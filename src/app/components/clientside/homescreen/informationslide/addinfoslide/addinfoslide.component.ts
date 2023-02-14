@@ -2,11 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-feedsection',
-  templateUrl: './feedsection.component.html',
-  styleUrls: ['./feedsection.component.scss'],
+  selector: 'app-addinfoslide',
+  templateUrl: './addinfoslide.component.html',
+  styleUrls: ['./addinfoslide.component.scss'],
 })
-export class FeedsectionComponent implements OnInit {
+export class AddinfoslideComponent implements OnInit {
   onFileSelected($event: Event) {
     throw new Error('Method not implemented.');
   }

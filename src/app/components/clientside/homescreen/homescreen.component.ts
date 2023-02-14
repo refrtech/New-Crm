@@ -30,6 +30,7 @@ export class HomescreenComponent implements OnInit {
   feedSection: Array<any> = [
     { feed: 'Top Feed', link: '/feedmodule' },
     { feed: 'Visit, recommend and earn', link: '/visitmodule' },
+    { feed: 'Information slide', link: '/infoslide' },
     { feed: 'Scan QR', link: '/' },
     { feed: 'Brands in your neighbourhood', link: '/brands' },
     { feed: 'Homegrown brands on Refr', link: '/homebrands' },

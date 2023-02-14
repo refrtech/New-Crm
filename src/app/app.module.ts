@@ -67,6 +67,8 @@ import { CategorysectioninternalComponent } from './components/internalsection/h
 import { VisitshareinternalComponent } from './components/internalsection/visitshareinternal/visitshareinternal.component';
 import { SettingComponent } from './components/clientside/setting/setting.component';
 import { AddcityAndAreaComponent } from './components/clientside/setting/addcity-and-area/addcity-and-area.component';
+import { InformationslideComponent } from './components/clientside/homescreen/informationslide/informationslide.component';
+import { AddinfoslideComponent } from './components/clientside/homescreen/informationslide/addinfoslide/addinfoslide.component';
 
 @NgModule({
   declarations: [
@@ -102,6 +104,8 @@ import { AddcityAndAreaComponent } from './components/clientside/setting/addcity
     VisitshareinternalComponent,
     SettingComponent,
     AddcityAndAreaComponent,
+    InformationslideComponent,
+    AddinfoslideComponent,
   ],
   imports: [
     MatDialogModule,

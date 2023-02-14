@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { BrandsneighbourhoodComponent } from './components/clientside/homescreen/brandsneighbourhood/brandsneighbourhood.component';
 import { HomegrowbrandsComponent } from './components/clientside/homescreen/homegrowbrands/homegrowbrands.component';
 import { HomescreenComponent } from './components/clientside/homescreen/homescreen.component';
+import { AddinfoslideComponent } from './components/clientside/homescreen/informationslide/addinfoslide/addinfoslide.component';
+import { InformationslideComponent } from './components/clientside/homescreen/informationslide/informationslide.component';
 import { FeedsectionComponent } from './components/clientside/homescreen/topfeedmodule/feedsection/feedsection.component';
 import { TopfeedmoduleComponent } from './components/clientside/homescreen/topfeedmodule/topfeedmodule.component';
 import { VisitaddstoredetailsComponent } from './components/clientside/homescreen/visitsharemodule/visitaddstoredetails/visitaddstoredetails.component';
@@ -46,7 +48,7 @@ const routes: Routes = [
       { path: 'Redeemreq', component: RedeemreqComponent },
       { path: 'transaction', component: TransactionComponent },
       { path: 'Notification', component: NotificationComponent },
-      { path: 'nodemanage',component: NodemanagementComponent},
+      { path: 'nodemanage', component: NodemanagementComponent },
       { path: 'addnode/:id', component: AddnodeComponent },
       { path: 'homescreen', component: HomescreenComponent },
       { path: 'feedmodule', component: TopfeedmoduleComponent },
@@ -64,6 +66,8 @@ const routes: Routes = [
       { path: 'settings', component: SettingComponent },
       { path: 'addcityarea/:id', component: AddcityAndAreaComponent },
       { path: 'visitshareinternal', component: VisitshareinternalComponent },
+      { path: 'infoslide', component: InformationslideComponent },
+      { path: 'addinfoslide', component: AddinfoslideComponent },
     ],
   },
 ];
