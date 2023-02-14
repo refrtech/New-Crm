@@ -1,0 +1,129 @@
+<div class="A20padding">
+    <div class="dflex AIcenter">
+        <a routerLink="/homescreen">
+            <svg width="38" height="24" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M24 12H5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+
+        </a>
+        <span class="xxl_size boldtext lr15padding AScenter">Homegrown brand</span>
+    </div>
+
+
+    <div class="t50margin lr55padding">
+
+        <div>
+            <div class="boldtext l_size t30margin b20margin">Module details</div>
+            <div class="Aborder A5radius A20padding b20margin">
+                <div>
+                    <div class="t20margin b15margin">
+                        <div class="m_size crminput r15padding AScenter">Module name</div>
+                    </div>
+                    <div>
+                        <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
+                            <input type="text" matInput placeholder="Enter the module name">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div>
+                    <div class="t20margin b15margin">
+                        <div class="m_size crminput r15padding AScenter">Subtext</div>
+                    </div>
+                    <div>
+                        <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
+                            <input type="text" matInput placeholder="Enter the subtext name">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="lr55padding">
+        <div class="boldtext l_size b20margin">All stores</div>
+
+        <div class="dflex">
+            <section *ngFor="let x of [0,1,2]">
+
+                <main class="section">
+                    <div class="w200 h200 Aborder dflex flex_col JCcenter AIcenter pos_relative">
+                        <div class="c_align boldtext m_size b15margin">
+                            Dinshaws Xpress cafe
+                        </div>
+                        <div class="c_align">cafe</div>
+                        <div
+                            class="c_align pos_absolute M100width tb10padding cursor_pointer purple_txt regulartext s_size">
+                            <svg class="r5margin cursor_pointer" style="margin-bottom: -3px;" width="17" height="15"
+                                viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M1.625 7.5C1.625 7.5 4.125 2.5 8.5 2.5C12.875 2.5 15.375 7.5 15.375 7.5C15.375 7.5 12.875 12.5 8.5 12.5C4.125 12.5 1.625 7.5 1.625 7.5Z"
+                                    stroke="#8111E8" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M8.5 9.375C9.53553 9.375 10.375 8.53553 10.375 7.5C10.375 6.46447 9.53553 5.625 8.5 5.625C7.46447 5.625 6.625 6.46447 6.625 7.5C6.625 8.53553 7.46447 9.375 8.5 9.375Z"
+                                    stroke="#8111E8" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            Preview
+                        </div>
+                    </div>
+                    <div routerLink="/addstore"
+                        class="w200 Aborder dflex  JCcenter AIcenter t10margin b10margin tb10padding regulartext s_size">
+                        <svg class="r5margin cursor_pointer" width="15" height="15" viewBox="0 0 15 15" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_344_11618)">
+                                <path
+                                    d="M6.875 2.5H2.5C2.16848 2.5 1.85054 2.6317 1.61612 2.86612C1.3817 3.10054 1.25 3.41848 1.25 3.75V12.5C1.25 12.8315 1.3817 13.1495 1.61612 13.3839C1.85054 13.6183 2.16848 13.75 2.5 13.75H11.25C11.5815 13.75 11.8995 13.6183 12.1339 13.3839C12.3683 13.1495 12.5 12.8315 12.5 12.5V8.125"
+                                    stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M11.5625 1.56215C11.8111 1.31351 12.1484 1.17383 12.5 1.17383C12.8516 1.17383 13.1889 1.31351 13.4375 1.56215C13.6861 1.81079 13.8258 2.14802 13.8258 2.49965C13.8258 2.85128 13.6861 3.18851 13.4375 3.43715L7.5 9.37465L5 9.99965L5.625 7.49965L11.5625 1.56215Z"
+                                    stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_344_11618">
+                                    <rect width="15" height="15" fill="white" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                        Edit
+                    </div>
+                    <div
+                        class="w200 Aborder dflex  JCcenter AIcenter t10margin b10margin tb10padding regulartext s_size red_txt">
+                        <svg class="r5margin cursor_pointer" width="18" height="18" viewBox="0 0 18 18" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2.25 4.5H3.75H15.75" stroke="#CE0000" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path
+                                d="M14.25 4.5V15C14.25 15.3978 14.092 15.7794 13.8107 16.0607C13.5294 16.342 13.1478 16.5 12.75 16.5H5.25C4.85218 16.5 4.47064 16.342 4.18934 16.0607C3.90804 15.7794 3.75 15.3978 3.75 15V4.5M6 4.5V3C6 2.60218 6.15804 2.22064 6.43934 1.93934C6.72064 1.65804 7.10218 1.5 7.5 1.5H10.5C10.8978 1.5 11.2794 1.65804 11.5607 1.93934C11.842 2.22064 12 2.60218 12 3V4.5"
+                                stroke="#CE0000" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M7.5 8.25V12.75" stroke="#CE0000" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M10.5 8.25V12.75" stroke="#CE0000" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        Delete
+                    </div>
+                </main>
+
+            </section>
+            <section>
+                <main>
+                    <div routerLink="/addstore"
+                        class="w200 h200 Aborder dflex flex_col JCcenter AIcenter pos_relative cursor_pointer">
+                        <mat-icon>
+                            add
+                        </mat-icon>
+                    </div>
+                </main>
+
+            </section>
+        </div>
+
+        <div>
+            <button mat-button routerLink="/visitdetails"
+                class="viewbtn t5padding b5padding l30padding r30padding t30margin b15margin">Preview</button>
+        </div>
+    </div>
+
+</div>

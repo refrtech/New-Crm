@@ -1,0 +1,234 @@
+<div class="col col-100 col-sm-100 col-card">
+    <div class="card-box">
+        <table mat-table [dataSource]="dataSource" class="userTransaction" matSort>
+            <!-- ID Column -->
+            <ng-container matColumnDef="Tran_id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Transaction ID</th>
+                <td mat-cell *matCellDef="let row"
+                    [ngClass]="(row.status == undefined || (row.status <= 0 && row.status !=-10)) ?'Failed_Tran':''">
+                    {{row.id}}
+                </td>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="Phone_no">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone Number</th>
+                <td mat-cell *matCellDef="let row"
+                    [ngClass]="(row.status == undefined || (row.status <= 0 && row.status !=-10)) ?'Failed_Tran':''">
+                    <div *ngIf="row.logistics != undefined && id == 1">
+                        {{row.logistics.phone}}
+                    </div>
+                    <div *ngIf="row.logistics == undefined">
+                        -
+                    </div>
+                </td>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="DAT">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Date And Time</th>
+                <td mat-cell *matCellDef="let row"
+                    [ngClass]="(row.status == undefined || (row.status <= 0 && row.status !=-10)) ?'Failed_Tran':''">
+                    -
+                    <!--button mat-icon-button (click)=" deleteTranz(row.id) " [disabled]=" row.to !== 'zn99lfRpB4bDy4KBvu4K1QpSMBk2' "><mat-icon>delete</mat-icon></button-->
+                </td>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="CatAsubCat">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Category & Sub-Category</th>
+                <td mat-cell *matCellDef="let row"
+                    [ngClass]="(row.status == undefined || (row.status <= 0 && row.status !=-10)) ?'Failed_Tran':''">
+                    <div *ngIf="row.logistics == undefined || row.to =='Δ'">
+                        -
+                    </div>
+                    <div *ngIf="row.logistics != undefined && row.to !='Δ'">
+                        <span *ngIf="row.logistics.typeCat == 'food_and_beverages'">Food & Beverages</span>
+                        <span *ngIf="row.logistics.typeCat == 'fashion_brand'">Fashion brand</span>
+                        <span *ngIf="row.logistics.typeCat == 'beauty_personal_care'">Beauty & Personal Care</span>
+                        <span *ngIf="row.logistics.typeCat == 'salons & spa'">salons & spa</span>
+                        <span *ngIf="row.logistics.typeCat == 'electronics'">Electronics</span>
+                        <span *ngIf="row.logistics.typeCat == 'healthcare'">Healthcare</span>
+                        <span *ngIf="row.logistics.typeCat == 'fitness'">Fitness</span>
+                    </div>
+                    <div class="gray_txt" *ngIf="row.logistics != undefined">
+                        <span *ngIf="row.logistics.typeSuCat == 'sc-food_and_beverages-bakery'">
+                            Bakery & Confectionery
+                        </span>
+                        <span *ngIf="row.logistics.typeSuCat == 'sc-food_and_beverages-cafe'">food_and_beverages</span>
+                        <span *ngIf="row.logistics.typeSuCat == 'sc-food_and_beverages-restaurants'">Restaurants</span>
+                        <span *ngIf="row.logistics.typeSuCat == 'sc-food_and_beverages-clubs_and_bars'">
+                            Clubs & Bars
+                        </span>
+                        <span *ngIf="row.logistics.typeSuCat == 'sc-food_and_beverages-clubs_and_bars'">
+                            Healthy Snacks
+                        </span>
+                        <span *ngIf="row.logistics.typeSuCat == 'sc-fashion_brand-kids_fashion'">Kids Fashion</span>
+                        <span *ngIf="row.logistics.typeSuCat == 'sc-fashion_brand-mens_fashion'">Mens Fashion</span>
+                        <span *ngIf="row.logistics.typeSuCat == 'sc-fashion_brand-womens_fashion'">Womens Fashion</span>
+                        <span *ngIf="row.logistics.typeSuCat == 'sc-fashion_brand-womens_fashion'">Active Wear</span>
+                        <!-- <span *ngIf="row.logistics.typeSuCat == ''"></span>
+                        <span *ngIf="row.logistics.typeSuCat == ''"></span>
+                        <span *ngIf="row.logistics.typeSuCat == ''"></span>
+                        <span *ngIf="row.logistics.typeSuCat == ''"></span>
+                        <span *ngIf="row.logistics.typeSuCat == ''"></span>
+                        <span *ngIf="row.logistics.typeSuCat == ''"></span>
+                        <span *ngIf="row.logistics.typeSuCat == ''"></span>
+                        <span *ngIf="row.logistics.typeSuCat == ''"></span>
+                        <span *ngIf="row.logistics.typeSuCat == ''"></span>
+                        <span *ngIf="row.logistics.typeSuCat == ''"></span>
+                        <span *ngIf="row.logistics.typeSuCat == ''"></span>
+                        <span *ngIf="row.logistics.typeSuCat == ''"></span>
+                        <span *ngIf="row.logistics.typeSuCat == ''"></span>
+                        <span *ngIf="row.logistics.typeSuCat == ''"></span>
+                        <span *ngIf="row.logistics.typeSuCat == ''"></span>
+                        <span *ngIf="row.logistics.typeSuCat == ''"></span>
+                        <span *ngIf="row.logistics.typeSuCat == ''"></span>
+                        <span *ngIf="row.logistics.typeSuCat == ''"></span>
+                        <span *ngIf="row.logistics.typeSuCat == ''"></span> -->
+                    </div>
+                </td>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="Bill">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Bill Amount</th>
+                <td mat-cell *matCellDef="let row"
+                    [ngClass]="(row.status == undefined || (row.status <= 0 && row.status !=-10)) ?'Failed_Tran':''">
+                    <!-- <span *ngIf="row.to == 'Δ' && row.type.includes('firstBalance')  ">ONBOARD</span>
+                    <span *ngIf="row.to == 'Δ' && row.type.includes('campaignBalance')  ">CAMPAIGN</span>
+                    <span
+                        *ngIf="row.to == 'Δ' && !row.type.includes('firstBalance') && !row.type.includes('campaignBalance')  ">XXX</span>
+                    <span *ngIf="row.to !== 'Δ' ">{{row.journey}}</span> -->
+                    <div *ngIf="row.to =='Δ'">
+                        <span *ngIf="row.amCamp != undefined">
+                            <span *ngIf="row.amTotal == '5126'">4300</span>
+                            <span *ngIf="row.amTotal == '10216'">8800</span>
+                            <span *ngIf="row.amTotal == '15270'">13500</span>
+                            <span *ngIf="row.amTotal == '20360'">18000</span>
+                        </span>
+                        <span *ngIf="row.amGive != undefined">
+                            {{row.amTotal}}
+                        </span>
+                    </div>
+                    <div *ngIf="row.to !='Δ'">
+                        {{row.amTotal}}
+                    </div>
+                </td>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="Type">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Transaction Type</th>
+                <td mat-cell *matCellDef="let row"
+                    [ngClass]="(row.status == undefined || (row.status <= 0 && row.status !=-10)) ?'Failed_Tran':''">
+                    <div *ngIf="row.to =='Δ'">
+                        <span *ngIf="row.amCamp != undefined">
+                            Campaign Refill
+                        </span>
+                        <span *ngIf="row.amGive != undefined">
+                            Refr Credit
+                        </span>
+                    </div>
+                    <div *ngIf="row.to !='Δ'">
+                        <div *ngIf="row.by == 'Δ'">
+                            Withdraw
+                        </div>
+
+                        <div *ngIf="row.by != 'Δ'">
+                            <div *ngIf="row.status == -10">
+                                Refund Order
+                            </div>
+                            <div *ngIf="row.status != -10">
+                                <div>
+                                    {{row.journey}}
+                                </div>
+                                <div class="gray_txt" *ngIf="row.cart !=undefined && row.cart.length > 0">
+                                    Online
+                                </div>
+                                <div class="gray_txt" *ngIf="row.cart ==undefined || row.cart.length <= 0">
+                                    In-Store
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="PayMode">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Payment Mode </th>
+                <td mat-cell *matCellDef="let row"
+                    [ngClass]="(row.status == undefined || (row.status <= 0 && row.status !=-10)) ?'Failed_Tran':''">
+                    <div *ngIf="row.to =='Δ' || row.by == 'Δ'">
+                        -
+                    </div>
+                    <div *ngIf="row.to !='Δ'">
+                        <span *ngIf="row.ordrTYPE == 'CASH'">Cash</span>
+                        <span *ngIf="row.ordrTYPE == 'ONLINE'">Digital</span>
+                        <span *ngIf="row.ordrTYPE == 'RefrCASH'">Refr Cash</span>
+                        <span *ngIf="row.ordrTYPE == 'COD'">COD</span>
+                        <span *ngIf="row.ordrTYPE == 'RefrCASH+ONLINE'">RC + D</span>
+                        <span *ngIf="row.ordrTYPE == 'RefrCASH+COD'">RC + COD</span>
+                    </div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Refr_eard">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Refr Cash Earned</th>
+                <td mat-cell *matCellDef="let row"
+                    [ngClass]="(row.status == undefined || (row.status <= 0 && row.status !=-10)) ?'Failed_Tran':''">
+                    <div *ngIf="row.to =='Δ' || row.by =='Δ'">
+                        -
+                    </div>
+                    <div *ngIf="row.to !='Δ' && row.by != 'Δ'">
+                        <span *ngIf="id == 1">
+                            <span *ngIf="row.status != -10">{{row.invoice.amtRefrCash | number:'1.0-2'}}</span>
+                            <span *ngIf="row.status == -10">0</span>
+                        </span>
+                        <!-- <span *ngIf="id == 2">
+                            <span *ngIf="row.status != -10">
+                                {{row.earn | number:'1.0-2'}}
+                                <span *ngIf="row.refr !=null">+ {{row.refr.earn | number:'1.0-2'}} </span>
+                            </span>
+                            <span *ngIf="row.status == -10">0</span>
+                        </span> -->
+                    </div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Refr_Paid">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Refr Cash Used</th>
+                <td mat-cell *matCellDef="let row"
+                    [ngClass]="(row.status == undefined || (row.status <= 0 && row.status !=-10)) ?'Failed_Tran':''">
+                    <div *ngIf="row.to =='Δ' || row.by == 'Δ'">
+                        -
+                    </div>
+                    <div *ngIf="row.to !='Δ'">
+                        <span *ngIf="id == 1">
+                            <span *ngIf="row.status != -10">
+                                {{row.earn | number:'1.0-2'}}
+                                <span *ngIf="row.refr !=null">+ {{row.refr.earn | number:'1.0-2'}} </span>
+                            </span>
+                            <span *ngIf="row.status == -10">
+                                {{row.invoice.amtRefrCash | number:'1.0-2'}}
+                            </span>
+                        </span>
+                        <!-- <span *ngIf="id == 2">{{row.invoice.amtRefrCash | number:'1.0-2'}} </span> -->
+                    </div>
+                </td>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="manage">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+                <td mat-cell *matCellDef="let row"
+                    [ngClass]="(row.status == undefined || (row.status <= 0 && row.status !=-10)) ?'Failed_Tran':''">
+                    <button (click)="oepndetails(row)">
+                        <mat-icon>visibility</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <!-- Row shown when there is no matching data. -->
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">
+                    <!-- No data matching the filter "{{input.value}}" -->
+                </td>
+            </tr>
+        </table>
+        <!-- <span>{{id}}</span> -->
+    </div>
+</div>

@@ -1,0 +1,64 @@
+<div class="A20padding" *ngIf="data.id == 1">
+    <div>
+        <div>
+            <span class="xxl_size boldtext r15padding AScenter">Add City</span>
+        </div>
+        <div class="t50margin">
+            <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
+                <input type="text" matInput [(ngModel)]="CityN" (keyup)="cityanamechange()"
+                    placeholder="Enter the City name">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
+                <input type="text" matInput [(ngModel)]="CitySN" maxlength="3" placeholder="Enter the City Short name">
+            </mat-form-field>
+        </div>
+        <div class="M30width lr5padding t5padding">
+            <ng-multiselect-dropdown class="crminpu" [placeholder]="'Select area'" [settings]="dropdownSettings"
+                [data]="dropdownList" (onSelect)="addarea($event)" (onDeSelect)="removearea($event)" [(ngModel)]="selectedareas" name="Area_N" ngModel required>
+            </ng-multiselect-dropdown>
+        </div>
+        <div class="A5padding">
+            <button mat-raised-button *ngIf="data.id != undefined && data.citydata == undefined" (click)="CreateCity()"
+                class="crud_ctas s_size semiboldtext purple_background normallineheight White_txt r10margin">
+                Create City
+            </button>
+
+            <button mat-raised-button *ngIf="data.id != undefined && data.citydata != undefined" (click)="updateCity()"
+                class="crud_ctas s_size semiboldtext purple_background normallineheight White_txt r10margin">
+                Updated City
+            </button>
+            <!-- <button mat-raised-button *ngIf="data.id != undefined && data.citydata != undefined" (click)="removearea()"
+                class="crud_ctas s_size semiboldtext purple_background normallineheight White_txt r10margin">
+                removearea
+            </button> -->
+        </div>
+    </div>
+</div>
+
+
+<div class="A20padding" *ngIf="data.id == 2">
+    <div>
+        <div>
+            <span class="xxl_size boldtext r15padding AScenter">Add Area</span>
+        </div>
+        <div class="t50margin">
+            <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
+                <input type="text" matInput [(ngModel)]="AreaN" placeholder="Enter the Area name">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
+                <input type="text" matInput [(ngModel)]="AreaPIN" maxlength="6" type="tel"
+                    placeholder="Enter the Area Pin code.">
+            </mat-form-field>
+        </div>
+        <div class="A5padding">
+            <button mat-raised-button (click)="cratearea()"
+                class="crud_ctas s_size semiboldtext purple_background normallineheight White_txt r10margin">
+                Create Area
+            </button>
+        </div>
+    </div>
+</div>

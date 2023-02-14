@@ -1,0 +1,25 @@
+.browse {
+  padding: 6px 30px;
+}
+
+.bg_fb {
+  background: #fbfbfb;
+}
+
+.feedmoduleImg {
+  width: 5%;
+  img {
+    width: 100%;
+    min-height: 45px;
+    object-fit: contain;
+  }
+  video {
+    // width: 100%;
+    // min-height: 100px;
+    // object-fit: contain;
+  }
+}
+
+.file-input {
+  display: none;
+}

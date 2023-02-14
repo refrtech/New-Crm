@@ -1,0 +1,83 @@
+<div class="A20padding">
+    <div class="dflex">
+        <span class="xxl_size boldtext r15padding AScenter">Node management</span>
+        <span class="divide"></span>
+        <div class="AScenter">
+            <button mat-button (click)="opennode(1)"
+                class="s_size semiboldtext purple_background normallineheight tb5padding l15padding r15padding White_txt">
+                <mat-icon class="xml_size">add</mat-icon>
+                Add node
+            </button>
+        </div>
+    </div>
+    <ng-container>
+        <!-- <div class="t30padding b15padding m_size boldtext">
+            City
+        </div>
+        <div>
+            <mat-form-field class="crminput l5margin r5margin filterinput" appearance="outline">
+                <mat-select placeholder="Filter Type" [(ngModel)]="parameters">
+                    <mat-option *ngFor="let item of ParaArr" [value]="item.titvalue">
+                        {{item.Title}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div> -->
+        <div class="t20padding">
+            <table class="crmtable" mat-table [dataSource]="nodes" matSort>
+                <ng-container matColumnDef="node">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading rborder lborder">Node
+                    </th>
+                    <td class="rborder lborder" mat-cell *matCellDef="let row">{{row?.name}}</td>
+                </ng-container>
+                <ng-container matColumnDef="area">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading rborder tborder">Area
+                    </th>
+                    <td class="rborder tborder" mat-cell *matCellDef="let row">
+                        <div class="d_inline lightgray_bg tb5padding lr15padding A20radius r5margin"
+                            *ngFor="let item of row.Nareas">
+                            {{item.Area_N}}
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="used_in">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading rborder tborder">Create
+                        Date
+                    </th>
+                    <td class="rborder tborder" mat-cell *matCellDef="let row">
+                        {{row?.created_at.toDate() | date:'MMM dd, yyyy' }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading rborder lborder tborder">
+                        Action
+                    </th>
+                    <td class="rborder lborder tborder dflex JCcenter M100width tb10padding" mat-cell
+                        *matCellDef="let row">
+                        <a class="text_decoration_none r50margin cursor_pointer"
+                            (click)="opennode(2,row)">
+                            <div>
+                                <mat-icon>
+                                    edit
+                                </mat-icon>
+                            </div>
+                            <div class="s_size semiboldtext">Edit</div>
+                        </a>
+                        <a class="text_decoration_none black_text cursor_pointer" (click)="deletenode(row.id)">
+                            <div>
+                                <mat-icon>
+                                    delete
+                                </mat-icon>
+                            </div>
+                            <div class="s_size semiboldtext">delete</div>
+                        </a>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="nodeColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: nodeColumns;"></tr>
+                <tr class="mat-row" *matNoDataRow>
+                </tr>
+            </table>
+        </div>
+    </ng-container>
+</div>

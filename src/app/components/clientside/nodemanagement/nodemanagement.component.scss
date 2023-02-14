@@ -1,0 +1,15 @@
+.crmtable {
+  width: 100%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 7%);
+  border-radius: 10px;
+
+  .mat-header-row {
+    background: #ffffff;
+  }
+
+  tr td,
+  th {
+    text-align: center !important;
+    width: 25%;
+  }
+}

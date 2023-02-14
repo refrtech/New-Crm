@@ -1,0 +1,108 @@
+<div class="A20padding">
+    <div class="dflex AIcenter">
+        <a routerLink="/homegrownintsec">
+            <svg width="38" height="24" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M24 12H5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+
+        </a>
+        <span class="xxl_size boldtext lr15padding AScenter">Homegrown brand</span>
+    </div>
+
+    <div class="t50margin lr55padding">
+        <div>
+            <div class="t20margin b15margin">
+                <div class="m_size crminput r15padding AScenter">Category Name</div>
+            </div>
+            <div>
+                <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
+                    <input type="text" matInput placeholder="Categories">
+                </mat-form-field>
+            </div>
+            <div class="t20margin b15margin">
+                <div class="m_size crminput r15padding AScenter">Category Image</div>
+            </div>
+
+            <div class="Aborder M50width A30padding b30margin">
+                <div class="c_align">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z"
+                            stroke="#979797" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M8.5 10C9.32843 10 10 9.32843 10 8.5C10 7.67157 9.32843 7 8.5 7C7.67157 7 7 7.67157 7 8.5C7 9.32843 7.67157 10 8.5 10Z"
+                            stroke="#979797" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M21 15L16 10L5 21" stroke="#979797" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <!-- <div class="m_size regulartext c_align tb10padding gray_txt">
+                                Drop your image here, or <span><a type="submit"
+                                        class="text_decoration_none purple_txt semiboldtext cursor_pointer">browse</a></span>
+                            </div> -->
+                <div class="dflex JCcenter tb10padding">
+                    <div class="col-8">
+                        <label class="btn btn-default p-0">
+                            <input class="A5padding" type="file" accept="image/*" (change)="selectFile($event)" />
+                        </label>
+                    </div>
+
+                    <div class="col-4">
+                        <button class="A5padding" [disabled]="!selectedFiles" (click)="upload()">
+                            Upload
+                        </button>
+                    </div>
+                </div>
+                <div class="m_size regulartext c_align gray_txt">
+                    Supported files : <span class="semiboldtext">WEBP</span>
+                </div>
+                <div class="m_size regulartext c_align tb10padding gray_txt">
+                    Maximum upload size : <span class="semiboldtext">10mb</span>
+                </div>
+            </div>
+
+            <div *ngIf="currentFile && progress">
+                <div role="progressbar" attr.aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100"
+                    [ngStyle]="{ width: progress + '%' }">
+                    {{ progress }}%
+                </div>
+            </div>
+
+            <div class="t10margin b10margin" *ngIf="message" role="alert">
+                {{ message }}
+            </div>
+
+
+            <div class="t10margin b30margin">
+                <div class="m_size boldtext">List of Images</div>
+                <div class="m_size boldtext" *ngIf="preview < '0'">
+                    <img src="https://img.icons8.com/arcade/64/null/no-image.png" />
+                </div>
+
+                <div class="t10margin b10margin">
+                    <img width="200" [src]="preview" class="preview" />
+                </div>
+            </div>
+
+            <div class="t20margin b15margin">
+                <div class="m_size crminput r15padding AScenter">Category url</div>
+            </div>
+            <div>
+                <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
+                    <input type="text" matInput placeholder="Categories">
+                </mat-form-field>
+            </div>
+
+
+            <button mat-button routerLink="/categorysec"
+                class="s_size semiboldtext purple_background normallineheight t30margin tb5padding l15padding r15padding White_txt">
+                Next
+            </button>
+        </div>
+
+
+    </div>
+
+</div>

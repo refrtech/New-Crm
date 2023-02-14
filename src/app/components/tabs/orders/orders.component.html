@@ -1,0 +1,173 @@
+<div class="A20padding">
+    <div class="dflex">
+        <span class="xxl_size boldtext r15padding AScenter">Orders</span>
+        <span class="divide"></span>
+        <div class="AScenter">
+            <mat-checkbox class="example-margin" [(ngModel)]="getall">Get All</mat-checkbox>
+        </div>
+        <div class="AScenter">
+            <button mat-button (click)="exportexcel()">
+                <mat-icon>
+                    file_upload
+                </mat-icon>
+                Export
+            </button>
+        </div>
+    </div>
+    <div class="t20padding b15padding xl_size boldtext">
+        Filter
+    </div>
+    <div>
+        <mat-form-field class="crminput l5margin r5margin filterinput" appearance="outline">
+            <mat-select placeholder="Filter Type" [(ngModel)]="parameters">
+                <mat-option *ngFor="let item of ParaArr" [value]="item.titvalue">
+                    {{item.Title}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="crminput l5margin r5margin filterinput" appearance="outline">
+            <mat-select placeholder="Operator's" [(ngModel)]="operators">
+                <mat-option *ngFor="let item of OperatorArr" [value]="item.titvalue">
+                    {{item.Title}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="searchinput" appearance="fill">
+            <input [type]="inputtype" matInput [(ngModel)]="searchvalue">
+        </mat-form-field>
+    </div>
+    <div *ngIf="showerror == true" class="c_align red_txt">
+        {{errormsg}}
+    </div>
+    <div class="c_align">
+        <Button class="viewbtn t10padding b10padding l30padding r30padding t10margin b15margin"
+            (click)="execute()">Apply Filter</Button>
+    </div>
+    <div>
+        <table class="crmtable" mat-table [dataSource]="orderdatasource" matSort>
+            <ng-container matColumnDef="Sr_no">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Sr No</th>
+                <td class="gray_txt xs_size" mat-cell *matCellDef="let row; let i = index">
+                    {{i + 1}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="orderDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Order Date</th>
+                <td class="gray_txt xs_size" mat-cell *matCellDef="let row; let i = index">
+                    {{row.sin.toDate() | date:'dd/MM/yyyy'}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="StoreName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Store Name</th>
+                <td mat-cell *matCellDef="let row">
+                    {{row.storeName}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Cust_Name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Customer Name</th>
+                <td mat-cell *matCellDef="let row">
+                    {{row.userName}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="journey">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Order Type</th>
+                <td mat-cell *matCellDef="let row">
+                    <span *ngIf="row.journey != 'F2F'">{{row.journey}}</span>
+                    <span *ngIf="row.journey == 'F2F' && row.cart.length > 0">F2F - Online</span>
+                    <span *ngIf="row.journey == 'F2F' && row.cart.length == 0">F2F - Offline</span>
+                    <div class="status">
+                        {{row.ordrTYPE}}
+                    </div>
+                </td>
+            </ng-container>
+            <!-- <ng-container matColumnDef="Order_type">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Payment Type</th>
+                <td mat-cell *matCellDef="let row">
+
+                </td>
+            </ng-container> -->
+            <ng-container matColumnDef="Vendor_Amt">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Store Amount</th>
+                <td mat-cell *matCellDef="let row">
+                    {{row.amBurst | number :'1.0-2'}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Tax">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Tax</th>
+                <td mat-cell *matCellDef="let row">
+                    {{row.amTax | number :'1.0-2'}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="tcsTax">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">TCS Tax</th>
+                <td mat-cell *matCellDef="let row">
+                    {{row.amTaxTCS | number:'1.0-2'}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Gatway">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Gateway</th>
+                <td mat-cell *matCellDef="let row">
+                    {{row.amGateway | number :'1.0-2'}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Total">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Total</th>
+                <td mat-cell *matCellDef="let row">
+                    {{row.amTotal | number :'1.0-2'}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="ordStatus">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Status</th>
+                <td mat-cell *matCellDef="let row">
+                    <span class="green_txt"
+                        *ngIf=" row.ordrTYPE == 'CASH' && row.status == 10 && row.logistics.status == 0 && (row.journey == 'POS' || row.journey == 'F2F') ">Complete</span>
+                    <span class="green_txt"
+                        *ngIf=" row.ordrTYPE == 'CASH' && row.status == 0 && row.logistics.status == 0 && (row.journey == 'POS' || row.journey == 'F2F') ">In
+                        Queue</span>
+                    <span class="green_txt"
+                        *ngIf="row.status == 10 && row.logistics.status == 20 && ( row.journey == 'F2F' || row.journey == 'DIRECT' || row.journey == 'BURN')">Delivered</span>
+                    <span class="yellow_txt"
+                        *ngIf="row.cart.length > 0 && ((row.ordrTYPE !== 'RefrCASH' && row.status == 1) || (row.ordrTYPE == 'RefrCASH' && row.status == 0)) ">Placed</span>
+                    <span class="red_txt"
+                        *ngIf="row.cart.length > 0 && row.ordrTYPE !== 'RefrCASH' && row.status == 0 ">
+                        Failed
+                    </span>
+                    <span class="ora_txt"
+                        *ngIf="row.status == -10 && row.logistics.status == -100 && ( row.journey == 'F2F' || row.journey == 'DIRECT' || row.journey == 'BURN')">Returned</span>
+                    <span class="blue_txt"
+                        *ngIf="row.status == 10 && row.logistics.status == 10 && (row.journey == 'F2F' || row.journey == 'DIRECT' || row.journey == 'BURN')">Shipped</span>
+                    <span class="red_txt"
+                        *ngIf="(row.status == -10 && row.logistics.status == 0 && (row.journey == 'F2F' || row.journey == 'POS')) || (row.status == -10 && row.logistics.status == -10 && ( row.journey == 'F2F' || row.journey == 'DIRECT' || row.journey == 'BURN'))">Rejected</span>
+                    <span class="blue_txt"
+                        *ngIf="row.status == -10 && row.logistics.status == -1000 && ( row.journey == 'F2F' || row.journey == 'DIRECT' || row.journey == 'BURN')">Refunded</span>
+                    <span *ngIf="row.status == '5'">Out for delivery</span>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading"> Action </th>
+                <td mat-cell *matCellDef="let row">
+                    <a (click)="openDialog(row)">
+                        <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0.125" y="0.125" width="24.75" height="24.75" fill="#DCCE8D" />
+                            <g clip-path="url(#clip0_1979_8859)">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M13.0083 18.378C8.7875 18.378 5.02 15.1388 3 11.898C5.015 8.74185 8.78583 6.07031 13.0083 6.07031C17.2875 6.07031 21.0375 8.72647 23.0075 11.8888C21.14 15.2965 17.4025 18.378 13.0083 18.378ZM3.97333 11.9042C4.67583 12.928 8.155 17.6088 13.0083 17.6088C18.2625 17.6088 21.435 12.9142 22.0508 11.9126C21.4075 10.9911 18.2125 6.83954 13.0083 6.83954C7.91167 6.83954 4.65417 10.9588 3.97333 11.9042ZM13 8.378C15.3 8.378 17.1667 10.1011 17.1667 12.2242C17.1667 14.3472 15.3 16.0703 13 16.0703C10.7 16.0703 8.83333 14.3472 8.83333 12.2242C8.83333 10.1011 10.7 8.378 13 8.378ZM13 9.14724C14.84 9.14724 16.3333 10.5257 16.3333 12.2242C16.3333 13.9226 14.84 15.3011 13 15.3011C11.16 15.3011 9.66667 13.9226 9.66667 12.2242C9.66667 10.5257 11.16 9.14724 13 9.14724Z"
+                                    fill="black" />
+                            </g>
+                            <rect x="0.125" y="0.125" width="24.75" height="24.75" stroke="black" stroke-width="0.25" />
+                            <defs>
+                                <clipPath id="clip0_1979_8859">
+                                    <rect width="20" height="18.4615" fill="white" transform="translate(3 3)" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </a>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="Ordercolumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: Ordercolumns;"></tr>
+            <tr class="mat-row" *matNoDataRow>
+            </tr>
+        </table>
+    </div>
+</div>

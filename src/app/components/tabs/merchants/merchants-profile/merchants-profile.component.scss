@@ -1,0 +1,46 @@
+.addbtn {
+  line-height: 24px !important;
+}
+
+.storelogo {
+  height: 272px;
+  width: 272px;
+}
+
+.storebanner {
+  width: 272px;
+  height: 144px;
+}
+
+.prod_img {
+  height: 80px;
+  width: 80px;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 10px;
+  width: 10px;
+  margin: 0 5px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active,
+.dot:hover {
+  background-color: #717171;
+}
+
+.F_section {
+  max-width: calc(25% - 15px);
+  min-width: calc(25% - 15px);
+}
+
+.S_section {
+  max-width: calc(75% - 15px);
+  min-width: calc(75% - 15px);
+}
+

@@ -1,0 +1,570 @@
+<div class="trancontainer" *ngIf="Transactiondata.to != 'Δ' && Transactiondata.by == 'Δ'">
+    <div *ngIf="(Transactiondata.status == undefined || (Transactiondata.status <= 0 && Transactiondata.status !=-10))"
+        class="failed_tran">
+        Failed Transaction
+    </div>
+    <div class="title">
+        Withdraw
+    </div>
+    <div class="card-box dflex">
+        <div class="datacont1">
+            <div class="b5padding">Date : </div>
+            <div class="b5padding">
+                Withdraw Amount:
+            </div>
+        </div>
+        <div class="datacont2 gray_txt">
+            <div class="b5padding">
+                {{Transactiondata.sin}}
+            </div>
+            <div class="b5padding">
+                {{Transactiondata.amTotal}}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="trancontainer" *ngIf="Transactiondata.to == 'Δ'">
+    <div *ngIf="(Transactiondata.status == undefined || (Transactiondata.status <= 0 && Transactiondata.status !=-10))"
+        class="failed_tran">
+        Failed Transaction
+    </div>
+    <div class="title">
+        <span *ngIf="Transactiondata.amCamp != undefined">Campaign / Wallet Refill</span>
+        <span *ngIf="Transactiondata.amCamp == undefined">Refr Credits</span>
+    </div>
+    <div class="card-box dflex">
+        <div class="datacont1">
+            <div class="b5padding">Date : </div>
+            <div class="b5padding">
+                <span *ngIf="Transactiondata.amCamp != undefined">Refill Amount:</span>
+                <span *ngIf="Transactiondata.amCamp == undefined">Refr Credits:</span>
+            </div>
+            <div class="b5padding" *ngIf="Transactiondata.amCamp != undefined">Payment Mode: </div>
+            <div class="b5padding" *ngIf="Transactiondata.amCamp != undefined">Amount Credit to Wallet: </div>
+        </div>
+        <div class="datacont2 gray_txt">
+            <div class="b5padding">
+                {{Transactiondata.sin}}
+            </div>
+            <div class="b5padding">
+                {{Transactiondata.amTotal}}
+            </div>
+            <div class="b5padding" *ngIf="Transactiondata.amCamp != undefined">
+                {{Transactiondata.gwInfo.method}}
+            </div>
+            <div class="b5padding" *ngIf="Transactiondata.amCamp != undefined">
+                <span *ngIf="Transactiondata.amTotal == '5126'">4300</span>
+                <span *ngIf="Transactiondata.amTotal == '10216'">8800</span>
+                <span *ngIf="Transactiondata.amTotal == '15270'">13500</span>
+                <span *ngIf="Transactiondata.amTotal == '20360'">18000</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="trancontainer" *ngIf="Transactiondata.to != 'Δ' && Transactiondata.by != 'Δ'">
+    <div class="alldetailcont">
+        <div class="stepcotainer">
+            <div class="detailtitle">
+                Order Status
+            </div>
+            <div>
+                <!-- completed -->
+                <div class="step completed">
+                    <div class="v-stepper">
+                        <div class="circle"></div>
+                        <div class="line"></div>
+                    </div>
+                    <div class="stepercontent">
+                        <div>Order Placed</div>
+                        <div class="steperaction" *ngIf="Transactiondata.status <= 0">
+                            <div class="stepactiontitle">Order has been placed</div>
+                            <div class="stepactionsubtitle">
+                                <!-- {{Transactiondata.sin.toDate() | date}} -->
+                                Mon, 6th Aug ‘22 - 11:37am
+                            </div>
+                        </div>
+                        <div class="steperaction" *ngIf="Transactiondata.status > 0">
+                            <div class="stepactiontitle">Order has been Accepted</div>
+                            <div class="stepactionsubtitle">
+                                <!-- {{Transactiondata.sin.toDate() | date}} -->
+                                Mon, 6th Aug ‘22 - 11:37am
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="step {{Transactiondata.status == -10 ? 'completed' : ''}}"
+                    *ngIf="Transactiondata.status < 0">
+                    <div class="v-stepper">
+                        <div class="circle"></div>
+                        <div class="line"></div>
+                    </div>
+                    <div class="stepercontent">
+                        <div>Cancelled</div>
+                        <div class="steperaction">
+                            <div class="stepactiontitle">Order has been Cancelled</div>
+                            <!-- <div class="stepactionsubtitle">Mon, 6th Aug ‘22 - 11:37am</div> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="step {{Transactiondata.status == 10 && Transactiondata.logistics.status >= 10 ? 'completed' : ''}}"
+                    *ngIf="Transactiondata.status >= 0">
+                    <div class="v-stepper">
+                        <div class="circle"></div>
+                        <div class="line"></div>
+                    </div>
+                    <div class="stepercontent">
+                        <div>{{ !Transactiondata.logistics.require ? 'Shipping' : 'Shipped'}}</div>
+                        <div class="steperaction">
+                            <div class="stepactiontitle">Order has been shipped</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="step {{Transactiondata.status == -10 && Transactiondata.logistics.status == -1000 ? 'completed' : ''}}"
+                    *ngIf="Transactiondata.status < 0">
+                    <div class="v-stepper">
+                        <div class="circle"></div>
+                        <div class="line"></div>
+                    </div>
+                    <div class="stepercontent">
+                        <div>Refunded</div>
+                        <div class="steperaction">
+                            <!-- <div class="stepactiontitle">Your Amount is Ref</div> / -->
+                            <div class="stepactionsubtitle"
+                                *ngIf="Transactiondata.status == -10 && Transactiondata.logistics.status == -1000">
+                                <!-- {{p.com.toDate() | date}}  -->
+                                Mon, 6th Aug ‘22 - 11:37am
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="step {{Transactiondata.status == 10 && Transactiondata.logistics.status >= 20 ?'completed':''}}"
+                    *ngIf="Transactiondata.status >= 0">
+                    <div class="v-stepper">
+                        <div class="circle"></div>
+                        <div class="line"></div>
+                    </div>
+                    <div class="stepercontent">
+                        <div>Delivered</div>
+                        <div class="steperaction"
+                            *ngIf="Transactiondata.status == 10 && Transactiondata.logistics.status >= 20">
+                            <div class="stepactiontitle" *ngIf="Transactiondata.com">Your Order has been delivered</div>
+                            <div class="stepactionsubtitle" *ngIf="Transactiondata.com">Mon, 6th Aug ‘22 - 11:37am</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="step">
+                    <div class="v-stepper">
+                        <div class="circle"></div>
+                        <div class="line"></div>
+                    </div>
+                    <div class="stepercontent">
+                        <div>Order Returned</div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="detailCOnt">
+            <div class="detailtitle">
+                User Details
+            </div>
+            <div class="card-box DFlex">
+                <div class="datacont1">
+                    <div class="b5padding">User Name : </div>
+                    <div class="b5padding">Contact No :</div>
+                    <div class="b5padding">E-Mail ID :</div>
+                    <div class="b5padding">Billing Address :</div>
+
+                </div>
+                <div class="datacont2 gray_txt">
+                    <div class="b5padding">{{Transactiondata.userName}}</div>
+                    <div class="b5padding">
+                        <span *ngIf="Transactiondata.logistics != undefined && Transactiondata.logistics.phone != ''">
+                            {{Transactiondata.logistics.phone}}
+                        </span>
+                        <span *ngIf="Transactiondata.logistics == undefined && Transactiondata.logistics.phone == ''">
+                            -
+                        </span>
+                    </div>
+                    <div class="b5padding">
+                        -
+                    </div>
+                    <div class="b5padding">
+                        {{Transactiondata.logistics.addressDrop?.address}},
+                        {{Transactiondata.logistics.addressDrop?.zip}},
+                        {{Transactiondata.logistics.addressDrop?.landmark}}
+                    </div>
+                </div>
+                <div class="datacont1" *ngIf="Transactiondata.logistics.addressPick != undefined">
+                    <div>Shipping Address : </div>
+                </div>
+                <div class="datacont2 gray_txt">
+                    <div>
+                        {{Transactiondata.logistics.addressDrop?.address}},
+                        {{Transactiondata.logistics.addressDrop?.zip}},
+                        {{Transactiondata.logistics.addressDrop?.landmark}}
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="detailtitle t15padding">
+                Merchant Details
+            </div>
+            <div class="card-box DFlex">
+                <div class="datacont1">
+                    <div class="b5padding">Store Name : </div>
+                    <div class="b5padding">GST Number :</div>
+                    <div class="b5padding">Contact Number :</div>
+                    <div class="b5padding">E-mail ID :</div>
+                </div>
+                <div class="datacont2 gray_txt">
+                    <div class="b5padding">{{Transactiondata.storeName}}</div>
+                    <div class="b5padding">-</div>
+                    <div class="b5padding">-</div>
+                    <div class="b5padding">-</div>
+                </div>
+                <div class="datacont1">
+                    <div class="b5padding">
+                        Store Type :
+                    </div>
+                    <div class="b5padding">
+                        Category :
+                    </div>
+                    <div class="b5padding" *ngIf="Transactiondata.logistics.addressPick != undefined">
+                        Store Address :
+                    </div>
+                </div>
+                <div class="datacont2 gray_txt">
+                    <div class="b5padding">
+                        <span *ngIf="Transactiondata.camp.storeTyp == 'Both'">
+                            Online + Offline
+                        </span>
+                        <span *ngIf="Transactiondata.camp.storeTyp == 'Onli'">
+                            Online
+                        </span>
+                        <span *ngIf="Transactiondata.camp.storeTyp == 'Offl'">
+                            Offline
+                        </span>
+                    </div>
+                    <div class="b5padding">
+                        {{Transactiondata.logistics.typeCat}}
+                    </div>
+                    <div class="b5padding" *ngIf="Transactiondata.logistics.addressPick != undefined">
+                        {{Transactiondata.logistics.addressPick.line1}},
+                        {{Transactiondata.logistics.addressPick.zip}},
+                        {{Transactiondata.logistics.addressPick.locality}}
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="detailtitle t15padding">
+                Order Information
+            </div>
+            <div class="card-box DFlex">
+                <div class="datacont1">
+                    <div class="b5padding">Date : </div>
+                    <div class="b5padding">Order No : </div>
+                    <div class="b5padding">Transaction Status : </div>
+                    <div class="b5padding">Order Status : </div>
+                    <div class="b5padding">Order type : </div>
+                    <div class="b5padding">Amount : </div>
+                    <div class="b5padding">Payment Method : </div>
+                    <div class="b5padding">Refr Cash Payment : </div>
+                </div>
+                <div class="datacont2 gray_txt">
+                    <div class="b5padding">{{Transactiondata.sin.toDate() | date:'dd MMM yyyy'}}</div>
+                    <div class="b5padding">#{{Transactiondata.id}}</div>
+                    <div class="b5padding">
+                        <button mat-button [disabled]="true" class="failed_btn"
+                            *ngIf="Transactiondata.status == undefined || (Transactiondata.status <= 0 && Transactiondata.status !=-10)">
+                            Failed
+                        </button>
+                        <button mat-button [disabled]="true" class="failed_btn"
+                            *ngIf="Transactiondata.status ==-10">
+                            Refund
+                        </button>
+                        <button mat-button [disabled]="true" class="Success_btn"
+                            *ngIf="Transactiondata.status != undefined && Transactiondata.status > 0 ">
+                            Successful
+                        </button>
+                    </div>
+                    <div class="b5padding">
+                        Placed
+                    </div>
+                    <div class="b5padding">
+                        <span *ngIf=" Transactiondata.cart.length > 0">Instore</span>
+                        <span *ngIf="Transactiondata.cart.length == 0">Online</span>
+                    </div>
+                    <div class="b5padding">{{Transactiondata.amTotal}}</div>
+                    <div class="b5padding">
+                        <span *ngIf="Transactiondata.ordrTYPE == 'CASH'">Cash</span>
+                        <span *ngIf="Transactiondata.ordrTYPE == 'ONLINE'">Digital</span>
+                        <span *ngIf="Transactiondata.ordrTYPE == 'RefrCASH'">Refr Cash</span>
+                        <span *ngIf="Transactiondata.ordrTYPE == 'COD'">COD</span>
+                        <span *ngIf="Transactiondata.ordrTYPE == 'RefrCASH+ONLINE'">RC + D</span>
+                        <span *ngIf="Transactiondata.ordrTYPE == 'RefrCASH+COD'">RC + COD</span>
+                    </div>
+                    <div class="b5padding">
+                        <span *ngIf="typeid==1">{{Transactiondata.invoice.amtRefrCash |
+                            number:'1.0-2' || 0}}</span>
+                        <span *ngIf="typeid==2">{{Transactiondata.earn | number:'1.0-2'}}</span>
+                    </div>
+                </div>
+                <div class="datacont1">
+                    <div class="b5padding" *ngIf="Transactiondata.camp != null">Campaign Name : </div>
+                    <div class="b5padding">Sale Type : </div>
+                    <div class="b5padding" *ngIf="Transactiondata.refr != null">Referred By : </div>
+                    <div class="b5padding"
+                        *ngIf="Transactiondata.invoice.useRefrCash == true && typeid == 2 || typeid == 1">
+                        Cashback Given : </div>
+                    <div class="gray_txt s_size" *ngIf="Transactiondata.refr != null && typeid == 1">New Customer :
+                    </div>
+                    <div class="b5padding gray_txt s_size" *ngIf="Transactiondata.refr != null && typeid == 1">
+                        Existing
+                        Customer :
+                    </div>
+                </div>
+                <div class="datacont2 gray_txt">
+                    <div class="b5padding" *ngIf="Transactiondata.camp != null">
+                        {{Transactiondata.camp.name}}
+                    </div>
+                    <div class="b5padding">
+                        {{ Transactiondata.journey }}
+                    </div>
+                    <div class="b5padding" *ngIf="Transactiondata.refr != null">
+                        {{Transactiondata.refr.name}}
+                    </div>
+                    <div class="b5padding">
+                        <span *ngIf="Transactiondata.invoice.useRefrCash == true && typeid == 2">
+                            {{Transactiondata.invoice.amtRefrCash | number:'1.0-2'}}</span>
+                        <span *ngIf="Transactiondata.refr != null && typeid == 1">
+                            {{Transactiondata.refr.earn + Transactiondata.earn | number:'1.0-2'}}
+                        </span>
+                        <span *ngIf="Transactiondata.refr == null && typeid == 1">
+                            {{Transactiondata.earn | number:'1.0-2'}}
+                        </span>
+                    </div>
+                    <div class="s_size" *ngIf="Transactiondata.refr != null && typeid == 1">
+                        {{Transactiondata.earn}}
+                    </div>
+                    <div class="b5padding s_size" *ngIf="Transactiondata.refr != null && typeid == 1">
+                        {{Transactiondata.refr.earn}}
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="DFlex">
+                <div class="title" (click)="order_summaryexpanded = !order_summaryexpanded">
+                    Details
+                </div>
+                <div class="icon_cont" (click)="order_summaryexpanded = !order_summaryexpanded">
+                    <mat-icon>
+                        {{order_summaryexpanded == true ? 'expand_less' : 'expand_more'}}
+                    </mat-icon>
+                </div>
+            </div> -->
+            <div class="t15padding">
+                <!-- <div class="DFlex t5padding">
+                    <div class="userDetails">
+                        <div>
+                            User Name : {{Transactiondata.userName}}
+                        </div>
+                        <div>
+                            Contact No : <span *ngIf="typeid == 1 && Transactiondata.logistics !=undefined">
+                                {{Transactiondata.logistics.phone}}
+                            </span>
+                        </div>
+                        <div class="b5padding" *ngIf="false">E-Mail ID : </div>
+                    </div>
+                    <div class="userDetails">
+                        <div>
+                            Store Name : {{Transactiondata.storeName}}
+                        </div>
+                        <div>
+                            Store Address :
+                        </div>
+                        <div class="gray_txt">
+                            leena residency, 7, Gulmohar Rd, Junaid Nagar, Yadav Nagar, Juhu, Mumbai,
+                            Maharashtra 400056
+                        </div>
+                    </div>
+                </div> -->
+                <div *ngIf="Transactiondata.cart.length > 0">
+                    <div class="ordertable">
+                        <div class="DFlex ordersummary_table orderSum_THead">
+                            <div>
+                                Sr. No.
+                            </div>
+                            <div>
+                                Item Name
+                            </div>
+                            <div *ngIf="Transactiondata.logistics.typeCat != 'food_and_beverages'">
+                                HSN / SAC Code
+                            </div>
+                            <div>
+                                Unit Price
+                            </div>
+                            <div>
+                                Qty
+                            </div>
+                            <div *ngIf="Transactiondata.logistics.typeCat != 'food_and_beverages'">
+                                Net Value
+                            </div>
+                            <div *ngIf="Transactiondata.logistics.typeCat != 'food_and_beverages'">
+                                Taxes (GST)
+                            </div>
+                            <div *ngIf="Transactiondata.logistics.typeCat != 'food_and_beverages'">
+                                Tax Amount
+                            </div>
+                            <div>
+                                Total Amount
+                            </div>
+                        </div>
+                        <div class="DFlex ordersummary_table orderSum_TBody"
+                            *ngFor="let x of Transactiondata.cart ,let i = index">
+                            <div>
+                                {{i + 1}}
+                            </div>
+                            <div>
+                                {{x.title}}
+                            </div>
+                            <div *ngIf="Transactiondata.logistics.typeCat != 'food_and_beverages'">
+                            </div>
+                            <div>
+                                {{(x.cost * x.Q/ 1.12)/x.Q | number:'1.0-2'}}
+                            </div>
+                            <div>
+                                {{x.Q}}
+                            </div>
+                            <div *ngIf="Transactiondata.logistics.typeCat != 'food_and_beverages'">
+                                {{(x.cost * x.Q/ 1.12) | number:'1.0-2'}}
+                            </div>
+                            <div *ngIf="Transactiondata.logistics.typeCat != 'food_and_beverages'">
+                                12 %
+                            </div>
+                            <div *ngIf="Transactiondata.logistics.typeCat != 'food_and_beverages'">
+                                {{(x.cost * x.Q) - (x.cost * x.Q/ 1.12) | number:'1.0-2'}}
+                            </div>
+                            <div>
+                                {{x.cost * x.Q | number:'1.0-2'}}
+                            </div>
+                        </div>
+                        <div class="orderSumFot DFlex">
+                            <div>
+                                Taxable Amount
+                            </div>
+                            <div>
+                                {{Transactiondata.amTax | number:'1.0-2'}}
+                            </div>
+                        </div>
+                        <div class="orderSumFot DFlex">
+                            <div>
+                                Shipping Charges
+                            </div>
+                            <div>
+                                {{Transactiondata.amParcel | number:'1.0-2' }}
+                            </div>
+                        </div>
+                        <div class="orderSumFot DFlex">
+                            <div>
+                                Total
+                            </div>
+                            <div>
+                                {{Transactiondata.amTotal | number:'1.0-2'}}
+                            </div>
+                        </div>
+                        <div class="orderSumFot DFlex">
+                            <div>
+                                Amount in Words
+                            </div>
+                            <div>
+                                {{AInWords}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

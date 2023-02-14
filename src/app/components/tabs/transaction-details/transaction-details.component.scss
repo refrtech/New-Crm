@@ -1,0 +1,255 @@
+.trancontainer {
+    padding: 2%;
+
+    .card-box {
+        padding: 2%;
+        box-shadow: 0 0 6px 0 #333;
+        border-radius: 10px;
+    }
+
+    .DFlex {
+        display: flex;
+    }
+
+    .b5padding {
+        padding-bottom: 5px !important;
+    }
+
+    .icon_cont{
+        padding-top: 5px;
+    }
+
+    .nobox {
+        box-shadow: none;
+    }
+
+    .gray_txt {
+        color: gray;
+    }
+
+    .seconddiv {
+        width: 48%;
+    }
+
+    .s_size {
+        font-size: 10px !important;
+    }
+
+    .title {
+        font-size: 16px;
+        align-self: center;
+        padding-bottom: 10px;
+    }
+
+    .t15padding {
+        padding-top: 15px;
+    }
+
+    .ordersummary_table {
+        div {
+            padding: 10px;
+            text-align: center;
+            border-right: 1px solid #dedede;
+        }
+
+        :nth-child(1) {
+            width: 5%;
+        }
+
+        :nth-child(2) {
+            width: -webkit-fill-available;
+        }
+
+        :nth-child(3),
+        :nth-child(4),
+        :nth-child(5),
+        :nth-child(6),
+        :nth-child(7),
+        :nth-child(8),
+        :nth-child(9) {
+            width: 10%;
+        }
+
+        :nth-child(9) {
+            border-right: none;
+        }
+
+    }
+
+    .ordertable {
+        overflow: hidden;
+        box-shadow: 0 0 6px -3px #333;
+        border-radius: 10px;
+
+        .orderSum_THead {
+            background-color: #F2F2F2;
+        }
+
+        .orderSum_TBody {
+            border-top: 1px solid #dedede;
+        }
+
+    }
+
+    .orderSumFot {
+        border-top: 1px solid #dedede;
+        padding: 10px;
+        padding: 10px;
+        justify-content: space-between;
+    }
+
+    .datacont1 {
+        min-width: 16%;
+        max-width: 16%;
+
+        .s_size {
+            padding-left: 20px !important;
+        }
+    }
+
+    .datacont2 {
+        min-width: 34%;
+        max-width: 34%;
+    }
+
+    .failed_tran {
+        color: red;
+        font-size: 10px;
+    }
+
+    .expand_btn {
+        background-color: transparent !important;
+        min-width: 30px;
+        max-width: 30px;
+        border-radius: 20px;
+        height: 30px;
+        padding: 3px;
+
+        mat-icon {
+            vertical-align: unset !important;
+        }
+    }
+
+    button.Success_btn {
+        border: none;
+        background: #62c85f;
+        color: white;
+        height: 20px;
+        line-height: 20px;
+    }
+
+    button.failed_btn {
+        border: none;
+        background: red;
+        color: white;
+        height: 20px;
+        line-height: 20px;
+    }
+
+    .userDetails {
+        padding: 20px 0;
+        width: 48%;
+    }
+
+    .alldetailcont {
+        display: flex;
+    }
+
+    .detailCOnt {
+        width: 70%;
+    }
+
+    .detailtitle{
+        padding-bottom: 10px;
+    }
+    .stepcotainer {
+        width: 30%;
+    }
+
+    .stepercontent {
+        padding-left: 20px;
+    }
+
+    .stepactiontitle {
+        font-size: 12px;
+    }
+
+    .stepactionsubtitle {
+        font-size: 10px;
+        color: gray;
+        line-height: 1;
+    }
+
+    .steperaction {
+        padding: 10px;
+    }
+
+    .step {
+        padding: 0 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        background-color: cream;
+    }
+
+    .v-stepper {
+        position: relative;
+    }
+
+
+    /* regular step */
+    .step .circle {
+        background-color: #D9D9D9;
+        border: 3px solid #D9D9D9;
+        border-radius: 100%;
+        width: 10px;
+        height: 10px;
+        display: inline-block;
+    }
+
+    .step .line {
+        top: 15px;
+        left: 7.5px;
+        height: 100%;
+        position: absolute;
+        border-left: 3px solid #D9D9D9;
+    }
+
+    .step.completed .circle {
+        visibility: visible;
+        background-color: #95FF9F;
+        border-color: #95FF9F;
+    }
+
+    .step.completed .line {
+        border-left: 3px solid #95FF9F;
+    }
+
+    .step.active .circle {
+        visibility: visible;
+        border-color: #95FF9F;
+    }
+
+    .step.empty .circle {
+        visibility: hidden;
+    }
+
+    .step.empty .line {
+        top: 0;
+        height: 150%;
+    }
+
+    .step:last-child .line {
+        border-left: 3px solid white;
+        z-index: -1;
+    }
+
+    .t5padding {
+        padding-top: 5px;
+    }
+
+    .xxs_size {
+        font-size: 10px;
+    }
+
+}

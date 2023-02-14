@@ -1,0 +1,12 @@
+<div style="display: flex; align-items: center; justify-content: center;">
+  <div class="b_white" #canvasX id="canvasX"></div>
+</div>
+
+<div style="border: solid 1px black;text-align: center;">
+  {{ qrLINK }}
+</div>
+<div style="margin-bottom: 10px;margin-top: 10px;text-align: center;">
+  <button mat-button class="viewbtn tb5padding lr10padding" (click)=" download('svg', id, name) ">
+    Download QR Code
+  </button>
+</div>

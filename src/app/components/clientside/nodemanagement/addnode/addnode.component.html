@@ -1,0 +1,43 @@
+<div class="A20padding">
+    <div>
+        <span class="xxl_size boldtext r15padding AScenter">Create node</span>
+    </div>
+
+    <div class="t50margin b15margin">
+        <div class="m_size boldtext AScenter">Node Name</div>
+    </div>
+    <div>
+        <mat-form-field  class="crminput l5margin r5margin M40width" appearance="outline">
+            <input type="string" matInput autocomplete="off" [(ngModel)]="Nodename">
+        </mat-form-field>
+    </div>
+
+    <div class="t20margin b15margin">
+        <div class="m_size boldtext AScenter">Select city</div>
+    </div>
+    <div>
+        <mat-form-field class="crminput l5margin r5margin M40width" appearance="outline">
+            <mat-select [disabled]="isselectdisable" placeholder="Filter Type" [(ngModel)]="selectedcity">
+                <mat-option *ngFor="let item of cityarr;let i = index" [value]="item.id" name="cities"
+                    (click)="citychange(i)">
+                    {{item.CityN}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="t20margin b15margin">
+        <div class="m_size boldtext AScenter">Select area</div>
+    </div>
+    <div>
+        <ng-multiselect-dropdown class="crminput M40width" [placeholder]="'Select area'" [settings]="dropdownSettings"
+        (onSelect)="addarea($event)" (onDeSelect)="removearea($event)" [data]="dropdownList" [(ngModel)]="selectedareas" name="Area_N" ngModel required>
+        </ng-multiselect-dropdown>
+    </div>
+    <div class="t30margin b15margin">
+        <button mat-button *ngIf="data.id == 1" class="crud_ctas s_size semiboldtext purple_background normallineheight White_txt r10margin"
+            (click)="addnode()">Create
+            Node</button>
+        <button type="button" mat-button *ngIf="data.id == 2"
+            class="crud_ctas s_size semiboldtext purple_background normallineheight White_txt">Update Node</button>
+    </div>
+</div>

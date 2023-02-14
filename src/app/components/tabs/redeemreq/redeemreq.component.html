@@ -1,0 +1,127 @@
+<div class="A20padding">
+    <div class="dflex">
+        <span class="xxl_size boldtext r15padding AScenter">Redeem Requests</span>
+        <span class="divide"></span>
+        <div class="AScenter">
+            <mat-checkbox class="example-margin" [(ngModel)]="getall">Get All</mat-checkbox>
+        </div>
+        <div>
+            <button mat-button (click)="exportexcel()">
+                <mat-icon>
+                    file_upload
+                </mat-icon>
+                Export
+            </button>
+        </div>
+    </div>
+    <div class="t20padding b15padding xl_size boldtext">
+        Filter
+    </div>
+    <div>
+        <mat-form-field class="crminput l5margin r5margin filterinput" appearance="outline">
+            <mat-select placeholder="Filter Type" [(ngModel)]="parameters" (selectionChange)="onChange()">
+                <mat-option *ngFor="let item of ParaArr" [value]="item.titvalue">
+                    {{item.Title}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="crminput l5margin r5margin filterinput" appearance="outline">
+            <mat-select placeholder="Operator's" [(ngModel)]="operators">
+                <mat-option *ngFor="let item of OperatorArr" [value]="item.titvalue">
+                    {{item.Title}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="crminput l5margin r5margin filterinput" appearance="outline" *ngIf="valuetype == 1">
+            <mat-select placeholder="Operator's" [(ngModel)]="searchvalue">
+                <mat-option *ngFor="let item of Valuearr" [value]="item.titvalue">
+                    {{item.Title}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="searchinput" appearance="fill" *ngIf="valuetype == 2">
+            <input [type]="inputtype" matInput [(ngModel)]="searchvalue">
+        </mat-form-field>
+    </div>
+    <div *ngIf="showerror == true" class="c_align red_txt">
+        {{errormsg}}
+    </div>
+    <div class="c_align">
+        <Button class="viewbtn t10padding b10padding l30padding r30padding t10margin b15margin"
+            (click)="ApplyFilter()">Apply Filter</Button>
+    </div>
+    <div>
+        <table class="crmtable" mat-table [dataSource]="redeemreqdatasource" matSort>
+            <ng-container matColumnDef="Details">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Details</th>
+                <td mat-cell *matCellDef="let row">
+                    <div>{{row.id}}</div>
+                    <div class="gray_txt xxs_size">
+                        {{row.sin.toDate() | date:'dd MMM yy hh:mm a'}}
+                    </div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Cust_Details">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Customer Details
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <div>{{row.userName}}</div>
+                    <div class="gray_txt xxs_size">{{row.logistics.phone}}</div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Store_Details">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Store Details</th>
+                <td mat-cell *matCellDef="let row">
+                    {{row.storeName}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Sale_type">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Sale type</th>
+                <td mat-cell *matCellDef="let row">
+                    {{row.journey}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Order_value">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Order Value</th>
+                <td mat-cell *matCellDef="let row">
+                    {{row.amTotal}}
+                </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="r_status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Redeem Status</th>
+                <td mat-cell *matCellDef="let row">
+                    <span class="red_txt" *ngIf="row.status == -10">Rejected</span>
+                    <span class="ora_txt" *ngIf="row.status == 0">Queued</span>
+                    <span class="green_txt" *ngIf="row.status == 10">Accepted</span>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading"> Action </th>
+                <td mat-cell *matCellDef="let row">
+                    <a>
+                        <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0.125" y="0.125" width="24.75" height="24.75" fill="#DCCE8D" />
+                            <g clip-path="url(#clip0_1979_8859)">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M13.0083 18.378C8.7875 18.378 5.02 15.1388 3 11.898C5.015 8.74185 8.78583 6.07031 13.0083 6.07031C17.2875 6.07031 21.0375 8.72647 23.0075 11.8888C21.14 15.2965 17.4025 18.378 13.0083 18.378ZM3.97333 11.9042C4.67583 12.928 8.155 17.6088 13.0083 17.6088C18.2625 17.6088 21.435 12.9142 22.0508 11.9126C21.4075 10.9911 18.2125 6.83954 13.0083 6.83954C7.91167 6.83954 4.65417 10.9588 3.97333 11.9042ZM13 8.378C15.3 8.378 17.1667 10.1011 17.1667 12.2242C17.1667 14.3472 15.3 16.0703 13 16.0703C10.7 16.0703 8.83333 14.3472 8.83333 12.2242C8.83333 10.1011 10.7 8.378 13 8.378ZM13 9.14724C14.84 9.14724 16.3333 10.5257 16.3333 12.2242C16.3333 13.9226 14.84 15.3011 13 15.3011C11.16 15.3011 9.66667 13.9226 9.66667 12.2242C9.66667 10.5257 11.16 9.14724 13 9.14724Z"
+                                    fill="black" />
+                            </g>
+                            <rect x="0.125" y="0.125" width="24.75" height="24.75" stroke="black" stroke-width="0.25" />
+                            <defs>
+                                <clipPath id="clip0_1979_8859">
+                                    <rect width="20" height="18.4615" fill="white" transform="translate(3 3)" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </a>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="redeemColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: redeemColumns;"></tr>
+            <tr class="mat-row" *matNoDataRow>
+            </tr>
+        </table>
+    </div>
+</div>

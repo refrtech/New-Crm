@@ -1,0 +1,64 @@
+<div class="A20padding">
+    <div class="xxl_size boldtext b20padding">
+        Notification Panel
+    </div>
+
+    <mat-radio-group aria-label="Select an option" class="t10padding">
+        <mat-radio-button class="r10margin" value="1">Whatsapp</mat-radio-button>
+        <mat-radio-button value="2">SMS</mat-radio-button>
+    </mat-radio-group>
+
+    <div class="tb10padding">
+        <mat-form-field class="crminput l5margin" appearance="outline">
+            <mat-select placeholder="Select Customer or Merchant" [(ngModel)]="CustOrMech"
+                (selectionChange)="doSomething()">
+                <mat-option value="0">
+                    Customer
+                </mat-option>
+                <mat-option value="1">
+                    Merchant
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="b10padding">
+        <mat-form-field class="crminput l5margin r5margin filterinput" appearance="outline">
+            <mat-select placeholder="Select Filter Name" [(ngModel)]="FIlterName"
+                (selectionChange)="Filtersnamechange()">
+                <mat-option *ngFor="let item of filters" [value]="item">
+                    {{item.Title}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="crminput l5margin r5margin filterinput" appearance="outline">
+            <mat-select placeholder="Select Operator">
+                <mat-option *ngFor="let item of TYpesoffilters" [value]="item.values">
+                    {{item.Title}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="crminput l5margin r5margin filterinput" appearance="outline">
+            <input matInput [type]="typeoffilterinput" [(ngModel)]="Filtervalue">
+        </mat-form-field>
+
+    </div>
+    <div class="c_align">
+        <Button class="viewbtn t10padding b10padding l30padding r30padding">Apply
+            Filter</Button>
+    </div>
+    <div class="t10padding">
+        <Button class="viewbtn t10padding b10padding l30padding r30padding addMedia">
+            Add Media
+        </Button>
+        
+    </div>
+    <div class="tb10padding">
+        Message
+    </div>
+    <div>
+        <textarea></textarea>
+    </div>
+    <div class="c_align">
+        <Button class="viewbtn t10padding b10padding l30padding r30padding" (click)="sendwhatsappNotification()">Send Message</Button>
+    </div>
+</div>
