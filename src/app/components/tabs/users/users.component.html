@@ -18,14 +18,14 @@
         Filter
     </div>
     <div>
-        <mat-form-field class="crminput l5margin r5margin filterinput" appearance="outline">
+        <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
             <mat-select placeholder="Filter Type" [(ngModel)]="parameters">
                 <mat-option *ngFor="let item of ParaArr" [value]="item.titvalue">
                     {{item.Title}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field class="crminput l5margin r5margin filterinput" appearance="outline">
+        <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
             <mat-select placeholder="Operator's" [(ngModel)]="operators">
                 <mat-option *ngFor="let item of OperatorArr" [value]="item.titvalue">
                     {{item.Title}}
@@ -40,8 +40,8 @@
         {{errormsg}}
     </div>
     <div class="c_align">
-        <Button class="viewbtn t10padding b10padding l30padding r30padding t10margin b15margin"
-            (click)="ApplyFilter()">Apply Filter</Button>
+        <button class="viewbtn t10padding b10padding l30padding r30padding t10margin b15margin"
+            (click)="ApplyFilter()">Apply Filter</button>
     </div>
     <div>
         <table class="crmtable" mat-table [dataSource]="UserdataSource" matSort>

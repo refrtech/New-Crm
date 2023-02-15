@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { BrandSpotlightComponent } from './components/clientside/homescreen/brand-spotlight/brand-spotlight.component';
 import { BrandsneighbourhoodComponent } from './components/clientside/homescreen/brandsneighbourhood/brandsneighbourhood.component';
 import { HomegrowbrandsComponent } from './components/clientside/homescreen/homegrowbrands/homegrowbrands.component';
 import { HomescreenComponent } from './components/clientside/homescreen/homescreen.component';
@@ -68,6 +69,8 @@ const routes: Routes = [
       { path: 'visitshareinternal', component: VisitshareinternalComponent },
       { path: 'infoslide', component: InformationslideComponent },
       { path: 'addinfoslide', component: AddinfoslideComponent },
+      { path: 'brandspotlight', component: BrandSpotlightComponent },
+
     ],
   },
 ];

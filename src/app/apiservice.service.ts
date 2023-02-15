@@ -15,6 +15,7 @@ import {
   serverTimestamp,
   CollectionReference,
 } from '@angular/fire/firestore';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { arrayRemove, arrayUnion, deleteDoc, WhereFilterOp } from 'firebase/firestore';
 
 @Injectable({
@@ -25,6 +26,7 @@ export class ApiserviceService {
 
   constructor(
     private firestore: Firestore,
+    private snackBar: MatSnackBar,
   ) { }
 
   get getServerTimestamp() {
@@ -246,6 +248,7 @@ export class ApiserviceService {
         qu = query(catData, orderBy(orderbyvalue, 'desc'));
       }
     } else {
+
       if (
         Parametere != undefined &&
         operator != undefined &&
@@ -434,10 +437,127 @@ export class ApiserviceService {
 
   async addcity(data: any) {
     console.log(data);
-    const addedcity = await addDoc(collection(this.firestore, `${'cities'}`), data).then(ref => {
+    await addDoc(collection(this.firestore, `${'cities'}`), data).then(ref => {
       const areeas = doc(this.firestore, `${'cities'}`, `${ref.id}`)
       return updateDoc(areeas, { id: ref.id }).then(() => { return ref; })
     });
+  }
+
+  async addstore_brandspotlight(data: any) {
+    await addDoc(collection(this.firestore, `${'brandspotlight'}`), data).then(ref => {
+      const stores = doc(this.firestore, `${'brandspotlight'}`, `${ref.id}`)
+      return updateDoc(stores, { id: ref.id }).then(() => { return ref; })
+    });
+  }
+
+  getspotlightdata() {
+    const manageNode: CollectionReference = collection(
+      this.firestore,
+      `${'brandspotlight'}`
+    );
+    const qu = query(manageNode);
+    return collectionData(qu);
+  }
+
+  updateBStitle(Title: string, id: any) {
+    const cityrefr = doc(this.firestore, `${'brandspotlight'}`, `${id}`);
+    return updateDoc(cityrefr, { BS_Title: Title }).then((datas: any) => {
+      if (datas) {
+        return "issue in update title.";
+      }
+      else {
+        return "title updated.";
+      }
+    })
+      .catch((err) => {
+        console.log(err);
+        return false;
+      });
+  }
+
+  updateBSStitle(STitle: string, id: any) {
+    const cityrefr = doc(this.firestore, `${'brandspotlight'}`, `${id}`);
+    return updateDoc(cityrefr, { BS_STitle: STitle }).then((datas: any) => {
+      if (datas) {
+        return "issue in update Sub-title.";
+      }
+      else {
+        return "Sub-title updated.";
+      }
+    })
+      .catch((err) => {
+        console.log(err);
+        return false;
+      });
+  }
+
+  addBSstores(stores: any, id: any) {
+    const cityrefr = doc(this.firestore, `${'brandspotlight'}`, `${id}`);
+    return updateDoc(cityrefr, { Stores: arrayUnion(stores) });
+  }
+
+
+  removeBSstores(stores: any, id: any) {
+    const cityrefr = doc(this.firestore, `${'brandspotlight'}`, `${id}`);
+    return updateDoc(cityrefr, { Stores: arrayRemove(stores) });
+  }
+
+  async addstore_homegrown(data: any) {
+    await addDoc(collection(this.firestore, `${'Home_Grown'}`), data).then(ref => {
+      const stores = doc(this.firestore, `${'Home_Grown'}`, `${ref.id}`)
+      return updateDoc(stores, { id: ref.id }).then(() => { return ref; })
+    });
+  }
+
+  addHGstores(stores: any, id: any) {
+    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
+    return updateDoc(cityrefr, { Stores: arrayUnion(stores) });
+  }
+
+  removeHGstores(stores: any, id: any) {
+    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
+    return updateDoc(cityrefr, { Stores: arrayRemove(stores) });
+  }
+
+  updateHGtitle(Title: string, id: any) {
+    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
+    return updateDoc(cityrefr, { HG_Title: Title }).then((datas: any) => {
+      if (datas) {
+        return "issue in update title.";
+      }
+      else {
+        return "title updated.";
+      }
+    })
+      .catch((err) => {
+        console.log(err);
+        return false;
+      });
+  }
+
+  updateHGStitle(STitle: string, id: any) {
+    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
+    return updateDoc(cityrefr, { HG_STitle: STitle }).then((datas: any) => {
+      if (datas) {
+        return "issue in update Sub-title.";
+      }
+      else {
+        return "Sub-title updated.";
+      }
+    })
+      .catch((err) => {
+        console.log(err);
+        return false;
+      });
+  }
+
+  gethomegrowndata() {
+    const manageNode: CollectionReference = collection(
+      this.firestore,
+      `${'Home_Grown'}`
+    );
+    const qu = query(manageNode);
+    return collectionData(qu);
   }
 
   updatecity(data: any) {
@@ -459,10 +579,7 @@ export class ApiserviceService {
       });
   }
 
-  
-
-
-  addcityarea(data:any){
+  addcityarea(data: any) {
     const cityrefr = doc(this.firestore, `${'cities'}`, `${data.id}`);
     return updateDoc(cityrefr, { Areas: arrayUnion(data.areadata) });
   }
@@ -499,6 +616,51 @@ export class ApiserviceService {
   nodeList: any[] = [];
   nodesData: any[] = JSON.parse(localStorage.getItem('nodesData') || '[]');
 
+  addnodearea(data: any) {
+    const noderefr = doc(this.firestore, `${'node_manager'}`, `${data.id}`);
+    return updateDoc(noderefr, { Nareas: arrayUnion(data.areadata) });
+  }
+
+  removenodearea(data: any) {
+    const noderefr = doc(this.firestore, `${'node_manager'}`, `${data.id}`);
+    return updateDoc(noderefr, { Nareas: arrayRemove(data.areadata) });
+  }
+
+
+
+
+  copyClipboard(text: any) {
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = text;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    this.startSnackBar("copied to your clipboard.")
+  }
+
+  startSnackBar(mes: any) {
+    this.snackBar.open(mes, "", {
+      duration: 2000,
+      verticalPosition: "bottom", horizontalPosition: "right"
+    });
+  }
+
+
+  // Node functions start
+  async addnode(data: any) {
+    console.log(data);
+    const addedcity = await addDoc(collection(this.firestore, "node_manager"), data).then(ref => {
+      const areeas = doc(this.firestore, 'node_manager', `${ref.id}`)
+      return updateDoc(areeas, { id: ref.id }).then(() => { return ref; })
+    });
+  }
+
   getNodeData() {
     const manageNode: CollectionReference = collection(
       this.firestore,
@@ -513,7 +675,6 @@ export class ApiserviceService {
     return deleteDoc(noderefr);
   }
 
-
   updateNodeData(uid: string, nodeData: any) {
     const manageNode: CollectionReference = collection(
       this.firestore,
@@ -525,35 +686,4 @@ export class ApiserviceService {
     });
   }
 
-  addnodearea(data:any){
-    const noderefr = doc(this.firestore, `${'node_manager'}`, `${data.id}`);
-    return updateDoc(noderefr, { Nareas: arrayUnion(data.areadata) });
-  }
-  
-  removenodearea(data: any) {
-    const noderefr = doc(this.firestore, `${'node_manager'}`, `${data.id}`);
-    return updateDoc(noderefr, { Nareas: arrayRemove(data.areadata) });
-  }
-
-  async addnode(data: any) {
-    console.log(data);
-    const addedcity = await addDoc(collection(this.firestore, "node_manager"), data).then(ref => {
-      const areeas = doc(this.firestore, 'node_manager', `${ref.id}`)
-      return updateDoc(areeas, { id: ref.id }).then(() => { return ref; })
-    });
-  }
-
-  // ifareaexist(){
-  //   const manageNode: CollectionReference = collection(
-  //     this.firestore,
-  //     `${'node_manager'}`
-  //   );
-  // this.firestore.database()
-  //  a manageNode.orderByChild("ID").equalTo("U1EL5623").once("value",snapshot => {
-  //     if (snapshot.exists()){
-  //       const userData = snapshot.val();
-  //       console.log("exists!", userData);
-  //     }
-  // });
-  // }
 }

@@ -40,7 +40,6 @@ export class NodemanagementComponent implements OnInit {
     },
   ];
   constructor(public api: ApiserviceService, public rs: Router, private dailog: MatDialog) {
-    this.api.nodeList = this.api.nodesData;
   }
 
   ngOnInit(): void {

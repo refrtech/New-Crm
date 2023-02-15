@@ -22,7 +22,7 @@
         </mat-form-field>
     </div>
     <div class="b10padding">
-        <mat-form-field class="crminput l5margin r5margin filterinput" appearance="outline">
+        <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
             <mat-select placeholder="Select Filter Name" [(ngModel)]="FIlterName"
                 (selectionChange)="Filtersnamechange()">
                 <mat-option *ngFor="let item of filters" [value]="item">
@@ -30,27 +30,25 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field class="crminput l5margin r5margin filterinput" appearance="outline">
+        <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
             <mat-select placeholder="Select Operator">
                 <mat-option *ngFor="let item of TYpesoffilters" [value]="item.values">
                     {{item.Title}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field class="crminput l5margin r5margin filterinput" appearance="outline">
+        <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
             <input matInput [type]="typeoffilterinput" [(ngModel)]="Filtervalue">
         </mat-form-field>
-
     </div>
     <div class="c_align">
-        <Button class="viewbtn t10padding b10padding l30padding r30padding">Apply
-            Filter</Button>
+        <button class="viewbtn t10padding b10padding l30padding r30padding">Apply
+            Filter</button>
     </div>
     <div class="t10padding">
-        <Button class="viewbtn t10padding b10padding l30padding r30padding addMedia">
+        <button class="viewbtn t10padding b10padding l30padding r30padding addMedia">
             Add Media
-        </Button>
-        
+        </button>
     </div>
     <div class="tb10padding">
         Message
@@ -59,6 +57,6 @@
         <textarea></textarea>
     </div>
     <div class="c_align">
-        <Button class="viewbtn t10padding b10padding l30padding r30padding" (click)="sendwhatsappNotification()">Send Message</Button>
+        <button class="viewbtn t10padding b10padding l30padding r30padding" (click)="sendwhatsappNotification()">Send Message</button>
     </div>
 </div>

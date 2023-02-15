@@ -136,7 +136,7 @@
                                 </mat-form-field>
                             </div>
                             <div class="normaltext M_size M50width">
-                                <mat-form-field class="crminput crmsearch filterinput" appearance="outline">
+                                <mat-form-field class="crminput crmsearch M30width" appearance="outline">
                                     <mat-select placeholder="Store Type" [(ngModel)]="storeDetails.type">
                                         <mat-option value="Both">
                                             Hybrid
@@ -168,7 +168,7 @@
                                 </mat-form-field>
                             </div>
                             <div class="normaltext M_size M50width">
-                                <mat-form-field class="crminput crmsearch filterinput" appearance="outline">
+                                <mat-form-field class="crminput crmsearch M30width" appearance="outline">
                                     <mat-select placeholder="Category" [(ngModel)]="Selcategory">
                                         <div *ngFor="let item of auth.resource.categoryList">
                                             <mat-option [value]="item?.id">
@@ -195,7 +195,7 @@
                                 </mat-form-field>
                             </div>
                             <div class="normaltext M_size M50width">
-                                <mat-form-field class="crminput crmsearch filterinput" appearance="outline">
+                                <mat-form-field class="crminput crmsearch M30width" appearance="outline">
                                     <mat-select placeholder="Sub-Category" [(ngModel)]="Selsubcategory">
                                         <div *ngFor="let item of auth.resource.categoryList[catindex].items">
                                             <mat-option [value]="item?.id">
@@ -206,13 +206,6 @@
                                 </mat-form-field>
                             </div>
                         </div>
-
-
-
-
-
-
-
 
                         <div class="dflex t5padding M100width">
                             <div class="normaltext M_size M50width">
@@ -225,7 +218,7 @@
 
                         <div class="dflex M100width t5padding">
                             <div class="normaltext M_size M50width">
-                                <mat-form-field class="crminput crmsearch filterinput" appearance="outline">
+                                <mat-form-field class="crminput crmsearch M30width" appearance="outline">
                                     <mat-select placeholder="Category" class="">
                                         <mat-option [value]="1">
                                             item
@@ -245,6 +238,7 @@
                                 GST No
                             </div>
                             <div class="normaltext M_size M50width">
+                                Store ID
                             </div>
                         </div>
 
@@ -254,7 +248,16 @@
                                     <input matInput>
                                 </mat-form-field>
                             </div>
-                            <div class="normaltext M_size M50width">
+                            <div class="normaltext M_size M50width Editableinput">
+                                <mat-form-field appearance="outline" class="crminput crmsearch">
+                                    <input matInput disabled="true" [(ngModel)]="storeID">
+                                    <button matSuffix mat-icon-button aria-label="Clear" class="purple_background"
+                                (click)="apiservice.copyClipboard(storeID)">
+                                <mat-icon>
+                                    content_copy
+                                </mat-icon>
+                            </button>
+                                </mat-form-field>
                             </div>
                         </div>
 
@@ -476,14 +479,14 @@
                         Campaign Details
                     </div>
                     <div class="dflex">
-                        <mat-form-field class="crminput filterinput r10margin" appearance="outline">
+                        <mat-form-field class="crminput M30width r10margin" appearance="outline">
                             <mat-select placeholder="Category" class="">
                                 <mat-option [value]="1">
                                     item
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
-                        <mat-form-field class="crminput filterinput" appearance="outline">
+                        <mat-form-field class="crminput M30width" appearance="outline">
                             <mat-select placeholder="Category" class="">
                                 <mat-option [value]="1">
                                     item
@@ -591,7 +594,7 @@
                         Subscription Details
                     </div>
                     <div class="dflex">
-                        <mat-form-field class="crminput filterinput" appearance="outline">
+                        <mat-form-field class="crminput M30width" appearance="outline">
                             <mat-select placeholder="Category" class="">
                                 <mat-option [value]="1">
                                     item
