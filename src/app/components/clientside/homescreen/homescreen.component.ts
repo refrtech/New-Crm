@@ -23,7 +23,7 @@ export class HomescreenComponent implements OnInit {
     { feed: 'Brands in your neighbourhood', link: '/brands' },
     { feed: 'Homegrown brands on Refr', link: '/homebrands' },
     { feed: 'Brand spotlight', link: '/brandspotlight' },
-    { feed: 'What’s new in your hood', link: '/' },
+    { feed: 'What’s new in your hood', link: '/newstoreinyourhood' },
     { feed: 'Top drops', link: '/' },
     { feed: 'Student special', link: '/' },
   ];

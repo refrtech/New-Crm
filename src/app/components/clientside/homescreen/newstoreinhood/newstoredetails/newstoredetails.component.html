@@ -1,0 +1,119 @@
+<div class="A20padding">
+    <div class="dflex AIcenter">
+        <a routerLink="/brands">
+            <svg width="38" height="24" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M24 12H5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+        </a>
+        <span class="xxl_size boldtext lr15padding AScenter">What’s new in your hood</span>
+    </div>
+    <div class="t50margin">
+        <div class="boldtext l_size b20margin">Node details</div>
+        <div class="Aborder A5radius A20padding">
+            <div class="dflex JCspace">
+                <div class="M50width">
+                    <div class="t20margin b15margin">
+                        <div class="m_size crminput r15padding AScenter lr5padding">City</div>
+                    </div>
+                    <div>
+                        <mat-form-field class="crminput l5margin r5margin M70width" appearance="outline">
+                            <mat-select placeholder="Select city">
+                                <mat-option *ngFor="let item of ParaArr" [value]="item.titvalue">
+                                    {{item.Title}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="M50width">
+                    <div class="t20margin b15margin">
+                        <div class="m_size crminput r15padding AScenter lr5padding">Node</div>
+                    </div>
+                    <div>
+                        <mat-form-field class="crminput l5margin r5margin M70width" appearance="outline">
+                            <mat-select placeholder="Select node">
+                                <mat-option *ngFor="let item of node" [value]="item.titvalue">
+                                    {{item.Title}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="t20margin b20margin">
+                <a class="purple_txt nopadding boldtext cursor_pointer">Add node</a>
+            </div>
+        </div>
+        <div>
+            <button mat-button (click)="allstores('visitstoresection')"
+                class="viewbtn t5padding b5padding l30padding r30padding t30margin b15margin">Next</button>
+        </div>
+    </div>
+
+
+    <div class="t20margin">
+        <table class="crmtable" mat-table [dataSource]="nodes" matSort>
+            <ng-container matColumnDef="node">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Node
+                </th>
+                <td mat-cell *matCellDef="let row">{{row.node}}</td>
+            </ng-container>
+            <ng-container matColumnDef="no_stores">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">No of stores
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <div>
+                        {{row.no_stores}}
+                    </div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="storename">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Store name
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <span class="lightgray_bg A20radius lr15padding tb5padding">
+                        {{row.storedetail[0].storename}}
+                    </span>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Date created
+                </th>
+                <td mat-cell *matCellDef="let row"> {{row.date | date:'shortDate'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading rborder lborder tborder">
+                    Action
+                </th>
+                <td class="dflex JCcenter M100width tb10padding" mat-cell *matCellDef="let row">
+                    <a class="text_decoration_none r50margin purple_txt cursor_pointer">
+                        <mat-icon>
+                            visibility
+                        </mat-icon>
+                        <div class="s_size semiboldtext">Preview</div>
+                    </a>
+                    <a class="text_decoration_none black_text cursor_pointer" routerLink="/visit_editstore"
+                        [queryParams]="{ id: row.id }">
+                        <mat-icon>
+                            edit
+                        </mat-icon>
+                        <div class="s_size semiboldtext">Edit</div>
+                    </a>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="nodeColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: nodeColumns;"></tr>
+            <tr class="mat-row" *matNoDataRow>
+            </tr>
+        </table>
+
+        <mat-paginator *ngIf="this.as.nodeList.length == 10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+            aria-label="Select page of periodic elements">
+        </mat-paginator>
+    </div>
+
+</div>

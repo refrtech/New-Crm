@@ -69,6 +69,10 @@ import { SettingComponent } from './components/clientside/setting/setting.compon
 import { AddcityAndAreaComponent } from './components/clientside/setting/addcity-and-area/addcity-and-area.component';
 import { InformationslideComponent } from './components/clientside/homescreen/informationslide/informationslide.component';
 import { AddinfoslideComponent } from './components/clientside/homescreen/informationslide/addinfoslide/addinfoslide.component';
+import { BrandsdetailComponent } from './components/clientside/homescreen/brandsneighbourhood/brandsdetail/brandsdetail.component';
+import { BrandsstoreComponent } from './components/clientside/homescreen/brandsneighbourhood/brandsstore/brandsstore.component';
+import { NewstoreinhoodComponent } from './components/clientside/homescreen/newstoreinhood/newstoreinhood.component';
+import { NewstoredetailsComponent } from './components/clientside/homescreen/newstoreinhood/newstoredetails/newstoredetails.component';
 import { BrandSpotlightComponent } from './components/clientside/homescreen/brand-spotlight/brand-spotlight.component';
 
 @NgModule({
@@ -107,7 +111,6 @@ import { BrandSpotlightComponent } from './components/clientside/homescreen/bran
     AddcityAndAreaComponent,
     InformationslideComponent,
     AddinfoslideComponent,
-    BrandSpotlightComponent,
   ],
   imports: [
     MatDialogModule,
