@@ -4,15 +4,11 @@
 $crm-main-primary: mat.define-palette(mat.$indigo-palette);
 $crm-main-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
 $crm-main-warn: mat.define-palette(mat.$red-palette);
-$crm-main-theme: mat.define-light-theme(
-  (
-    color: (
-      primary: $crm-main-primary,
-      accent: $crm-main-accent,
-      warn: $crm-main-warn,
-    ),
-  )
-);
+$crm-main-theme: mat.define-light-theme((color: (primary: $crm-main-primary,
+        accent: $crm-main-accent,
+        warn: $crm-main-warn,
+      ),
+    ));
 @include mat.all-component-themes($crm-main-theme);
 
 html,
@@ -742,6 +738,7 @@ body {
 .crminput {
   .mat-form-field-wrapper {
     padding-bottom: 0px !important;
+
     .mat-form-field-infix {
       padding: 10px 0 !important;
       border-top: none;
@@ -755,10 +752,6 @@ body {
   width: 350px !important;
 }
 
-.filterinput {
-  width: 30%;
-}
-
 .cardbox {
   background: white;
   box-shadow: 0px 0px 10px rgb(0 0 0 / 25%);
@@ -769,8 +762,21 @@ body {
   background: linear-gradient(90.17deg, #ff6a54 -4.31%, #ff4064 104.75%);
 }
 
-.searchinput .mat-form-field-appearance-fill {
-  background-color: none;
+.searchinput .mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+
+  .mat-form-field-flex {
+    padding-top: 0px !important;
+    background-color: transparent !important;
+
+    .mat-form-field-infix {
+      border-top: none !important;
+      padding-top: 0.75em !important;
+    }
+  }
+  .mat-form-field-underline {
+    display: none !important;
+  }
 }
 
 .dialogLayout {
@@ -835,17 +841,21 @@ body {
     border: 1px solid rgba(0, 0, 0, 0.12) !important;
     padding: 5px 0 !important;
   }
+
   .dropdown-multiselect__caret {
     right: 0px !important;
     top: 4px !important;
     height: 25px !important;
+
     :before {
       border-width: 5px 5px 0;
     }
   }
+
   span {
     padding: 0 7px !important;
   }
+
   .selected-item {
     padding: 2px 10px !important;
     margin-right: 0px !important;
@@ -878,4 +888,17 @@ body {
 
 .dottedborder {
   border: 1px dotted #dbdbdb;
+}
+
+.Editableinput .mat-form-field-wrapper {
+  margin: 0 !important;
+
+  .mat-form-field-flex {
+    padding-right: 0px !important;
+
+    .mat-form-field-suffix {
+      background-color: #874bf9 !important;
+      color: #FFF !important;
+    }
+  }
 }

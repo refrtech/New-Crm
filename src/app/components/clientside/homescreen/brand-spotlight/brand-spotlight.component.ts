@@ -4,20 +4,20 @@ import { take } from 'rxjs';
 import { ApiserviceService } from 'src/app/apiservice.service';
 
 @Component({
-  selector: 'app-homegrowbrands',
-  templateUrl: './homegrowbrands.component.html',
-  styleUrls: ['./homegrowbrands.component.scss']
+  selector: 'app-brand-spotlight',
+  templateUrl: './brand-spotlight.component.html',
+  styleUrls: ['./brand-spotlight.component.scss']
 })
-export class HomegrowbrandsComponent implements OnInit {
+export class BrandSpotlightComponent implements OnInit {
   editSubt: boolean = false;
   editTitle: boolean = false;
   parameters: string = "phone";
   operators: string = "==";
   searchvalue: string = "9876543210";
-  homegrownT: string = "";
-  homegrownST: string = "";
+  brandspotT: string = "Brand Spotlight";
+  brandspotST: string = "Brand Spotlight sub title";
   selectedstores: Array<any> = [];
-  HGmoduledata: any = [];
+  BSmoduledata: any = [];
   isstorealreadyadded: boolean = false;
   ParaArr: Array<any> = [
     {
@@ -39,66 +39,42 @@ export class HomegrowbrandsComponent implements OnInit {
   constructor(public api: ApiserviceService) { }
 
   ngOnInit(): void {
-    this.gethomegrowndata();
-  }
-
-  addhomegrownbrand() {
-    if (!this.homegrownT) {
-      alert("please enter the Title.");
-    }
-    else if (!this.homegrownST) {
-      alert("please enter the Sub-Title.");
-    }
-    else {
-      let datas = {
-        HG_Title: this.homegrownT,
-        HG_STitle: this.homegrownST,
-        CDateTime: this.api.newTimestamp,
-        MDateTime: this.api.newTimestamp,
-        Stores: this.selectedstores,
-      }
-      this.api.addstore_homegrown(datas).then((data) => {
-        if (data != undefined) {
-          alert("city added");
-        }
-      }).catch(() => {
-        return false;
-      });
-    }
+    this.getspotlightdata();
   }
 
   ApplyFilter() {
     this.isstorealreadyadded = false;
     this.api.getRecentStores(1, false, this.parameters, this.operators, this.searchvalue).pipe(take(1)).subscribe((recentStore: any) => {
       this.MerchantdataSource = new MatTableDataSource(recentStore);
-      let index = this.HGmoduledata.Stores.findIndex((x: any) => x.id == recentStore[0].id);
+      let index = this.BSmoduledata.Stores.findIndex((x: any) => x.id == recentStore[0].id);
       if (index == 0) {
         this.isstorealreadyadded = true;
       }
     });
   }
 
-  gethomegrowndata() {
-    this.api.gethomegrowndata().subscribe((data: any) => {
-      this.HGmoduledata = data[0];
-      this.homegrownT = this.HGmoduledata.HG_Title;
-      this.homegrownST = this.HGmoduledata.HG_STitle;
+  getspotlightdata() {
+    this.api.getspotlightdata().subscribe((data: any) => {
+      console.log(data);
+      this.BSmoduledata = data[0];
+      this.brandspotT = this.BSmoduledata.BS_Title;
+      this.brandspotST = this.BSmoduledata.BS_STitle;
     });
   }
 
-  updateHGTitle() {
+  updateBSTitle() {
     if (!this.editTitle) {
       this.editTitle = !this.editTitle;
     }
-    else if (this.homegrownT == this.HGmoduledata.HG_Title) {
+    else if (this.brandspotT == this.BSmoduledata.BS_Title) {
       this.editTitle = !this.editTitle;
     }
     else {
-      if (!this.homegrownT) {
+      if (!this.brandspotT) {
         alert("please enter the Title.");
       }
       else {
-        this.api.updateHGtitle(this.homegrownT, this.HGmoduledata.id).then((data) => {
+        this.api.updateBStitle(this.brandspotT, this.BSmoduledata.id).then((data) => {
           if (data != undefined) {
             console.log("title updated");
           }
@@ -109,20 +85,19 @@ export class HomegrowbrandsComponent implements OnInit {
     }
   }
 
-  updateHGSTitle() {
+  updateBSSTitle() {
     if (!this.editSubt) {
       this.editSubt = !this.editSubt;
     }
-    else if (this.homegrownST == this.HGmoduledata.HG_STitle) {
+    else if (this.brandspotST == this.BSmoduledata.BS_STitle) {
       this.editSubt = !this.editSubt;
     }
     else {
-      if (!this.homegrownST) {
+      if (!this.brandspotST) {
         alert("please enter the sub Title.");
       }
       else {
-
-        this.api.updateHGStitle(this.homegrownST, this.HGmoduledata.id).then((data) => {
+        this.api.updateBSStitle(this.brandspotST, this.BSmoduledata.id).then((data) => {
           if (data != undefined) {
             console.log("Sub-title updated");
           }
@@ -135,12 +110,13 @@ export class HomegrowbrandsComponent implements OnInit {
 
   action(data: any) {
     if (this.isstorealreadyadded == true) {
-      this.api.removeHGstores(data, this.HGmoduledata.id);
+      this.api.removeBSstores(data, this.BSmoduledata.id);
       this.isstorealreadyadded = false;
     }
     else {
-      this.api.addHGstores(data, this.HGmoduledata.id);
+      this.api.addBSstores(data, this.BSmoduledata.id);
       this.isstorealreadyadded = true;
     }
   }
+
 }

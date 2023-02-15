@@ -15,18 +15,6 @@ export class HomescreenComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // todo = [
-  //   '',
-  //   'Visit, recommend and earn',
-  //   'Scan QR',
-  //   'Brands in your neighbourhood',
-  //   'Homegrown brands on Refr',
-  //   'Brand spotlight',
-  //   'What’s new in your hood',
-  //   'Top drops',
-  //   'Student special',
-  // ];
-
   feedSection: Array<any> = [
     { feed: 'Top Feed', link: '/feedmodule' },
     { feed: 'Visit, recommend and earn', link: '/visitmodule' },
@@ -34,7 +22,7 @@ export class HomescreenComponent implements OnInit {
     { feed: 'Scan QR', link: '/' },
     { feed: 'Brands in your neighbourhood', link: '/brands' },
     { feed: 'Homegrown brands on Refr', link: '/homebrands' },
-    { feed: 'Brand spotlight', link: '/' },
+    { feed: 'Brand spotlight', link: '/brandspotlight' },
     { feed: 'What’s new in your hood', link: '/newstoreinyourhood' },
     { feed: 'Top drops', link: '/dailydrops' },
     { feed: 'Student special', link: '/' },

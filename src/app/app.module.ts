@@ -75,6 +75,7 @@ import { NewstoreinhoodComponent } from './components/clientside/homescreen/news
 import { NewstoredetailsComponent } from './components/clientside/homescreen/newstoreinhood/newstoredetails/newstoredetails.component';
 import { DailydropsComponent } from './components/clientside/homescreen/dailydrops/dailydrops.component';
 import { DaildropsbrandsComponent } from './components/clientside/homescreen/dailydrops/daildropsbrands/daildropsbrands.component';
+import { BrandSpotlightComponent } from './components/clientside/homescreen/brand-spotlight/brand-spotlight.component';
 
 @NgModule({
   declarations: [
@@ -118,6 +119,7 @@ import { DaildropsbrandsComponent } from './components/clientside/homescreen/dai
     NewstoredetailsComponent,
     DailydropsComponent,
     DaildropsbrandsComponent,
+    BrandSpotlightComponent,
   ],
   imports: [
     MatDialogModule,

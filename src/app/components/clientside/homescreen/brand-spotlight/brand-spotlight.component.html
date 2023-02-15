@@ -7,7 +7,7 @@
                     stroke-linejoin="round" />
             </svg>
         </a>
-        <span class="xxl_size boldtext lr15padding AScenter">Homegrown brand</span>
+        <span class="xxl_size boldtext lr15padding AScenter">Brand Spotlight</span>
     </div>
     <div class="t50margin lr55padding">
         <div>
@@ -19,10 +19,10 @@
                     </div>
                     <div>
                         <mat-form-field class="crminput l5margin r5margin M80width Editableinput" appearance="outline">
-                            <input type="text" [(ngModel)]="homegrownT" matInput placeholder="Enter the module name"
+                            <input type="text" [(ngModel)]="brandspotT" matInput placeholder="Enter the module name"
                                 [disabled]="!editTitle">
                             <button matSuffix mat-icon-button aria-label="Clear" class="purple_background"
-                                (click)="updateHGTitle();">
+                                (click)="updateBSTitle()">
                                 <mat-icon>
                                     {{editTitle ? 'check': 'edit'}}
                                 </mat-icon>
@@ -36,10 +36,10 @@
                     </div>
                     <div>
                         <mat-form-field class="crminput l5margin r5margin M80width Editableinput" appearance="outline">
-                            <input type="text" [(ngModel)]="homegrownST" matInput placeholder="Enter the subtext name"
+                            <input type="text" [(ngModel)]="brandspotST" matInput placeholder="Enter the subtext name"
                                 [disabled]="!editSubt">
                             <button matSuffix mat-icon-button aria-label="Clear" class="purple_background"
-                                (click)="updateHGSTitle()">
+                                (click)="updateBSSTitle()">
                                 <mat-icon>
                                     {{editSubt ? 'check': 'edit'}}
                                 </mat-icon>
@@ -74,7 +74,9 @@
             </div>
             <div class="dflex JCcenter">
                 <button class="viewbtn t10padding b10padding l30padding r30padding t10margin b15margin"
-                    (click)="ApplyFilter()">Apply Filter</button>
+                    (click)="ApplyFilter()">
+                    Apply Filter
+                </button>
             </div>
             <table class="crmtable" mat-table [dataSource]="MerchantdataSource" matSort>
                 <ng-container matColumnDef="MerchantId">
@@ -107,7 +109,8 @@
                 </ng-container>
                 <ng-container matColumnDef="action">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading"> Action </th>
-                    <td mat-cell *matCellDef="let row" (click)="action(row)">
+                    <td mat-cell *matCellDef="let row"
+                    (click)="action(row)">
                         <mat-icon>
                             {{isstorealreadyadded ?'remove':'add_circle'}}
                         </mat-icon>
@@ -123,7 +126,7 @@
     <div class="lr55padding">
         <div class="boldtext l_size b20margin">All stores</div>
         <div class="dflex">
-            <section *ngFor="let x of HGmoduledata.Stores">
+            <section *ngFor="let x of BSmoduledata.Stores">
                 <main class="section">
                     <div class="w200 h200 Aborder dflex flex_col JCcenter AIcenter pos_relative">
                         <div class="c_align boldtext m_size b15margin">
@@ -151,7 +154,7 @@
                         </svg>
                         Edit
                     </div>
-                    <div (click)="api.removeHGstores(x,HGmoduledata.id)"
+                    <div (click)="api.removeBSstores(x,BSmoduledata.id)"
                         class="w200 Aborder dflex  JCcenter AIcenter t10margin b10margin tb10padding regulartext s_size red_txt">
                         <svg class="r5margin cursor_pointer" width="18" height="18" viewBox="0 0 18 18" fill="none"
                             xmlns="http://www.w3.org/2000/svg">

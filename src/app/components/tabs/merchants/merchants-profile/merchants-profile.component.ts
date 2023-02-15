@@ -110,7 +110,7 @@ export class MerchantsProfileComponent implements OnInit {
   storeinfoDetails: any;
   productList: Array<any> = [];
   // catindex:number;
-  constructor(private actRoute: ActivatedRoute, private apiservice: ApiserviceService, private dialog: MatDialog, public auth: AuthService,private https: HttpClient) {
+  constructor(private actRoute: ActivatedRoute, public apiservice: ApiserviceService, private dialog: MatDialog, public auth: AuthService,private https: HttpClient) {
     this.execute();
   }
 
@@ -122,6 +122,8 @@ export class MerchantsProfileComponent implements OnInit {
       this.execute();
     }, 1000);
   }
+
+  
 
   execute() {
     this.storeID = this.actRoute.snapshot.params["id"];
