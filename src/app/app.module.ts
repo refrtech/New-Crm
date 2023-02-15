@@ -111,6 +111,11 @@ import { BrandSpotlightComponent } from './components/clientside/homescreen/bran
     AddcityAndAreaComponent,
     InformationslideComponent,
     AddinfoslideComponent,
+    BrandsdetailComponent,
+    BrandsstoreComponent,
+    NewstoreinhoodComponent,
+    NewstoredetailsComponent,
+    BrandSpotlightComponent,
   ],
   imports: [
     MatDialogModule,
@@ -149,4 +154,4 @@ import { BrandSpotlightComponent } from './components/clientside/homescreen/bran
   providers: [AngularFirestore],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
