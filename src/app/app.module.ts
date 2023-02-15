@@ -69,6 +69,8 @@ import { SettingComponent } from './components/clientside/setting/setting.compon
 import { AddcityAndAreaComponent } from './components/clientside/setting/addcity-and-area/addcity-and-area.component';
 import { InformationslideComponent } from './components/clientside/homescreen/informationslide/informationslide.component';
 import { AddinfoslideComponent } from './components/clientside/homescreen/informationslide/addinfoslide/addinfoslide.component';
+import { BrandsdetailComponent } from './components/clientside/homescreen/brandsneighbourhood/brandsdetail/brandsdetail.component';
+import { BrandsstoreComponent } from './components/clientside/homescreen/brandsneighbourhood/brandsstore/brandsstore.component';
 
 @NgModule({
   declarations: [
@@ -106,6 +108,8 @@ import { AddinfoslideComponent } from './components/clientside/homescreen/inform
     AddcityAndAreaComponent,
     InformationslideComponent,
     AddinfoslideComponent,
+    BrandsdetailComponent,
+    BrandsstoreComponent,
   ],
   imports: [
     MatDialogModule,

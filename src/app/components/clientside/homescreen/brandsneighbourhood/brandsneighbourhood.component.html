@@ -6,161 +6,39 @@
                 <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round" />
             </svg>
-
         </a>
         <span class="xxl_size boldtext lr15padding AScenter">Brands in your neighbourhood</span>
     </div>
-
-    <div class="t50margin lr55padding">
-
-        <div>
-            <div class="boldtext l_size t30margin b20margin">Module details</div>
-            <div class="Aborder A5radius A20padding b20margin">
+    <div class="t20padding">
+        <div class="boldtext l_size t30margin b20margin">Module details</div>
+        <div class="Aborder A5radius A20padding">
+            <div class="dflex">
                 <div>
-                    <div class="t20margin b15margin">
+                    <div class="t20margin b5margin">
                         <div class="m_size crminput r15padding AScenter">Module name</div>
                     </div>
                     <div>
-                        <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
+                        <mat-form-field class="crminput l5margin r5margin" appearance="outline">
                             <input type="text" matInput placeholder="Enter the module name">
                         </mat-form-field>
                     </div>
                 </div>
                 <div>
-                    <div class="t20margin b15margin">
+                    <div class="t20margin b5margin">
                         <div class="m_size crminput r15padding AScenter">Subtext</div>
                     </div>
                     <div>
-                        <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
+                        <mat-form-field class="crminput l5margin r5margin" appearance="outline">
                             <input type="text" matInput placeholder="Enter the subtext name">
                         </mat-form-field>
                     </div>
                 </div>
-            </div>
-        </div>
-
-
-        <div>
-            <div class="boldtext l_size b20margin">Node details</div>
-            <div class="Aborder A5radius A20padding">
-                <div class="dflex JCspace">
-                    <div class="M50width">
-                        <div class="t20margin b15margin">
-                            <div class="m_size crminput r15padding AScenter lr5padding">City</div>
-                        </div>
-                        <div>
-                            <mat-form-field class="crminput l5margin r5margin M50width" appearance="outline">
-                                <mat-select placeholder="Select city">
-                                    <mat-option *ngFor="let item of ParaArr" [value]="item.titvalue">
-                                        {{item.Title}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="M50width">
-                        <div class="t20margin b15margin">
-                            <div class="m_size crminput r15padding AScenter lr5padding">Node</div>
-                        </div>
-                        <div>
-                            <mat-form-field class="crminput l5margin r5margin M50width" appearance="outline">
-                                <mat-select placeholder="Select node">
-                                    <mat-option *ngFor="let item of node" [value]="item.titvalue">
-                                        {{item.Title}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                </div>
-                <div class="t20margin b20margin">
-                    <a class="purple_txt nopadding boldtext cursor_pointer">Add node</a>
-                </div>
-
 
             </div>
+            <div>
+                <button mat-button routerLink="/nodebrands"
+                    class="crud_ctas s_size semiboldtext purple_background normallineheight White_txt l5margin t10margin">Next</button>
+            </div>
         </div>
-
-        <div>
-            <button mat-button (click)="allstores('brandsallstore')"
-                class="viewbtn t5padding b5padding l30padding r30padding t30margin b15margin">Next</button>
-        </div>
-
-    </div>
-
-
-    <div class="t20margin lr55padding">
-        <table class="crmtable" mat-table [dataSource]="nodes" matSort>
-            <ng-container matColumnDef="node">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading rborder lborder">Node
-                </th>
-                <td class="rborder lborder" mat-cell *matCellDef="let row">{{row.node}}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="no_stores">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading rborder tborder">No of stores
-                </th>
-                <td class="rborder tborder" mat-cell *matCellDef="let row">
-                    <div class="rborder tborder ">
-                        {{row.no_stores}}
-                    </div>
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="storename">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading rborder tborder">Store name
-                </th>
-                <td class="d_inline lightgray_bg tb5padding lr15padding A20radius" mat-cell *matCellDef="let row">
-                    {{row.storedetail[0].storename}}
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="date">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading rborder tborder">Date created
-                </th>
-                <td class="rborder tborder" mat-cell *matCellDef="let row"> {{row.date | date:'shortDate'}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="action">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading rborder lborder tborder">
-                    Action
-                </th>
-                <td class="rborder lborder tborder dflex JCcenter M100width tb10padding" mat-cell *matCellDef="let row">
-                    <a class="text_decoration_none r50margin purple_txt cursor_pointer">
-                        <svg class="M50width" width="28" height="28" viewBox="0 0 28 28" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M1.16797 14.0001C1.16797 14.0001 5.83464 4.66675 14.0013 4.66675C22.168 4.66675 26.8346 14.0001 26.8346 14.0001C26.8346 14.0001 22.168 23.3334 14.0013 23.3334C5.83464 23.3334 1.16797 14.0001 1.16797 14.0001Z"
-                                stroke="#8111E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            <path
-                                d="M14 17.5C15.933 17.5 17.5 15.933 17.5 14C17.5 12.067 15.933 10.5 14 10.5C12.067 10.5 10.5 12.067 10.5 14C10.5 15.933 12.067 17.5 14 17.5Z"
-                                stroke="#8111E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                        <div class="s_size semiboldtext">Preview</div>
-                    </a>
-                    <a class="text_decoration_none black_text cursor_pointer" routerLink="/visit_editstore"
-                        [queryParams]="{ id: row.id }">
-                        <svg class="M70width" width="28" height="28" viewBox="0 0 28 28" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M12.832 4.66675H4.66536C4.04653 4.66675 3.45303 4.91258 3.01545 5.35017C2.57786 5.78775 2.33203 6.38124 2.33203 7.00008V23.3334C2.33203 23.9523 2.57786 24.5457 3.01545 24.9833C3.45303 25.4209 4.04653 25.6667 4.66536 25.6667H20.9987C21.6175 25.6667 22.211 25.4209 22.6486 24.9833C23.0862 24.5457 23.332 23.9523 23.332 23.3334V15.1667"
-                                stroke="#1F1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            <path
-                                d="M21.582 2.91677C22.0462 2.45264 22.6757 2.19189 23.332 2.19189C23.9884 2.19189 24.6179 2.45264 25.082 2.91677C25.5462 3.3809 25.8069 4.01039 25.8069 4.66677C25.8069 5.32315 25.5462 5.95264 25.082 6.41677L13.9987 17.5001L9.33203 18.6668L10.4987 14.0001L21.582 2.91677Z"
-                                stroke="#1F1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                        <div class="s_size semiboldtext">Edit</div>
-                    </a>
-                </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="nodeColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: nodeColumns;"></tr>
-            <tr class="mat-row" *matNoDataRow>
-            </tr>
-        </table>
-
-        <mat-paginator *ngIf="this.as.nodeList.length == 10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
-            aria-label="Select page of periodic elements">
-        </mat-paginator>
     </div>
 </div>
