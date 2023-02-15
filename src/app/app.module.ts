@@ -71,6 +71,8 @@ import { InformationslideComponent } from './components/clientside/homescreen/in
 import { AddinfoslideComponent } from './components/clientside/homescreen/informationslide/addinfoslide/addinfoslide.component';
 import { BrandsdetailComponent } from './components/clientside/homescreen/brandsneighbourhood/brandsdetail/brandsdetail.component';
 import { BrandsstoreComponent } from './components/clientside/homescreen/brandsneighbourhood/brandsstore/brandsstore.component';
+import { NewstoreinhoodComponent } from './components/clientside/homescreen/newstoreinhood/newstoreinhood.component';
+import { NewstoredetailsComponent } from './components/clientside/homescreen/newstoreinhood/newstoredetails/newstoredetails.component';
 
 @NgModule({
   declarations: [
@@ -110,6 +112,8 @@ import { BrandsstoreComponent } from './components/clientside/homescreen/brandsn
     AddinfoslideComponent,
     BrandsdetailComponent,
     BrandsstoreComponent,
+    NewstoreinhoodComponent,
+    NewstoredetailsComponent,
   ],
   imports: [
     MatDialogModule,

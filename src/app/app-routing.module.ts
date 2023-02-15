@@ -7,6 +7,8 @@ import { HomegrowbrandsComponent } from './components/clientside/homescreen/home
 import { HomescreenComponent } from './components/clientside/homescreen/homescreen.component';
 import { AddinfoslideComponent } from './components/clientside/homescreen/informationslide/addinfoslide/addinfoslide.component';
 import { InformationslideComponent } from './components/clientside/homescreen/informationslide/informationslide.component';
+import { NewstoredetailsComponent } from './components/clientside/homescreen/newstoreinhood/newstoredetails/newstoredetails.component';
+import { NewstoreinhoodComponent } from './components/clientside/homescreen/newstoreinhood/newstoreinhood.component';
 import { FeedsectionComponent } from './components/clientside/homescreen/topfeedmodule/feedsection/feedsection.component';
 import { TopfeedmoduleComponent } from './components/clientside/homescreen/topfeedmodule/topfeedmodule.component';
 import { VisitaddstoredetailsComponent } from './components/clientside/homescreen/visitsharemodule/visitaddstoredetails/visitaddstoredetails.component';
@@ -72,6 +74,11 @@ const routes: Routes = [
       { path: 'addinfoslide', component: AddinfoslideComponent },
       { path: 'nodebrands', component: BrandsdetailComponent },
       { path: 'storebrands', component: BrandsstoreComponent },
+      { path: 'newstoreinyourhood', component: NewstoreinhoodComponent },
+      {
+        path: 'newstoreinyourhooddetails',
+        component: NewstoredetailsComponent,
+      },
     ],
   },
 ];
