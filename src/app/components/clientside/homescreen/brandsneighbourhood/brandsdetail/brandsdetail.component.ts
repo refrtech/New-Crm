@@ -72,7 +72,7 @@ export class BrandsdetailComponent implements OnInit {
       this.router.navigate(['/storedetails/' + store]);
     }
     // Brands in your neighbourhood
-    if (this.router.url == '/allstores/brandsallstore') {
+    if (this.router.url == '/nodebrands') {
       this.router.navigate(['/storedetails/' + store]);
     }
   }
