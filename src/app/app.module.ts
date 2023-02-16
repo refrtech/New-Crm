@@ -76,6 +76,10 @@ import { NewstoredetailsComponent } from './components/clientside/homescreen/new
 import { DailydropsComponent } from './components/clientside/homescreen/dailydrops/dailydrops.component';
 import { DaildropsbrandsComponent } from './components/clientside/homescreen/dailydrops/daildropsbrands/daildropsbrands.component';
 import { BrandSpotlightComponent } from './components/clientside/homescreen/brand-spotlight/brand-spotlight.component';
+import { CropperComponent } from './placeholders/cropper/cropper.component';
+import { ContentComponent } from './placeholders/content/content.component';
+
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 @NgModule({
   declarations: [
@@ -120,6 +124,8 @@ import { BrandSpotlightComponent } from './components/clientside/homescreen/bran
     DailydropsComponent,
     DaildropsbrandsComponent,
     BrandSpotlightComponent,
+    CropperComponent,
+    ContentComponent,
   ],
   imports: [
     MatDialogModule,
@@ -154,6 +160,7 @@ import { BrandSpotlightComponent } from './components/clientside/homescreen/bran
     provideStorage(() => getStorage()),
     provideMessaging(() => getMessaging()),
     NgMultiSelectDropDownModule.forRoot(),
+    ImageCropperModule,
   ],
   providers: [AngularFirestore],
   bootstrap: [AppComponent],
