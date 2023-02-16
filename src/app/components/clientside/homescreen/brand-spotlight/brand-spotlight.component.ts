@@ -13,9 +13,9 @@ export class BrandSpotlightComponent implements OnInit {
   editTitle: boolean = false;
   parameters: string = "phone";
   operators: string = "==";
-  searchvalue: string = "9876543210";
-  brandspotT: string = "Brand Spotlight";
-  brandspotST: string = "Brand Spotlight sub title";
+  searchvalue: string = "";
+  brandspotT: string = "";
+  brandspotST: string = "";
   selectedstores: Array<any> = [];
   BSmoduledata: any = [];
   isstorealreadyadded: boolean = false;

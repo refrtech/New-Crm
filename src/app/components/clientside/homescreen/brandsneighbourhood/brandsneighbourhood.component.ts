@@ -15,9 +15,7 @@ export class BrandsneighbourhoodComponent implements OnInit {
   nodes!: MatTableDataSource<any>;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-
   nodeColumns: string[] = ['node', 'no_stores', 'storename', 'date', 'action'];
-
   node: Array<any> = [
     {
       Title: 'Cities',
@@ -84,15 +82,8 @@ export class BrandsneighbourhoodComponent implements OnInit {
         date: new Date(),
       },
     ];
-    // this.nodes = new MatTableDataSource(this.as.nodeList);
     this.nodes = new MatTableDataSource(users);
     this.nodes.paginator = this.paginator;
     this.nodes.sort = this.sort;
-    // this.auth.getStoreList(100).subscribe((users: any) => {
-    //   console.log('List: ', users);
-    //   this.dataSource = new MatTableDataSource(users);
-    //   this.dataSource.paginator = this.paginator;
-    //   this.dataSource.sort = this.sort;
-    // });
   }
 }

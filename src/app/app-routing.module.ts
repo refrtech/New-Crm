@@ -17,10 +17,10 @@ import { TopfeedmoduleComponent } from './components/clientside/homescreen/topfe
 import { VisitaddstoredetailsComponent } from './components/clientside/homescreen/visitsharemodule/visitaddstoredetails/visitaddstoredetails.component';
 import { VisitallstoredetailsComponent } from './components/clientside/homescreen/visitsharemodule/visitallstoredetails/visitallstoredetails.component';
 import { VisiteditstoredetailsComponent } from './components/clientside/homescreen/visitsharemodule/visiteditstoredetails/visiteditstoredetails.component';
-import { VisitsharedetailsComponent } from './components/clientside/homescreen/visitsharemodule/visitsharedetails/visitsharedetails.component';
 import { VisitsharemoduleComponent } from './components/clientside/homescreen/visitsharemodule/visitsharemodule.component';
-import { AddnodeComponent } from './components/clientside/nodemanagement/addnode/addnode.component';
-import { NodemanagementComponent } from './components/clientside/nodemanagement/nodemanagement.component';
+import { NodemanagementCitysComponent } from './components/clientside/nodemanagement-citys/nodemanagement-citys.component';
+import { AddnodeComponent } from './components/clientside/nodemanagement-citys/nodemanagement/addnode/addnode.component';
+import { NodemanagementComponent } from './components/clientside/nodemanagement-citys/nodemanagement/nodemanagement.component';
 import { AddcityAndAreaComponent } from './components/clientside/setting/addcity-and-area/addcity-and-area.component';
 import { SettingComponent } from './components/clientside/setting/setting.component';
 import { CategorysectioninternalComponent } from './components/internalsection/homegrownbrands/categorysectioninternal/categorysectioninternal.component';
@@ -55,13 +55,12 @@ const routes: Routes = [
       { path: 'Redeemreq', component: RedeemreqComponent },
       { path: 'transaction', component: TransactionComponent },
       { path: 'Notification', component: NotificationComponent },
-      { path: 'nodemanage', component: NodemanagementComponent },
+      { path: 'nodemanage/:id', component: NodemanagementComponent },
       { path: 'addnode/:id', component: AddnodeComponent },
       { path: 'homescreen', component: HomescreenComponent },
       { path: 'feedmodule', component: TopfeedmoduleComponent },
       { path: 'feedsection', component: FeedsectionComponent },
       { path: 'visitmodule', component: VisitsharemoduleComponent },
-      { path: 'visitdetails', component: VisitsharedetailsComponent },
       { path: 'storedetails/:id', component: VisitallstoredetailsComponent },
       { path: 'addstore', component: VisitaddstoredetailsComponent },
       { path: 'visit_editstore', component: VisiteditstoredetailsComponent },
@@ -79,18 +78,11 @@ const routes: Routes = [
       { path: 'nodebrands', component: BrandsdetailComponent },
       { path: 'storebrands', component: BrandsstoreComponent },
       { path: 'newstoreinyourhood', component: NewstoreinhoodComponent },
-      {
-        path: 'newstoreinyourhooddetails',
-        component: NewstoredetailsComponent,
-      },
-      {
-        path: 'dailydrops',
-        component: DailydropsComponent,
-      },
-      {
-        path: 'dailydropsbrands',
-        component: DaildropsbrandsComponent,
-      },
+      { path: 'newstoreinyourhooddetails', component: NewstoredetailsComponent },
+      { path: 'dailydrops', component: DailydropsComponent },
+      { path: 'dailydropsbrands', component: DaildropsbrandsComponent },
+      { path: 'Nodecity', component: NodemanagementCitysComponent },
+
     ],
   },
 ];

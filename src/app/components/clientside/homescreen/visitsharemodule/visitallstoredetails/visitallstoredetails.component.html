@@ -7,85 +7,87 @@
                     stroke-linejoin="round" />
             </svg>
         </a>
-        <span class="xxl_size boldtext lr15padding AScenter" *ngIf="router.url == '/storedetails/visitstoresection'">
+        <span class="xxl_size boldtext lr15padding AScenter">
             All store details
         </span>
-        <span class="xxl_size boldtext lr15padding AScenter" *ngIf="router.url == '/storedetails/brandsallstore'">
-            Brands in your neighbourhood
-        </span>
     </div>
+
+    <div class="t50margin lr55padding">
+        <div class="boldtext l_size t30margin b20margin">Apply Filter to search store</div>
+        <div class="Aborder A5radius A20padding b20margin ">
+            <div class="dflex">
+                <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
+                    <mat-select placeholder="Filter Type" [(ngModel)]="parameters">
+                        <mat-option *ngFor="let item of ParaArr" [value]="item.titvalue">
+                            {{item.Title}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
+                    <mat-select placeholder="Operator's" [(ngModel)]="operators">
+                        <mat-option value="==">
+                            Equal to
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="Aborder l5margin r5margin M30width searchinput" appearance="fill">
+                    <input type="string" matInput [(ngModel)]="searchvalue">
+                </mat-form-field>
+            </div>
+            <div class="dflex JCcenter">
+                <button class="viewbtn t10padding b10padding l30padding r30padding t10margin b15margin"
+                    (click)="ApplyFilter()">
+                    Apply Filter
+                </button>
+            </div>
+            <table class="crmtable" mat-table [dataSource]="MerchantdataSource" matSort>
+                <ng-container matColumnDef="MerchantId">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Merchant ID</th>
+                    <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+                </ng-container>
+                <ng-container matColumnDef="storename">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Store Name</th>
+                    <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="contact">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Contact</th>
+                    <td mat-cell *matCellDef="let row">
+                        <div>{{row.phone}}</div>
+                        <div class="gray_txt xxs_size">{{row.email}}</div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="storetype">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Store Type</th>
+                    <td mat-cell *matCellDef="let row">
+                        <div *ngIf="row.type == 'Both' ">Hybrid</div>
+                        <div *ngIf="row.type == 'Onli' ">Online</div>
+                        <div *ngIf="row.type == 'Offl' ">Offline</div>
+                        <div class="gray_txt xxs_size">{{row.cat}}</div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="city">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading"> City </th>
+                    <td mat-cell *matCellDef="let row">{{row.loc[0].city}}</td>
+                </ng-container>
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading"> Action </th>
+                    <td mat-cell *matCellDef="let row" (click)="action(row)">
+                        <mat-icon>
+                            {{isstorealreadyadded ?'remove':'add_circle'}}
+                        </mat-icon>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="marchantColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: marchantColumns;"></tr>
+                <tr class="mat-row" *matNoDataRow>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
     <div class="t50margin">
         <div class="dflex">
-            <!-- <section *ngFor="let x of [0,1,2]">
-                <main class="section">
-                    <div class="w200 h200 Aborder dflex flex_col JCcenter AIcenter pos_relative">
-                        <div class="c_align boldtext m_size b15margin">
-                            Dinshaws Xpress cafe
-                        </div>
-                        <div class="c_align">cafe</div>
-                        <div
-                            class="c_align pos_absolute M100width tb10padding cursor_pointer purple_txt regulartext s_size">
-                            <svg class="r5margin cursor_pointer" style="margin-bottom: -3px;" width="17" height="15"
-                                viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M1.625 7.5C1.625 7.5 4.125 2.5 8.5 2.5C12.875 2.5 15.375 7.5 15.375 7.5C15.375 7.5 12.875 12.5 8.5 12.5C4.125 12.5 1.625 7.5 1.625 7.5Z"
-                                    stroke="#8111E8" stroke-linecap="round" stroke-linejoin="round" />
-                                <path
-                                    d="M8.5 9.375C9.53553 9.375 10.375 8.53553 10.375 7.5C10.375 6.46447 9.53553 5.625 8.5 5.625C7.46447 5.625 6.625 6.46447 6.625 7.5C6.625 8.53553 7.46447 9.375 8.5 9.375Z"
-                                    stroke="#8111E8" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                            Preview
-                        </div>
-                    </div>
-                    <div routerLink="/addstore"
-                        class="w200 Aborder dflex  JCcenter AIcenter t10margin b10margin tb10padding regulartext s_size">
-                        <svg class="r5margin cursor_pointer" width="15" height="15" viewBox="0 0 15 15" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <g clip-path="url(#clip0_344_11618)">
-                                <path
-                                    d="M6.875 2.5H2.5C2.16848 2.5 1.85054 2.6317 1.61612 2.86612C1.3817 3.10054 1.25 3.41848 1.25 3.75V12.5C1.25 12.8315 1.3817 13.1495 1.61612 13.3839C1.85054 13.6183 2.16848 13.75 2.5 13.75H11.25C11.5815 13.75 11.8995 13.6183 12.1339 13.3839C12.3683 13.1495 12.5 12.8315 12.5 12.5V8.125"
-                                    stroke="black" stroke-linecap="round" stroke-linejoin="round" />
-                                <path
-                                    d="M11.5625 1.56215C11.8111 1.31351 12.1484 1.17383 12.5 1.17383C12.8516 1.17383 13.1889 1.31351 13.4375 1.56215C13.6861 1.81079 13.8258 2.14802 13.8258 2.49965C13.8258 2.85128 13.6861 3.18851 13.4375 3.43715L7.5 9.37465L5 9.99965L5.625 7.49965L11.5625 1.56215Z"
-                                    stroke="black" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <defs>
-                                <clipPath id="clip0_344_11618">
-                                    <rect width="15" height="15" fill="white" />
-                                </clipPath>
-                            </defs>
-                        </svg>
-                        Edit
-                    </div>
-                    <div
-                        class="w200 Aborder dflex  JCcenter AIcenter t10margin b10margin tb10padding regulartext s_size red_txt">
-                        <svg class="r5margin cursor_pointer" width="18" height="18" viewBox="0 0 18 18" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path d="M2.25 4.5H3.75H15.75" stroke="#CE0000" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                            <path
-                                d="M14.25 4.5V15C14.25 15.3978 14.092 15.7794 13.8107 16.0607C13.5294 16.342 13.1478 16.5 12.75 16.5H5.25C4.85218 16.5 4.47064 16.342 4.18934 16.0607C3.90804 15.7794 3.75 15.3978 3.75 15V4.5M6 4.5V3C6 2.60218 6.15804 2.22064 6.43934 1.93934C6.72064 1.65804 7.10218 1.5 7.5 1.5H10.5C10.8978 1.5 11.2794 1.65804 11.5607 1.93934C11.842 2.22064 12 2.60218 12 3V4.5"
-                                stroke="#CE0000" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M7.5 8.25V12.75" stroke="#CE0000" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M10.5 8.25V12.75" stroke="#CE0000" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                        </svg>
-                        Delete
-                    </div>
-                </main>
-            </section>
-            <section>
-                <main>
-                    <div (click)="addstorelink('addstoredetails')"
-                        class="w200 h200 Aborder dflex flex_col JCcenter AIcenter pos_relative cursor_pointer">
-                        <mat-icon>
-                            add
-                        </mat-icon>
-                    </div>
-                </main>
-            </section> -->
-
-
             <div class="boxshw M100width">
                 <div class="dflex JCevenly M100width tb15padding s_size">
                     <div class="M5width"></div>
@@ -96,27 +98,29 @@
                 </div>
                 <div cdkDropListGroup>
                     <div class="example-container M100width">
-                        <div cdkDropList class="example-list"
-                            (cdkDropListDropped)="drop($event)">
-                            <div class="example-box tborder dflex s_size White_bg" *ngFor="let item of stores" cdkDrag>
-                                <div class="M5width dflex JCcenter">
-                                    <mat-icon>menu</mat-icon>
+                        <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+                            <ng-container *ngIf="nodestores$ | async as nodestores">
+                                <div class="example-box tborder dflex s_size White_bg" *ngFor="let item of nodestores"
+                                    cdkDrag>
+                                    <div class="M5width dflex JCcenter">
+                                        <mat-icon>menu</mat-icon>
+                                    </div>
+                                    <div class="M30width l_align">
+                                        {{item.S_name}}
+                                    </div>
+                                    <div class="M15width c_align">
+                                        {{item.Category}}
+                                    </div>
+                                    <div class="M25width c_align">
+                                        {{item.Last_m}}
+                                    </div>
+                                    <div class="M25width c_align">
+                                        <a routerLink="/addstore">
+                                            <mat-icon class="black_text">edit</mat-icon>
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="M30width l_align">
-                                    {{item.S_name}}
-                                </div>
-                                <div class="M15width c_align">
-                                    {{item.Category}}
-                                </div>
-                                <div class="M25width c_align">
-                                    {{item.Last_m}}
-                                </div>
-                                <div class="M25width c_align">
-                                    <a routerLink="/addstore">
-                                        <mat-icon class="black_text">edit</mat-icon>
-                                    </a>
-                                </div>
-                            </div>
+                            </ng-container>
                         </div>
                     </div>
                 </div>

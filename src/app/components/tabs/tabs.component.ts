@@ -27,7 +27,7 @@ export class TabsComponent implements OnInit {
       iconName: 'expand_more',
       isexpanded: false,
       childern: [
-        { tit: 'Node management', link: '/nodemanage' },
+        { tit: 'Node management', link: '/Nodecity' },
         { tit: 'Homescreen', link: '/homescreen' },
         { tit: 'Internal section', link: '/internalsec' },
         { tit: 'Settings', link: '/settings' },
