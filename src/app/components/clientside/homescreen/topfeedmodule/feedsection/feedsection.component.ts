@@ -23,20 +23,13 @@ export class FeedsectionComponent implements OnInit {
 
   onSelectFile(event: any) {
     const file = event.target.files && event.target.files[0];
-    // this.selectedFiles = event.target.files[0];
-    // console.log('abc', this.selectedFiles.name);
-
     if (file) {
       var reader = new FileReader();
       reader.readAsDataURL(file);
       this.fileName = file.name;
-
       const formData = new FormData();
-
       formData.append('thumbnail', file);
-
       const upload$ = this.http.post('/api/thumbnail-upload', formData);
-
       upload$.subscribe();
       if (file.type.indexOf('image') > -1) {
         this.format = 'image';

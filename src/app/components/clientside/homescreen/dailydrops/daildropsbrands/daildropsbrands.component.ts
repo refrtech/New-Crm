@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { type } from 'os';
 import { ApiserviceService } from 'src/app/apiservice.service';
 @Component({
   selector: 'app-daildropsbrands',
@@ -12,17 +10,11 @@ import { ApiserviceService } from 'src/app/apiservice.service';
   styleUrls: ['./daildropsbrands.component.scss'],
 })
 export class DaildropsbrandsComponent implements OnInit {
-  // parameters: string = '';
-  // searchvalue: any;
-  // valuetype: number = 2;
-  // Valuearr: Array<any> = [];
 
   nodes!: MatTableDataSource<any>;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-
   nodeColumns: string[] = ['node', 'no_stores', 'storename', 'date', 'action'];
-
   ParaArr: Array<any> = [
     {
       Title: 'Cities',
@@ -102,15 +94,8 @@ export class DaildropsbrandsComponent implements OnInit {
         date: new Date(),
       },
     ];
-    // this.nodes = new MatTableDataSource(this.as.nodeList);
     this.nodes = new MatTableDataSource(users);
     this.nodes.paginator = this.paginator;
     this.nodes.sort = this.sort;
-    // this.auth.getStoreList(100).subscribe((users: any) => {
-    //   console.log('List: ', users);
-    //   this.dataSource = new MatTableDataSource(users);
-    //   this.dataSource.paginator = this.paginator;
-    //   this.dataSource.sort = this.sort;
-    // });
   }
 }

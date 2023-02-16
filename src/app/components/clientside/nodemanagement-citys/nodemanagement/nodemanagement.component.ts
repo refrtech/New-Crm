@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiserviceService } from 'src/app/apiservice.service';
 import { AddnodeComponent } from './addnode/addnode.component';
 
@@ -13,6 +13,7 @@ import { AddnodeComponent } from './addnode/addnode.component';
   styleUrls: ['./nodemanagement.component.scss'],
 })
 export class NodemanagementComponent implements OnInit {
+  cityID:string="";
   parameters: string = '';
   searchvalue: any;
   valuetype: number = 2;
@@ -39,7 +40,8 @@ export class NodemanagementComponent implements OnInit {
       titvalue: 'kalyan',
     },
   ];
-  constructor(public api: ApiserviceService, public rs: Router, private dailog: MatDialog) {
+  constructor(public api: ApiserviceService, public rs: Router, private dailog: MatDialog,private actRoute: ActivatedRoute) {
+    this.cityID = this.actRoute.snapshot.params["id"];
   }
 
   ngOnInit(): void {
@@ -47,13 +49,9 @@ export class NodemanagementComponent implements OnInit {
   }
 
   getallnode() {
-    this.api.getNodeData().subscribe((data: any) => {
-      let dataN: Array<any> = [];
-      for (let i = 0; i < data.length; i++) {
-        if (data[i].city != undefined && data[i].city != '' && data[i].created_at != undefined && data[i].used_in != "")
-          dataN.push(data[i]);
-      }
-      this.nodes = new MatTableDataSource(dataN);
+    this.api.getNodeDataaspercity(this.cityID).subscribe((data: any) => {
+      console.log(data);
+      this.nodes = new MatTableDataSource(data);
       this.nodes.paginator = this.paginator;
       this.nodes.sort = this.sort;
     });
@@ -62,7 +60,7 @@ export class NodemanagementComponent implements OnInit {
   opennode(id: any, data?: any) {
     const dialogRef = this.dailog.open(AddnodeComponent, {
       width: "50%",
-      data: { id: id, nodedata: data },
+      data: { id: id, nodedata: data, selectedcityid:this.cityID },
       hasBackdrop: true,
       disableClose: false,
       panelClass: 'thanksscreen'

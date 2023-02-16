@@ -1,10 +1,7 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiserviceService } from 'src/app/apiservice.service';
-import {
-  FormBuilder,
-  NgForm,
-} from '@angular/forms';
+import { FormBuilder, NgForm } from '@angular/forms';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { AuthService } from 'src/app/auth.service';
 
@@ -37,7 +34,7 @@ export class AddnodeComponent implements OnInit {
   selectedareafiltered: Array<any> = [];
   selectedcity: any;
   isselectdisable: boolean = false;
-
+  nodeid: string = "";
   constructor(
     public as: ApiserviceService,
     public rs: Router,
@@ -48,10 +45,14 @@ export class AddnodeComponent implements OnInit {
     public dialogRef: MatDialogRef<AddnodeComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+    if (this.data.id != undefined && this.data.selectedcityid != undefined) {
+      this.selectedcity = this.data.selectedcityid;
+      this.isselectdisable = true;
+    }
     if (this.data.id != undefined && this.data.nodedata != undefined) {
       this.Nodename = this.data.nodedata.name;
       this.selectedcity = this.data.nodedata.city_id;
-      // this.dropdownList = 
+      this.nodeid = this.data.nodedata.id;
       this.isselectdisable = true;
       for (let i = 0; i < this.data.nodedata.Nareas.length; i++) {
         this.selectedareas.push({
@@ -107,7 +108,6 @@ export class AddnodeComponent implements OnInit {
         isaddedincity: this.dropdownList[index].isaddedincity,
       }
     }
-
     this.api.removenodearea(data);
   }
 
@@ -121,14 +121,21 @@ export class AddnodeComponent implements OnInit {
       this.cityarr = [];
       this.cityarr = data;
       if (this.data.id != undefined && this.data.nodedata != undefined) {
-        let index = this.cityarr.findIndex((x:any)=>
-        x.id= this.data.nodedata.city_id
+        let index = this.cityarr.findIndex((x: any) =>
+          x.id == this.data.nodedata.city_id
         );
-      this.dropdownList = this.cityarr[index].Areas;
+        this.cityindex = index;
+        this.dropdownList = this.cityarr[index].Areas;
+      }
+      else if (this.data.id != undefined && this.data.selectedcityid != undefined) {
+        let index = this.cityarr.findIndex((x: any) =>
+          x.id == this.data.selectedcityid
+        );
+        this.cityindex = index;
+        this.dropdownList = this.cityarr[index].Areas;
       }
     });
   }
-
 
   addnode() {
     if (this.Nodename == undefined) {
@@ -154,9 +161,43 @@ export class AddnodeComponent implements OnInit {
         updated_at: this.api.newTimestamp,
       }
       this.api.addnode(datas).then((data) => {
+        console.log(data);
         if (data == undefined) {
-          alert("Node added");
           this.dialogRef.close();
+          alert("Node added");
+        }
+      }).catch(() => {
+        return false;
+      });
+    }
+  }
+
+  updatenode() {
+    if (this.Nodename == undefined) {
+      alert("Please enter the node name.")
+    }
+    else if (this.cityindex == undefined) {
+      alert("please select the city");
+    }
+    else if (this.selectedareas.length == 0) {
+      alert("please select the areas.")
+    }
+    else {
+      for (let i = 0; i < this.selectedareas.length; i++) {
+        let j = this.cityarr[this.cityindex].Areas.findIndex((a: any) => a.id == this.selectedareas[i].id);
+        this.selectedareafiltered.push(this.cityarr[this.cityindex].Areas[j]);
+      }
+      
+      let datas = {
+        name: this.Nodename,
+        id: this.nodeid,
+        Nareas: this.selectedareafiltered,
+      }
+      this.api.updateNodeData(datas).then((data) => {
+        console.log(data);
+        if (data == undefined) {
+          this.dialogRef.close();
+          alert("Node updated");
         }
       }).catch(() => {
         return false;

@@ -670,20 +670,45 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
+  getNodeDataaspercity(cityid:string) {
+    const manageNode: CollectionReference = collection(
+      this.firestore,
+      `${'node_manager'}`
+    );
+    const qu = query(manageNode,
+      where('city_id', '==', cityid));
+    return collectionData(qu);
+  }
+
+
   deletenode(id: any) {
     const noderefr = doc(this.firestore, `${'node_manager'}`, `${id}`);
     return deleteDoc(noderefr);
   }
 
-  updateNodeData(uid: string, nodeData: any) {
+  updateNodeData(nodeData: any) {
     const manageNode: CollectionReference = collection(
       this.firestore,
       `${'node_manager'}`
     );
-    const qu = doc(this.firestore, 'node_manager', `${uid}`);
+    const qu = doc(this.firestore, 'node_manager', `${nodeData.id}`);
     return updateDoc(qu, {
       name: nodeData.name,
+      Nareas:nodeData.Nareas
     });
   }
 
+
+
+  // VSA section start
+
+  getVSAData() {
+    const VSA_section: CollectionReference = collection(
+      this.firestore,
+      `${'VSA_section'}`
+    );
+    const qu = query(VSA_section);
+    return collectionData(qu);
+  }
+  // VSA section end
 }

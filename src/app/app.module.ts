@@ -45,17 +45,14 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { WebsiteformComponent } from './components/tabs/websiteform/websiteform.component';
 import { QrViewerComponent } from './components/tabs/merchants/merchants-profile/qr-viewer/qr-viewer.component';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { NodemanagementComponent } from './components/clientside/nodemanagement/nodemanagement.component';
-import { AddnodeComponent } from './components/clientside/nodemanagement/addnode/addnode.component';
-
-// npm select
+import { NodemanagementComponent } from './components/clientside/nodemanagement-citys/nodemanagement/nodemanagement.component';
+import { AddnodeComponent } from './components/clientside/nodemanagement-citys/nodemanagement/addnode/addnode.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { HomescreenComponent } from './components/clientside/homescreen/homescreen.component';
 import { TopfeedmoduleComponent } from './components/clientside/homescreen/topfeedmodule/topfeedmodule.component';
 import { FeedsectionComponent } from './components/clientside/homescreen/topfeedmodule/feedsection/feedsection.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { VisitsharemoduleComponent } from './components/clientside/homescreen/visitsharemodule/visitsharemodule.component';
-import { VisitsharedetailsComponent } from './components/clientside/homescreen/visitsharemodule/visitsharedetails/visitsharedetails.component';
 import { VisitallstoredetailsComponent } from './components/clientside/homescreen/visitsharemodule/visitallstoredetails/visitallstoredetails.component';
 import { VisitaddstoredetailsComponent } from './components/clientside/homescreen/visitsharemodule/visitaddstoredetails/visitaddstoredetails.component';
 import { VisiteditstoredetailsComponent } from './components/clientside/homescreen/visitsharemodule/visiteditstoredetails/visiteditstoredetails.component';
@@ -76,6 +73,7 @@ import { NewstoredetailsComponent } from './components/clientside/homescreen/new
 import { DailydropsComponent } from './components/clientside/homescreen/dailydrops/dailydrops.component';
 import { DaildropsbrandsComponent } from './components/clientside/homescreen/dailydrops/daildropsbrands/daildropsbrands.component';
 import { BrandSpotlightComponent } from './components/clientside/homescreen/brand-spotlight/brand-spotlight.component';
+import { NodemanagementCitysComponent } from './components/clientside/nodemanagement-citys/nodemanagement-citys.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +97,6 @@ import { BrandSpotlightComponent } from './components/clientside/homescreen/bran
     TopfeedmoduleComponent,
     FeedsectionComponent,
     VisitsharemoduleComponent,
-    VisitsharedetailsComponent,
     VisitallstoredetailsComponent,
     VisitaddstoredetailsComponent,
     VisiteditstoredetailsComponent,
@@ -120,6 +117,7 @@ import { BrandSpotlightComponent } from './components/clientside/homescreen/bran
     DailydropsComponent,
     DaildropsbrandsComponent,
     BrandSpotlightComponent,
+    NodemanagementCitysComponent,
   ],
   imports: [
     MatDialogModule,
