@@ -121,6 +121,9 @@ import { NodemanagementCitysComponent } from './components/clientside/nodemanage
     DailydropsComponent,
     DaildropsbrandsComponent,
     BrandSpotlightComponent,
+    NodemanagementCitysComponent,
+    CropperComponent,
+    ContentComponent,
   ],
   imports: [
     MatDialogModule,

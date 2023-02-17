@@ -1,17 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Camera } from '@capacitor/camera';
-import {
-  CameraOptions,
-  CameraResultType,
-} from '@capacitor/camera/dist/esm/definitions';
-import { url } from 'inspector';
+import { CameraResultType } from '@capacitor/camera/dist/esm/definitions';
 import { AuthService } from 'src/app/auth.service';
 import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component';
 
 import { ImageCroppedEvent, LoadedImage } from 'ngx-image-cropper';
+import { ApiserviceService } from 'src/app/apiservice.service';
 
 @Component({
   selector: 'app-visitaddstoredetails',
@@ -29,45 +26,72 @@ export class VisitaddstoredetailsComponent implements OnInit {
   storeBanner = '';
   storeBannersActive = '';
   storeBannersList: string[] = [];
+  listLoc: any[] = [];
   makingChanges = true;
+  imageLOADED: string[] = [];
 
   constructor(
     public router: Router,
     private http: HttpClient,
-    public auth: AuthService
-  ) {}
+    public auth: AuthService,
+
+    public api: ApiserviceService,
+    private actRoute: ActivatedRoute
+  ) {
+    // this.execute();
+  }
 
   ngOnInit(): void {}
 
-  onSelectFile(event: any) {
-    const file = event.target.files && event.target.files[0];
+  // onSelectFile(event: any) {
+  //   const file = event.target.files && event.target.files[0];
 
-    if (file) {
-      var reader = new FileReader();
-      reader.readAsDataURL(file);
-      this.fileName = file.name;
+  //   if (file) {
+  //     var reader = new FileReader();
+  //     reader.readAsDataURL(file);
+  //     this.fileName = file.name;
 
-      const formData = new FormData();
+  //     const formData = new FormData();
 
-      formData.append('thumbnail', file);
+  //     formData.append('thumbnail', file);
 
-      const upload$ = this.http.post('/api/thumbnail-upload', formData);
+  //     const upload$ = this.http.post('/api/thumbnail-upload', formData);
 
-      upload$.subscribe();
-      if (file.type.indexOf('image') > -1) {
-        this.format = 'image';
-      }
-      reader.onload = (event) => {
-        this.url = (<FileReader>event.target).result;
-      };
-      // const imageUrl = event.webPath || '';
-      // if (imageUrl) {
-      //   this.startCropper(imageUrl, event);
-      //   console.log('image', imageUrl);
-      // } else {
-      //   console.log('No image');
-      // }
-      this.startCropper('banner', 'logo');
+  //     upload$.subscribe();
+  //     if (file.type.indexOf('image') > -1) {
+  //       this.format = 'image';
+  //     }
+  //     reader.onload = (event) => {
+  //       this.url = (<FileReader>event.target).result;
+  //     };
+  //     // const imageUrl = event.webPath || '';
+  //     // if (imageUrl) {
+  //     //   this.startCropper(imageUrl, event);
+  //     //   console.log('image', imageUrl);
+  //     // } else {
+  //     //   console.log('No image');
+  //     // }
+  //     this.startCropper('banner', 'logo');
+  //   }
+  // }
+
+  async takePicture(type: string) {
+    const image = await Camera.getPhoto({
+      quality: 100,
+      height: 300,
+      width: 300,
+      allowEditing: false,
+      //source:CameraSource.Camera,
+      resultType: CameraResultType.Uri,
+    });
+
+    console.log('image', image);
+    const imageUrl = image.webPath || '';
+    if (imageUrl) {
+      this.startCropper(imageUrl, type);
+      console.log('image', imageUrl);
+    } else {
+      console.log('No image');
     }
   }
 
@@ -88,26 +112,8 @@ export class VisitaddstoredetailsComponent implements OnInit {
     });
     refDialog.afterClosed().subscribe((result) => {
       console.log('cropper closed');
-      if (!result.success) {
-        if (result.info) {
-          console.log(result.info);
-          this.auth.resource.startSnackBar(result.info);
-        }
-      } else {
-        if (type == 'banner') {
-          this.auth
-            .updateStoreBanner(this.storeID, result.croppedImage)
-            .then((ref) => {
-              if (!ref || !ref.success) {
-                this.auth.resource.startSnackBar('Upload Failed!');
-                this.makingChanges = false;
-              } else {
-                this.storeBanner = ref.url;
-                this.auth.resource.startSnackBar('Banner Update Under Review!');
-                this.makingChanges = false;
-              }
-            });
-        }
+      if (type == 'banner') {
+        console.log(webPath, type, 'asdasd');
       }
     });
   }
