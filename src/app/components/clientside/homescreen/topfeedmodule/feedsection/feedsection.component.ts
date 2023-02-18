@@ -21,6 +21,8 @@ export class FeedsectionComponent implements OnInit {
   url: any;
   format: any;
 
+  baseUrl: any = 'http://localhost:3000/upload-video';
+
   onSelectFile(event: any) {
     const file = event.target.files && event.target.files[0];
     if (file) {
@@ -28,17 +30,29 @@ export class FeedsectionComponent implements OnInit {
       reader.readAsDataURL(file);
       this.fileName = file.name;
       const formData = new FormData();
-      formData.append('thumbnail', file);
-      const upload$ = this.http.post('/api/thumbnail-upload', formData);
-      upload$.subscribe();
-      if (file.type.indexOf('image') > -1) {
-        this.format = 'image';
-      } else if (file.type.indexOf('video') > -1) {
-        this.format = 'video';
-      }
-      reader.onload = (event) => {
-        this.url = (<FileReader>event.target).result;
-      };
+      formData.append('video', file);
+
+      this.http
+        .post<any>('http://localhost:3000/upload-video', formData)
+        .subscribe(
+          (res) => console.log(res),
+          (err: any) => {
+            console.log(err);
+          }
+        );
+      // const upload$ = this.http.post(this.baseUrl, formData);
+      // upload$.subscribe();
+      // if (file.type.indexOf('video') > -1) {
+      //   this.format = 'video';
+      // }
+      // reader.onload = (event) => {
+      //   this.url = (<FileReader>event.target).result;
+      // };
     }
   }
+
+  // onSelectFile(event: any){
+  //   const formData = new FormData();
+  //   formData.append('x', this.fileName)
+  // }
 }
