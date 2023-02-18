@@ -25,7 +25,7 @@ export class TransactionDetailsComponent implements OnInit {
   });
   order_summaryexpanded: boolean = false;
   constructor(private _formBuilder: FormBuilder, public dialogRef: MatDialogRef<TransactionDetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) public Data: DialogData,) {
+    @Inject(MAT_DIALOG_DATA) public Data: any) {
     this.Transactiondata = this.Data.Orderdata;
     this.typeid = parseFloat(this.Data.id);
     this.AInWords = this.convertinstring(parseInt(this.Transactiondata.amTotal));

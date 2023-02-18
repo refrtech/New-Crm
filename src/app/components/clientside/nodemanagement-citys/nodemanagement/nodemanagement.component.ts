@@ -13,7 +13,7 @@ import { AddnodeComponent } from './addnode/addnode.component';
   styleUrls: ['./nodemanagement.component.scss'],
 })
 export class NodemanagementComponent implements OnInit {
-  cityID:string="";
+  cityID: string = "";
   parameters: string = '';
   searchvalue: any;
   valuetype: number = 2;
@@ -40,7 +40,8 @@ export class NodemanagementComponent implements OnInit {
       titvalue: 'kalyan',
     },
   ];
-  constructor(public api: ApiserviceService, public rs: Router, private dailog: MatDialog,private actRoute: ActivatedRoute) {
+  constructor(public api: ApiserviceService, public rs: Router, private dailog: MatDialog, private actRoute: ActivatedRoute) {
+    console.log(this.actRoute.snapshot.params["id"])
     this.cityID = this.actRoute.snapshot.params["id"];
   }
 
@@ -60,7 +61,7 @@ export class NodemanagementComponent implements OnInit {
   opennode(id: any, data?: any) {
     const dialogRef = this.dailog.open(AddnodeComponent, {
       width: "50%",
-      data: { id: id, nodedata: data, selectedcityid:this.cityID },
+      data: { id: id, nodedata: data, selectedcityid: this.cityID },
       hasBackdrop: true,
       disableClose: false,
       panelClass: 'thanksscreen'

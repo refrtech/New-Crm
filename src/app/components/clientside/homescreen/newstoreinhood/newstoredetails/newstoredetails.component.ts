@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
-import { type } from 'os';
+import { Router } from '@angular/router';
 import { ApiserviceService } from 'src/app/apiservice.service';
 
 @Component({
@@ -13,10 +11,6 @@ import { ApiserviceService } from 'src/app/apiservice.service';
   styleUrls: ['./newstoredetails.component.scss'],
 })
 export class NewstoredetailsComponent implements OnInit {
-  // parameters: string = '';
-  // searchvalue: any;
-  // valuetype: number = 2;
-  // Valuearr: Array<any> = [];
 
   nodes!: MatTableDataSource<any>;
   @ViewChild(MatSort) sort!: MatSort;
@@ -57,7 +51,6 @@ export class NewstoredetailsComponent implements OnInit {
   constructor(
     public as: ApiserviceService,
     public router: Router,
-    private actRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {

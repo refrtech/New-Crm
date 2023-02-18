@@ -22,7 +22,7 @@
                             <input type="text" [(ngModel)]="VSATitle" matInput placeholder="Enter the module name"
                                 [disabled]="!editTitle">
                             <button matSuffix mat-icon-button aria-label="Clear" class="purple_background"
-                                (click)="updateVSATitle()">
+                                (click)="updateVSTitle()">
                                 <mat-icon>
                                     {{editTitle ? 'check': 'edit'}}
                                 </mat-icon>
@@ -79,7 +79,7 @@
                         <mat-form-field class="crminput l5margin r5margin M70width" appearance="outline">
                             <mat-select placeholder="Select node" [(ngModel)]="Selectednode">
                                 <ng-container *ngIf="nodes$ | async as nodeList">
-                                    <mat-option *ngFor="let item of nodeList" [value]="item.id">
+                                    <mat-option *ngFor="let item of nodeList" [value]="item.id" (click)="nodechange(item)">
                                         {{item.name}}
                                     </mat-option>
                                 </ng-container>
@@ -89,7 +89,7 @@
                 </div>
             </div>
             <div>
-                <button mat-button (click)="allstores('visitstoresection')"
+                <button mat-button (click)="allstores()"
                     class="viewbtn t5padding b5padding l30padding r30padding t15margin b15margin">Next</button>
             </div>
         </div>
@@ -107,15 +107,21 @@
                     <ng-container *ngFor="let item of creatednodes">
                         <ng-container *ngIf="item.city_id == Selectedcity">
                             <div class="dflex tborder s_size tb15padding">
-                                <div class="regulartext M20width l10padding">{{item.name}}</div>
+                                <div class="regulartext M20width l10padding">
+                                    {{item.name}}
+                                </div>
                                 <div class="regulartext M10width c_align">
                                     {{item.stores.length}}
                                 </div>
                                 <div class="regulartext M50width c_align">
-                                    <span class="stores">{{item.stores[0].name}}</span>
+                                    <ng-container *ngFor="let items of item.stores">
+                                    <span class="stores">
+                                        {{items.name}}
+                                    </span>
+                                </ng-container>
                                 </div>
                                 <div class="regulartext M20width c_align">
-                                    <mat-icon>
+                                    <mat-icon (click)="allstores(item)">
                                         edit
                                     </mat-icon>
                                 </div>
