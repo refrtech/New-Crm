@@ -670,7 +670,7 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-  getNodeDataaspercity(cityid:string) {
+  getNodeDataaspercity(cityid: string) {
     const manageNode: CollectionReference = collection(
       this.firestore,
       `${'node_manager'}`
@@ -694,7 +694,7 @@ export class ApiserviceService {
     const qu = doc(this.firestore, 'node_manager', `${nodeData.id}`);
     return updateDoc(qu, {
       name: nodeData.name,
-      Nareas:nodeData.Nareas
+      Nareas: nodeData.Nareas
     });
   }
 
@@ -710,5 +710,54 @@ export class ApiserviceService {
     const qu = query(VSA_section);
     return collectionData(qu);
   }
+
+
+  updateVSAtitle(Title: string, id: any) {
+    const cityrefr = doc(this.firestore, `${'VSA_section'}`, `${id}`);
+    return updateDoc(cityrefr, { VSA_Title: Title }).then((datas: any) => {
+      if (datas) {
+        return "issue in update title.";
+      }
+      else {
+        return "title updated.";
+      }
+    })
+      .catch((err) => {
+        console.log(err);
+        return false;
+      });
+  }
+
+  updateVSAStitle(STitle: string, id: any) {
+    const cityrefr = doc(this.firestore, `${'VSA_section'}`, `${id}`);
+    return updateDoc(cityrefr, { VSA_STitle: STitle }).then((datas: any) => {
+      if (datas) {
+        return "issue in update Sub-title.";
+      }
+      else {
+        return "Sub-title updated.";
+      }
+    })
+      .catch((err) => {
+        console.log(err);
+        return false;
+      });
+  }
+
+  addVSAstores(nodes: any, id: any) {
+    const cityrefr = doc(this.firestore, `${'VSA_section'}`, `${id}`);
+    return updateDoc(cityrefr, { Nodes: arrayUnion(nodes) });
+  }
+
+  editVSAstores(nodes: any, id: any) {
+    const cityrefr = doc(this.firestore, `${'VSA_section'}`, `${id}`);
+    return updateDoc(cityrefr, { Nodes: nodes });
+  }
+
+  VSAupdatestore(nodes: any, id: any) {
+    const cityrefr = doc(this.firestore, `${'VSA_section'}`, `${id}`);
+    return updateDoc(cityrefr, { Nodes: nodes });
+  }
+
   // VSA section end
 }

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ApiserviceService } from 'src/app/apiservice.service';
 @Component({
   selector: 'app-daildropsbrands',
@@ -47,8 +47,7 @@ export class DaildropsbrandsComponent implements OnInit {
 
   constructor(
     public as: ApiserviceService,
-    public router: Router,
-    private actRoute: ActivatedRoute
+    public router: Router
   ) {}
 
   ngOnInit(): void {
