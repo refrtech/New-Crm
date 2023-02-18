@@ -25,7 +25,15 @@
             <div class="boldtext l_size b10margin">Store banner</div>
             <div class="dflex">
                 <div>
-                    <div class="img Aborder"></div>
+                    <div class="img ">
+
+                        <img [src]=" storeBanner ? storeBanner : 'assets/brand/opengraph.png' " alt="banner" />
+                        {{storeBanner}}
+                        <!-- <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
+                            [aspectRatio]="4 / 3" format="png" (imageCropped)="imageCropped($event)"
+                            (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
+                            (loadImageFailed)="loadImageFailed()"></image-cropper> -->
+                    </div>
                 </div>
                 <div class="dflex flex_col l15margin JEend">
                     <button mat-button disableRipple
@@ -40,9 +48,11 @@
                                 stroke="#8111E8" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
 
-                        Preview
+                        Create
                     </button>
-                    <button mat-button disableRipple
+
+                    <!-- <input class="b10margin d_none" #hiddenfileinput type="file" (change)="onSelectFile($event)" /> -->
+                    <button mat-button disableRipple (click)="takePicture('banner')"
                         class="w200 Aborder dflex  JCcenter AIcenter t10margin  tb5padding regulartext s_size normallineheight lr20padding Aborder">
                         <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g clip-path="url(#clip0_470_17467)">
@@ -125,10 +135,10 @@
             </div>
         </main>
 
-        <div>
+        <!-- <div>
             <button mat-button routerLink="/visitdetails"
                 class="viewbtn t5padding b5padding l30padding r30padding t30margin b15margin">Create</button>
-        </div>
+        </div> -->
 
     </div>
 

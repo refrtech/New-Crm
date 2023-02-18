@@ -9,22 +9,51 @@ import { Hype, Locate, Product, Shop, User } from './universal.model';
 //import app from 'firebase/compat/app';
 //import { WindowService } from './window.service';
 
-
 import {
-  Auth, authState,
-  fetchSignInMethodsForEmail, linkWithPhoneNumber, updateEmail, updatePassword, updateProfile,
-  signInWithEmailAndPassword, UserCredential, updatePhoneNumber, /*User*/ PhoneAuthCredential, signInWithPhoneNumber, PhoneAuthProvider, signInWithPopup, linkWithPopup,
+  Auth,
+  authState,
+  fetchSignInMethodsForEmail,
+  linkWithPhoneNumber,
+  updateEmail,
+  updatePassword,
+  updateProfile,
+  signInWithEmailAndPassword,
+  UserCredential,
+  updatePhoneNumber,
+  /*User*/ PhoneAuthCredential,
+  signInWithPhoneNumber,
+  PhoneAuthProvider,
+  signInWithPopup,
+  linkWithPopup,
   RecaptchaVerifier,
-  GoogleAuthProvider, FacebookAuthProvider, signInWithCredential, linkWithCredential,
+  GoogleAuthProvider,
+  FacebookAuthProvider,
+  signInWithCredential,
+  linkWithCredential,
 } from '@angular/fire/auth';
 import {
   Firestore,
-  collection, collectionData, collectionGroup,
-  doc, getDoc, docData,
-  setDoc, updateDoc, addDoc,
-  query, limit, orderBy, where, FieldValue, increment, serverTimestamp, arrayUnion, arrayRemove,
-  DocumentReference, CollectionReference,
-  onSnapshot
+  collection,
+  collectionData,
+  collectionGroup,
+  doc,
+  getDoc,
+  docData,
+  setDoc,
+  updateDoc,
+  addDoc,
+  query,
+  limit,
+  orderBy,
+  where,
+  FieldValue,
+  increment,
+  serverTimestamp,
+  arrayUnion,
+  arrayRemove,
+  DocumentReference,
+  CollectionReference,
+  onSnapshot,
 } from '@angular/fire/firestore';
 import { Storage, ref, uploadString } from '@angular/fire/storage';
 
@@ -32,21 +61,21 @@ import { Storage, ref, uploadString } from '@angular/fire/storage';
 import { getDownloadURL } from '@firebase/storage';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   user$: Observable<any> = this.getLogUSER();
   allowLog = false;
 
   lock = true;
-  step = 0; stepDisable = false;
+  step = 0;
+  stepDisable = false;
   windowRef: any;
   confirmationResult: any;
-  verificationId: string = "";
+  verificationId: string = '';
   verificationReset: any;
 
-  ManMade = "";
+  ManMade = '';
   constructor(
     //public afAuth: AngularFireAuth,
     public afAuth: Auth,
@@ -54,20 +83,20 @@ export class AuthService {
     private firestore: Firestore,
     private fireStorage: Storage,
 
-    public resource: ResourceService,
+    public resource: ResourceService
+  ) // private win: WindowService,
 
-    // private win: WindowService,
-
-    //private fb: Facebook
-    //private gP: GooglePlus
-    //private googlePlus: GooglePlus
-  ) {
+  //private fb: Facebook
+  //private gP: GooglePlus
+  //private googlePlus: GooglePlus
+  {
     // Get the auth state, then fetch the Firestore user document or return null
     //this.user$ = this.getLogUSER();
   }
 
-  get getServerTimestamp() { return serverTimestamp; }
-
+  get getServerTimestamp() {
+    return serverTimestamp;
+  }
 
   setupReCapca() {
     //this.afAuth.settings.appVerificationDisabledForTesting = true;
@@ -75,7 +104,11 @@ export class AuthService {
     //AuthSettings()
     //appVerificationDisabledForTesting(true) //= true;
     // this.windowRef = this.win.windowRef;
-    this.windowRef.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', { 'size': 'invisible' }, this.afAuth);
+    this.windowRef.recaptchaVerifier = new RecaptchaVerifier(
+      'recaptcha-container',
+      { size: 'invisible' },
+      this.afAuth
+    );
 
     // new RecaptchaVerifier(/*'sign-in-button', {
     //   'size': 'invisible',
@@ -89,7 +122,6 @@ export class AuthService {
     // //RecaptchaVerifier('recaptcha-container', { 'size': 'invisible' });
 
     this.windowRef.recaptchaVerifier.render();
-
   }
 
   getFirestoreDocument(docX: string, idX: string) {
@@ -97,92 +129,100 @@ export class AuthService {
       const itemDoc = doc(this.firestore, `${docX}`, `${idX}`);
       return docData(itemDoc);
     } catch (err) {
-      console.log("err: ", err)
-      return of()
+      console.log('err: ', err);
+      return of();
     }
   }
 
-  getFirestoreCollection() { }
+  getFirestoreCollection() {}
 
   // AUTH SYSTEM
   private getLogUSER() {
     //this.allowLog = false;
     //return this.afAuth.authState.pipe(switchMap(user => {
-    return authState(this.afAuth).pipe(switchMap(user => {
-      if (!user) {
-        this.allowLog = true;
-        return of(null);
-      } else {
-        if (!user.phoneNumber && !user.emailVerified) {
+    return authState(this.afAuth).pipe(
+      switchMap((user) => {
+        if (!user) {
           this.allowLog = true;
           return of(null);
         } else {
-          console.log("USA")
-          this.allowLog = true;
-          //return of({id:user.uid}); 
-          //return this.afs.doc<User>(`${this.resource.env.db.users}/${user.uid}`).valueChanges();
-          // return this.afs.doc<User>(`${this.resource.env.db.users}/${user.uid}`).valueChanges();
-          //return doc<User>(`${this.resource.env.db.users}/${user.uid}`).valueChanges();
-          //return getDoc() (`${this.resource.env.db.users}/${user.uid}`);
+          if (!user.phoneNumber && !user.emailVerified) {
+            this.allowLog = true;
+            return of(null);
+          } else {
+            console.log('USA');
+            this.allowLog = true;
+            //return of({id:user.uid});
+            //return this.afs.doc<User>(`${this.resource.env.db.users}/${user.uid}`).valueChanges();
+            // return this.afs.doc<User>(`${this.resource.env.db.users}/${user.uid}`).valueChanges();
+            //return doc<User>(`${this.resource.env.db.users}/${user.uid}`).valueChanges();
+            //return getDoc() (`${this.resource.env.db.users}/${user.uid}`);
 
-          // const itemDoc = doc(this.firestore, `${this.resource.env.db.users}`, `${user.uid}`);
-          // return docData(itemDoc);
-          return this.getFirestoreDocument(this.resource.env.db.users, user.uid);
+            // const itemDoc = doc(this.firestore, `${this.resource.env.db.users}`, `${user.uid}`);
+            // return docData(itemDoc);
+            return this.getFirestoreDocument(
+              this.resource.env.db.users,
+              user.uid
+            );
+          }
         }
-      }
-    }))
+      })
+    );
   }
 
-
-
-
-
-
-  async step0_userForward(phone: string, byMe: boolean) {// check if user exist redirect login else redirect 1 
+  async step0_userForward(phone: string, byMe: boolean) {
+    // check if user exist redirect login else redirect 1
     this.stepDisable = true;
     // CHECK FOR USER
-    let email = phone + "@" + "refr.club";
-    const fetchSignMethodEmail = await fetchSignInMethodsForEmail(this.afAuth, email);
+    let email = phone + '@' + 'refr.club';
+    const fetchSignMethodEmail = await fetchSignInMethodsForEmail(
+      this.afAuth,
+      email
+    );
     //const fetchSignMethodEmail = await this.afAuth.fetchSignInMethodsForEmail( email );
-    console.log("fetchSignMethodEmail", fetchSignMethodEmail)
+    console.log('fetchSignMethodEmail', fetchSignMethodEmail);
 
-    if (fetchSignMethodEmail?.length > 0) {// USER PHONE@EMAIL.com EXIST 
+    if (fetchSignMethodEmail?.length > 0) {
+      // USER PHONE@EMAIL.com EXIST
       //WORK NEEDED
-      if (fetchSignMethodEmail.includes("password")) {
+      if (fetchSignMethodEmail.includes('password')) {
         //if(!byMe){
         //this.step = 3;//REDIRECT LOGIN WITH PASSWORD
         //return {"success":true}
         //}else{
-        return { "success": true, exist: true }
+        return { success: true, exist: true };
         //}
       } else {
         // CHECK IF SIGN IN INCLUDES PHONE
-        return { "success": false, info: "401" }
+        return { success: false, info: '401' };
       }
-    } else {// NO SUCH USER > SIGN UP GO STEP 1
+    } else {
+      // NO SUCH USER > SIGN UP GO STEP 1
       //if(!byMe){
       //this.step = 1;
       //return {"success":true}
       //}else{
-      return { "success": true, exist: false }
+      return { success: true, exist: false };
       //}
     }
   }
 
-
-  async step0_socialForward(uid: string, email: string) {// check if user exist redirect login else redirect 1 
+  async step0_socialForward(uid: string, email: string) {
+    // check if user exist redirect login else redirect 1
     this.stepDisable = true;
     // const userRef: AngularFirestoreDocument<User> = this.afs.doc(`${this.resource.env.db.users}/${uid}`);
     // return await userRef.get();
     //const userRef = this.getFirestoreDocument(this.resource.env.db.users, uid);
-    //return await userRef; 
-
+    //return await userRef;
 
     //REMEMBER FIX
     //return await this.getFirestoreDocument(this.resource.env.db.users, uid);
-    const docRef = doc(this.firestore, `${this.resource.env.db.users}`, `${uid}`);
+    const docRef = doc(
+      this.firestore,
+      `${this.resource.env.db.users}`,
+      `${uid}`
+    );
     return await getDoc(docRef);
-
 
     // let responce = null;
     // let x = await userRef.get().pipe(take(1)).subscribe(ref => {
@@ -236,7 +276,7 @@ export class AuthService {
       }
     }
   */
-  // async stepAdd_USERS_PHONE(phone:string, //password:string, 
+  // async stepAdd_USERS_PHONE(phone:string, //password:string,
   //   iso:string, coin:string){//ADD PHONE WITH artificial EMAIL & PASSWORD
   // }
 
@@ -285,22 +325,24 @@ export class AuthService {
     this.stepDisable = true;
     const appVerifier = this.windowRef.recaptchaVerifier;
     if (!appVerifier) {
-      return { "success": false, info: "recaptcha did not process properly." }
+      return { success: false, info: 'recaptcha did not process properly.' };
     } else {
-      console.log(appVerifier)
+      console.log(appVerifier);
       const currentUser = await this.afAuth.currentUser;
       if (!currentUser) {
-        return { "success": false, info: "Sms not sent" }
+        return { success: false, info: 'Sms not sent' };
       } else {
         //return currentUser.linkWithPhoneNumber(phone, appVerifier).then(confirmationResult => {
-        return linkWithPhoneNumber(currentUser, phone, appVerifier).then(confirmationResult => {
-          this.confirmationResult = confirmationResult;
-          this.verificationId = confirmationResult.verificationId;
-          return { "success": true, info: "" }
-        }).catch((error) => {
-          console.log("SMS not sent", error);
-          return { "success": false, info: error }
-        });
+        return linkWithPhoneNumber(currentUser, phone, appVerifier)
+          .then((confirmationResult) => {
+            this.confirmationResult = confirmationResult;
+            this.verificationId = confirmationResult.verificationId;
+            return { success: true, info: '' };
+          })
+          .catch((error) => {
+            console.log('SMS not sent', error);
+            return { success: false, info: error };
+          });
       }
     }
   }
@@ -309,12 +351,12 @@ export class AuthService {
     this.stepDisable = true;
     const appVerifier = this.windowRef.recaptchaVerifier;
     if (!appVerifier) {
-      return { "success": false, info: "recaptcha did not process properly." }
+      return { success: false, info: 'recaptcha did not process properly.' };
     } else {
-      console.log(appVerifier)
+      console.log(appVerifier);
       //return app.auth().signInWithPhoneNumber(phone, appVerifier)
       return signInWithPhoneNumber(this.afAuth, phone, appVerifier)
-        .then(confirmationResult => {
+        .then((confirmationResult) => {
           this.confirmationResult = confirmationResult;
           this.verificationId = confirmationResult.verificationId;
           //confirmationResult.confirm("").then(ref => {
@@ -323,12 +365,13 @@ export class AuthService {
           //ref.user?.updatePassword("")
           //ref.user?.updateProfile({displayName:"", photoURL:""})
           //})
-          return { "success": true, info: "" }
+          return { success: true, info: '' };
           // SMS sent. Prompt user to type the code from the message, then sign the
           // user in with confirmationResult.confirm(code).
-        }).catch((error) => {
-          console.log("SMS not sent", error);
-          return { "success": false, info: error }
+        })
+        .catch((error) => {
+          console.log('SMS not sent', error);
+          return { success: false, info: error };
         });
     }
   }
@@ -339,40 +382,54 @@ export class AuthService {
 
     if (!logged) {
       const provider = new PhoneAuthProvider(this.afAuth);
-      return await provider.verifyPhoneNumber(phone, appVerifier).then(verificationId => {
-        this.verificationId = verificationId;
-        this.step = 2;
-        return { "success": true, info: "" }
-      }).catch(err => {
-        return { "success": false, info: "issue: " + err }
-      })
+      return await provider
+        .verifyPhoneNumber(phone, appVerifier)
+        .then((verificationId) => {
+          this.verificationId = verificationId;
+          this.step = 2;
+          return { success: true, info: '' };
+        })
+        .catch((err) => {
+          return { success: false, info: 'issue: ' + err };
+        });
     } else {
       const credential = await this.afAuth.currentUser;
       if (!credential) {
-        return { "success": false, info: "issue: No user logged" }
+        return { success: false, info: 'issue: No user logged' };
       } else {
         //return await credential?.linkWithPhoneNumber(phone, appVerifier).then(result =>{
-        return await linkWithPhoneNumber(credential, phone, appVerifier).then(result => {
-          this.verificationId = result.verificationId;
-          return { "success": true, info: "" }
-        }).catch(err => {
-          return { "success": false, info: "issue: " + err }
-        })
+        return await linkWithPhoneNumber(credential, phone, appVerifier)
+          .then((result) => {
+            this.verificationId = result.verificationId;
+            return { success: true, info: '' };
+          })
+          .catch((err) => {
+            return { success: false, info: 'issue: ' + err };
+          });
       }
     }
   }
 
-  private updateUserData(medium: string, user: any,
-    phone: string, name: string, iso: string, coin: string,
-    email: string, emailV: boolean
+  private updateUserData(
+    medium: string,
+    user: any,
+    phone: string,
+    name: string,
+    iso: string,
+    coin: string,
+    email: string,
+    emailV: boolean
   ) {
-    const userRef = doc(this.firestore, `${this.resource.env.db.users}/${user.uid}`);
+    const userRef = doc(
+      this.firestore,
+      `${this.resource.env.db.users}/${user.uid}`
+    );
     //const userRef: AngularFirestoreDocument<User> = doc(`${this.resource.env.db.users}`, `${user.uid}`);
     //const userRef: AngularFirestoreDocument<User> = setDoc(`${this.resource.env.db.users}/${user.uid}`);
     let newTimestamp = this.getServerTimestamp();
-    let status = "Hey there! I'm using " + this.resource.env.brand + "."
+    let status = "Hey there! I'm using " + this.resource.env.brand + '.';
 
-    let look: string[] = []//this.resource.getLOOKUP( name.toLowerCase() );
+    let look: string[] = []; //this.resource.getLOOKUP( name.toLowerCase() );
     //look = look.filter((elem, index, self) => { return index === self.indexOf(elem); })
     //look = look.filter((elem) => { return elem.length > 2; })
 
@@ -384,18 +441,42 @@ export class AuthService {
 
     const data: User = {
       uid: user.uid,
-      name: name, display: "",
-      phone: phone, iso: iso, coin: coin,
-      email: email, emailV: emailV, emails: [],
+      name: name,
+      display: '',
+      phone: phone,
+      iso: iso,
+      coin: coin,
+      email: email,
+      emailV: emailV,
+      emails: [],
 
-      soIG: "", soYT: "", soTW: "", soWA: "",
-      storeLoc: [], storeCam: [],
-      sin: newTimestamp, upd: newTimestamp, log: newTimestamp,
-      ban: false, note: [{ info: "Hi " + name.split(" ") + " welcome to " + this.resource.env.brand, by: this.resource.env.brand, sin: Date.now(), URL: '' }],
+      soIG: '',
+      soYT: '',
+      soTW: '',
+      soWA: '',
+      storeLoc: [],
+      storeCam: [],
+      sin: newTimestamp,
+      upd: newTimestamp,
+      log: newTimestamp,
+      ban: false,
+      note: [
+        {
+          info:
+            'Hi ' + name.split(' ') + ' welcome to ' + this.resource.env.brand,
+          by: this.resource.env.brand,
+          sin: Date.now(),
+          URL: '',
+        },
+      ],
 
-      acBalC: 0, acBalV: 0, acBalP: 0,
-      acBalCr: 0, acBalVr: 0, acBalH: 0,
-      axess: [medium]
+      acBalC: 0,
+      acBalV: 0,
+      acBalP: 0,
+      acBalCr: 0,
+      acBalVr: 0,
+      acBalH: 0,
+      axess: [medium],
       /* 
       check: false,
       email: user.email, username:"",
@@ -407,26 +488,32 @@ export class AuthService {
       pay:{ now:0, out:0, cut:18, exit:false, over:over },
       chat:[],look:look, stay:[]
       */
+    };
+    if (emailV) {
+      data.emails.push(email);
     }
-    if (emailV) { data.emails.push(email) }
     //ALLOW NOTIFICATION SEND
     //ALLOW NOTIFICATION SEND
     //return userRef.set(data, { merge: true });
-    return setDoc(userRef, data, { merge: true })
+    return setDoc(userRef, data, { merge: true });
   }
 
   async step2X_varifyCODE(
-    //code:string, logged:string, 
+    //code:string, logged:string,
     credential: any,
     name: string, //password:string,
-    phone: string, iso: string, coin: string
+    phone: string,
+    iso: string,
+    coin: string
   ) {
     this.stepDisable = true;
     console.log(
       credential,
       name, //password,
-      phone, iso, coin
-    )
+      phone,
+      iso,
+      coin
+    );
     // const credential = await app.auth.PhoneAuthProvider.credential(this.verificationId, code);
 
     // const currentUser = await this.afAuth.currentUser;
@@ -436,24 +523,33 @@ export class AuthService {
     //   return {"success":true,complete:true, info:"" };
     // }
 
-    const email = phone + "@" + "refr.club";
+    const email = phone + '@' + 'refr.club';
     // const credential = await this.afAuth.createUserWithEmailAndPassword(email,password);
     // CREATE USER DOC TO FIRESTORE
-    const storeData = await this.updateUserData("phone", credential.user, phone, name, iso, coin, "", false).then(() => {
-      //     credential.user?.updateProfile({ displayName: name });
-      if (credential.user) {
-        //console.log("hit", credential)
-        let password = Date.now().toString();
-        this.addEmallPass(
-          email, password,
-          name, "");
-        return { success: true, complete: true, info: "" }
-      } else {
-        return { success: false, info: "issue: invalid credentials" }
-      }
-    }).catch(err => {
-      return { success: false, info: "issue: " + err }
-    });
+    const storeData = await this.updateUserData(
+      'phone',
+      credential.user,
+      phone,
+      name,
+      iso,
+      coin,
+      '',
+      false
+    )
+      .then(() => {
+        //     credential.user?.updateProfile({ displayName: name });
+        if (credential.user) {
+          //console.log("hit", credential)
+          let password = Date.now().toString();
+          this.addEmallPass(email, password, name, '');
+          return { success: true, complete: true, info: '' };
+        } else {
+          return { success: false, info: 'issue: invalid credentials' };
+        }
+      })
+      .catch((err) => {
+        return { success: false, info: 'issue: ' + err };
+      });
 
     // // CREATE USER DOC TO FIRESTORE
     // if(!storeData.success){
@@ -468,25 +564,37 @@ export class AuthService {
   }
 
   async addEmallPass(
-    email: string, password: string,
-    displayName: string, photoURL: string) {
+    email: string,
+    password: string,
+    displayName: string,
+    photoURL: string
+  ) {
     const currentUser: any = await this.afAuth.currentUser;
     //currentUser?.updateEmail(email).then(resEmail => {
-    updateEmail(currentUser, email).then(resEmail => {
-      //console.log("resEmail",resEmail)
-      updatePassword(currentUser, password).then(resPass => {
-        //console.log("resPass",resPass)
-        updateProfile(currentUser, { displayName: displayName, photoURL: photoURL }).then(resName => {
-          //console.log("resName",resName)
-        }).catch(err => {
-          console.log("err", err)
-        });
-      }).catch(err => {
-        console.log("err", err)
+    updateEmail(currentUser, email)
+      .then((resEmail) => {
+        //console.log("resEmail",resEmail)
+        updatePassword(currentUser, password)
+          .then((resPass) => {
+            //console.log("resPass",resPass)
+            updateProfile(currentUser, {
+              displayName: displayName,
+              photoURL: photoURL,
+            })
+              .then((resName) => {
+                //console.log("resName",resName)
+              })
+              .catch((err) => {
+                console.log('err', err);
+              });
+          })
+          .catch((err) => {
+            console.log('err', err);
+          });
       })
-    }).catch(err => {
-      console.log("err", err)
-    })/*
+      .catch((err) => {
+        console.log('err', err);
+      }); /*
     //app.auth.EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD
     // app.auth().currentUser.getIdToken(/ * forceRefresh * / true).then(function(idToken) {
     //   // Send token to your backend via HTTPS
@@ -499,60 +607,79 @@ export class AuthService {
 */
   }
 
-  async step2_varifyCODE(code: string, logged: string,
+  async step2_varifyCODE(
+    code: string,
+    logged: string
     //name:string, pass: string
   ) {
     this.stepDisable = true;
-    const credential: any = await PhoneAuthProvider.credential(this.verificationId, code);
+    const credential: any = await PhoneAuthProvider.credential(
+      this.verificationId,
+      code
+    );
     const currentUser: any = await this.afAuth.currentUser;
     if (!currentUser) {
-      return { "success": false, info: "401" }
+      return { success: false, info: '401' };
     } else {
-
       //return currentUser.updatePhoneNumber(credential).then(() =>{
-      return updatePhoneNumber(currentUser, credential).then(() => {
-        if (!logged) {
-          //this.user$ = this.getLogUSER();
-          this.resource.startSnackBar(this.resource.env.brand + " Welcomes! " + currentUser.displayName)
-          return { "success": true, complete: true, info: "" }
-        } else {
+      return updatePhoneNumber(currentUser, credential)
+        .then(() => {
+          if (!logged) {
+            //this.user$ = this.getLogUSER();
+            this.resource.startSnackBar(
+              this.resource.env.brand + ' Welcomes! ' + currentUser.displayName
+            );
+            return { success: true, complete: true, info: '' };
+          } else {
+            const email = logged + '@' + 'refr.club';
+            currentUser.updateEmail(email);
+            const userRef = doc(
+              this.firestore,
+              `${this.resource.env.db.users}`,
+              `${currentUser.uid}`
+            );
+            updateDoc(userRef, { axess: arrayUnion('phone'), phone: logged });
 
-          const email = logged + "@" + "refr.club";
-          currentUser.updateEmail(email);
-          const userRef = doc(this.firestore, `${this.resource.env.db.users}`, `${currentUser.uid}`)
-          updateDoc(userRef, { axess: arrayUnion("phone"), phone: logged })
-
-          return { "success": true, complete: true, info: "" };
-        }
-      }).catch(err => {
-        return { "success": false, info: err }
-      });
-
+            return { success: true, complete: true, info: '' };
+          }
+        })
+        .catch((err) => {
+          return { success: false, info: err };
+        });
     }
   }
-
 
   async step3_login(phone: string, password: string) {
     this.stepDisable = true;
 
-    const email = phone + "@" + "refr.club";
+    const email = phone + '@' + 'refr.club';
     // LOG IN WITH PASSWORD
     //const credential = await this.afAuth.signInWithEmailAndPassword(email,password).then(data=>{
-    const credential = await signInWithEmailAndPassword(this.afAuth, email, password).then(data => {
-      // CHECK IF PHONE VARIFIED
-      if (!data.user?.phoneNumber) {
-        return { "success": true, incomplete: true, phone: phone }
-        // SETUP VARIVIED CODE STEP
-        // REDIRECT VARIVIED CODE STEP
-      } else {
-        this.resource.startSnackBar("Welcome Back!")
-        return { "success": true, complete: true }
-      }
-    }).catch(err => {
-      this.resource.pass.setValue("");
-      this.resource.pass.enable();
-      return { "success": false, info: "issue: " + err.message, code: err.code }
-    });
+    const credential = await signInWithEmailAndPassword(
+      this.afAuth,
+      email,
+      password
+    )
+      .then((data) => {
+        // CHECK IF PHONE VARIFIED
+        if (!data.user?.phoneNumber) {
+          return { success: true, incomplete: true, phone: phone };
+          // SETUP VARIVIED CODE STEP
+          // REDIRECT VARIVIED CODE STEP
+        } else {
+          this.resource.startSnackBar('Welcome Back!');
+          return { success: true, complete: true };
+        }
+      })
+      .catch((err) => {
+        this.resource.pass.setValue('');
+        this.resource.pass.enable();
+        return {
+          success: false,
+          info: 'issue: ' + err.message,
+          code: err.code,
+        };
+      });
     return credential;
   }
 
@@ -560,31 +687,41 @@ export class AuthService {
     this.stepDisable = true;
     const appVerifier = this.windowRef.recaptchaVerifier;
     //return await this.afAuth.signInWithPhoneNumber( phone, appVerifier ).then(result =>{
-    return await signInWithPhoneNumber(this.afAuth, phone, appVerifier).then(result => {
-      this.verificationReset = result;
-      this.step = 4;
-      return { "success": true, phone: phone }
-    }).catch(err => {
-      return { "success": false, info: "issue: " + err }
-    });
+    return await signInWithPhoneNumber(this.afAuth, phone, appVerifier)
+      .then((result) => {
+        this.verificationReset = result;
+        this.step = 4;
+        return { success: true, phone: phone };
+      })
+      .catch((err) => {
+        return { success: false, info: 'issue: ' + err };
+      });
   }
 
   async step5_reset(verificationCode: string, newPassword: string) {
     this.stepDisable = true;
-    return await this.verificationReset.confirm(verificationCode).then((ref: any) => {
-      return ref.user?.updatePassword(newPassword).then(() => {
-        console.log("i am here", ref)
-        const userRef = doc(this.firestore, `${this.resource.env.db.users}`, `${ref.user.uid}`);
-        updateDoc(userRef, { axess: arrayUnion("pass") });
+    return await this.verificationReset
+      .confirm(verificationCode)
+      .then((ref: any) => {
+        return ref.user
+          ?.updatePassword(newPassword)
+          .then(() => {
+            console.log('i am here', ref);
+            const userRef = doc(
+              this.firestore,
+              `${this.resource.env.db.users}`,
+              `${ref.user.uid}`
+            );
+            updateDoc(userRef, { axess: arrayUnion('pass') });
 
-        this.resource.startSnackBar("Password Changed!")
-        return { "success": true, complete: true }
-      }).catch((err: any) => {
-        return { "success": false, info: "issue: " + err }
-      })
-    });
+            this.resource.startSnackBar('Password Changed!');
+            return { success: true, complete: true };
+          })
+          .catch((err: any) => {
+            return { success: false, info: 'issue: ' + err };
+          });
+      });
   }
-
 
   async googleSignin() {
     //if(this.resource.appMode){
@@ -610,13 +747,24 @@ export class AuthService {
     */
     //}else{
     const provider = new GoogleAuthProvider();
-    const credential = signInWithPopup(this.afAuth, provider).then((result) => {
-      console.log("GO: 1", result);
-      return { "success": true, social: true, medium: "google", data: result.user }
-    }).catch((error) => {
-      console.log("GO: 2", error.message);
-      return { "success": false, info: "issue: " + error.message, code: error.code }
-    })
+    const credential = signInWithPopup(this.afAuth, provider)
+      .then((result) => {
+        console.log('GO: 1', result);
+        return {
+          success: true,
+          social: true,
+          medium: 'google',
+          data: result.user,
+        };
+      })
+      .catch((error) => {
+        console.log('GO: 2', error.message);
+        return {
+          success: false,
+          info: 'issue: ' + error.message,
+          code: error.code,
+        };
+      });
     return credential;
     //}
   }
@@ -637,8 +785,11 @@ export class AuthService {
 
   async facebookSignin() {
     if (this.resource.appMode) {
-
-      const credential = { "success": false, info: "Support coming soon...", code: 1000 };
+      const credential = {
+        success: false,
+        info: 'Support coming soon...',
+        code: 1000,
+      };
       return credential;
     } else {
       /*
@@ -650,11 +801,14 @@ export class AuthService {
           console.log("GO: 2", error.message);
           return {"success":false,info:"issue: " + error.message, code:error.code}
       })*/
-      const credential = { "success": false, info: "Support coming soon...", code: 1000 };
+      const credential = {
+        success: false,
+        info: 'Support coming soon...',
+        code: 1000,
+      };
       return credential;
     }
   }
-
 
   async googleSync(hasfacebook: boolean) {
     //if(this.resource.appMode){
@@ -696,35 +850,55 @@ export class AuthService {
     //}else{
     const provider = new GoogleAuthProvider();
     const credential: any = await this.afAuth.currentUser;
-    const linkX = linkWithPopup(credential, provider).then(lin => {
-      let newProfile: any = lin.user;
-      let newEmail = newProfile.email || "";
-      let newEmailV = newProfile.verified_email || false;
+    const linkX = linkWithPopup(credential, provider)
+      .then((lin) => {
+        let newProfile: any = lin.user;
+        let newEmail = newProfile.email || '';
+        let newEmailV = newProfile.verified_email || false;
 
-      if (!newProfile || !newEmail || !newEmailV) {
-        return { "success": false, info: "The account does not meet our social log in standards." }
-      } else {
-        console.log("mega: ", newProfile, newEmail, newEmailV)
+        if (!newProfile || !newEmail || !newEmailV) {
+          return {
+            success: false,
+            info: 'The account does not meet our social log in standards.',
+          };
+        } else {
+          console.log('mega: ', newProfile, newEmail, newEmailV);
 
-        const userData = !hasfacebook ? {
-          axess: arrayUnion("google"),
-          emails: arrayUnion(newEmail),
-          email: newEmail
-        } : {
-          axess: arrayUnion("google"),
-          emails: arrayUnion(newEmail)
+          const userData = !hasfacebook
+            ? {
+                axess: arrayUnion('google'),
+                emails: arrayUnion(newEmail),
+                email: newEmail,
+              }
+            : {
+                axess: arrayUnion('google'),
+                emails: arrayUnion(newEmail),
+              };
+
+          const userRef = doc(
+            this.firestore,
+            `${this.resource.env.db.users}`,
+            `${lin?.user?.uid}`
+          );
+          return updateDoc(userRef, userData)
+            .then(() => {
+              return { success: true, info: '' };
+            })
+            .catch((err) => {
+              return {
+                success: false,
+                info: 'The account has issues. please contact our dev team.',
+              };
+            });
         }
-
-        const userRef = doc(this.firestore, `${this.resource.env.db.users}`, `${lin?.user?.uid}`);
-        return updateDoc(userRef, userData).then(() => {
-          return { "success": true, info: "" }
-        }).catch(err => {
-          return { "success": false, info: "The account has issues. please contact our dev team." }
-        })
-      }
-    }).catch(err => {
-      return { "success": false, info: "issue: " + err.message, code: err.code }
-    })
+      })
+      .catch((err) => {
+        return {
+          success: false,
+          info: 'issue: ' + err.message,
+          code: err.code,
+        };
+      });
 
     return linkX;
     //}
@@ -776,10 +950,13 @@ export class AuthService {
     // })
     return linkX;
 */
-    const credential = { "success": false, info: "Support coming soon...", code: 1000 };
+    const credential = {
+      success: false,
+      info: 'Support coming soon...',
+      code: 1000,
+    };
     return credential;
   }
-
 
   // async microsoftSignin() {
   //   const provider = new app.auth.GoogleAuthProvider;
@@ -798,17 +975,28 @@ export class AuthService {
   socialCreate(cred: any, medium: string) {
     const newUser = {
       user: { uid: cred.uid },
-      phone: "",
-      name: cred.displayName, iso: "", coin: "",
-      email: cred.email, emailV: true
-    }
-    return this.updateUserData(medium, newUser.user, newUser.phone, newUser.name, newUser.iso, newUser.coin, newUser.email, newUser.emailV);
+      phone: '',
+      name: cred.displayName,
+      iso: '',
+      coin: '',
+      email: cred.email,
+      emailV: true,
+    };
+    return this.updateUserData(
+      medium,
+      newUser.user,
+      newUser.phone,
+      newUser.name,
+      newUser.iso,
+      newUser.coin,
+      newUser.email,
+      newUser.emailV
+    );
   }
 
   // upgradeSocial(){
   //   this.user$ = this.getLogUSER();
   // }
-
 
   async signOut() {
     //this.resource.playSound('beep');
@@ -825,71 +1013,85 @@ export class AuthService {
   }
   // AUTH SYSTEM
 
-
-
   // UPDATE ABOUT
 
   async updateUserBio(
     uid: string,
-    nameCu: string, name: string,
-    soIG: string, soYT: string, soTW: string, soWA: string
-    //username:string, info:string, url:string, typ:number, sex:number, stat:string 
+    nameCu: string,
+    name: string,
+    soIG: string,
+    soYT: string,
+    soTW: string,
+    soWA: string
+    //username:string, info:string, url:string, typ:number, sex:number, stat:string
   ) {
     const newTimestamp = this.getServerTimestamp();
     if (nameCu !== name) {
       const credential: any = await this.afAuth.currentUser;
       //this.afAuth.currentUser.then(data => { data?.updateProfile({displayName:name}) });
-      updateProfile(credential, { displayName: name })
+      updateProfile(credential, { displayName: name });
       // if(!username){ //NO USERNAME
       //   let looks:string[] = this.resources.getLOOKUP( name.toLowerCase() );
       //   return this.afs.doc<User>(`${this.resources.env.db.users}/${uid}`).update({ name:name, info:info, url:url, typ:typ, sex:sex, stat:stat, look:looks, upd: newTimestamp });
       // }else{ //HAS USERNAME
       //   let looks:string[] = this.resources.getLOOKUP( username +' '+ name.toLowerCase() );
-      const userRef = doc(this.firestore, `${this.resource.env.db.users}`, `${uid}`);
+      const userRef = doc(
+        this.firestore,
+        `${this.resource.env.db.users}`,
+        `${uid}`
+      );
       return updateDoc(userRef, {
         name: name,
-        //info:info, url:url, typ:typ, sex:sex, stat:stat, look:looks, 
-        upd: newTimestamp
+        //info:info, url:url, typ:typ, sex:sex, stat:stat, look:looks,
+        upd: newTimestamp,
       });
       // }
     } else {
-      const userRef = doc(this.firestore, `${this.resource.env.db.users}`, `${uid}`);
+      const userRef = doc(
+        this.firestore,
+        `${this.resource.env.db.users}`,
+        `${uid}`
+      );
       return updateDoc(userRef, {
-        //name:name, 
-        soIG, soYT, soTW, soWA,
-        //info:info, url:url, typ:typ, sex:sex, stat:stat, 
-        upd: newTimestamp
+        //name:name,
+        soIG,
+        soYT,
+        soTW,
+        soWA,
+        //info:info, url:url, typ:typ, sex:sex, stat:stat,
+        upd: newTimestamp,
       });
     }
-
   }
-
 
   clearNotifications() {
     const newTimestamp = this.getServerTimestamp();
-    this.user$.pipe(take(1)).subscribe(ref => {
+    this.user$.pipe(take(1)).subscribe((ref) => {
       if (!ref) {
-        this.resource.startSnackBar("issue: Failed to clear notifications")
-        return EMPTY
+        this.resource.startSnackBar('issue: Failed to clear notifications');
+        return EMPTY;
       } else {
-        const userRef = doc(this.firestore, `${this.resource.env.db.users}`, `${ref.uid}`);
+        const userRef = doc(
+          this.firestore,
+          `${this.resource.env.db.users}`,
+          `${ref.uid}`
+        );
         return updateDoc(userRef, {
           note: [],
-          upd: newTimestamp
+          upd: newTimestamp,
         });
       }
-    })
+    });
   }
   // UPDATE ABOUT
 
-
   getCategoryList() {
-    const catData: CollectionReference = collection(this.firestore, `${this.resource.env.db.categories}`)
-    const qu = query(catData,
-      orderBy("title"),
-      limit(22)
+    const catData: CollectionReference = collection(
+      this.firestore,
+      `${this.resource.env.db.categories}`
     );
-    return collectionData(qu)
+    const qu = query(catData, orderBy('title'), limit(22));
+    return collectionData(qu);
     //  r => r
     // .orderBy("title")
     // .limit(22)
@@ -900,75 +1102,148 @@ export class AuthService {
 
   createStore(data: any, logo: string, banner: string) {
     const newTimestamp = this.getServerTimestamp();
-    const locateID = data.nationISO + "_" + data.stateISO + "_" + Date.now();
+    const locateID = data.nationISO + '_' + data.stateISO + '_' + Date.now();
 
     const dataSend: Shop = {
-      id: "", //this.storeLoc
-      email: data.email, phone: data.phone, name: data.storeName,
-      logo: "", banner: "", banners: [],
-      type: data.storeType, typeORDER: {
-        logistics: data.logistics, delivery: data.delivery,
-        exchange: data.exchange, return: data.exchange, refund: data.exchange,
+      id: '', //this.storeLoc
+      email: data.email,
+      phone: data.phone,
+      name: data.storeName,
+      logo: '',
+      banner: '',
+      banners: [],
+      type: data.storeType,
+      typeORDER: {
+        logistics: data.logistics,
+        delivery: data.delivery,
+        exchange: data.exchange,
+        return: data.exchange,
+        refund: data.exchange,
         COD: data.COD,
-      }, cat: data.storeCat, subCat: data.storeSubCat, proCat: [], products: 0, loc: [
+      },
+      cat: data.storeCat,
+      subCat: data.storeSubCat,
+      proCat: [],
+      products: 0,
+      loc: [
         {
           id: locateID,
-          lat: (data.loc.latitude || ""), lon: (data.loc.longitude || ""), area: data.locSearch,
-          line1: data.locAddress, line2: "", locality: data.locality, zip: data.postal_code,
-          region: data.administrative_area_level_1, city: data.administrative_area_level_2, state: data.stateISO, nation: data.nationISO,
-        }
-      ], schedule: {
-        opensDaily: data.opensDaily, opensDailyS: data.opensDailyS, opensDailyE: data.opensDailyE,
-        openMon: data.openMon, openMonS: data.openMonS, openMonE: data.openMonE,
-        openTue: data.openTue, openTueS: data.openTueS, openTueE: data.openTueE,
-        openWed: data.openWed, openWedS: data.openWedS, openWedE: data.openWedE,
-        openThu: data.openThu, openThuS: data.openThuS, openThuE: data.openThuE,
-        openFri: data.openFri, openFriS: data.openFriS, openFriE: data.openFriE,
-        openSat: data.openSat, openSatS: data.openSatS, openSatE: data.openSatE,
-        openSun: data.openSun, openSunS: data.openSunS, openSunE: data.openSunE
-      }, by: data.by,
-      sin: newTimestamp, log: newTimestamp, upd: newTimestamp,
-    }
+          lat: data.loc.latitude || '',
+          lon: data.loc.longitude || '',
+          area: data.locSearch,
+          line1: data.locAddress,
+          line2: '',
+          locality: data.locality,
+          zip: data.postal_code,
+          region: data.administrative_area_level_1,
+          city: data.administrative_area_level_2,
+          state: data.stateISO,
+          nation: data.nationISO,
+        },
+      ],
+      schedule: {
+        opensDaily: data.opensDaily,
+        opensDailyS: data.opensDailyS,
+        opensDailyE: data.opensDailyE,
+        openMon: data.openMon,
+        openMonS: data.openMonS,
+        openMonE: data.openMonE,
+        openTue: data.openTue,
+        openTueS: data.openTueS,
+        openTueE: data.openTueE,
+        openWed: data.openWed,
+        openWedS: data.openWedS,
+        openWedE: data.openWedE,
+        openThu: data.openThu,
+        openThuS: data.openThuS,
+        openThuE: data.openThuE,
+        openFri: data.openFri,
+        openFriS: data.openFriS,
+        openFriE: data.openFriE,
+        openSat: data.openSat,
+        openSatS: data.openSatS,
+        openSatE: data.openSatE,
+        openSun: data.openSun,
+        openSunS: data.openSunS,
+        openSunE: data.openSunE,
+      },
+      by: data.by,
+      sin: newTimestamp,
+      log: newTimestamp,
+      upd: newTimestamp,
+    };
 
     console.log(dataSend, logo, banner);
 
     //const shopRef: AngularFirestoreDocument<Shop> = this.afs.doc(`${this.resource.env.db.shops}/${data.by}`);
     //return shopRef.set(dataSend, { merge: true }).then(() => {
-    const shopRefC = collection(this.firestore, `${this.resource.env.db.shops}`)
-    return addDoc(shopRefC, dataSend).then(ref => {
-      const refUser = doc(this.firestore, `${this.resource.env.db.users}`, `${data.by}`);
-      return updateDoc(refUser, { storeLoc: arrayUnion(ref.id) }).then(async () => {
-        const shopRef = doc(this.firestore, `${this.resource.env.db.shops}`, `${ref.id}`);
+    const shopRefC = collection(
+      this.firestore,
+      `${this.resource.env.db.shops}`
+    );
+    return addDoc(shopRefC, dataSend).then((ref) => {
+      const refUser = doc(
+        this.firestore,
+        `${this.resource.env.db.users}`,
+        `${data.by}`
+      );
+      return updateDoc(refUser, { storeLoc: arrayUnion(ref.id) }).then(
+        async () => {
+          const shopRef = doc(
+            this.firestore,
+            `${this.resource.env.db.shops}`,
+            `${ref.id}`
+          );
 
-        const cloudUploadLogo = await this.cloudUpload(ref.id, logo);
-        const cloudUploadBanner = await this.cloudUpload(ref.id, banner);
-        return updateDoc(shopRef, { id: ref.id, logo: cloudUploadLogo.url, banner: cloudUploadBanner.url }).then(() => {
-        }).catch(err => {
-          return err;
-        })
-
-      })
-    })
-
+          const cloudUploadLogo = await this.cloudUpload(ref.id, logo);
+          const cloudUploadBanner = await this.cloudUpload(ref.id, banner);
+          return updateDoc(shopRef, {
+            id: ref.id,
+            logo: cloudUploadLogo.url,
+            banner: cloudUploadBanner.url,
+          })
+            .then(() => {})
+            .catch((err) => {
+              return err;
+            });
+        }
+      );
+    });
   }
 
   addPhoneNumber(uid: string, phone: string, iso: string, coin: string) {
-    const userRef = doc(this.firestore, `${this.resource.env.db.users}`, `${uid}`);
+    const userRef = doc(
+      this.firestore,
+      `${this.resource.env.db.users}`,
+      `${uid}`
+    );
     return updateDoc(userRef, { phone: phone, iso: iso, coin: coin });
   }
 
   addLocation(data: any) {
     const newTimestamp = this.getServerTimestamp();
-    const locateID = data.nationISO + "_" + data.stateISO + "_" + Date.now();
+    const locateID = data.nationISO + '_' + data.stateISO + '_' + Date.now();
 
     const dataSend: Locate = {
       id: locateID,
-      lat: data.loc.latitude, lon: data.loc.longitude, area: data.locSearch,
-      line1: data.locAddress, line2: "", locality: data.locality, zip: data.postal_code,
-      region: data.administrative_area_level_1, city: data.administrative_area_level_2, state: data.stateISO, nation: data.nationISO,
-    }
-    console.log("dataSend", dataSend);
-    const refShop = doc(this.firestore, `${this.resource.env.db.shops}`, `${data.storeID}`);
+      lat: data.loc.latitude,
+      lon: data.loc.longitude,
+      area: data.locSearch,
+      line1: data.locAddress,
+      line2: '',
+      locality: data.locality,
+      zip: data.postal_code,
+      region: data.administrative_area_level_1,
+      city: data.administrative_area_level_2,
+      state: data.stateISO,
+      nation: data.nationISO,
+    };
+    console.log('dataSend', dataSend);
+    const refShop = doc(
+      this.firestore,
+      `${this.resource.env.db.shops}`,
+      `${data.storeID}`
+    );
     return updateDoc(refShop, { loc: arrayUnion(dataSend), upd: newTimestamp });
   }
   /*
@@ -1032,8 +1307,11 @@ export class AuthService {
   }
   */
   getMyStore(uid: string) {
-    const catDataC = collection(this.firestore, `${this.resource.env.db.shops}`)
-    const qu = query(catDataC, where("by", "==", uid));
+    const catDataC = collection(
+      this.firestore,
+      `${this.resource.env.db.shops}`
+    );
+    const qu = query(catDataC, where('by', '==', uid));
     return collectionData(qu);
   }
 
@@ -1041,66 +1319,117 @@ export class AuthService {
     const newTimestamp = this.getServerTimestamp();
 
     const dataSend: Hype = {
-      id: "", tX: tX, customAct: false, customPay: payCustom,
-      type: data.type, storeTyp: data.storeTyp, paid: false,
+      id: '',
+      tX: tX,
+      customAct: false,
+      customPay: payCustom,
+      type: data.type,
+      storeTyp: data.storeTyp,
+      paid: false,
       name: data.campaignName,
-      cbNew: data.cbNew, cbExi: data.cbExi, cbDir: data.cbDir,
-      min: data.min, max: data.max,
-      expiry: data.expiry, dateS: data.dateS, dateE: data.dateE,
-      stage: data.stage, paused: false, stoped: false, ban: false,
-      countS: 0, countP: 0, countM: 0,
-      sin: newTimestamp, upd: newTimestamp, by: data.by, sid: data.storeID
-    }
-    const hypeRefC = collection(this.firestore, `${this.resource.env.db.hypes}`);
-    return addDoc(hypeRefC, dataSend).then(ref => {
-      console.log("DONE", ref.id)
+      cbNew: data.cbNew,
+      cbExi: data.cbExi,
+      cbDir: data.cbDir,
+      min: data.min,
+      max: data.max,
+      expiry: data.expiry,
+      dateS: data.dateS,
+      dateE: data.dateE,
+      stage: data.stage,
+      paused: false,
+      stoped: false,
+      ban: false,
+      countS: 0,
+      countP: 0,
+      countM: 0,
+      sin: newTimestamp,
+      upd: newTimestamp,
+      by: data.by,
+      sid: data.storeID,
+    };
+    const hypeRefC = collection(
+      this.firestore,
+      `${this.resource.env.db.hypes}`
+    );
+    return addDoc(hypeRefC, dataSend).then((ref) => {
+      console.log('DONE', ref.id);
 
-      const userRef = doc(this.firestore, `${this.resource.env.db.users}`, `${data.by}`);
-      return updateDoc(userRef, { storeCam: arrayUnion(ref.id) }).then(() => {
-        console.log("DONE2")
+      const userRef = doc(
+        this.firestore,
+        `${this.resource.env.db.users}`,
+        `${data.by}`
+      );
+      return updateDoc(userRef, { storeCam: arrayUnion(ref.id) })
+        .then(() => {
+          console.log('DONE2');
 
-        const hypeRef = doc(this.firestore, `${this.resource.env.db.hypes}`, `${ref.id}`);
-        return updateDoc(hypeRef, { id: ref.id }).then(() => {
-          //console.log("DONE2", ref.id)
-          return ref;
-        }).catch(err => {// HANDLE ISSUE
-          console.log("DONE3", err)
-          return err;
+          const hypeRef = doc(
+            this.firestore,
+            `${this.resource.env.db.hypes}`,
+            `${ref.id}`
+          );
+          return updateDoc(hypeRef, { id: ref.id })
+            .then(() => {
+              //console.log("DONE2", ref.id)
+              return ref;
+            })
+            .catch((err) => {
+              // HANDLE ISSUE
+              console.log('DONE3', err);
+              return err;
+            });
         })
-      }).catch(err => {// HANDLE ISSUE
-        console.log("DONE1", err)
-        return err;
-      })
-    })
+        .catch((err) => {
+          // HANDLE ISSUE
+          console.log('DONE1', err);
+          return err;
+        });
+    });
   }
 
-
   getCampaignByID(id: string) {
-    const catDataC = collection(this.firestore, `${this.resource.env.db.hypes}`)
-    const qu = query(catDataC, where("id", "==", id));
+    const catDataC = collection(
+      this.firestore,
+      `${this.resource.env.db.hypes}`
+    );
+    const qu = query(catDataC, where('id', '==', id));
     return collectionData(qu);
   }
 
   getMyCampaignByUID(uid: string, s: number) {
-    const catDataC = collection(this.firestore, `${this.resource.env.db.hypes}`)
-    const qu = query(catDataC, where("by", "==", uid), orderBy("sin", "desc"), limit(s));
+    const catDataC = collection(
+      this.firestore,
+      `${this.resource.env.db.hypes}`
+    );
+    const qu = query(
+      catDataC,
+      where('by', '==', uid),
+      orderBy('sin', 'desc'),
+      limit(s)
+    );
     return collectionData(qu);
   }
 
   getMyProductByUID(uid: string, s: number) {
-    const catDataC = collection(this.firestore, `${this.resource.env.db.things}`)
-    const qu = query(catDataC, where("by", "==", uid), orderBy("sin", "desc"), limit(s));
+    const catDataC = collection(
+      this.firestore,
+      `${this.resource.env.db.things}`
+    );
+    const qu = query(
+      catDataC,
+      where('by', '==', uid),
+      orderBy('sin', 'desc'),
+      limit(s)
+    );
     return collectionData(qu);
   }
 
-
-
-
   async updateStoreBio(
     id: string,
-    nameCu: string, name: string,
+    nameCu: string,
+    name: string
     //soIG:string, soYT:string, soTW:string, soWA:string
-    //username:string, info:string, url:string, typ:number, sex:number, stat:string 
+    //username:string, info:string, url:string, typ:number, sex:number, stat:string
   ) {
     const newTimestamp = this.getServerTimestamp();
     //const credential:any = await this.afAuth.currentUser;
@@ -1111,23 +1440,34 @@ export class AuthService {
     //   return this.afs.doc<User>(`${this.resources.env.db.users}/${uid}`).update({ name:name, info:info, url:url, typ:typ, sex:sex, stat:stat, look:looks, upd: newTimestamp });
     // }else{ //HAS USERNAME
     //   let looks:string[] = this.resources.getLOOKUP( username +' '+ name.toLowerCase() );
-    const userRef = doc(this.firestore, `${this.resource.env.db.shops}`, `${id}`);
+    const userRef = doc(
+      this.firestore,
+      `${this.resource.env.db.shops}`,
+      `${id}`
+    );
     return updateDoc(userRef, {
       name: name,
       //soIG, soYT, soTW, soWA,
-      //info:info, url:url, typ:typ, sex:sex, stat:stat, look:looks, 
-      upd: newTimestamp
+      //info:info, url:url, typ:typ, sex:sex, stat:stat, look:looks,
+      upd: newTimestamp,
     });
   }
 
   async updateStoreLogo(id: string, logo: string) {
     const newTimestamp = this.getServerTimestamp();
-    const userRef = doc(this.firestore, `${this.resource.env.db.shops}`, `${id}`);
+    const userRef = doc(
+      this.firestore,
+      `${this.resource.env.db.shops}`,
+      `${id}`
+    );
     const cloudUpload = await this.cloudUpload(id, logo);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
-      return updateDoc(userRef, { logo: cloudUpload.url, upd: newTimestamp }).then(() => {
+      return updateDoc(userRef, {
+        logo: cloudUpload.url,
+        upd: newTimestamp,
+      }).then(() => {
         return cloudUpload;
       });
     }
@@ -1135,12 +1475,19 @@ export class AuthService {
 
   async updateStoreBanner(id: string, banner: string) {
     const newTimestamp = this.getServerTimestamp();
-    const userRef = doc(this.firestore, `${this.resource.env.db.shops}`, `${id}`);
+    const userRef = doc(
+      this.firestore,
+      `${this.resource.env.db.shops}`,
+      `${id}`
+    );
     const cloudUpload = await this.cloudUpload(id, banner);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
-      return updateDoc(userRef, { banner: cloudUpload.url, upd: newTimestamp }).then(() => {
+      return updateDoc(userRef, {
+        banner: cloudUpload.url,
+        upd: newTimestamp,
+      }).then(() => {
         return cloudUpload;
       });
     }
@@ -1148,12 +1495,19 @@ export class AuthService {
 
   async addStoreBanners(id: string, banner: string) {
     const newTimestamp = this.getServerTimestamp();
-    const userRef = doc(this.firestore, `${this.resource.env.db.shops}`, `${id}`);
+    const userRef = doc(
+      this.firestore,
+      `${this.resource.env.db.shops}`,
+      `${id}`
+    );
     const cloudUpload = await this.cloudUpload(id, banner);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
-      return updateDoc(userRef, { banners: arrayUnion(cloudUpload.url), upd: newTimestamp }).then(() => {
+      return updateDoc(userRef, {
+        banners: arrayUnion(cloudUpload.url),
+        upd: newTimestamp,
+      }).then(() => {
         return cloudUpload;
       });
     }
@@ -1161,24 +1515,33 @@ export class AuthService {
 
   async removeStoreBanners(id: string, banner: string) {
     const newTimestamp = this.getServerTimestamp();
-    const userRef = doc(this.firestore, `${this.resource.env.db.shops}`, `${id}`);
-    return updateDoc(userRef, { banners: arrayRemove(banner), upd: newTimestamp });
+    const userRef = doc(
+      this.firestore,
+      `${this.resource.env.db.shops}`,
+      `${id}`
+    );
+    return updateDoc(userRef, {
+      banners: arrayRemove(banner),
+      upd: newTimestamp,
+    });
   }
 
   cloudUpload(idX: string, base64String: string) {
     const imgID = idX + Date.now();
-    const bannerRef = ref(this.fireStorage, "store/" + imgID);
+    const bannerRef = ref(this.fireStorage, 'store/' + imgID);
 
-    return uploadString(bannerRef, base64String.split(',')[1], 'base64').then((snapshot) => {
-      console.log('Uploaded a base64 string!', snapshot);
-      return getDownloadURL(bannerRef).then(dlURL => {
-        console.log("getDownloadURL", dlURL)
-        return { success: true, url: dlURL }
+    return uploadString(bannerRef, base64String.split(',')[1], 'base64')
+      .then((snapshot) => {
+        console.log('Uploaded a base64 string!', snapshot);
+        return getDownloadURL(bannerRef).then((dlURL) => {
+          console.log('getDownloadURL', dlURL);
+          return { success: true, url: dlURL };
+        });
       })
-    }).catch(err => {
-      console.log('Uploaded a base64 string! Fail', err);
-      return { success: false, url: "" }
-    });
+      .catch((err) => {
+        console.log('Uploaded a base64 string! Fail', err);
+        return { success: false, url: '' };
+      });
   }
 
   /*
@@ -1283,47 +1646,61 @@ export class AuthService {
   }
   */
 
-
   getUserList(c: number) {
-    const catData: CollectionReference = collection(this.firestore, `${this.resource.env.db.users}`)
-    const qu = query(catData,
+    const catData: CollectionReference = collection(
+      this.firestore,
+      `${this.resource.env.db.users}`
+    );
+    const qu = query(
+      catData,
       //where("ban", "==", false),
-      orderBy("sin", "asc"),
+      orderBy('sin', 'asc'),
       limit(c)
     );
-    return collectionData(qu)
+    return collectionData(qu);
   }
 
   getStoreList(c: number) {
-    const catData: CollectionReference = collection(this.firestore, `${this.resource.env.db.shops}`)
-    const qu = query(catData,
+    const catData: CollectionReference = collection(
+      this.firestore,
+      `${this.resource.env.db.shops}`
+    );
+    const qu = query(
+      catData,
       //where("ban", "==", false),
-      orderBy("sin", "desc"),
+      orderBy('sin', 'desc'),
       limit(c)
     );
-    return collectionData(qu)
+    return collectionData(qu);
   }
 
   getCampaignList(c: number) {
-    const catData: CollectionReference = collection(this.firestore, `${this.resource.env.db.hypes}`)
-    const qu = query(catData,
+    const catData: CollectionReference = collection(
+      this.firestore,
+      `${this.resource.env.db.hypes}`
+    );
+    const qu = query(
+      catData,
       //where("ban", "==", false),
-      orderBy("sin", "asc"),
+      orderBy('sin', 'asc'),
       limit(c)
     );
-    return collectionData(qu)
+    return collectionData(qu);
   }
 
   getProductList(c: number) {
-    const catData: CollectionReference = collection(this.firestore, `${this.resource.env.db.things}`)
-    const qu = query(catData,
+    const catData: CollectionReference = collection(
+      this.firestore,
+      `${this.resource.env.db.things}`
+    );
+    const qu = query(
+      catData,
       //where("ban", "==", false),
-      orderBy("sin", "asc"),
+      orderBy('sin', 'asc'),
       limit(c)
     );
-    return collectionData(qu)
+    return collectionData(qu);
   }
-
 
   getOrderList(c: number) {
     /*
@@ -1336,6 +1713,4 @@ export class AuthService {
     return collectionData( qu )
     */
   }
-
-
 }
