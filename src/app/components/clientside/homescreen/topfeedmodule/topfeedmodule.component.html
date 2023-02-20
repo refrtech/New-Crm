@@ -11,7 +11,7 @@
         <span class="fs_24 boldtext lr15padding AScenter">Top Feed module</span>
         <span class="divide"></span>
         <div class="AScenter">
-            <button mat-button routerLink="/feedsection"
+            <button mat-button (click)="addSlide(1)"
                 class="s_size semiboldtext purple_background normallineheight tb5padding l15padding r15padding White_txt">
                 <mat-icon class="xml_size">add</mat-icon>
                 Add Slide
@@ -32,15 +32,16 @@
             <div class="example-container M100width">
                 <div cdkDropList [cdkDropListData]="feedSection" class="example-list"
                     (cdkDropListDropped)="drop($event)">
-                    <div class="example-box tborder s_size" *ngFor="let item of feedSection" cdkDrag>
+                    <div class="example-box tborder s_size" *ngFor="let item of getVideoData" cdkDrag>
                         <div class="M5width dflex JCcenter">
                             <mat-icon>menu</mat-icon>
                         </div>
                         <div class="M25width l_align gray_txt">
-                            {{item.date}}
+                            {{item.created_at.toDate() | date:'MMM dd, yyyy'}}
                         </div>
                         <div class="M25width c_align semiboldtext">
                             {{item.slides}}
+                            {{item.name}}
                         </div>
                         <div class="M45width c_align">
                             <a [routerLink]="item.link">
@@ -54,5 +55,14 @@
                 </div>
             </div>
         </div>
+    </div>
+
+
+
+
+    <!-- empty state -->
+
+    <div *ngIf="getVideoData.length == 0">
+        <p>no data</p>
     </div>
 </div>
