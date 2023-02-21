@@ -4,6 +4,9 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
+import { AddinfoslideComponent } from './addinfoslide/addinfoslide.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ApiserviceService } from 'src/app/apiservice.service';
 
 @Component({
   selector: 'app-informationslide',
@@ -14,28 +17,69 @@ export class InformationslideComponent implements OnInit {
   slide: boolean = false;
   currentSlide: any[] = [];
 
-  constructor() {}
+  getVideoData: any;
 
-  ngOnInit(): void {}
+  id: string = '';
+  videoData: string = '';
+  videoPath: string = '';
 
-  feedSection: Array<any> = [
-    { date: '23/2/2023', slides: 'Slide 1', link: '/addinfoslide' },
-  ];
+  constructor(private dailog: MatDialog, public api: ApiserviceService) {}
 
-  drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
+  ngOnInit(): void {
+    this.getVideo();
+  }
+
+  addSlide(id: number, data?: any) {
+    const dialogRef = this.dailog.open(AddinfoslideComponent, {
+      width: '50%',
+      data: { id: id, videoData: data },
+      hasBackdrop: true,
+      disableClose: false,
+      panelClass: 'thanksscreen',
+    });
+  }
+
+  getVideo() {
+    this.api.infogetuploadVideo().subscribe((data: any) => {
+      this.getVideoData = data;
+      console.log('get data', data);
+    });
+  }
+
+  deleteVid(id: any) {
+    if (id == undefined) {
+      alert('invalid data');
     } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
+      this.api.infodeleteVideo(id).then((data: any) => {
+        alert('area deleted');
+      });
     }
   }
+
+  view(data?: any) {
+    const dialogRef = this.dailog.open(AddinfoslideComponent, {
+      width: '50%',
+      data: { videoData: data },
+      hasBackdrop: true,
+      disableClose: false,
+      panelClass: 'thanksscreen',
+    });
+  }
+
+  // drop(event: CdkDragDrop<string[]>) {
+  //   if (event.previousContainer === event.container) {
+  //     moveItemInArray(
+  //       event.container.data,
+  //       event.previousIndex,
+  //       event.currentIndex
+  //     );
+  //   } else {
+  //     transferArrayItem(
+  //       event.previousContainer.data,
+  //       event.container.data,
+  //       event.previousIndex,
+  //       event.currentIndex
+  //     );
+  //   }
+  // }
 }

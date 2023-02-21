@@ -44,11 +44,11 @@
                             {{item.name}}
                         </div>
                         <div class="M45width c_align">
-                            <a [routerLink]="item.link">
+                            <!-- <a [routerLink]="item.link">
                                 <mat-icon class="black_text r15margin">edit</mat-icon>
-                            </a>
+                            </a> -->
                             <a>
-                                <mat-icon class="black_text">delete</mat-icon>
+                                <mat-icon (click)="deleteVid(item.id)" class="black_text">delete</mat-icon>
                             </a>
                         </div>
                     </div>

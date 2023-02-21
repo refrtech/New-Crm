@@ -573,6 +573,31 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
+  viewVideo(data: any) {
+    console.log('99999');
+
+    // const videoRef = doc(this.firestore, `${'info_slide'}`, `${data.id}`);
+    // return updateDoc(videoRef, {
+    //   name: data.name,
+    //   // id: data.id,
+    //   path: data.path,
+    // })
+    //   .then((datas: any) => {
+    //     console.log('****');
+    //     console.log(datas, 'viewData');
+    //     console.log('****');
+    //     if (datas) {
+    //       return 'issue in file';
+    //     } else {
+    //       return 'view';
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log('view video service', err);
+    //     return false;
+    //   });
+  }
+
   updatecity(data: any) {
     const cityrefr = doc(this.firestore, `${'cities'}`, `${data.id}`);
     return updateDoc(cityrefr, {
@@ -798,5 +823,40 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
+  deleteVideo(id: any) {
+    const vidRef = doc(this.firestore, 'Top_Feed', `${id}`);
+    return deleteDoc(vidRef);
+  }
+
   // top feed video end
+
+  // info slide start
+
+  async infoUploadVideo(data: any) {
+    console.log('UploadVideo api');
+    await addDoc(collection(this.firestore, `${'info_slide'}`), data).then(
+      (ref) => {
+        const video = doc(this.firestore, 'info_slide', `${ref.id}`);
+        return updateDoc(video, { id: ref.id }).then(() => {
+          return ref;
+        });
+      }
+    );
+  }
+
+  infogetuploadVideo() {
+    const getuploadVideo: CollectionReference = collection(
+      this.firestore,
+      `${'info_slide'}`
+    );
+    const qu = query(getuploadVideo);
+    return collectionData(qu);
+  }
+
+  infodeleteVideo(id: any) {
+    const vidRef = doc(this.firestore, 'info_slide', `${id}`);
+    return deleteDoc(vidRef);
+  }
+
+  // info slide end
 }

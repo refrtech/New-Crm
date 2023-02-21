@@ -64,4 +64,14 @@ export class TopfeedmoduleComponent implements OnInit {
       console.log('get data', data);
     });
   }
+
+  deleteVid(id: any) {
+    if (id == undefined) {
+      alert('invalid data');
+    } else {
+      this.api.deleteVideo(id).then((data: any) => {
+        alert('area deleted');
+      });
+    }
+  }
 }

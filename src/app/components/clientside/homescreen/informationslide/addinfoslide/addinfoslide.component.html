@@ -1,6 +1,6 @@
 <div class="A20padding">
     <div class="dflex AIcenter">
-        <a routerLink="/infoslide">
+        <a routerLink="/feedmodule">
             <svg width="38" height="24" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M24 12H5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round"
@@ -8,7 +8,8 @@
             </svg>
 
         </a>
-        <span class="fs_24 boldtext lr15padding AScenter">Information Slide</span>
+        <span class="fs_24 boldtext lr15padding AScenter">Information Slide
+        </span>
 
     </div>
 
@@ -48,14 +49,17 @@
 
     <div class="dflex AIcenter Aborder A5padding t20margin A5radius" *ngIf="fileName >= '0'">
         <div class="feedmoduleImg">
-            <img [src]="url" *ngIf="format==='image' && url">
-            <video [src]="url" *ngIf="format==='video' && url" controls height="200"></video>
+            <img #imagePreview [src]="url" *ngIf="format==='image' && url">
+            <video #videoPlayer [src]="url" *ngIf="format==='video' && url" controls height="100"></video>
         </div>
         <div class="l10margin">
             {{fileName}}
         </div>
+        <!-- <div class="l10margin" *ngIf="view()">
+            {{showData.name}}
+        </div> -->
         <span class="divide"></span>
-        <div>
+        <!-- <div>
             <input class="b10margin d_none" #hiddenfileinput type="file" (change)="onSelectFile($event)">
             <a class="text_decoration_none r20margin purple_txt semiboldtext cursor_pointer">{{"Update"}}</a>
         </div>
@@ -66,15 +70,11 @@
             <mat-icon class="r20margin cursor_pointer">
                 delete
             </mat-icon>
-        </div>
+        </div> -->
 
     </div>
 
 
-    <div *ngIf="fileName < '0'">
-
-        no data
-    </div>
 
     <!-- <div>
         <div class="t20margin b15margin">
@@ -92,7 +92,8 @@
     <video [src]="url" *ngIf="format==='video' && url" height="200" controls></video> -->
 
     <div>
-        <button mat-button class="s_size normallineheight purple_background White_txt browse t50margin">Save</button>
+        <button (click)="addVideo()" mat-button
+            class="s_size normallineheight purple_background White_txt browse t50margin">Save</button>
     </div>
 </div>
 
