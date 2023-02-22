@@ -36,11 +36,6 @@ export class AddnodeComponent implements OnInit {
   isselectdisable: boolean = false;
   nodeid: string = "";
   constructor(
-    public as: ApiserviceService,
-    public rs: Router,
-    public fb: FormBuilder,
-    public ar: ActivatedRoute,
-    public auth: AuthService,
     public api: ApiserviceService,
     public dialogRef: MatDialogRef<AddnodeComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any

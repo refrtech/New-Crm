@@ -754,10 +754,203 @@ export class ApiserviceService {
     return updateDoc(cityrefr, { Nodes: nodes });
   }
 
-  VSAupdatestore(nodes: any, id: any) {
-    const cityrefr = doc(this.firestore, `${'VSA_section'}`, `${id}`);
+  // VSAupdatestore(nodes: any, id: any) {
+  //   const cityrefr = doc(this.firestore, `${'VSA_section'}`, `${id}`);
+  //   return updateDoc(cityrefr, { Nodes: nodes });
+  // }
+
+  // VSA section end
+
+  //BIYN section start
+  getBIYNData() {
+    const VSA_section: CollectionReference = collection(
+      this.firestore,
+      `${'BIYN_section'}`
+    );
+    const qu = query(VSA_section);
+    return collectionData(qu);
+  }
+
+
+  updateBIYNtitle(Title: string, id: any) {
+    const cityrefr = doc(this.firestore, `${'BIYN_section'}`, `${id}`);
+    return updateDoc(cityrefr, { BN_Title: Title }).then((datas: any) => {
+      if (datas) {
+        return "issue in update title.";
+      }
+      else {
+        return "title updated.";
+      }
+    })
+      .catch((err) => {
+        console.log(err);
+        return false;
+      });
+  }
+
+  updateBIYNStitle(STitle: string, id: any) {
+    const cityrefr = doc(this.firestore, `${'BIYN_section'}`, `${id}`);
+    return updateDoc(cityrefr, { BN_STitle: STitle }).then((datas: any) => {
+      if (datas) {
+        return "issue in update Sub-title.";
+      }
+      else {
+        return "Sub-title updated.";
+      }
+    })
+      .catch((err) => {
+        console.log(err);
+        return false;
+      });
+  }
+
+  addBIYNstores(nodes: any, id: any) {
+    const cityrefr = doc(this.firestore, `${'BIYN_section'}`, `${id}`);
+    return updateDoc(cityrefr, { Nodes: arrayUnion(nodes) });
+  }
+
+  editBIYNstores(nodes: any, id: any) {
+    const cityrefr = doc(this.firestore, `${'BIYN_section'}`, `${id}`);
     return updateDoc(cityrefr, { Nodes: nodes });
   }
 
-  // VSA section end
+  // async addBIYN(data: any) {
+  //   const addedcity = await addDoc(collection(this.firestore, "BIYN_section"), data).then(ref => {
+  //     const areeas = doc(this.firestore, 'BIYN_section', `${ref.id}`)
+  //     return updateDoc(areeas, { id: ref.id }).then(() => { return ref; })
+  //   })
+  // }
+
+  //BIYN section end
+
+
+  // NSIYH section start
+
+
+  getNSIYHData() {
+    const VSA_section: CollectionReference = collection(
+      this.firestore,
+      `${'NSIYH_section'}`
+    );
+    const qu = query(VSA_section);
+    return collectionData(qu);
+  }
+
+
+  updateNSIYHtitle(Title: string, id: any) {
+    console.log(id);
+    const cityrefr = doc(this.firestore, `${'NSIYH_section'}`, `${id}`);
+    return updateDoc(cityrefr, { NSIYH_Title: Title }).then((datas: any) => {
+      if (datas) {
+        return "issue in update title.";
+      }
+      else {
+        return "title updated.";
+      }
+    })
+      .catch((err) => {
+        console.log(err);
+        return false;
+      });
+  }
+
+  updateNSIYHStitle(STitle: string, id: any) {
+    const cityrefr = doc(this.firestore, `${'NSIYH_section'}`, `${id}`);
+    return updateDoc(cityrefr, { NSIYH_STitle: STitle }).then((datas: any) => {
+      if (datas) {
+        return "issue in update Sub-title.";
+      }
+      else {
+        return "Sub-title updated.";
+      }
+    })
+      .catch((err) => {
+        console.log(err);
+        return false;
+      });
+  }
+
+  addNSIYHstores(nodes: any, id: any) {
+    const cityrefr = doc(this.firestore, `${'NSIYH_section'}`, `${id}`);
+    return updateDoc(cityrefr, { Nodes: arrayUnion(nodes) });
+  }
+
+  editNSIYHstores(nodes: any, id: any) {
+    const cityrefr = doc(this.firestore, `${'NSIYH_section'}`, `${id}`);
+    return updateDoc(cityrefr, { Nodes: nodes });
+  }
+
+  // async addNSIYH(data: any) {
+  //    await addDoc(collection(this.firestore, "NSIYH_section"), data).then(ref => {
+  //     const areeas = doc(this.firestore, 'NSIYH_section', `${ref.id}`)
+  //     return updateDoc(areeas, { id: ref.id }).then(() => { return ref; })
+  //   })
+  // }
+
+  // NSIYH section end
+
+
+  // Daily drop start
+
+  getDailydropdata() {
+    const VSA_section: CollectionReference = collection(
+      this.firestore,
+      `${'dailyDrop_section'}`
+    );
+    const qu = query(VSA_section);
+    return collectionData(qu);
+  }
+
+
+  updateDailydroptitle(Title: string, id: any) {
+    console.log(id);
+    const cityrefr = doc(this.firestore, `${'dailyDrop_section'}`, `${id}`);
+    return updateDoc(cityrefr, { DDrop_Title: Title }).then((datas: any) => {
+      if (datas) {
+        return "issue in update title.";
+      }
+      else {
+        return "title updated.";
+      }
+    })
+      .catch((err) => {
+        console.log(err);
+        return false;
+      });
+  }
+
+  updateDailydropStitle(STitle: string, id: any) {
+    const cityrefr = doc(this.firestore, `${'dailyDrop_section'}`, `${id}`);
+    return updateDoc(cityrefr, { DDrop_STitle: STitle }).then((datas: any) => {
+      if (datas) {
+        return "issue in update Sub-title.";
+      }
+      else {
+        return "Sub-title updated.";
+      }
+    })
+      .catch((err) => {
+        console.log(err);
+        return false;
+      });
+  }
+
+  addDailydropstores(nodes: any, id: any) {
+    const cityrefr = doc(this.firestore, `${'dailyDrop_section'}`, `${id}`);
+    return updateDoc(cityrefr, { Nodes: arrayUnion(nodes) });
+  }
+
+  editDailydropstores(nodes: any, id: any) {
+    const cityrefr = doc(this.firestore, `${'dailyDrop_section'}`, `${id}`);
+    return updateDoc(cityrefr, { Nodes: nodes });
+  }
+
+  // async addDailydrop(data: any) {
+  //    await addDoc(collection(this.firestore, "dailyDrop_section"), data).then(ref => {
+  //     const areeas = doc(this.firestore, 'dailyDrop_section', `${ref.id}`)
+  //     return updateDoc(areeas, { id: ref.id }).then(() => { return ref; })
+  //   })
+  // }
+
+  // Daily drop end
 }

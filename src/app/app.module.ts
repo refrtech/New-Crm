@@ -75,9 +75,9 @@ import { DaildropsbrandsComponent } from './components/clientside/homescreen/dai
 import { BrandSpotlightComponent } from './components/clientside/homescreen/brand-spotlight/brand-spotlight.component';
 import { CropperComponent } from './placeholders/cropper/cropper.component';
 import { ContentComponent } from './placeholders/content/content.component';
-
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { NodemanagementCitysComponent } from './components/clientside/nodemanagement-citys/nodemanagement-citys.component';
+import { StoresinhoodComponent } from './components/clientside/homescreen/newstoreinhood/storesinhood/storesinhood.component';
 
 @NgModule({
   declarations: [
@@ -124,6 +124,7 @@ import { NodemanagementCitysComponent } from './components/clientside/nodemanage
     NodemanagementCitysComponent,
     CropperComponent,
     ContentComponent,
+    StoresinhoodComponent,
   ],
   imports: [
     MatDialogModule,

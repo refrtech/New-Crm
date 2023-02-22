@@ -26,7 +26,7 @@ export class VisitsharemoduleComponent implements OnInit {
   VSAmoduledata: any = [];
   selectednodedata: any;
   constructor(public router: Router, public api: ApiserviceService,
-    private dailog: MatDialog
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -48,10 +48,6 @@ export class VisitsharemoduleComponent implements OnInit {
     this.cityList$ = this.api.getcity().pipe(take(1));
   }
 
-  nodechange(data: any) {
-    this.selectednodedata = data;
-  }
-
   allstores(creatednode?: any) {
     console.log(creatednode);
     if (this.Selectedcity == "") {
@@ -61,8 +57,7 @@ export class VisitsharemoduleComponent implements OnInit {
       alert("please select node.")
     }
     else {
-      // this.router.navigate(['/storedetails/' + this.Selectednode]);
-      const dialogRef = this.dailog.open(VisitallstoredetailsComponent, {
+      const dialogRef = this.dialog.open(VisitallstoredetailsComponent, {
         width: "90%",
         data: { node: this.selectednodedata, id: this.VSAmoduledata.id, selectednode: creatednode, creatednodes: this.creatednodes },
         hasBackdrop: true,

@@ -1,10 +1,10 @@
-import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem,
-} from '@angular/cdk/drag-drop';
-import { Component, OnInit } from '@angular/core';
+
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { take } from 'rxjs';
+import { ApiserviceService } from 'src/app/apiservice.service';
 
 @Component({
   selector: 'app-brandsstore',
@@ -12,52 +12,113 @@ import { Router } from '@angular/router';
   styleUrls: ['./brandsstore.component.scss'],
 })
 export class BrandsstoreComponent implements OnInit {
-  id: number = 0;
+  parameters: string = "phone";
+  operators: string = "==";
+  searchvalue: string = "9833006431";//9833006431
+  isstorealreadyadded: boolean = false;
 
-  storedetails: Array<any> = [
+  ParaArr: Array<any> = [
     {
-      storename: 'Dinshaws Xpress cafe',
-      storetype: 'cafe',
+      Title: "Store Phone Number", titvalue: "phone",
     },
+    {
+      Title: "Store Id", titvalue: "id",
+    }
   ];
 
-  stores: Array<any> = [
-    { S_name: 'Dinshaws Xpress cafe', Category: 'Cafe', Last_m: '23/2/2023' },
-    { S_name: 'Mexichino', Category: 'Cafe', Last_m: '23/2/2023' },
-    { S_name: 'UK14 Icecream', Category: 'Cafe', Last_m: '23/2/2023' },
+  marchantColumns: string[] = [
+    "MerchantId",
+    "storename",
+    "contact",
+    "storetype",
+    "city",
+    "action"
   ];
+  storelist: Array<any> = [];
+  MerchantdataSource!: MatTableDataSource<any>;
 
-  constructor(public router: Router) {}
+  constructor(public router: Router,
+    public api: ApiserviceService,
+    public dialogRef: MatDialogRef<BrandsstoreComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,) {
+    this.storelist = this.data.selectednode != undefined ? this.data.selectednode.stores : [];
+    }
 
   ngOnInit(): void {}
 
-  addstorelink(adds: any) {
-    // visit share earn
-    if (this.router.url == '/storedetails/visitstoresection') {
-      this.router.navigate(['/addstore/' + adds]);
-    }
-    // Brands in your neighbourhood
+  action(data: any) {
+    //   let storess = [data];
+    //   data = {
+    //     Nareas: this.data.node.Nareas,
+    //     city: this.data.node.city,
+    //     city_id: this.data.node.city_id,
+    //     created_at: this.data.node.created_at,
+    //     id: this.data.node.id,
+    //     name: this.data.node.name,
+    //     stores: storess,
+    //     updated_at: this.data.node.updated_at,
+    //   }
+    //   console.log(data);
+    //   this.api.addVSAstores(data, this.data.id).then((data:any)=>{
+    //     if(!data){
+    //       // alert(error);
+    //     }
+    //   });
 
-    if (this.router.url == '/storedetails/brandsallstore') {
-      this.router.navigate(['/addstore/' + adds]);
+    let i = this.storelist.findIndex((x) => x.id == data.id);
+    if (i < 0) {
+      this.storelist.push(data);
+      this.isstorealreadyadded = true;
     }
-    console.log('click');
+    else {
+      this.storelist.splice(i, i + 1);
+      this.isstorealreadyadded = false;
+    }
   }
 
-  drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
+  close() {
+    this.dialogRef.close();
+  }
+
+  ApplyFilter() {
+    this.isstorealreadyadded = false;
+    this.api.getRecentStores(1, false, this.parameters, this.operators, this.searchvalue).pipe(take(1)).subscribe((recentStore: any) => {
+      this.MerchantdataSource = new MatTableDataSource(recentStore);
+      console.log(recentStore);
+      this.isstorealreadyadded = this.storelist.findIndex((x) => x.id == recentStore[0].id) < 0 ? false : true;
+    });
+  }
+
+  updatestore() {
+    if (this.data.selectednode == undefined) {
+      let data = {
+        Nareas: this.data.node.Nareas,
+        city: this.data.node.city,
+        city_id: this.data.node.city_id,
+        created_at: this.data.node.created_at,
+        id: this.data.node.id,
+        name: this.data.node.name,
+        stores: this.storelist,
+        updated_at: this.data.node.updated_at,
+      }
+      console.log(data);
+      this.api.addBIYNstores(data, this.data.id).then((data: any) => {
+        if (!data) {
+          this.dialogRef.close();
+        }
+      });
+    }
+    else {
+      console.log(this.data.selectednode.id);
+      let index = this.data.creatednodes.findIndex((x: any) => x.id == this.data.selectednode.id);
+      this.data.creatednodes[index].stores = this.storelist;
+      this.api.editBIYNstores(this.data.creatednodes, this.data.id).then((data: any) => {
+        if (!data) {
+          this.dialogRef.close();
+        }
+      });
+      console.log(this.data.creatednodes);
     }
   }
+
 }

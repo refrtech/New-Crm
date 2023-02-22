@@ -3,12 +3,13 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { take } from 'rxjs';
 import { ApiserviceService } from 'src/app/apiservice.service';
+
 @Component({
-  selector: 'app-daildropsbrands',
-  templateUrl: './daildropsbrands.component.html',
-  styleUrls: ['./daildropsbrands.component.scss'],
+  selector: 'app-storesinhood',
+  templateUrl: './storesinhood.component.html',
+  styleUrls: ['./storesinhood.component.scss']
 })
-export class DaildropsbrandsComponent implements OnInit {
+export class StoresinhoodComponent implements OnInit {
   parameters: string = "phone";
   operators: string = "==";
   searchvalue: string = "9833006431";//9833006431
@@ -35,7 +36,7 @@ export class DaildropsbrandsComponent implements OnInit {
   MerchantdataSource!: MatTableDataSource<any>;
   constructor(
     public api: ApiserviceService,
-    public dialogRef: MatDialogRef<DaildropsbrandsComponent>,
+    public dialogRef: MatDialogRef<StoresinhoodComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
     this.storelist = this.data.selectednode != undefined ? this.data.selectednode.stores : [];
@@ -82,7 +83,7 @@ export class DaildropsbrandsComponent implements OnInit {
         updated_at: this.data.node.updated_at,
       }
       console.log(data);
-      this.api.addDailydropstores(data, this.data.id).then((data: any) => {
+      this.api.addNSIYHstores(data, this.data.id).then((data: any) => {
         if (!data) {
           this.dialogRef.close();
         }
@@ -92,7 +93,7 @@ export class DaildropsbrandsComponent implements OnInit {
       console.log(this.data.selectednode.id);
       let index = this.data.creatednodes.findIndex((x: any) => x.id == this.data.selectednode.id);
       this.data.creatednodes[index].stores = this.storelist;
-      this.api.editDailydropstores(this.data.creatednodes, this.data.id).then((data: any) => {
+      this.api.editNSIYHstores(this.data.creatednodes, this.data.id).then((data: any) => {
         if (!data) {
           this.dialogRef.close();
         }
@@ -100,5 +101,5 @@ export class DaildropsbrandsComponent implements OnInit {
       console.log(this.data.creatednodes);
     }
   }
-}
 
+}

@@ -79,7 +79,7 @@
                         <mat-form-field class="crminput l5margin r5margin M70width" appearance="outline">
                             <mat-select placeholder="Select node" [(ngModel)]="Selectednode">
                                 <ng-container *ngIf="nodes$ | async as nodeList">
-                                    <mat-option *ngFor="let item of nodeList" [value]="item.id" (click)="nodechange(item)">
+                                    <mat-option *ngFor="let item of nodeList" [value]="item.id" (click)="selectednodedata = item">
                                         {{item.name}}
                                     </mat-option>
                                 </ng-container>
@@ -115,7 +115,7 @@
                                 </div>
                                 <div class="regulartext M50width c_align">
                                     <ng-container *ngFor="let items of item.stores">
-                                    <span class="stores">
+                                    <span class="lightgray_bg lr15padding tb5padding A20radius r5margin">
                                         {{items.name}}
                                     </span>
                                 </ng-container>

@@ -40,8 +40,7 @@ export class NodemanagementComponent implements OnInit {
       titvalue: 'kalyan',
     },
   ];
-  constructor(public api: ApiserviceService, public rs: Router, private dailog: MatDialog, private actRoute: ActivatedRoute) {
-    console.log(this.actRoute.snapshot.params["id"])
+  constructor(public api: ApiserviceService, public rs: Router, private dialog: MatDialog, private actRoute: ActivatedRoute) {
     this.cityID = this.actRoute.snapshot.params["id"];
   }
 
@@ -59,7 +58,7 @@ export class NodemanagementComponent implements OnInit {
   }
 
   opennode(id: any, data?: any) {
-    const dialogRef = this.dailog.open(AddnodeComponent, {
+    const dialogRef = this.dialog.open(AddnodeComponent, {
       width: "50%",
       data: { id: id, nodedata: data, selectedcityid: this.cityID },
       hasBackdrop: true,

@@ -13,7 +13,7 @@ export class SettingComponent implements OnInit {
   areaarr: Array<any> = [];
 
   constructor(public api: ApiserviceService,
-    private dailog: MatDialog,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -58,7 +58,7 @@ export class SettingComponent implements OnInit {
   }
 
   addUpdateCAA(id: number, data?: any) {
-    const dialogRef = this.dailog.open(AddcityAndAreaComponent, {
+    const dialogRef = this.dialog.open(AddcityAndAreaComponent, {
       width: "50%",
       data: { id: id, citydata: data },
       hasBackdrop: true,
