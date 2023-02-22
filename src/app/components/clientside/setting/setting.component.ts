@@ -34,7 +34,7 @@ export class SettingComponent implements OnInit {
     }
     else {
       this.api.deletecity(id).then((data: any) => {
-        alert("store deleted");
+        alert("city deleted");
       });
     }
   }

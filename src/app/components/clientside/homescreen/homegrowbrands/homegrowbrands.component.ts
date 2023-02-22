@@ -13,12 +13,13 @@ export class HomegrowbrandsComponent implements OnInit {
   editTitle: boolean = false;
   parameters: string = "phone";
   operators: string = "==";
-  searchvalue: string = "9876543210";
+  searchvalue: string = "9833006431";
   homegrownT: string = "";
   homegrownST: string = "";
   selectedstores: Array<any> = [];
   HGmoduledata: any = [];
   isstorealreadyadded: boolean = false;
+  rowno: string = "1";
   ParaArr: Array<any> = [
     {
       Title: "Store Phone Number", titvalue: "phone",
@@ -71,15 +72,28 @@ export class HomegrowbrandsComponent implements OnInit {
     this.isstorealreadyadded = false;
     this.api.getRecentStores(1, false, this.parameters, this.operators, this.searchvalue).pipe(take(1)).subscribe((recentStore: any) => {
       this.MerchantdataSource = new MatTableDataSource(recentStore);
-      let index = this.HGmoduledata.Stores.findIndex((x: any) => x.id == recentStore[0].id);
-      if (index == 0) {
-        this.isstorealreadyadded = true;
+      if (this.HGmoduledata != undefined) {
+        let index;
+        if (this.rowno == "1") {
+          index = this.HGmoduledata.First_Stores.findIndex((x: any) => x.id == recentStore[0].id);
+        }
+        else if (this.rowno == "2") {
+          index = this.HGmoduledata.Second_Stores.findIndex((x: any) => x.id == recentStore[0].id);
+        }
+        else {
+          index = this.HGmoduledata.third_Stores.findIndex((x: any) => x.id == recentStore[0].id);
+        }
+        console.log(index);
+        if (index >= 0) {
+          this.isstorealreadyadded = true;
+        }
       }
     });
   }
 
   gethomegrowndata() {
     this.api.gethomegrowndata().subscribe((data: any) => {
+      console.log(data[0]);
       this.HGmoduledata = data[0];
       this.homegrownT = this.HGmoduledata.HG_Title;
       this.homegrownST = this.HGmoduledata.HG_STitle;
@@ -121,7 +135,6 @@ export class HomegrowbrandsComponent implements OnInit {
         alert("please enter the sub Title.");
       }
       else {
-
         this.api.updateHGStitle(this.homegrownST, this.HGmoduledata.id).then((data) => {
           if (data != undefined) {
             console.log("Sub-title updated");
@@ -133,14 +146,35 @@ export class HomegrowbrandsComponent implements OnInit {
     }
   }
 
-  action(data: any) {
-    if (this.isstorealreadyadded == true) {
-      this.api.removeHGstores(data, this.HGmoduledata.id);
+  action(data: any, rowno?: string) {
+    console.log(this.rowno);
+    if (this.isstorealreadyadded == true || rowno != undefined) {
+      if (this.rowno == "1" || rowno == "1") {
+        this.api.removeHGFRstores(data, this.HGmoduledata.id);
+      }
+      else if (this.rowno == "2" || rowno == "2") {
+        this.api.removeHGSRstores(data, this.HGmoduledata.id);
+      }
+      else if (this.rowno == "3" || rowno == "3") {
+        this.api.removeHGTRstores(data, this.HGmoduledata.id);
+      }
       this.isstorealreadyadded = false;
     }
     else {
-      this.api.addHGstores(data, this.HGmoduledata.id);
+      if (this.rowno == "1") {
+        this.api.addHGFRstores(data, this.HGmoduledata.id);
+      }
+      else if (this.rowno == "2") {
+        this.api.addHGSRstores(data, this.HGmoduledata.id);
+      }
+      else if (this.rowno == "3") {
+        this.api.addHGTRstores(data, this.HGmoduledata.id);
+      }
       this.isstorealreadyadded = true;
     }
+  }
+
+  rowchange(){
+    this.MerchantdataSource = new MatTableDataSource();
   }
 }

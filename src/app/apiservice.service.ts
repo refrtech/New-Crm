@@ -522,14 +522,34 @@ export class ApiserviceService {
     );
   }
 
-  addHGstores(stores: any, id: any) {
+  addHGFRstores(stores: any, id: any,) {
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
-    return updateDoc(cityrefr, { Stores: arrayUnion(stores) });
+    return updateDoc(cityrefr, { First_Stores: arrayUnion(stores) });
   }
 
-  removeHGstores(stores: any, id: any) {
+  addHGSRstores(stores: any, id: any,) {
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
-    return updateDoc(cityrefr, { Stores: arrayRemove(stores) });
+    return updateDoc(cityrefr, { Second_Stores: arrayUnion(stores) });
+  }
+
+  addHGTRstores(stores: any, id: any,) {
+    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
+    return updateDoc(cityrefr, { third_Stores: arrayUnion(stores) });
+  }
+
+  removeHGFRstores(stores: any, id: any) {
+    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
+    return updateDoc(cityrefr, { First_Stores: arrayRemove(stores) });
+  }
+
+  removeHGSRstores(stores: any, id: any) {
+    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
+    return updateDoc(cityrefr, { Second_Stores: arrayRemove(stores) });
+  }
+
+  removeHGTRstores(stores: any, id: any) {
+    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
+    return updateDoc(cityrefr, { third_Stores: arrayRemove(stores) });
   }
 
   updateHGtitle(Title: string, id: any) {
