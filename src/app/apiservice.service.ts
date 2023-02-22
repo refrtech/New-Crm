@@ -16,7 +16,12 @@ import {
   CollectionReference,
 } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { arrayRemove, arrayUnion, deleteDoc, WhereFilterOp } from 'firebase/firestore';
+import {
+  arrayRemove,
+  arrayUnion,
+  deleteDoc,
+  WhereFilterOp,
+} from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -24,10 +29,7 @@ import { arrayRemove, arrayUnion, deleteDoc, WhereFilterOp } from 'firebase/fire
 export class ApiserviceService {
   newTimestamp = this.getServerTimestamp();
 
-  constructor(
-    private firestore: Firestore,
-    private snackBar: MatSnackBar,
-  ) { }
+  constructor(private firestore: Firestore, private snackBar: MatSnackBar) {}
 
   get getServerTimestamp() {
     return serverTimestamp;
@@ -217,7 +219,6 @@ export class ApiserviceService {
     operator?: any,
     value?: any
   ) {
-
     const catData: CollectionReference = collection(this.firestore, 'shops');
     let Parametere: WhereFilterOp = Para;
     let conditions: WhereFilterOp = operator;
@@ -248,7 +249,6 @@ export class ApiserviceService {
         qu = query(catData, orderBy(orderbyvalue, 'desc'));
       }
     } else {
-
       if (
         Parametere != undefined &&
         operator != undefined &&
@@ -395,8 +395,6 @@ export class ApiserviceService {
   //   return collectionData(qu);
   // }
 
-
-
   getarea() {
     const manageNode: CollectionReference = collection(
       this.firestore,
@@ -413,10 +411,15 @@ export class ApiserviceService {
   }
 
   async addarea(data: any) {
-    const addedcity = await addDoc(collection(this.firestore, "Areas"), data).then(ref => {
-      const areeas = doc(this.firestore, 'Areas', `${ref.id}`)
-      return updateDoc(areeas, { id: ref.id }).then(() => { return ref; })
-    })
+    const addedcity = await addDoc(
+      collection(this.firestore, 'Areas'),
+      data
+    ).then((ref) => {
+      const areeas = doc(this.firestore, 'Areas', `${ref.id}`);
+      return updateDoc(areeas, { id: ref.id }).then(() => {
+        return ref;
+      });
+    });
   }
 
   getcity() {
@@ -429,7 +432,6 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-
   deletecity(id: any) {
     const cityrefr = doc(this.firestore, `${'cities'}`, `${id}`);
     return deleteDoc(cityrefr);
@@ -437,17 +439,25 @@ export class ApiserviceService {
 
   async addcity(data: any) {
     console.log(data);
-    await addDoc(collection(this.firestore, `${'cities'}`), data).then(ref => {
-      const areeas = doc(this.firestore, `${'cities'}`, `${ref.id}`)
-      return updateDoc(areeas, { id: ref.id }).then(() => { return ref; })
-    });
+    await addDoc(collection(this.firestore, `${'cities'}`), data).then(
+      (ref) => {
+        const areeas = doc(this.firestore, `${'cities'}`, `${ref.id}`);
+        return updateDoc(areeas, { id: ref.id }).then(() => {
+          return ref;
+        });
+      }
+    );
   }
 
   async addstore_brandspotlight(data: any) {
-    await addDoc(collection(this.firestore, `${'brandspotlight'}`), data).then(ref => {
-      const stores = doc(this.firestore, `${'brandspotlight'}`, `${ref.id}`)
-      return updateDoc(stores, { id: ref.id }).then(() => { return ref; })
-    });
+    await addDoc(collection(this.firestore, `${'brandspotlight'}`), data).then(
+      (ref) => {
+        const stores = doc(this.firestore, `${'brandspotlight'}`, `${ref.id}`);
+        return updateDoc(stores, { id: ref.id }).then(() => {
+          return ref;
+        });
+      }
+    );
   }
 
   getspotlightdata() {
@@ -461,14 +471,14 @@ export class ApiserviceService {
 
   updateBStitle(Title: string, id: any) {
     const cityrefr = doc(this.firestore, `${'brandspotlight'}`, `${id}`);
-    return updateDoc(cityrefr, { BS_Title: Title }).then((datas: any) => {
-      if (datas) {
-        return "issue in update title.";
-      }
-      else {
-        return "title updated.";
-      }
-    })
+    return updateDoc(cityrefr, { BS_Title: Title })
+      .then((datas: any) => {
+        if (datas) {
+          return 'issue in update title.';
+        } else {
+          return 'title updated.';
+        }
+      })
       .catch((err) => {
         console.log(err);
         return false;
@@ -477,14 +487,14 @@ export class ApiserviceService {
 
   updateBSStitle(STitle: string, id: any) {
     const cityrefr = doc(this.firestore, `${'brandspotlight'}`, `${id}`);
-    return updateDoc(cityrefr, { BS_STitle: STitle }).then((datas: any) => {
-      if (datas) {
-        return "issue in update Sub-title.";
-      }
-      else {
-        return "Sub-title updated.";
-      }
-    })
+    return updateDoc(cityrefr, { BS_STitle: STitle })
+      .then((datas: any) => {
+        if (datas) {
+          return 'issue in update Sub-title.';
+        } else {
+          return 'Sub-title updated.';
+        }
+      })
       .catch((err) => {
         console.log(err);
         return false;
@@ -496,17 +506,20 @@ export class ApiserviceService {
     return updateDoc(cityrefr, { Stores: arrayUnion(stores) });
   }
 
-
   removeBSstores(stores: any, id: any) {
     const cityrefr = doc(this.firestore, `${'brandspotlight'}`, `${id}`);
     return updateDoc(cityrefr, { Stores: arrayRemove(stores) });
   }
 
   async addstore_homegrown(data: any) {
-    await addDoc(collection(this.firestore, `${'Home_Grown'}`), data).then(ref => {
-      const stores = doc(this.firestore, `${'Home_Grown'}`, `${ref.id}`)
-      return updateDoc(stores, { id: ref.id }).then(() => { return ref; })
-    });
+    await addDoc(collection(this.firestore, `${'Home_Grown'}`), data).then(
+      (ref) => {
+        const stores = doc(this.firestore, `${'Home_Grown'}`, `${ref.id}`);
+        return updateDoc(stores, { id: ref.id }).then(() => {
+          return ref;
+        });
+      }
+    );
   }
 
   addHGstores(stores: any, id: any) {
@@ -521,14 +534,14 @@ export class ApiserviceService {
 
   updateHGtitle(Title: string, id: any) {
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
-    return updateDoc(cityrefr, { HG_Title: Title }).then((datas: any) => {
-      if (datas) {
-        return "issue in update title.";
-      }
-      else {
-        return "title updated.";
-      }
-    })
+    return updateDoc(cityrefr, { HG_Title: Title })
+      .then((datas: any) => {
+        if (datas) {
+          return 'issue in update title.';
+        } else {
+          return 'title updated.';
+        }
+      })
       .catch((err) => {
         console.log(err);
         return false;
@@ -537,14 +550,14 @@ export class ApiserviceService {
 
   updateHGStitle(STitle: string, id: any) {
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
-    return updateDoc(cityrefr, { HG_STitle: STitle }).then((datas: any) => {
-      if (datas) {
-        return "issue in update Sub-title.";
-      }
-      else {
-        return "Sub-title updated.";
-      }
-    })
+    return updateDoc(cityrefr, { HG_STitle: STitle })
+      .then((datas: any) => {
+        if (datas) {
+          return 'issue in update Sub-title.';
+        } else {
+          return 'Sub-title updated.';
+        }
+      })
       .catch((err) => {
         console.log(err);
         return false;
@@ -560,19 +573,48 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
+  viewVideo(data: any) {
+    console.log('99999');
+
+    // const videoRef = doc(this.firestore, `${'info_slide'}`, `${data.id}`);
+    // return updateDoc(videoRef, {
+    //   name: data.name,
+    //   // id: data.id,
+    //   path: data.path,
+    // })
+    //   .then((datas: any) => {
+    //     console.log('****');
+    //     console.log(datas, 'viewData');
+    //     console.log('****');
+    //     if (datas) {
+    //       return 'issue in file';
+    //     } else {
+    //       return 'view';
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log('view video service', err);
+    //     return false;
+    //   });
+  }
+
   updatecity(data: any) {
     const cityrefr = doc(this.firestore, `${'cities'}`, `${data.id}`);
-    return updateDoc(cityrefr, { CityN: data.CityN, CitySN: data.CitySN, MDateTime: data.MDateTime }).then((datas: any) => {
-      console.log("*****");
-      console.log(datas)
-      console.log("*****");
-      if (datas) {
-        return "issue in city update";
-      }
-      else {
-        return "city updated";
-      }
+    return updateDoc(cityrefr, {
+      CityN: data.CityN,
+      CitySN: data.CitySN,
+      MDateTime: data.MDateTime,
     })
+      .then((datas: any) => {
+        console.log('*****');
+        console.log(datas);
+        console.log('*****');
+        if (datas) {
+          return 'issue in city update';
+        } else {
+          return 'city updated';
+        }
+      })
       .catch((err) => {
         console.log(err);
         return false;
@@ -626,9 +668,6 @@ export class ApiserviceService {
     return updateDoc(noderefr, { Nareas: arrayRemove(data.areadata) });
   }
 
-
-
-
   copyClipboard(text: any) {
     const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
@@ -641,23 +680,28 @@ export class ApiserviceService {
     selBox.select();
     document.execCommand('copy');
     document.body.removeChild(selBox);
-    this.startSnackBar("copied to your clipboard.")
+    this.startSnackBar('copied to your clipboard.');
   }
 
   startSnackBar(mes: any) {
-    this.snackBar.open(mes, "", {
+    this.snackBar.open(mes, '', {
       duration: 2000,
-      verticalPosition: "bottom", horizontalPosition: "right"
+      verticalPosition: 'bottom',
+      horizontalPosition: 'right',
     });
   }
-
 
   // Node functions start
   async addnode(data: any) {
     console.log(data);
-    const addedcity = await addDoc(collection(this.firestore, "node_manager"), data).then(ref => {
-      const areeas = doc(this.firestore, 'node_manager', `${ref.id}`)
-      return updateDoc(areeas, { id: ref.id }).then(() => { return ref; })
+    const addedcity = await addDoc(
+      collection(this.firestore, 'node_manager'),
+      data
+    ).then((ref) => {
+      const areeas = doc(this.firestore, 'node_manager', `${ref.id}`);
+      return updateDoc(areeas, { id: ref.id }).then(() => {
+        return ref;
+      });
     });
   }
 
@@ -675,11 +719,9 @@ export class ApiserviceService {
       this.firestore,
       `${'node_manager'}`
     );
-    const qu = query(manageNode,
-      where('city_id', '==', cityid));
+    const qu = query(manageNode, where('city_id', '==', cityid));
     return collectionData(qu);
   }
-
 
   deletenode(id: any) {
     const noderefr = doc(this.firestore, `${'node_manager'}`, `${id}`);
@@ -694,11 +736,9 @@ export class ApiserviceService {
     const qu = doc(this.firestore, 'node_manager', `${nodeData.id}`);
     return updateDoc(qu, {
       name: nodeData.name,
-      Nareas: nodeData.Nareas
+      Nareas: nodeData.Nareas,
     });
   }
-
-
 
   // VSA section start
 
@@ -711,17 +751,16 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-
   updateVSAtitle(Title: string, id: any) {
     const cityrefr = doc(this.firestore, `${'VSA_section'}`, `${id}`);
-    return updateDoc(cityrefr, { VSA_Title: Title }).then((datas: any) => {
-      if (datas) {
-        return "issue in update title.";
-      }
-      else {
-        return "title updated.";
-      }
-    })
+    return updateDoc(cityrefr, { VSA_Title: Title })
+      .then((datas: any) => {
+        if (datas) {
+          return 'issue in update title.';
+        } else {
+          return 'title updated.';
+        }
+      })
       .catch((err) => {
         console.log(err);
         return false;
@@ -730,14 +769,14 @@ export class ApiserviceService {
 
   updateVSAStitle(STitle: string, id: any) {
     const cityrefr = doc(this.firestore, `${'VSA_section'}`, `${id}`);
-    return updateDoc(cityrefr, { VSA_STitle: STitle }).then((datas: any) => {
-      if (datas) {
-        return "issue in update Sub-title.";
-      }
-      else {
-        return "Sub-title updated.";
-      }
-    })
+    return updateDoc(cityrefr, { VSA_STitle: STitle })
+      .then((datas: any) => {
+        if (datas) {
+          return 'issue in update Sub-title.';
+        } else {
+          return 'Sub-title updated.';
+        }
+      })
       .catch((err) => {
         console.log(err);
         return false;
@@ -953,4 +992,64 @@ export class ApiserviceService {
   // }
 
   // Daily drop end
+
+  // top feed video start
+
+  async UploadVideo(data: any) {
+    console.log('UploadVideo api');
+    await addDoc(collection(this.firestore, `${'Top_Feed'}`), data).then(
+      (ref) => {
+        const video = doc(this.firestore, 'Top_Feed', `${ref.id}`);
+        return updateDoc(video, { id: ref.id }).then(() => {
+          return ref;
+        });
+      }
+    );
+  }
+
+  getuploadVideo() {
+    const getuploadVideo: CollectionReference = collection(
+      this.firestore,
+      `${'Top_Feed'}`
+    );
+    const qu = query(getuploadVideo);
+    return collectionData(qu);
+  }
+
+  deleteVideo(id: any) {
+    const vidRef = doc(this.firestore, 'Top_Feed', `${id}`);
+    return deleteDoc(vidRef);
+  }
+
+  // top feed video end
+
+  // info slide start
+
+  async infoUploadVideo(data: any) {
+    console.log('UploadVideo api');
+    await addDoc(collection(this.firestore, `${'info_slide'}`), data).then(
+      (ref) => {
+        const video = doc(this.firestore, 'info_slide', `${ref.id}`);
+        return updateDoc(video, { id: ref.id }).then(() => {
+          return ref;
+        });
+      }
+    );
+  }
+
+  infogetuploadVideo() {
+    const getuploadVideo: CollectionReference = collection(
+      this.firestore,
+      `${'info_slide'}`
+    );
+    const qu = query(getuploadVideo);
+    return collectionData(qu);
+  }
+
+  infodeleteVideo(id: any) {
+    const vidRef = doc(this.firestore, 'info_slide', `${id}`);
+    return deleteDoc(vidRef);
+  }
+
+  // info slide end
 }

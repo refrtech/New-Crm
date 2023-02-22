@@ -59,6 +59,7 @@ import { Storage, ref, uploadString } from '@angular/fire/storage';
 
 //import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { getDownloadURL } from '@firebase/storage';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -83,13 +84,8 @@ export class AuthService {
     private firestore: Firestore,
     private fireStorage: Storage,
 
-    public resource: ResourceService
-  ) // private win: WindowService,
-
-  //private fb: Facebook
-  //private gP: GooglePlus
-  //private googlePlus: GooglePlus
-  {
+    public resource: ResourceService // private win: WindowService, //private fb: Facebook //private gP: GooglePlus //private googlePlus: GooglePlus
+  ) {
     // Get the auth state, then fetch the Firestore user document or return null
     //this.user$ = this.getLogUSER();
   }

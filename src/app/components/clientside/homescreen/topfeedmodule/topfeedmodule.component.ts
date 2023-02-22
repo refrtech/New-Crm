@@ -4,6 +4,9 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
+import { FeedsectionComponent } from './feedsection/feedsection.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ApiserviceService } from 'src/app/apiservice.service';
 
 @Component({
   selector: 'app-topfeedmodule',
@@ -13,10 +16,26 @@ import {
 export class TopfeedmoduleComponent implements OnInit {
   slide: boolean = false;
   currentSlide: any[] = [];
+  getVideoData: any;
 
-  constructor() {}
+  id: string = '';
+  videoData: string = '';
+
+  constructor(private dailog: MatDialog, public api: ApiserviceService) {
+    this.getVideo();
+  }
 
   ngOnInit(): void {}
+
+  addSlide(id: number, data?: any) {
+    const dialogRef = this.dailog.open(FeedsectionComponent, {
+      width: '50%',
+      data: { id: id, videoData: data },
+      hasBackdrop: true,
+      disableClose: false,
+      panelClass: 'thanksscreen',
+    });
+  }
 
   feedSection: Array<any> = [
     { date: '23/2/2023', slides: 'Slide 1', link: '/feedsection' },
@@ -36,6 +55,23 @@ export class TopfeedmoduleComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
+    }
+  }
+
+  getVideo() {
+    this.api.getuploadVideo().subscribe((data: any) => {
+      this.getVideoData = data;
+      console.log('get data', data);
+    });
+  }
+
+  deleteVid(id: any) {
+    if (id == undefined) {
+      alert('invalid data');
+    } else {
+      this.api.deleteVideo(id).then((data: any) => {
+        alert('area deleted');
+      });
     }
   }
 }

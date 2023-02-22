@@ -48,8 +48,8 @@
 
     <div class="dflex AIcenter Aborder A5padding t20margin A5radius" *ngIf="fileName >= '0'">
         <div class="feedmoduleImg">
-            <img [src]="url" *ngIf="format==='image' && url">
-            <video [src]="url" *ngIf="format==='video' && url" controls height="200"></video>
+            <img #imagePreview [src]="url" *ngIf="format==='image' && url">
+            <video #videoPlayer [src]="url" *ngIf="format==='video' && url" controls height="100"></video>
         </div>
         <div class="l10margin">
             {{fileName}}
@@ -71,10 +71,6 @@
     </div>
 
 
-    <div *ngIf="fileName < '0'">
-
-        no data
-    </div>
 
     <!-- <div>
         <div class="t20margin b15margin">
@@ -92,7 +88,8 @@
     <video [src]="url" *ngIf="format==='video' && url" height="200" controls></video> -->
 
     <div>
-        <button mat-button class="s_size normallineheight purple_background White_txt browse t50margin">Save</button>
+        <button (click)="addVideo()" mat-button
+            class="s_size normallineheight purple_background White_txt browse t50margin">Save</button>
     </div>
 </div>
 
