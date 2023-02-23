@@ -1,10 +1,13 @@
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { Camera } from '@capacitor/camera';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Observable, of, take } from 'rxjs';
 import { ApiserviceService } from 'src/app/apiservice.service';
+import { CameraResultType } from '@capacitor/camera/dist/esm/definitions';
+import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component';
+import { AuthService } from 'src/app/auth.service';
 
 
 @Component({
@@ -38,7 +41,7 @@ export class VisitallstoredetailsComponent implements OnInit {
   nodestores$: Observable<any[]> = of();
   storelist: Array<any> = [];
 
-  constructor(public router: Router, public api: ApiserviceService,
+  constructor(public router: Router, public api: ApiserviceService, public auth: AuthService,
     public dialogRef: MatDialogRef<VisitallstoredetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
@@ -50,25 +53,6 @@ export class VisitallstoredetailsComponent implements OnInit {
 
   ngOnInit(): void { }
 
-
-  // drop(event: CdkDragDrop<string[]>) {
-  //   if (event.previousContainer === event.container) {
-  //     moveItemInArray(
-  //       event.container.data,
-  //       event.previousIndex,
-  //       event.currentIndex
-  //     );
-  //   }
-  //   else {
-  //     transferArrayItem(
-  //       event.previousContainer.data,
-  //       event.container.data,
-  //       event.previousIndex,
-  //       event.currentIndex
-  //     );
-  //   }
-  // }
-
   ApplyFilter() {
     this.isstorealreadyadded = false;
     this.api.getRecentStores(1, false, this.parameters, this.operators, this.searchvalue).pipe(take(1)).subscribe((recentStore: any) => {
@@ -79,24 +63,6 @@ export class VisitallstoredetailsComponent implements OnInit {
   }
 
   action(data: any) {
-    //   let storess = [data];
-    //   data = {
-    //     Nareas: this.data.node.Nareas,
-    //     city: this.data.node.city,
-    //     city_id: this.data.node.city_id,
-    //     created_at: this.data.node.created_at,
-    //     id: this.data.node.id,
-    //     name: this.data.node.name,
-    //     stores: storess,
-    //     updated_at: this.data.node.updated_at,
-    //   }
-    //   console.log(data);
-    //   this.api.addVSAstores(data, this.data.id).then((data:any)=>{
-    //     if(!data){
-    //       // alert(error);
-    //     }
-    //   });
-
     let i = this.storelist.findIndex((x) => x.id == data.id);
     if (i < 0) {
       this.storelist.push(data);
@@ -128,8 +94,6 @@ export class VisitallstoredetailsComponent implements OnInit {
       this.api.addVSAstores(data, this.data.id).then((data: any) => {
         if (!data) {
           this.dialogRef.close();
-
-          // alert(error);
         }
       });
     }
@@ -140,12 +104,60 @@ export class VisitallstoredetailsComponent implements OnInit {
       this.api.editVSAstores(this.data.creatednodes, this.data.id).then((data: any) => {
         if (!data) {
           this.dialogRef.close();
-          // alert(error);
         }
       });
       console.log(this.data.creatednodes);
     }
-    // this.api.VSAupdatestore().then((data: any) => {
-    // })
+  }
+
+  async takePicture(type: string, index: number, item: any) {
+    console.log(item);
+    const image = await Camera.getPhoto({
+      quality: 100,
+      height: 300,
+      width: 300,
+      allowEditing: false,
+      resultType: CameraResultType.Uri,
+    });
+
+    console.log('image', image);
+    const imageUrl = image.webPath || '';
+    if (imageUrl) {
+      this.startCropper(imageUrl, type, index, item);
+      console.log('image', imageUrl);
+    } else {
+      console.log('No image');
+    }
+  }
+
+  async startCropper(webPath: string, type: string, index: number, item: any) {
+    console.log('click');
+    let isPhone = this.auth.resource.getWidth < 768;
+    let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
+    const refDialog = this.auth.resource.dialog.open(CropperComponent, {
+      width: w,
+      minWidth: '320px',
+      maxWidth: '480px',
+      height: '360px',
+      data: { webPath: webPath, type: type },
+      disableClose: true,
+      panelClass: 'dialogLayout',
+    });
+    refDialog.afterClosed().subscribe(async (result) => {
+      if (!result.success) {
+        if (result.info) {
+          console.log(result.info);
+          this.auth.resource.startSnackBar(result.info)
+        }
+      } else {
+        if (type == 'banner') {
+          let index = this.data.creatednodes.findIndex((x: any) => x.id == this.data.selectednode.id);
+          const cloudUpload = await this.api.cloudUpload(this.data.creatednodes[index].stores[index].id, result.croppedImage);
+          console.log("--------- banner --------");
+          console.log(cloudUpload);
+          console.log("--------- banner --------");
+        }
+      }
+    });
   }
 }

@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Storage, ref, uploadString } from '@angular/fire/storage';
+import { getDownloadURL } from '@firebase/storage';
 
 import {
   Firestore,
@@ -29,7 +31,7 @@ import {
 export class ApiserviceService {
   newTimestamp = this.getServerTimestamp();
 
-  constructor(private firestore: Firestore, private snackBar: MatSnackBar) {}
+  constructor(private firestore: Firestore, private fireStorage: Storage, private snackBar: MatSnackBar) { }
 
   get getServerTimestamp() {
     return serverTimestamp;
@@ -1072,4 +1074,24 @@ export class ApiserviceService {
   }
 
   // info slide end
+
+
+  cloudUpload(idX: string, base64String: string) {
+    const imgID = idX + Date.now();
+    const bannerRef = ref(this.fireStorage, "store/" + imgID);
+    console.log(imgID);
+    console.log(bannerRef);
+    console.log(base64String);
+    return uploadString(bannerRef, base64String.split(',')[1], 'base64').then((snapshot) => {
+      console.log('Uploaded a base64 string!', snapshot);
+      return getDownloadURL(bannerRef).then(dlURL => {
+        console.log("getDownloadURL", dlURL)
+        return { success: true, url: dlURL }
+      })
+    }).catch(err => {
+      console.log('Uploaded a base64 string! Fail', err);
+      return { success: false, url: "" }
+    });
+  }
+
 }

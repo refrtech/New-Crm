@@ -1,25 +1,12 @@
-<!--h3 mat-dialog-title>Crop Image</h3-->
-
 <div mat-dialog-content>
     <div class="b_persist" style="width: -webkit-fill-available; margin: 0 -14px;">
         <app-content *ngIf="!showCropper"></app-content>
-
         <image-cropper style="width: -webkit-fill-available;" [imageBase64]="imageUrl" [maintainAspectRatio]="true"
             [aspectRatio]="aspectRatio" format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
             (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()"></image-cropper>
     </div>
 </div>
-<!--ngModel]="imageUrl"
-<input type="file"  name="imgLogo" (change)="fileChangeEvent($event)" />
-    [imageChangedEvent]="imageChangedEvent"
-[imageFile]="imageUrl"
--->
-
-<!--img [src]="croppedImage" /-->
-
 <div mat-dialog-actions align="center">
-    <!--button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button-->
     <a mat-button (click)="loadCropFailed()" *ngIf="croppedImage" class="c_red"><mat-icon>close</mat-icon> Clear</a>
     <a mat-button (click)="selectImage()" *ngIf="croppedImage" class="c_green"><mat-icon>done</mat-icon> Crop</a>
 </div>

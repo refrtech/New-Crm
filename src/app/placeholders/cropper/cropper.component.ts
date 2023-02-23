@@ -17,7 +17,7 @@ export class CropperComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<CropperComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     let type = this.data.type;
@@ -38,9 +38,11 @@ export class CropperComponent implements OnInit {
     console.log(event);
     this.imageChangedEvent = event;
   }
+
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64;
   }
+  
   imageLoaded() {
     // show cropper
     console.log('imageLoaded');
