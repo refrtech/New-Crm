@@ -83,7 +83,6 @@ export class HomegrowbrandsComponent implements OnInit {
         else {
           index = this.HGmoduledata.third_Stores.findIndex((x: any) => x.id == recentStore[0].id);
         }
-        console.log(index);
         if (index >= 0) {
           this.isstorealreadyadded = true;
         }
@@ -93,7 +92,6 @@ export class HomegrowbrandsComponent implements OnInit {
 
   gethomegrowndata() {
     this.api.gethomegrowndata().subscribe((data: any) => {
-      console.log(data[0]);
       this.HGmoduledata = data[0];
       this.homegrownT = this.HGmoduledata.HG_Title;
       this.homegrownST = this.HGmoduledata.HG_STitle;

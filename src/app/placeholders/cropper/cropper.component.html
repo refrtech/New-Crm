@@ -2,7 +2,7 @@
     <div class="b_persist" style="width: -webkit-fill-available; margin: 0 -14px;">
         <app-content *ngIf="!showCropper"></app-content>
         <image-cropper style="width: -webkit-fill-available;" [imageBase64]="imageUrl" [maintainAspectRatio]="true"
-            [aspectRatio]="aspectRatio" format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
+            [aspectRatio]="aspectRatio" format="png" (imageCropped)="imageCropped($event)"
             (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()"></image-cropper>
     </div>
 </div>

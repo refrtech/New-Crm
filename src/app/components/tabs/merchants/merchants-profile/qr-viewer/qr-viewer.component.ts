@@ -81,7 +81,6 @@ export class QrViewerComponent implements OnInit {
           { name: "store-" + name.split(" ").join("_").toLowerCase() + "-" + this.qrName, extension: "png" as Extension }
         ) ;
       }catch(err){
-        console.log(err)
       }
     }
   }

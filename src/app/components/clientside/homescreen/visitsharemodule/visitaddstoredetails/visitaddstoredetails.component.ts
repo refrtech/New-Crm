@@ -40,14 +40,10 @@ export class VisitaddstoredetailsComponent implements OnInit {
       allowEditing: false,
       resultType: CameraResultType.Uri,
     });
-
-    console.log('image', image);
     const imageUrl = image.webPath || '';
     if (imageUrl) {
       this.startCropper(imageUrl, type);
-      console.log('image', imageUrl);
     } else {
-      console.log('No image');
     }
   }
 

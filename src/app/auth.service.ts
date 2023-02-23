@@ -125,7 +125,6 @@ export class AuthService {
       const itemDoc = doc(this.firestore, `${docX}`, `${idX}`);
       return docData(itemDoc);
     } catch (err) {
-      console.log('err: ', err);
       return of();
     }
   }
@@ -146,7 +145,6 @@ export class AuthService {
             this.allowLog = true;
             return of(null);
           } else {
-            console.log('USA');
             this.allowLog = true;
             //return of({id:user.uid});
             //return this.afs.doc<User>(`${this.resource.env.db.users}/${user.uid}`).valueChanges();
@@ -176,7 +174,6 @@ export class AuthService {
       email
     );
     //const fetchSignMethodEmail = await this.afAuth.fetchSignInMethodsForEmail( email );
-    console.log('fetchSignMethodEmail', fetchSignMethodEmail);
 
     if (fetchSignMethodEmail?.length > 0) {
       // USER PHONE@EMAIL.com EXIST
@@ -323,7 +320,6 @@ export class AuthService {
     if (!appVerifier) {
       return { success: false, info: 'recaptcha did not process properly.' };
     } else {
-      console.log(appVerifier);
       const currentUser = await this.afAuth.currentUser;
       if (!currentUser) {
         return { success: false, info: 'Sms not sent' };
@@ -336,7 +332,6 @@ export class AuthService {
             return { success: true, info: '' };
           })
           .catch((error) => {
-            console.log('SMS not sent', error);
             return { success: false, info: error };
           });
       }
@@ -349,7 +344,6 @@ export class AuthService {
     if (!appVerifier) {
       return { success: false, info: 'recaptcha did not process properly.' };
     } else {
-      console.log(appVerifier);
       //return app.auth().signInWithPhoneNumber(phone, appVerifier)
       return signInWithPhoneNumber(this.afAuth, phone, appVerifier)
         .then((confirmationResult) => {
@@ -366,7 +360,6 @@ export class AuthService {
           // user in with confirmationResult.confirm(code).
         })
         .catch((error) => {
-          console.log('SMS not sent', error);
           return { success: false, info: error };
         });
     }
@@ -503,13 +496,6 @@ export class AuthService {
     coin: string
   ) {
     this.stepDisable = true;
-    console.log(
-      credential,
-      name, //password,
-      phone,
-      iso,
-      coin
-    );
     // const credential = await app.auth.PhoneAuthProvider.credential(this.verificationId, code);
 
     // const currentUser = await this.afAuth.currentUser;
@@ -535,7 +521,6 @@ export class AuthService {
       .then(() => {
         //     credential.user?.updateProfile({ displayName: name });
         if (credential.user) {
-          //console.log("hit", credential)
           let password = Date.now().toString();
           this.addEmallPass(email, password, name, '');
           return { success: true, complete: true, info: '' };
@@ -549,11 +534,9 @@ export class AuthService {
 
     // // CREATE USER DOC TO FIRESTORE
     // if(!storeData.success){
-    //   console.log(storeData)
     //   return storeData;
     // }else{
     //   // CREATE USER
-    //   console.log(storeData)
     // }
 
     return storeData;
@@ -569,27 +552,21 @@ export class AuthService {
     //currentUser?.updateEmail(email).then(resEmail => {
     updateEmail(currentUser, email)
       .then((resEmail) => {
-        //console.log("resEmail",resEmail)
         updatePassword(currentUser, password)
           .then((resPass) => {
-            //console.log("resPass",resPass)
             updateProfile(currentUser, {
               displayName: displayName,
               photoURL: photoURL,
             })
               .then((resName) => {
-                //console.log("resName",resName)
               })
               .catch((err) => {
-                console.log('err', err);
               });
           })
           .catch((err) => {
-            console.log('err', err);
           });
       })
       .catch((err) => {
-        console.log('err', err);
       }); /*
     //app.auth.EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD
     // app.auth().currentUser.getIdToken(/ * forceRefresh * / true).then(function(idToken) {
@@ -702,7 +679,6 @@ export class AuthService {
         return ref.user
           ?.updatePassword(newPassword)
           .then(() => {
-            console.log('i am here', ref);
             const userRef = doc(
               this.firestore,
               `${this.resource.env.db.users}`,
@@ -731,11 +707,9 @@ export class AuthService {
       const provider = GoogleAuthProvider.credential(googleUser.authentication.idToken);
 
     const credential = signInWithCredential(this.afAuth, provider).then((result) => {
-        console.log("GO: 1", result);
         this.ManMade = "ManMadeR: " + result.user.uid + " "+result.user.email;
         return {"success":true, social:true, medium:"google", data: result.user}
     }).catch((error) => {
-        console.log("GO: 2", error.message);
         this.ManMade = "ManMadeRC: " + error;
         return {"success":false,info:"issue: " + error.message, code:error.code}
     })
@@ -745,7 +719,6 @@ export class AuthService {
     const provider = new GoogleAuthProvider();
     const credential = signInWithPopup(this.afAuth, provider)
       .then((result) => {
-        console.log('GO: 1', result);
         return {
           success: true,
           social: true,
@@ -754,7 +727,6 @@ export class AuthService {
         };
       })
       .catch((error) => {
-        console.log('GO: 2', error.message);
         return {
           success: false,
           info: 'issue: ' + error.message,
@@ -768,7 +740,6 @@ export class AuthService {
   // async appleSignin() {
   //   const provider = new app.auth.GoogleAuthProvider();
   //   const credential = await this.afAuth.signInWithPopup(provider).then(data=>{
-  //     //console.log("Google ", data);
   //     return {"success":true, social:true, data: data}
   //     //return {"success":true,incomplete:true,phone:phone}
   //   }).catch(err =>{
@@ -791,10 +762,8 @@ export class AuthService {
       /*
       const provider = new FacebookAuthProvider();
       const credential = signInWithPopup(this.afAuth, provider).then((result) => {
-          console.log("GO: 1", result);
           return {"success":true, social:true, medium:"facebook", data: result.user}
       }).catch((error) => {
-          console.log("GO: 2", error.message);
           return {"success":false,info:"issue: " + error.message, code:error.code}
       })*/
       const credential = {
@@ -820,8 +789,6 @@ export class AuthService {
       if(!newProfile || !newEmail || !newEmailV){
         return {"success":false,info:"The account does not meet our social log in standards." }
       }else{
-        console.log("mega: ", newProfile, newEmail, newEmailV)
-
           const userData = !hasfacebook ? {
             axess: arrayUnion("google"),
             emails: arrayUnion(newEmail),
@@ -858,8 +825,6 @@ export class AuthService {
             info: 'The account does not meet our social log in standards.',
           };
         } else {
-          console.log('mega: ', newProfile, newEmail, newEmailV);
-
           const userData = !hasfacebook
             ? {
                 axess: arrayUnion('google'),
@@ -910,7 +875,6 @@ export class AuthService {
     //   }else{
     //     return ref?.linkWithPopup(provider).then(lin => {
     const linkX =  linkWithPopup(credential, provider).then(lin => {
-          console.log("lin",lin)
           //let newProfile:any = lin.additionalUserInfo?.profile;
           let newProfile:any = lin.user;
           let newEmail = newProfile?.email || "";
@@ -919,7 +883,6 @@ export class AuthService {
           if(!newProfile || !newEmail || !newEmailV){
             return {"success":false,info:"The account does not meet our social log in standards." }
           }else{
-            console.log("mega: ", newProfile, newEmail, newEmailV)
 
               const userData = !hasgoogle ? {
                 axess: arrayUnion("facebook"),
@@ -957,7 +920,6 @@ export class AuthService {
   // async microsoftSignin() {
   //   const provider = new app.auth.GoogleAuthProvider;
   //   const credential = await this.afAuth.signInWithPopup(provider).then(data=>{
-  //     //console.log("Google ", data);
   //     return {"success":true, social:true, data: data}
   //     //return {"success":true,incomplete:true,phone:phone}
   //   }).catch(err =>{
@@ -1169,7 +1131,6 @@ export class AuthService {
       upd: newTimestamp,
     };
 
-    console.log(dataSend, logo, banner);
 
     //const shopRef: AngularFirestoreDocument<Shop> = this.afs.doc(`${this.resource.env.db.shops}/${data.by}`);
     //return shopRef.set(dataSend, { merge: true }).then(() => {
@@ -1234,7 +1195,6 @@ export class AuthService {
       state: data.stateISO,
       nation: data.nationISO,
     };
-    console.log('dataSend', dataSend);
     const refShop = doc(
       this.firestore,
       `${this.resource.env.db.shops}`,
@@ -1257,7 +1217,6 @@ export class AuthService {
   
       sin:newTimestamp, upd:newTimestamp, by:data.by, sid:data.storeID
     }
-    console.log("dataSend",dataSend);
     const thingsRefC = collection(this.firestore, `${this.resource.env.db.things}`)
     return addDoc(thingsRefC, dataSend).then(ref => {
       const storeRef = doc(this.firestore, `${this.resource.env.db.shops}`, `${data.storeID}`);
@@ -1348,8 +1307,6 @@ export class AuthService {
       `${this.resource.env.db.hypes}`
     );
     return addDoc(hypeRefC, dataSend).then((ref) => {
-      console.log('DONE', ref.id);
-
       const userRef = doc(
         this.firestore,
         `${this.resource.env.db.users}`,
@@ -1357,8 +1314,6 @@ export class AuthService {
       );
       return updateDoc(userRef, { storeCam: arrayUnion(ref.id) })
         .then(() => {
-          console.log('DONE2');
-
           const hypeRef = doc(
             this.firestore,
             `${this.resource.env.db.hypes}`,
@@ -1366,18 +1321,15 @@ export class AuthService {
           );
           return updateDoc(hypeRef, { id: ref.id })
             .then(() => {
-              //console.log("DONE2", ref.id)
               return ref;
             })
             .catch((err) => {
               // HANDLE ISSUE
-              console.log('DONE3', err);
               return err;
             });
         })
         .catch((err) => {
           // HANDLE ISSUE
-          console.log('DONE1', err);
           return err;
         });
     });
@@ -1528,14 +1480,11 @@ export class AuthService {
 
     return uploadString(bannerRef, base64String.split(',')[1], 'base64')
       .then((snapshot) => {
-        console.log('Uploaded a base64 string!', snapshot);
         return getDownloadURL(bannerRef).then((dlURL) => {
-          console.log('getDownloadURL', dlURL);
           return { success: true, url: dlURL };
         });
       })
       .catch((err) => {
-        console.log('Uploaded a base64 string! Fail', err);
         return { success: false, url: '' };
       });
   }

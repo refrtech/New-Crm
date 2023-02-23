@@ -6,17 +6,10 @@
                 <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round" />
             </svg>
-
         </a>
         <span class="fs_24 boldtext lr15padding AScenter">Information Slide
         </span>
-
     </div>
-
-
-
-
-
     <div class="dottedborder A20padding c_align t50margin bg_fb">
 
         <div class="m_size gray_txt">
@@ -26,17 +19,10 @@
             or
         </div>
         <div>
-            <!-- <button mat-button
-                class="Apurpleborder s_size normallineheight purple_txt browse b10margin cursor_pointer">Browse</button> -->
-
             <input class="b10margin d_none" #hiddenfileinput type="file" (change)="onSelectFile($event)">
-
-
             <button mat-button (click)="hiddenfileinput.click()"
                 class="file-upload Apurpleborder s_size normallineheight purple_txt browse b10margin cursor_pointer d_inline">
-
                 {{"Browse"}}
-
             </button>
         </div>
         <div class="s_size gray_txt b5margin">
@@ -55,47 +41,10 @@
         <div class="l10margin">
             {{fileName}}
         </div>
-        <!-- <div class="l10margin" *ngIf="view()">
-            {{showData.name}}
-        </div> -->
         <span class="divide"></span>
-        <!-- <div>
-            <input class="b10margin d_none" #hiddenfileinput type="file" (change)="onSelectFile($event)">
-            <a class="text_decoration_none r20margin purple_txt semiboldtext cursor_pointer">{{"Update"}}</a>
-        </div>
-        <div>
-            <a class="text_decoration_none r20margin purple_txt semiboldtext cursor_pointer">Preview</a>
-        </div>
-        <div>
-            <mat-icon class="r20margin cursor_pointer">
-                delete
-            </mat-icon>
-        </div> -->
-
     </div>
-
-
-
-    <!-- <div>
-        <div class="t20margin b15margin">
-            <div class="s_size semiboldtext crminput r15padding AScenter">Slide Name
-            </div>
-        </div>
-        <div>
-            <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
-                <input type="number" matInput placeholder="Enter the URL path">
-            </mat-form-field>
-        </div>
-    </div> -->
-    <!-- 
-    <img [src]="url" *ngIf="format==='image' && url" height="200"> <br />
-    <video [src]="url" *ngIf="format==='video' && url" height="200" controls></video> -->
-
     <div>
         <button (click)="addVideo()" mat-button
             class="s_size normallineheight purple_background White_txt browse t50margin">Save</button>
     </div>
 </div>
-
-
-<!--  -->

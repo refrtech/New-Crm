@@ -98,7 +98,6 @@ export class VisitallstoredetailsComponent implements OnInit {
       });
     }
     else {
-      console.log(this.data.selectednode.id);
       let index = this.data.creatednodes.findIndex((x: any) => x.id == this.data.selectednode.id);
       this.data.creatednodes[index].stores = this.storelist;
       this.api.editVSAstores(this.data.creatednodes, this.data.id).then((data: any) => {
@@ -106,7 +105,6 @@ export class VisitallstoredetailsComponent implements OnInit {
           this.dialogRef.close();
         }
       });
-      console.log(this.data.creatednodes);
     }
   }
 
@@ -124,14 +122,11 @@ export class VisitallstoredetailsComponent implements OnInit {
     const imageUrl = image.webPath || '';
     if (imageUrl) {
       this.startCropper(imageUrl, type, index, item);
-      console.log('image', imageUrl);
     } else {
-      console.log('No image');
     }
   }
 
   async startCropper(webPath: string, type: string, index: number, item: any) {
-    console.log('click');
     let isPhone = this.auth.resource.getWidth < 768;
     let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
     const refDialog = this.auth.resource.dialog.open(CropperComponent, {
@@ -146,7 +141,6 @@ export class VisitallstoredetailsComponent implements OnInit {
     refDialog.afterClosed().subscribe(async (result) => {
       if (!result.success) {
         if (result.info) {
-          console.log(result.info);
           this.auth.resource.startSnackBar(result.info)
         }
       } else {

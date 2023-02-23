@@ -38,7 +38,6 @@ export class ApiserviceService {
   }
 
   getuserdata(id: any) {
-    console.log(typeof id);
     const catData: CollectionReference = collection(this.firestore, 'users');
     const qu = query(catData, where('uid', '==', id));
     return collectionData(qu);
@@ -117,7 +116,6 @@ export class ApiserviceService {
   }
 
   getCampaignList(sid: string) {
-    console.log('side = ' + sid);
     const catData: CollectionReference = collection(
       this.firestore,
       `${'hypes'}`
@@ -164,8 +162,6 @@ export class ApiserviceService {
         operator != undefined &&
         value != undefined
       ) {
-        console.log(1);
-
         qu = query(
           catData,
           where(Parametere, conditions, value),
@@ -173,7 +169,6 @@ export class ApiserviceService {
           orderBy(orderbyvalue, 'desc')
         );
       } else {
-        console.log('get ALL');
         qu = query(
           catData,
           where('type', 'array-contains', 'storeORDER'),
@@ -186,10 +181,6 @@ export class ApiserviceService {
         operator != undefined &&
         value != undefined
       ) {
-        console.log('parameter = ' + Parametere);
-        console.log('operator = ' + operator);
-        console.log('value = ' + value);
-        console.log('orderbyvalue = ' + orderbyvalue);
 
         qu = query(
           catData,
@@ -200,7 +191,6 @@ export class ApiserviceService {
           limit(c)
         );
       } else {
-        console.log(4);
 
         qu = query(
           catData,
@@ -440,7 +430,6 @@ export class ApiserviceService {
   }
 
   async addcity(data: any) {
-    console.log(data);
     await addDoc(collection(this.firestore, `${'cities'}`), data).then(
       (ref) => {
         const areeas = doc(this.firestore, `${'cities'}`, `${ref.id}`);
@@ -596,28 +585,6 @@ export class ApiserviceService {
   }
 
   viewVideo(data: any) {
-    console.log('99999');
-
-    // const videoRef = doc(this.firestore, `${'info_slide'}`, `${data.id}`);
-    // return updateDoc(videoRef, {
-    //   name: data.name,
-    //   // id: data.id,
-    //   path: data.path,
-    // })
-    //   .then((datas: any) => {
-    //     console.log('****');
-    //     console.log(datas, 'viewData');
-    //     console.log('****');
-    //     if (datas) {
-    //       return 'issue in file';
-    //     } else {
-    //       return 'view';
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log('view video service', err);
-    //     return false;
-    //   });
   }
 
   updatecity(data: any) {
@@ -1018,7 +985,6 @@ export class ApiserviceService {
   // top feed video start
 
   async UploadVideo(data: any) {
-    console.log('UploadVideo api');
     await addDoc(collection(this.firestore, `${'Top_Feed'}`), data).then(
       (ref) => {
         const video = doc(this.firestore, 'Top_Feed', `${ref.id}`);
@@ -1048,7 +1014,6 @@ export class ApiserviceService {
   // info slide start
 
   async infoUploadVideo(data: any) {
-    console.log('UploadVideo api');
     await addDoc(collection(this.firestore, `${'info_slide'}`), data).then(
       (ref) => {
         const video = doc(this.firestore, 'info_slide', `${ref.id}`);

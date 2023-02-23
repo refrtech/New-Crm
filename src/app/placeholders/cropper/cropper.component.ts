@@ -22,7 +22,6 @@ export class CropperComponent implements OnInit {
   ngOnInit(): void {
     let type = this.data.type;
     this.imageUrl = this.data.webPath;
-    console.log(this.imageUrl);
     if (type == 'logo') {
       this.aspectRatio = 1 / 1;
     }
@@ -35,7 +34,6 @@ export class CropperComponent implements OnInit {
   }
 
   fileChangeEvent(event: Event): void {
-    console.log(event);
     this.imageChangedEvent = event;
   }
 
@@ -43,23 +41,15 @@ export class CropperComponent implements OnInit {
     this.croppedImage = event.base64;
   }
   
-  imageLoaded() {
-    // show cropper
-    console.log('imageLoaded');
-  }
   cropperReady() {
-    // cropper ready
-    console.log('cropperReady');
     this.showCropper = true;
   }
+
   loadImageFailed() {
-    // show message
-    console.log('loadImageFailed');
     this.dialogRef.close({ success: false, info: 'Failed to load image.' });
   }
+  
   loadCropFailed() {
-    // show message
-    console.log('loadCropFailed');
     this.dialogRef.close({ success: false, info: 'Cropper has been closed.' });
   }
 

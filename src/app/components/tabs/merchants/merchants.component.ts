@@ -121,7 +121,6 @@ export class MerchantsComponent implements OnInit {
     else {
       this.valuetype = 2;
     }
-    console.log("Parameters = " + this.parameters);
   }
 
   ApplyFilter() {

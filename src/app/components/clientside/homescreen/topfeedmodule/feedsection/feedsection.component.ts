@@ -17,34 +17,21 @@ import { ApiserviceService } from 'src/app/apiservice.service';
 export class FeedsectionComponent implements OnInit {
   @ViewChild('imagePreview') imagePreview?: ElementRef;
   @ViewChild('videoPreview') videoPreview?: ElementRef;
-
   imageSrc: string = '';
   videoSrc: string = '';
-
-  // enterFullscreen(element: ElementRef) {
-  //   // const media = element?.nativeElement;
-  //   // if (media.requestFullscreen) {
-  //   //   media.requestFullscreen();
-  //   // } else if (media.webkitRequestFullscreen) {
-  //   //   /* Safari */
-  //   //   media.webkitRequestFullscreen();
-  //   // } else if (media.msRequestFullscreen) {
-  //   //   /* IE11 */
-  //   //   media.msRequestFullscreen();
-  //   // }
-  // }
-
   feedsection: string = '';
   uploadVideoarr: string = '';
   videoIndex?: number;
   videoPath: any;
+  selectedFiles: any;
+  fileName = '';
+  url: any;
+  format: any;
 
   onFileSelected($event: Event) {
     throw new Error('Method not implemented.');
   }
-  selectedFiles: any;
-
-  fileName = '';
+ 
 
   constructor(
     private http: HttpClient,
@@ -55,9 +42,6 @@ export class FeedsectionComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  url: any;
-  format: any;
-
   onSelectFile(event: any) {
     const file = event.target.files && event.target.files[0];
     if (file) {
@@ -66,15 +50,6 @@ export class FeedsectionComponent implements OnInit {
       this.fileName = file.name;
       const formData = new FormData();
       formData.append('video', file);
-
-      // this.http
-      //   .post<any>('http://localhost:3000/upload-video', formData)
-      //   .subscribe(
-      //     (res) => console.log(res),
-      //     (err: any) => {
-      //       console.log(err);
-      //     }
-      //   );
       let upload$ = this.http.post(
         'http://localhost:3000/upload-video',
         formData

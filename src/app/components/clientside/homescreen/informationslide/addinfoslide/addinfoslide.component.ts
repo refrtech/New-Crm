@@ -13,31 +13,18 @@ export class AddinfoslideComponent implements OnInit {
   format: any;
   videoPath: any;
   showData: any;
-
+  selectedFiles: any;
+  fileName = '';
   onFileSelected($event: Event) {
     throw new Error('Method not implemented.');
   }
-  selectedFiles: any;
-
-  fileName = '';
-
+  
   constructor(
     private http: HttpClient,
     public api: ApiserviceService,
     public dialogRef: MatDialogRef<AddinfoslideComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    // this.view();
-    console.log(data);
-  }
-
-  view() {
-    let datas = {
-      name: this.data.videoData.name,
-      path: this.data.videoData.path,
-    };
-
-    console.log('mmmmm', datas);
   }
 
   ngOnInit(): void {}

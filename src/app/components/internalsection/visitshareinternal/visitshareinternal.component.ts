@@ -34,11 +34,8 @@ export class VisitshareinternalComponent implements OnInit {
       if (file) {
         this.preview = '';
         this.currentFile = file;
-
         const reader = new FileReader();
-
         reader.onload = (e: any) => {
-          console.log(e.target.result);
           this.preview = e.target.result;
         };
 
@@ -66,9 +63,7 @@ export class VisitshareinternalComponent implements OnInit {
             }
           },
           error: (err: any) => {
-            console.log(err);
             this.progress = 0;
-
             if (err.error && err.error.message) {
               this.message = err.error.message;
             } else {

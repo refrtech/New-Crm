@@ -45,7 +45,6 @@ export class StoresinhoodComponent implements OnInit {
   ngOnInit(): void { }
 
   action(data: any) {
-
     let i = this.storelist.findIndex((x) => x.id == data.id);
     if (i < 0) {
       this.storelist.push(data);

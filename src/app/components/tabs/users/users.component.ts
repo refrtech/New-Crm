@@ -109,7 +109,6 @@ export class UsersComponent implements OnInit {
 
   execute(para?: string, operator?: string, value?: any) {
     this.apiservice.getUserList(10, this.getall, para, operator, value).pipe(take(1)).subscribe((recentusers: any) => {
-      console.log(recentusers);
       this.UserdataSource = new MatTableDataSource(recentusers);
       this.UserdataSource.sort = this.sort;
     });

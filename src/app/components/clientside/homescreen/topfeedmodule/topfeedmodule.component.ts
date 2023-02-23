@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem,
-} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { FeedsectionComponent } from './feedsection/feedsection.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiserviceService } from 'src/app/apiservice.service';
@@ -17,7 +13,6 @@ export class TopfeedmoduleComponent implements OnInit {
   slide: boolean = false;
   currentSlide: any[] = [];
   getVideoData: any;
-
   id: string = '';
   videoData: string = '';
 

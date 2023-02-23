@@ -50,7 +50,6 @@ export class NodemanagementComponent implements OnInit {
 
   getallnode() {
     this.api.getNodeDataaspercity(this.cityID).subscribe((data: any) => {
-      console.log(data);
       this.nodes = new MatTableDataSource(data);
       this.nodes.paginator = this.paginator;
       this.nodes.sort = this.sort;

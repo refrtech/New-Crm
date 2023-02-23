@@ -70,7 +70,6 @@ export class AddnodeComponent implements OnInit {
   }
 
   addarea(event: any) {
-    console.log(event);
     let index = this.dropdownList.findIndex((x: any) =>
       x.id == event.id
     );
@@ -156,7 +155,6 @@ export class AddnodeComponent implements OnInit {
         updated_at: this.api.newTimestamp,
       }
       this.api.addnode(datas).then((data) => {
-        console.log(data);
         if (data == undefined) {
           this.dialogRef.close();
           alert("Node added");
@@ -189,7 +187,6 @@ export class AddnodeComponent implements OnInit {
         Nareas: this.selectedareafiltered,
       }
       this.api.updateNodeData(datas).then((data) => {
-        console.log(data);
         if (data == undefined) {
           this.dialogRef.close();
           alert("Node updated");

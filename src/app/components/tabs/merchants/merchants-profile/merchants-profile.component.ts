@@ -133,25 +133,16 @@ export class MerchantsProfileComponent implements OnInit {
         this.storeDetails = store;
         this.listLoc = store.loc;
         this.Selcategory = store.cat;
-        // console.log(store.subCat);
-        // console.log(store.cat);
-        // console.log(this.auth.resource.categoryList);
         this.catindex = this.auth.resource.categoryList.findIndex(x=>
           x.id == store.cat
         );
         this.subcatindex = this.auth.resource.categoryList[this.catindex].items.findIndex((x:any)=> 
           x.id == store.subCat
           );
-        this.Selsubcategory = this.auth.resource.categoryList[this.catindex].items[this.subcatindex].id;
-
-        // console.log(this.catindex);
-        // console.log(this.Selsubcategory);
-
-        
+        this.Selsubcategory = this.auth.resource.categoryList[this.catindex].items[this.subcatindex].id;        
         this.apiservice.getUserByUID(store.by).then(storeuser => {
           const storeuserD: any = storeuser.exists() ? storeuser.data() : null;
           this.storeuid = storeuserD.uid;
-          console.log(this.storeuid);
           this.storeinfoDetails = storeuserD;
         })
       })
@@ -194,7 +185,6 @@ export class MerchantsProfileComponent implements OnInit {
 
 
 ordertypechange(){
-  console.log(this.mattaborders?.selectedIndex);
   this.orderdataSource = new MatTableDataSource();
   if (this.mattaborders?.selectedIndex == 0) {
     this.apiservice.getRecentAddedOrder(100, false, "to", "==", this.storeuid,"journey","==","DIRECT").pipe(take(1)).subscribe((recentorders: any) => {
@@ -224,24 +214,6 @@ ordertypechange(){
 
   getproducts() {
     this.apiservice.getProductList(this.storeID).pipe(take(1)).subscribe((products: any) => {
-      // console.log(products);
-
-      // for (let i = 0; i < products.length; i++) {
-      //   // if(i < 1000){
-      //   const body = {
-      //     searchData: products[i],
-      //     searchIndex: "things"
-      //   }
-      //   console.log(body);
-      //   // const headers = { 'Authorization': 'Bearer my-token', 'My-Custom-Header': 'foobar' };
-      //   // const body = { title: 'Angular POST Request Example' };
-      //   this.https.post<any>('https://us-central1-refr-india.cloudfunctions.net/ind_serve/api/search/elastic/add/IN', body).subscribe(data => {
-      //       // this.postId = data.id;
-      //       console.log(i +"= success");
-      //   });
-      // }
-      // }
-
       this.ProductdataSource = new MatTableDataSource(products);
       this.ProductdataSource.sort = this.sort;
     })

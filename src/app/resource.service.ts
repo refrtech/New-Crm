@@ -78,8 +78,6 @@ export class ResourceService {
 
 
   getCat(catX: string, subCatX: string) {
-    console.log("category list")
-    console.log(this.categoryList);
     const cat = this.categoryList[this.categoryList.findIndex((x: any) => x.id == catX)];
     if (!subCatX) {
       return cat.title
@@ -189,7 +187,6 @@ export class ResourceService {
   //    );
   /*
   // Network.addListener('networkStatusChange', status => {
-  //   console.log('Network status changed', status);
   // });
   return of(
     this.internetConnected().then(res => {
@@ -219,7 +216,6 @@ export class ResourceService {
   const { Network } = Plugins;
   
   let handler = Network.addListener('networkStatusChange', (status) => {
-    console.log("Network status changed", status);
   });
   // To stop listening:
   // handler.remove();
@@ -239,7 +235,6 @@ export class ResourceService {
     let x = false;
     try {
       // const status = await Network.getStatus();
-      // console.log(status.connected, status.connectionType)
       // x = status.connected;
       // return of(status.connected);
 

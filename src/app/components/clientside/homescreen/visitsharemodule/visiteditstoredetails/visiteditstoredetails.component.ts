@@ -51,9 +51,7 @@ export class VisiteditstoredetailsComponent implements OnInit {
   }
 
   onItemSelect(item: any) {
-    console.log(item);
   }
   onSelectAll(items: any) {
-    console.log(items);
   }
 }

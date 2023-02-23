@@ -55,7 +55,6 @@ export class BrandSpotlightComponent implements OnInit {
 
   getspotlightdata() {
     this.api.getspotlightdata().subscribe((data: any) => {
-      console.log(data);
       this.BSmoduledata = data[0];
       this.brandspotT = this.BSmoduledata.BS_Title;
       this.brandspotST = this.BSmoduledata.BS_STitle;

@@ -62,7 +62,6 @@ export class WebsiteformComponent implements OnInit {
         tabChangeEvent?.index == 0 || tabChangeEvent == undefined ? false : true
       )
       .subscribe((websiteform: any) => {
-        console.log(websiteform);
         this.WebdataSource = new MatTableDataSource(websiteform);
         this.WebdataSource.sort = this.sort;
       });

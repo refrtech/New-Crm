@@ -1,9 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem,
-} from '@angular/cdk/drag-drop';
 import { AddinfoslideComponent } from './addinfoslide/addinfoslide.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiserviceService } from 'src/app/apiservice.service';
@@ -16,9 +11,7 @@ import { ApiserviceService } from 'src/app/apiservice.service';
 export class InformationslideComponent implements OnInit {
   slide: boolean = false;
   currentSlide: any[] = [];
-
   getVideoData: any;
-
   id: string = '';
   videoData: string = '';
   videoPath: string = '';
@@ -65,21 +58,4 @@ export class InformationslideComponent implements OnInit {
       panelClass: 'thanksscreen',
     });
   }
-
-  // drop(event: CdkDragDrop<string[]>) {
-  //   if (event.previousContainer === event.container) {
-  //     moveItemInArray(
-  //       event.container.data,
-  //       event.previousIndex,
-  //       event.currentIndex
-  //     );
-  //   } else {
-  //     transferArrayItem(
-  //       event.previousContainer.data,
-  //       event.container.data,
-  //       event.previousIndex,
-  //       event.currentIndex
-  //     );
-  //   }
-  // }
 }

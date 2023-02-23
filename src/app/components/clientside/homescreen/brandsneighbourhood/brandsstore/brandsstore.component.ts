@@ -47,24 +47,6 @@ export class BrandsstoreComponent implements OnInit {
   ngOnInit(): void {}
 
   action(data: any) {
-    //   let storess = [data];
-    //   data = {
-    //     Nareas: this.data.node.Nareas,
-    //     city: this.data.node.city,
-    //     city_id: this.data.node.city_id,
-    //     created_at: this.data.node.created_at,
-    //     id: this.data.node.id,
-    //     name: this.data.node.name,
-    //     stores: storess,
-    //     updated_at: this.data.node.updated_at,
-    //   }
-    //   console.log(data);
-    //   this.api.addVSAstores(data, this.data.id).then((data:any)=>{
-    //     if(!data){
-    //       // alert(error);
-    //     }
-    //   });
-
     let i = this.storelist.findIndex((x) => x.id == data.id);
     if (i < 0) {
       this.storelist.push(data);
