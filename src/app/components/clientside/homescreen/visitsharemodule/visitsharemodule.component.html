@@ -79,7 +79,8 @@
                         <mat-form-field class="crminput l5margin r5margin M70width" appearance="outline">
                             <mat-select placeholder="Select node" [(ngModel)]="Selectednode">
                                 <ng-container *ngIf="nodes$ | async as nodeList">
-                                    <mat-option *ngFor="let item of nodeList" [value]="item.id" (click)="selectednodedata = item">
+                                    <mat-option *ngFor="let item of nodeList" [value]="item.id"
+                                        (click)="selectednodedata = item">
                                         {{item.name}}
                                     </mat-option>
                                 </ng-container>
@@ -98,7 +99,8 @@
         <div class="dflex M100width tb15padding s_size">
             <div class="regulartext M20width l10padding">Node name</div>
             <div class="regulartext M10width c_align">No of stores</div>
-            <div class="regulartext M50width c_align">Store name</div>
+            <div class="regulartext M35width c_align">Store name</div>
+            <div class="regulartext M15width c_align"></div>
             <div class="regulartext M20width c_align">Action</div>
         </div>
         <div>
@@ -113,12 +115,19 @@
                                 <div class="regulartext M10width c_align">
                                     {{item.stores.length}}
                                 </div>
-                                <div class="regulartext M50width c_align">
+                                <div class="regulartext M35width c_align">
                                     <ng-container *ngFor="let items of item.stores">
-                                    <span class="lightgray_bg lr15padding tb5padding A20radius r5margin">
-                                        {{items.name}}
-                                    </span>
-                                </ng-container>
+                                        <span class="lightgray_bg lr15padding tb5padding A20radius r5margin">
+                                            {{items.name}}
+                                        </span>
+                                    </ng-container>
+                                </div>
+                                <div class="M15width c_align">
+                                    <a routerlink="/VSAcat">
+                                        <button mat-button class="viewbtn t5padding b5padding l30padding r30padding">
+                                            Go to internal
+                                        </button>
+                                    </a>
                                 </div>
                                 <div class="regulartext M20width c_align">
                                     <mat-icon (click)="allstores(item)">

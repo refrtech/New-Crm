@@ -16,6 +16,8 @@ import { FeedsectionComponent } from './components/clientside/homescreen/topfeed
 import { TopfeedmoduleComponent } from './components/clientside/homescreen/topfeedmodule/topfeedmodule.component';
 import { VisitaddstoredetailsComponent } from './components/clientside/homescreen/visitsharemodule/visitaddstoredetails/visitaddstoredetails.component';
 import { VisitallstoredetailsComponent } from './components/clientside/homescreen/visitsharemodule/visitallstoredetails/visitallstoredetails.component';
+import { VSAnodecatstoresComponent } from './components/clientside/homescreen/visitsharemodule/visitallstoredetails/vsanodescat/vsanodecatstores/vsanodecatstores.component';
+import { VSAnodescatComponent } from './components/clientside/homescreen/visitsharemodule/visitallstoredetails/vsanodescat/vsanodescat.component';
 import { VisiteditstoredetailsComponent } from './components/clientside/homescreen/visitsharemodule/visiteditstoredetails/visiteditstoredetails.component';
 import { VisitsharemoduleComponent } from './components/clientside/homescreen/visitsharemodule/visitsharemodule.component';
 import { NodemanagementCitysComponent } from './components/clientside/nodemanagement-citys/nodemanagement-citys.component';
@@ -82,6 +84,9 @@ const routes: Routes = [
       { path: 'dailydrops', component: DailydropsComponent },
       { path: 'dailydropsbrands', component: DaildropsbrandsComponent },
       { path: 'Nodecity', component: NodemanagementCitysComponent },
+      { path: 'VSAcat', component: VSAnodescatComponent },
+      { path: 'VSAcatstores', component: VSAnodecatstoresComponent },
+
 
     ],
   },
