@@ -86,4 +86,8 @@ export class FeedsectionComponent implements OnInit {
     });
     this.dialogRef.close();
   }
+
+  close() {
+    this.dialogRef.close();
+  }
 }

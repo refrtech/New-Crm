@@ -1,6 +1,6 @@
 <div class="A20padding">
     <div class="dflex AIcenter">
-        <a routerLink="/feedmodule">
+        <a (click)="close()">
             <svg width="38" height="24" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M24 12H5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round"
@@ -49,7 +49,7 @@
     <div class="dflex AIcenter Aborder A5padding t20margin A5radius" *ngIf="fileName >= '0'">
         <div class="feedmoduleImg">
             <img #imagePreview [src]="url" *ngIf="format==='image' && url">
-            <video #videoPlayer [src]="url" *ngIf="format==='video' && url" controls height="100"></video>
+            <video #videoPlayer [src]="url" *ngIf="format==='video' && url" controls height="200"></video>
         </div>
         <div class="l10margin">
             {{fileName}}
@@ -72,17 +72,17 @@
 
 
 
-    <!-- <div>
+    <div>
         <div class="t20margin b15margin">
-            <div class="s_size semiboldtext crminput r15padding AScenter">Slide Name
+            <div class="s_size semiboldtext crminput r15padding AScenter">URL path <span>(optional)</span>
             </div>
         </div>
         <div>
-            <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
+            <mat-form-field class="crminput l5margin r5margin M50width" appearance="outline">
                 <input type="number" matInput placeholder="Enter the URL path">
             </mat-form-field>
         </div>
-    </div> -->
+    </div>
     <!-- 
     <img [src]="url" *ngIf="format==='image' && url" height="200"> <br />
     <video [src]="url" *ngIf="format==='video' && url" height="200" controls></video> -->

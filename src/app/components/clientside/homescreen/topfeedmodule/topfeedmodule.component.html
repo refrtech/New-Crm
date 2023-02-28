@@ -30,9 +30,9 @@
         </div>
         <div cdkDropListGroup>
             <div class="example-container M100width">
-                <div cdkDropList [cdkDropListData]="feedSection" class="example-list"
+                <div cdkDropList class="example-list"
                     (cdkDropListDropped)="drop($event)">
-                    <div class="example-box tborder s_size" *ngFor="let item of getVideoData" cdkDrag>
+                    <div class="example-box tborder s_size" *ngFor="let item of getVideoData;let i = index" cdkDrag>
                         <div class="M5width dflex JCcenter">
                             <mat-icon>menu</mat-icon>
                         </div>
@@ -40,8 +40,7 @@
                             {{item.created_at.toDate() | date:'MMM dd, yyyy'}}
                         </div>
                         <div class="M25width c_align semiboldtext">
-                            {{item.slides}}
-                            {{item.name}}
+                            slide&nbsp;{{i+1}}
                         </div>
                         <div class="M45width c_align">
                             <!-- <a [routerLink]="item.link">
@@ -60,9 +59,4 @@
 
 
 
-    <!-- empty state -->
-
-    <div *ngIf="getVideoData.length == 0">
-        <p>no data</p>
-    </div>
 </div>

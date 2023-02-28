@@ -27,7 +27,7 @@ export class InformationslideComponent implements OnInit {
       width: '50%',
       data: { id: id, videoData: data },
       hasBackdrop: true,
-      disableClose: false,
+      disableClose: true,
       panelClass: 'thanksscreen',
     });
   }

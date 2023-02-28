@@ -81,6 +81,9 @@ import { StoresinhoodComponent } from './components/clientside/homescreen/newsto
 import { VSAnodescatComponent } from './components/clientside/homescreen/visitsharemodule/visitallstoredetails/vsanodescat/vsanodescat.component';
 import { VSAnodecatstoresComponent } from './components/clientside/homescreen/visitsharemodule/visitallstoredetails/vsanodescat/vsanodecatstores/vsanodecatstores.component';
 import { VSAnodesubcatstoresComponent } from './components/clientside/homescreen/visitsharemodule/visitallstoredetails/vsanodescat/vsanodecatstores/vsanodesubcatstores/vsanodesubcatstores.component';
+import { HbnodescatComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hbnodescat/hbnodescat.component';
+import { HgbcreatecategoryComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hgbcreatecategory/hgbcreatecategory.component';
+import { HgbnodecatstoresComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hgbnodecatstores/hgbnodecatstores.component';
 
 @NgModule({
   declarations: [
@@ -131,6 +134,9 @@ import { VSAnodesubcatstoresComponent } from './components/clientside/homescreen
     VSAnodescatComponent,
     VSAnodecatstoresComponent,
     VSAnodesubcatstoresComponent,
+    HbnodescatComponent,
+    HgbcreatecategoryComponent,
+    HgbnodecatstoresComponent,
   ],
   imports: [
     MatDialogModule,
