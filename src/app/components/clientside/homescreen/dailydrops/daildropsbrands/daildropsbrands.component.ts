@@ -97,7 +97,7 @@ export class DaildropsbrandsComponent implements OnInit {
           this.dialogRef.close();
         }
       });
-      console.log(this.data.creatednodes);
+      // console.log(this.data.creatednodes);
     }
   }
 }

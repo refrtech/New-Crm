@@ -45,10 +45,10 @@ export class VisitallstoredetailsComponent implements OnInit {
     public dialogRef: MatDialogRef<VisitallstoredetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
-    console.log("---");
+    console.log("----");
     console.log(this.data.creatednodes);
     this.storelist = this.data.selectednode != undefined ? this.data.selectednode.stores : [];
-    console.log("---");
+    console.log("----");
   }
 
   ngOnInit(): void { }
@@ -142,7 +142,7 @@ export class VisitallstoredetailsComponent implements OnInit {
       if (!result.success) {
         if (result.info) {
           this.auth.resource.startSnackBar(result.info)
-        }
+        } 
       } else {
         if (type == 'banner') {
           let index = this.data.creatednodes.findIndex((x: any) => x.id == this.data.selectednode.id);
