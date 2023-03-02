@@ -1,10 +1,14 @@
-
+import { Camera } from '@capacitor/camera';
+import { CameraResultType } from '@capacitor/camera/dist/esm/definitions';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { take } from 'rxjs';
 import { ApiserviceService } from 'src/app/apiservice.service';
+import { AuthService } from 'src/app/auth.service';
+import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component';
+
 
 @Component({
   selector: 'app-brandsstore',
@@ -40,7 +44,8 @@ export class BrandsstoreComponent implements OnInit {
   constructor(public router: Router,
     public api: ApiserviceService,
     public dialogRef: MatDialogRef<BrandsstoreComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,) {
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public auth: AuthService,) {
     this.storelist = this.data.selectednode != undefined ? this.data.selectednode.stores : [];
     }
 
@@ -101,6 +106,54 @@ export class BrandsstoreComponent implements OnInit {
       });
       console.log(this.data.creatednodes);
     }
+  }
+
+
+  async takePicture(type: string, index: number, item: any) {
+    console.log(item);
+    const image = await Camera.getPhoto({
+      quality: 100,
+      height: 300,
+      width: 300,
+      allowEditing: false,
+      resultType: CameraResultType.Uri,
+    });
+
+    console.log('image', image);
+    const imageUrl = image.webPath || '';
+    if (imageUrl) {
+      this.startCropper(imageUrl, type, index, item);
+    } else {
+    }
+  }
+
+  async startCropper(webPath: string, type: string, index: number, item: any) {
+    let isPhone = this.auth.resource.getWidth < 768;
+    let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
+    const refDialog = this.auth.resource.dialog.open(CropperComponent, {
+      width: w,
+      minWidth: '320px',
+      maxWidth: '480px',
+      height: '360px',
+      data: { webPath: webPath, type: type },
+      disableClose: true,
+      panelClass: 'dialogLayout',
+    });
+    refDialog.afterClosed().subscribe(async (result) => {
+      if (!result.success) {
+        if (result.info) {
+          this.auth.resource.startSnackBar(result.info)
+        }
+      } else {
+        if (type == 'banner') {
+          let index = this.data.creatednodes.findIndex((x: any) => x.id == this.data.selectednode.id);
+          const cloudUpload = await this.api.cloudUpload(this.data.creatednodes[index].stores[index].id, result.croppedImage);
+          console.log("--------- banner --------");
+          console.log(cloudUpload);
+          console.log("--------- banner --------");
+        }
+      }
+    });
   }
 
 }

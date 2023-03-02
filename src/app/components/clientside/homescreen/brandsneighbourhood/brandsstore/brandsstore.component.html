@@ -100,7 +100,7 @@
                 <div cdkDropListGroup>
                     <div class="example-container M100width">
                         <div cdkDropList class="example-list">
-                            <ng-container *ngFor="let item of storelist">
+                            <ng-container *ngFor="let item of storelist;let i= index">
                                 <div class="example-box tborder dflex s_size White_bg">
                                     <div class="M30width l_align l15padding">
                                         {{item.name}}
@@ -110,7 +110,7 @@
                                     </div>
                                     <div class="M25width"></div>
                                     <div class="M25width c_align">
-                                        <mat-icon class="black_text">edit</mat-icon>
+                                        <mat-icon class="black_text" (click)="takePicture('banner',i,item)">edit</mat-icon>
                                     </div>
                                 </div>
                             </ng-container>
