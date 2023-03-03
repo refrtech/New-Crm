@@ -14,7 +14,7 @@ export class TopfeedmoduleComponent implements OnInit {
   currentSlide: any[] = [];
   getVideoData: any;
   id: string = '';
-  videoData: string = '';
+  videoData: any = '';
 
   constructor(private dailog: MatDialog, public api: ApiserviceService) {
     this.getVideo();
@@ -27,14 +27,11 @@ export class TopfeedmoduleComponent implements OnInit {
       width: '50%',
       data: { id: id, videoData: data },
       hasBackdrop: true,
-      disableClose: false,
+      disableClose: true,
       panelClass: 'thanksscreen',
     });
+    
   }
-
-  feedSection: Array<any> = [
-    { date: '23/2/2023', slides: 'Slide 1', link: '/feedsection' },
-  ];
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
@@ -57,6 +54,9 @@ export class TopfeedmoduleComponent implements OnInit {
     this.api.getuploadVideo().subscribe((data: any) => {
       this.getVideoData = data;
       console.log('get data', data);
+      for (let i = 1; i < data.length; i++) {
+          console.log("length", i);
+      }
     });
   }
 

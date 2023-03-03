@@ -132,9 +132,10 @@
         <div class="dflex M100width">
             <div class="boxshw M100width">
                 <div class="dflex M100width tb15padding s_size">
-                    <div class="regulartext M35width l10padding">Store name</div>
-                    <div class="regulartext M35width c_align">Category</div>
-                    <div class="regulartext M30width c_align">Action</div>
+                    <div class="regulartext M25width l10padding">Store name</div>
+                    <div class="regulartext M25width c_align">Category</div>
+                    <div class="regulartext M25width c_align"></div>
+                    <div class="regulartext M25width c_align">Action</div>
                 </div>
                 <div>
                     <div class="example-container M100width">
@@ -142,13 +143,20 @@
                             <ng-container *ngFor="let item of HGmoduledata.First_Stores">
                                 <ng-container>
                                     <div class="dflex tborder s_size tb15padding">
-                                        <div class="regulartext M35width l10padding">
+                                        <div class="regulartext M25width l10padding">
                                             {{item.name}}
                                         </div>
-                                        <div class="regulartext M35width c_align">
+                                        <div class="regulartext M25width c_align">
                                             {{item.cat}}
                                         </div>
-                                        <div class="regulartext M30width c_align">
+                                        <div class="M25width c_align">
+                                            <a routerlink="/VSAcat">
+                                                <button mat-button class="viewbtn t5padding b5padding l30padding r30padding">
+                                                    Go to internal
+                                                </button>
+                                            </a>
+                                        </div>
+                                        <div class="regulartext M25width c_align">
                                             <mat-icon>
                                                 edit
                                             </mat-icon>
@@ -174,9 +182,10 @@
         <div class="dflex M100width">
             <div class="boxshw M100width">
                 <div class="dflex M100width tb15padding s_size">
-                    <div class="regulartext M35width l10padding">Store name</div>
-                    <div class="regulartext M35width c_align">Category</div>
-                    <div class="regulartext M30width c_align">Action</div>
+                    <div class="regulartext M25width l10padding">Store name</div>
+                    <div class="regulartext M25width c_align">Category</div>
+                    <div class="regulartext M25width c_align"></div>
+                    <div class="regulartext M25width c_align">Action</div>
                 </div>
                 <div>
                     <div class="example-container M100width">
@@ -184,13 +193,20 @@
                             <ng-container *ngFor="let item of HGmoduledata.Second_Stores">
                                 <ng-container>
                                     <div class="dflex tborder s_size tb15padding">
-                                        <div class="regulartext M35width l10padding">
+                                        <div class="regulartext M25width l10padding">
                                             {{item.name}}
                                         </div>
-                                        <div class="regulartext M35width c_align">
+                                        <div class="regulartext M25width c_align">
                                             {{item.cat}}
                                         </div>
-                                        <div class="regulartext M30width c_align">
+                                        <div class="M25width c_align">
+                                            <a routerlink="/VSAcat">
+                                                <button mat-button class="viewbtn t5padding b5padding l30padding r30padding">
+                                                    Go to internal
+                                                </button>
+                                            </a>
+                                        </div>
+                                        <div class="regulartext M25width c_align">
                                             <mat-icon>
                                                 edit
                                             </mat-icon>
@@ -216,9 +232,10 @@
         <div class="dflex M100width">
             <div class="boxshw M100width">
                 <div class="dflex M100width tb15padding s_size">
-                    <div class="regulartext M35width l10padding">Store name</div>
-                    <div class="regulartext M35width c_align">Category</div>
-                    <div class="regulartext M30width c_align">Action</div>
+                    <div class="regulartext M25width l10padding">Store name</div>
+                    <div class="regulartext M25width c_align">Category</div>
+                    <div class="regulartext M25width c_align"></div>
+                    <div class="regulartext M25width c_align">Action</div>
                 </div>
                 <div>
                     <div class="example-container M100width">
@@ -226,13 +243,20 @@
                             <ng-container *ngFor="let item of HGmoduledata.third_Stores">
                                 <ng-container>
                                     <div class="dflex tborder s_size tb15padding">
-                                        <div class="regulartext M35width l10padding">
+                                        <div class="regulartext M25width l10padding">
                                             {{item.name}}
                                         </div>
-                                        <div class="regulartext M35width c_align">
+                                        <div class="regulartext M25width c_align">
                                             {{item.cat}}
                                         </div>
-                                        <div class="regulartext M30width c_align">
+                                        <div class="M25width c_align">
+                                            <a routerlink="/VSAcat">
+                                                <button mat-button class="viewbtn t5padding b5padding l30padding r30padding">
+                                                    Go to internal
+                                                </button>
+                                            </a>
+                                        </div>
+                                        <div class="regulartext M25width c_align">
                                             <mat-icon routerLink="/addstore">
                                                 edit
                                             </mat-icon>

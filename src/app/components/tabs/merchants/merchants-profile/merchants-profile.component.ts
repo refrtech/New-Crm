@@ -142,6 +142,7 @@ export class MerchantsProfileComponent implements OnInit {
         this.Selsubcategory = this.auth.resource.categoryList[this.catindex].items[this.subcatindex].id;        
         this.apiservice.getUserByUID(store.by).then(storeuser => {
           const storeuserD: any = storeuser.exists() ? storeuser.data() : null;
+          console.log(storeuserD);
           this.storeuid = storeuserD.uid;
           this.storeinfoDetails = storeuserD;
         })

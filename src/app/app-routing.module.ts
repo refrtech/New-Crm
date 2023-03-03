@@ -7,6 +7,9 @@ import { BrandsstoreComponent } from './components/clientside/homescreen/brandsn
 import { DaildropsbrandsComponent } from './components/clientside/homescreen/dailydrops/daildropsbrands/daildropsbrands.component';
 import { DailydropsComponent } from './components/clientside/homescreen/dailydrops/dailydrops.component';
 import { HomegrowbrandsComponent } from './components/clientside/homescreen/homegrowbrands/homegrowbrands.component';
+import { HbnodescatComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hbnodescat/hbnodescat.component';
+import { HgbcreatecategoryComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hgbcreatecategory/hgbcreatecategory.component';
+import { HgbnodecatstoresComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hgbnodecatstores/hgbnodecatstores.component';
 import { HomescreenComponent } from './components/clientside/homescreen/homescreen.component';
 import { AddinfoslideComponent } from './components/clientside/homescreen/informationslide/addinfoslide/addinfoslide.component';
 import { InformationslideComponent } from './components/clientside/homescreen/informationslide/informationslide.component';
@@ -16,6 +19,8 @@ import { FeedsectionComponent } from './components/clientside/homescreen/topfeed
 import { TopfeedmoduleComponent } from './components/clientside/homescreen/topfeedmodule/topfeedmodule.component';
 import { VisitaddstoredetailsComponent } from './components/clientside/homescreen/visitsharemodule/visitaddstoredetails/visitaddstoredetails.component';
 import { VisitallstoredetailsComponent } from './components/clientside/homescreen/visitsharemodule/visitallstoredetails/visitallstoredetails.component';
+import { VSAnodecatstoresComponent } from './components/clientside/homescreen/visitsharemodule/visitallstoredetails/vsanodescat/vsanodecatstores/vsanodecatstores.component';
+import { VSAnodescatComponent } from './components/clientside/homescreen/visitsharemodule/visitallstoredetails/vsanodescat/vsanodescat.component';
 import { VisiteditstoredetailsComponent } from './components/clientside/homescreen/visitsharemodule/visiteditstoredetails/visiteditstoredetails.component';
 import { VisitsharemoduleComponent } from './components/clientside/homescreen/visitsharemodule/visitsharemodule.component';
 import { NodemanagementCitysComponent } from './components/clientside/nodemanagement-citys/nodemanagement-citys.component';
@@ -82,6 +87,14 @@ const routes: Routes = [
       { path: 'dailydrops', component: DailydropsComponent },
       { path: 'dailydropsbrands', component: DaildropsbrandsComponent },
       { path: 'Nodecity', component: NodemanagementCitysComponent },
+      { path: 'VSAcat', component: VSAnodescatComponent },
+      { path: 'VSAcatstores', component: VSAnodecatstoresComponent },
+
+      { path: 'HGBcat', component: HbnodescatComponent },
+      { path: 'HGBcreatecat', component: HgbcreatecategoryComponent },
+      { path: 'HGBcreatecat', component: HgbcreatecategoryComponent },
+      { path: 'HGBcatstores', component: HgbnodecatstoresComponent },
+
 
     ],
   },

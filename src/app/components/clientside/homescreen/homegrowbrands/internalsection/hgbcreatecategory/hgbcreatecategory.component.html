@@ -1,0 +1,57 @@
+<div class="A20padding">
+    <div class="dflex AIcenter">
+        <a routerLink="/homescreen">
+            <svg width="38" height="24" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M24 12H5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+        </a>
+        <span class="xxl_size boldtext lr15padding AScenter">Create Category</span>
+    </div>
+
+
+<div class="boldtext m_size t30margin">
+    Categories
+</div>
+    <div class="t15margin boxshw">
+        <div class="dflex JCevenly M100width tb15padding s_size">
+            <div class="M10width c_align">Rank</div>
+            <div class="regulartext M20width">Date Added</div>
+            <div class="regulartext M40width">Store name</div>
+            <div class="regulartext M20width">Category</div>
+            <div class="regulartext M10width c_align">Action</div>
+        </div>
+        <div cdkDropListGroup>
+            <div class="example-container M100width">
+                <div cdkDropList [cdkDropListData]="feedSection" class="example-list"
+                    (cdkDropListDropped)="drop($event)">
+                    <div class="example-box tborder s_size dflex tb10padding" *ngFor="let item of feedSection" cdkDrag>
+                        <div class="M10width dflex JCcenter">
+                            <mat-icon>menu</mat-icon>
+                        </div>
+                        <div class="M20width l_align">
+                            {{item.dateAdded}}
+                        </div>
+                        <div class="M40width l_align">
+                            {{item.storeName}}
+                        </div>
+                        <div class="M20width l_align">
+                            {{item.Catname}}
+                        </div>
+                        <div class="M10width c_align">
+                            <a [routerLink]="item.link">
+                                <mat-icon class="black_text">edit</mat-icon>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="t15margin">
+        <a class="m_size semiboldtext text_decoration_none purple_txt cursor_pointer">Add Category</a>
+    </div>
+
+</div>

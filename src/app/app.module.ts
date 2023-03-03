@@ -78,6 +78,12 @@ import { ContentComponent } from './placeholders/content/content.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { NodemanagementCitysComponent } from './components/clientside/nodemanagement-citys/nodemanagement-citys.component';
 import { StoresinhoodComponent } from './components/clientside/homescreen/newstoreinhood/storesinhood/storesinhood.component';
+import { VSAnodescatComponent } from './components/clientside/homescreen/visitsharemodule/visitallstoredetails/vsanodescat/vsanodescat.component';
+import { VSAnodecatstoresComponent } from './components/clientside/homescreen/visitsharemodule/visitallstoredetails/vsanodescat/vsanodecatstores/vsanodecatstores.component';
+import { VSAnodesubcatstoresComponent } from './components/clientside/homescreen/visitsharemodule/visitallstoredetails/vsanodescat/vsanodecatstores/vsanodesubcatstores/vsanodesubcatstores.component';
+import { HbnodescatComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hbnodescat/hbnodescat.component';
+import { HgbcreatecategoryComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hgbcreatecategory/hgbcreatecategory.component';
+import { HgbnodecatstoresComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hgbnodecatstores/hgbnodecatstores.component';
 
 @NgModule({
   declarations: [
@@ -125,6 +131,12 @@ import { StoresinhoodComponent } from './components/clientside/homescreen/newsto
     CropperComponent,
     ContentComponent,
     StoresinhoodComponent,
+    VSAnodescatComponent,
+    VSAnodecatstoresComponent,
+    VSAnodesubcatstoresComponent,
+    HbnodescatComponent,
+    HgbcreatecategoryComponent,
+    HgbnodecatstoresComponent,
   ],
   imports: [
     MatDialogModule,
