@@ -40,11 +40,13 @@ export class SettingComponent implements OnInit {
   }
 
   deletearea(id: any) {
+    console.log(id);
     if (id == undefined) {
       alert("invalid data");
     }
     else {
       this.api.deletearea(id).then((data: any) => {
+        console.log(data);
         alert("area deleted");
       });
     }

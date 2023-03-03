@@ -339,7 +339,6 @@ export class ApiserviceService {
         );
       }
     }
-
     return collectionData(qu);
   }
 
@@ -376,30 +375,24 @@ export class ApiserviceService {
     return getDoc(shopRef);
   }
 
-  // getStoreByID(storeID: string){
-  //   const catData: CollectionReference = collection(this.firestore, `${'users'}`)
-  //   const qu = query(catData,
-
-  //     where("acBalVr", ">", 0),
-  //     // where("storeCam","==",[])
-  //     // orderBy("sin", "desc"),
-  //   );
-  //   return collectionData(qu);
-  // }
-
   getarea() {
     const manageNode: CollectionReference = collection(
       this.firestore,
       `${'Areas'}`
     );
-
     const qu = query(manageNode);
     return collectionData(qu);
   }
 
   deletearea(id: any) {
     const arearefr = doc(this.firestore, `Areas`, `${id}`);
-    return deleteDoc(arearefr);
+    return deleteDoc(arearefr).then((data)=>{
+      return {success:true}
+    })
+    .catch((err) => {
+      console.log(err);
+      return {success:false};
+    });
   }
 
   async addarea(data: any) {
