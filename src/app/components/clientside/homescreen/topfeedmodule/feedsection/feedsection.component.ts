@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiserviceService } from 'src/app/apiservice.service';
+import { Storage } from '@google-cloud/storage';
 
 @Component({
   selector: 'app-feedsection',
@@ -31,13 +32,13 @@ export class FeedsectionComponent implements OnInit {
   onFileSelected($event: Event) {
     throw new Error('Method not implemented.');
   }
- 
+
 
   constructor(
     private http: HttpClient,
     public dialogRef: MatDialogRef<FeedsectionComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public api: ApiserviceService
+    public api: ApiserviceService,
   ) {}
 
   ngOnInit(): void {}
@@ -90,4 +91,29 @@ export class FeedsectionComponent implements OnInit {
   close() {
     this.dialogRef.close();
   }
+
+  async uploadFile(file: File) {
+    // const storage = new Storage({
+    //   keyFilename: 'assets/location-363107-b384bcbe5b3c.json', // replace with the path to your key file
+    //   projectId: 'refr-india' // replace with your Google Cloud project ID
+    // });
+
+    // const bucketName = 'FeedVideos'; // replace with the name of your Google Cloud Storage bucket
+    // const fileName = `uploads/${file.name}`;
+
+    // const bucket = storage.bucket(bucketName);
+    // const fileStream = bucket.file(fileName).createWriteStream();
+
+    // fileStream.on('error', (err) => {
+    //   console.error(`Error uploading file ${file.name}: ${err}`);
+    // });
+
+    // fileStream.on('finish', () => {
+    //   console.log(`File ${file.name} uploaded to Google Cloud Storage.`);
+    // });
+
+    // fileStream.end(file.data);
+  }
+
+
 }

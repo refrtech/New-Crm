@@ -152,7 +152,7 @@ import { HgbnodecatstoresComponent } from './components/clientside/homescreen/ho
     MatExpansionModule,
     NgxDropzoneModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-
+    AngularFireModule,
     // 3. Initialize
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     //provideFirestore(() => getFirestore()),
@@ -173,7 +173,7 @@ import { HgbnodecatstoresComponent } from './components/clientside/homescreen/ho
     NgMultiSelectDropDownModule.forRoot(),
     ImageCropperModule,
   ],
-  providers: [AngularFirestore],
+  providers: [AngularFirestore,],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

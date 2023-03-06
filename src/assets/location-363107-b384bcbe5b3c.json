@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "location-363107",
+  "private_key_id": "b384bcbe5b3cb45dc54ecc4670afca1a910d78fd",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC9zAodqNxGa+x4\n8+69SZmZ0q9JvYFJ8e13moyQMqo93TVtGDAiUgqOJrYgr5ExUMLynqHf+FnKVqC1\nPjOZelLjrC2IUds7N9YqS1tHq2bQC7uIzP7aSwasy+J+RIyeAH/rTZ6hp6TswniT\nAHdKOenRhA5w+2/xIogLEmSitEhEJ6WQnCYZZw6pTKvXgsPn6jCbmUWQiUWppK6X\nB/syaNI60f5Z5L61JFuTnG35H2vWvOJQfAuDqyg13Y97rMKU8+0fd+8Bvm1+U7C/\ngKU+gp1PewLPmWcqorjFu+rFcL5RIiFXH4jB3bwcbVUfhx6N0efvWqcbLgam0zQo\nNfRup8thAgMBAAECggEAEI1gXnjRCRU1cND5Q6nNCwS8Q8aSpXPDXXhthM/eV/nY\nRHTlEcEs6XvHy270TyQ3dDhQbrt2fTZz2oqbrmlkHDXyXJ6i63WxqEudINF6bG9x\ngfs6yKfdY6l+TbvFtavefBNvX7LCp+FH6a4TOTZ2xU5qggDzoMh9q9WFUEk/ui3C\nKahhMS1w5DUS6zv/X2CkDi6SlXJHlcgTQHpbk31THZzLZZ7S7HX6nOt/nMejPdKV\nXp9qhrTbvPNhIdb1F7XGItPr1ipUBYvJXXCx5ZB/9u7R+mNzZkkbh5IRFz4Kzbjl\n2QPU/XYfUPdyJmBP03z52TSM1SRUMEjDvUmmAMvATwKBgQD9Peuyv0BmtCg8w/MT\n3aT1g9Je3PXMU/4nFPbMEhgM5n/IIXVHsd2nNmfo7unNg9CFVL1l7KDmVMHPYuS9\nZzP4zZHQgNq/zlPqTL2I5OZVttXCg7q5GuME4i+2EL1QBwmxeIbxOCdNgUwyiYsa\nUtn64dmoV8pc5hWiC1v4IxQZ9wKBgQC/3TltNpqSHZb1HtorYFWxwDSxcdom5Rt0\nEQ5K7PH9TENL0DK0YqlxHZ69Jl8X7o4/8y1LiIK/CFE0QEhTWl37aiZ/hAoq4e08\nZNRigLHeDO5l430iwKYGDIyOliXYlnoCijPnGFfG/vpi2IW8+kcIhgokVXdbKbWH\noR9xSlsvZwKBgFQYMuPptLYmT1JWc6r+KGBLRRmxYIJYxgYuZQJBY/EsvfQ0gCCt\nxQBZBcqJQ+S2SBFuoXJuUMQME0wN+A2Zbt3JTgmiMIIPPziIAUyrTn3aOEPewKvl\nbMvbXKKmDme73pEriAwkbJDFRgtmN2YnazFvvHq1pIKS+U4VXZYZ9/vjAoGBAJ8v\nxmDFyDNpF4GiqnMIx7Dl/xImm1BgEIoZSJmDxDdb2g4B3L/riBhQ8g6P0qBBjoai\nlbcwuQIUvYMzvo5h0M4zQWPVQrZXowTTx58+ldTdN8MTnxSBcH5eVRRMoXP1TZ/j\n2LJpcRKrJUVzzmp/4QXCaJHC03ewwGualELj5YoLAoGAKrWqQE1jo3bFn/ng9GLI\nW/MD19e9Lk66DejI/SIn1dtaPAOdE3PQK4H+VfPraL6gE6a7k7atf/aQtxW+jiIF\nYvb4cb0hiO7nun9RN/g8evY5ITklfPNbnPaCfVUjWJ4J3pVGR1ZMcuNz5ZMpiMJO\nSo4/UHrm526GljtMBWdp/qU=\n-----END PRIVATE KEY-----\n",
+  "client_email": "refr-india@location-363107.iam.gserviceaccount.com",
+  "client_id": "107511707774864066668",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/refr-india%40location-363107.iam.gserviceaccount.com"
+}
