@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { take } from 'rxjs';
 import { ApiserviceService } from 'src/app/apiservice.service';
 import { AddnodeComponent } from './addnode/addnode.component';
 
@@ -13,68 +14,103 @@ import { AddnodeComponent } from './addnode/addnode.component';
   styleUrls: ['./nodemanagement.component.scss'],
 })
 export class NodemanagementComponent implements OnInit {
-  cityID: string = "";
+  cityID: string = '';
   parameters: string = '';
   searchvalue: any;
   valuetype: number = 2;
   Valuearr: Array<any> = [];
   nodes!: MatTableDataSource<any>;
+  dropdownList: Array<any> = [];
+
+  nodesarr: Array<any> = [];
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   nodeColumns: string[] = ['node', 'area', 'used_in', 'action'];
-  ParaArr: Array<any> = [
-    {
-      Title: 'Cities',
-      titvalue: '',
-    },
-    {
-      Title: 'Mumbai',
-      titvalue: 'mumbai',
-    },
-    {
-      Title: 'Andheri',
-      titvalue: 'andheri',
-    },
-    {
-      Title: 'Kalyan',
-      titvalue: 'kalyan',
-    },
-  ];
-  constructor(public api: ApiserviceService, public rs: Router, private dialog: MatDialog, private actRoute: ActivatedRoute) {
-    this.cityID = this.actRoute.snapshot.params["id"];
+  constructor(
+    public api: ApiserviceService,
+    public rs: Router,
+    private dialog: MatDialog,
+    private actRoute: ActivatedRoute
+  ) {
+    this.cityID = this.actRoute.snapshot.params['id'];
   }
 
   ngOnInit(): void {
+    this.getAreasbycity(this.cityID);
     this.getallnode();
   }
 
   getallnode() {
-    this.api.getNodeDataaspercity(this.cityID).subscribe((data: any) => {
-      this.nodes = new MatTableDataSource(data);
-      this.nodes.paginator = this.paginator;
-      this.nodes.sort = this.sort;
-    });
+    this.api
+      .getNodeDataaspercity(this.cityID)
+      .pipe(take(1))
+      .subscribe((data: any) => {
+        console.log(data);
+        this.nodesarr = data;
+        this.nodes = new MatTableDataSource(data);
+        this.nodes.paginator = this.paginator;
+        this.nodes.sort = this.sort;
+      });
+  }
+
+  getAreasbycity(id: any) {
+    this.api
+      .getareabycity(id)
+      .pipe(take(1))
+      .subscribe((Data: any) => {
+        this.dropdownList = Data;
+      });
   }
 
   opennode(id: any, data?: any) {
+    console.log(data);
+    if (data != undefined && data.Nareas != undefined ) {
+      for (let i = 0; i < data.Nareas.length; i++) {
+        this.dropdownList.unshift(data.Nareas[i]);
+      }
+    }
     const dialogRef = this.dialog.open(AddnodeComponent, {
-      width: "50%",
-      data: { id: id, nodedata: data, selectedcityid: this.cityID },
+      width: '50%',
+      data: {
+        id: id,
+        nodedata: data,
+        selectedcityid: this.cityID,
+        alreadyaddnodes: this.nodesarr,
+        Areas: this.dropdownList,
+      },
       hasBackdrop: true,
       disableClose: false,
-      panelClass: 'thanksscreen'
+      panelClass: 'thanksscreen',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      this.getAreasbycity(this.cityID);
+      this.getallnode();
     });
   }
 
   deletenode(id: any) {
     if (id == undefined) {
-      alert("invalid data");
-    }
-    else {
-      this.api.deletenode(id).then((data: any) => {
-        alert("node deleted");
-      });
+      alert('invalid data');
+    } else {
+
+      const dialogRef = this.dialog.open(AddnodeComponent, {
+        width: '30%',
+        data: {
+          id: 3,
+          Nodeid: id
+        }
+      })
+      dialogRef.afterClosed().subscribe((result) => {
+        console.log("-----");
+        console.log(result);
+        if(result.success == true){
+          this.getAreasbycity(this.cityID);
+        this.getallnode();
+        }
+      })
+
+
     }
   }
-
 }

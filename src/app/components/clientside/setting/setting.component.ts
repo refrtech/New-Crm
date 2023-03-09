@@ -18,15 +18,17 @@ export class SettingComponent implements OnInit {
 
   ngOnInit(): void {
     this.getcity();
-    this.getarea();
+    // this.getarea();
   }
 
-  getarea() {
-    this.api.getarea().subscribe((data: any) => {
-      this.areaarr = [];
-      this.areaarr = data;
-    });
-  }
+  // getarea() {
+  //   this.api.getarea().subscribe((data: any) => {
+  //     this.areaarr = [];
+  //     this.areaarr = data;
+  //     console.log("areasss ");
+  //     console.log(data);
+  //   });
+  // }
 
   deletecity(id: any) {
     if (id == undefined) {
@@ -56,6 +58,8 @@ export class SettingComponent implements OnInit {
     this.api.getcity().subscribe((data: any) => {
       this.cityarr = [];
       this.cityarr = data;
+      console.log("city ");
+      console.log(data);
     });
   }
 

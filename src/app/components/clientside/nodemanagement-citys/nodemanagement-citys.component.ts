@@ -18,6 +18,7 @@ export class NodemanagementCitysComponent implements OnInit {
   }
 
   getallcity() {
+    console.log(this.api.getcity());
     this.cityList$= this.api.getcity();
   }
 

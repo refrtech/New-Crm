@@ -19,7 +19,7 @@
     </div>
     <div>
         <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
-            <mat-select placeholder="Filter Type" [(ngModel)]="parameters">
+            <mat-select placeholder="Filter Type" [(ngModel)]="parameters" (selectionChange)="onChange()">
                 <mat-option *ngFor="let item of ParaArr" [value]="item.titvalue">
                     {{item.Title}}
                 </mat-option>
@@ -32,9 +32,16 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field class="searchinput" appearance="fill">
+        <mat-form-field class="searchinput" appearance="fill" *ngIf="valuetype == 2">
             <input [type]="inputtype" matInput [(ngModel)]="searchvalue">
         </mat-form-field>
+        <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline" *ngIf="valuetype == 1">
+          <mat-select placeholder="Operator's" [(ngModel)]="searchvalue">
+              <mat-option *ngFor="let item of Valuearr" [value]="item.titvalue">
+                  {{item.Title}}
+              </mat-option>
+          </mat-select>
+      </mat-form-field>
     </div>
     <div *ngIf="showerror == true" class="c_align red_txt">
         {{errormsg}}

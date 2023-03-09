@@ -31,7 +31,11 @@ import {
 export class ApiserviceService {
   newTimestamp = this.getServerTimestamp();
 
-  constructor(private firestore: Firestore, private fireStorage: Storage, private snackBar: MatSnackBar) { }
+  constructor(
+    private firestore: Firestore,
+    private fireStorage: Storage,
+    private snackBar: MatSnackBar
+  ) {}
 
   get getServerTimestamp() {
     return serverTimestamp;
@@ -129,10 +133,10 @@ export class ApiserviceService {
     c: number,
     getall: boolean,
     Para?: any,
-    Para1?: any,
     operator?: any,
-    operator1?: any,
     value?: any,
+    Para1?: any,
+    operator1?: any,
     value1?: any
   ) {
     const catData: CollectionReference = collection(
@@ -156,6 +160,10 @@ export class ApiserviceService {
     ) {
       orderbyvalue = Para;
     }
+    console.log(Parametere);
+    console.log(conditions);
+    console.log(value);
+
     if (getall == true) {
       if (
         Parametere != undefined &&
@@ -181,7 +189,6 @@ export class ApiserviceService {
         operator != undefined &&
         value != undefined
       ) {
-
         qu = query(
           catData,
           where(Parametere, conditions, value),
@@ -191,7 +198,6 @@ export class ApiserviceService {
           limit(c)
         );
       } else {
-
         qu = query(
           catData,
           where('type', 'array-contains', 'storeORDER'),
@@ -375,24 +381,25 @@ export class ApiserviceService {
     return getDoc(shopRef);
   }
 
-  getarea() {
+  getareabycity(cityid: any) {
     const manageNode: CollectionReference = collection(
       this.firestore,
       `${'Areas'}`
     );
-    const qu = query(manageNode);
+    const qu = query(manageNode, where('City_id', '==', cityid),where("isaddedinNode","==",false) );
     return collectionData(qu);
   }
 
   deletearea(id: any) {
     const arearefr = doc(this.firestore, `Areas`, `${id}`);
-    return deleteDoc(arearefr).then((data)=>{
-      return {success:true}
-    })
-    .catch((err) => {
-      console.log(err);
-      return {success:false};
-    });
+    return deleteDoc(arearefr)
+      .then((data) => {
+        return { success: true };
+      })
+      .catch((err) => {
+        console.log(err);
+        return { success: false };
+      });
   }
 
   async addarea(data: any) {
@@ -425,8 +432,8 @@ export class ApiserviceService {
   async addcity(data: any) {
     await addDoc(collection(this.firestore, `${'cities'}`), data).then(
       (ref) => {
-        const areeas = doc(this.firestore, `${'cities'}`, `${ref.id}`);
-        return updateDoc(areeas, { id: ref.id }).then(() => {
+        const citys = doc(this.firestore, `${'cities'}`, `${ref.id}`);
+        return updateDoc(citys, { id: ref.id }).then(() => {
           return ref;
         });
       }
@@ -506,17 +513,17 @@ export class ApiserviceService {
     );
   }
 
-  addHGFRstores(stores: any, id: any,) {
+  addHGFRstores(stores: any, id: any) {
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
     return updateDoc(cityrefr, { First_Stores: arrayUnion(stores) });
   }
 
-  addHGSRstores(stores: any, id: any,) {
+  addHGSRstores(stores: any, id: any) {
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
     return updateDoc(cityrefr, { Second_Stores: arrayUnion(stores) });
   }
 
-  addHGTRstores(stores: any, id: any,) {
+  addHGTRstores(stores: any, id: any) {
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
     return updateDoc(cityrefr, { third_Stores: arrayUnion(stores) });
   }
@@ -577,8 +584,7 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-  viewVideo(data: any) {
-  }
+  viewVideo(data: any) {}
 
   updatecity(data: any) {
     const cityrefr = doc(this.firestore, `${'cities'}`, `${data.id}`);
@@ -675,16 +681,22 @@ export class ApiserviceService {
 
   // Node functions start
   async addnode(data: any) {
-    console.log(data);
-    const addedcity = await addDoc(
-      collection(this.firestore, 'node_manager'),
-      data
-    ).then((ref) => {
-      const areeas = doc(this.firestore, 'node_manager', `${ref.id}`);
-      return updateDoc(areeas, { id: ref.id }).then(() => {
-        return ref;
+    await addDoc(collection(this.firestore, 'node_manager'), data)
+      .then((ref) => {
+        const Nodes = doc(this.firestore, 'node_manager', `${ref.id}`);
+        updateDoc(Nodes, { id: ref.id })
+          .then((data) => {
+            return ref.id;
+          })
+          .catch((err) => {
+            console.log(err);
+            return false;
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        return false;
       });
-    });
   }
 
   getNodeData() {
@@ -718,6 +730,7 @@ export class ApiserviceService {
     const qu = doc(this.firestore, 'node_manager', `${nodeData.id}`);
     return updateDoc(qu, {
       name: nodeData.name,
+      updated_at:nodeData.updated_at,
       Nareas: nodeData.Nareas,
     });
   }
@@ -792,17 +805,16 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-
   updateBIYNtitle(Title: string, id: any) {
     const cityrefr = doc(this.firestore, `${'BIYN_section'}`, `${id}`);
-    return updateDoc(cityrefr, { BN_Title: Title }).then((datas: any) => {
-      if (datas) {
-        return "issue in update title.";
-      }
-      else {
-        return "title updated.";
-      }
-    })
+    return updateDoc(cityrefr, { BN_Title: Title })
+      .then((datas: any) => {
+        if (datas) {
+          return 'issue in update title.';
+        } else {
+          return 'title updated.';
+        }
+      })
       .catch((err) => {
         console.log(err);
         return false;
@@ -811,14 +823,14 @@ export class ApiserviceService {
 
   updateBIYNStitle(STitle: string, id: any) {
     const cityrefr = doc(this.firestore, `${'BIYN_section'}`, `${id}`);
-    return updateDoc(cityrefr, { BN_STitle: STitle }).then((datas: any) => {
-      if (datas) {
-        return "issue in update Sub-title.";
-      }
-      else {
-        return "Sub-title updated.";
-      }
-    })
+    return updateDoc(cityrefr, { BN_STitle: STitle })
+      .then((datas: any) => {
+        if (datas) {
+          return 'issue in update Sub-title.';
+        } else {
+          return 'Sub-title updated.';
+        }
+      })
       .catch((err) => {
         console.log(err);
         return false;
@@ -844,9 +856,7 @@ export class ApiserviceService {
 
   //BIYN section end
 
-
   // NSIYH section start
-
 
   getNSIYHData() {
     const VSA_section: CollectionReference = collection(
@@ -857,18 +867,16 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-
   updateNSIYHtitle(Title: string, id: any) {
-    console.log(id);
     const cityrefr = doc(this.firestore, `${'NSIYH_section'}`, `${id}`);
-    return updateDoc(cityrefr, { NSIYH_Title: Title }).then((datas: any) => {
-      if (datas) {
-        return "issue in update title.";
-      }
-      else {
-        return "title updated.";
-      }
-    })
+    return updateDoc(cityrefr, { NSIYH_Title: Title })
+      .then((datas: any) => {
+        if (datas) {
+          return 'issue in update title.';
+        } else {
+          return 'title updated.';
+        }
+      })
       .catch((err) => {
         console.log(err);
         return false;
@@ -877,14 +885,14 @@ export class ApiserviceService {
 
   updateNSIYHStitle(STitle: string, id: any) {
     const cityrefr = doc(this.firestore, `${'NSIYH_section'}`, `${id}`);
-    return updateDoc(cityrefr, { NSIYH_STitle: STitle }).then((datas: any) => {
-      if (datas) {
-        return "issue in update Sub-title.";
-      }
-      else {
-        return "Sub-title updated.";
-      }
-    })
+    return updateDoc(cityrefr, { NSIYH_STitle: STitle })
+      .then((datas: any) => {
+        if (datas) {
+          return 'issue in update Sub-title.';
+        } else {
+          return 'Sub-title updated.';
+        }
+      })
       .catch((err) => {
         console.log(err);
         return false;
@@ -910,7 +918,6 @@ export class ApiserviceService {
 
   // NSIYH section end
 
-
   // Daily drop start
 
   getDailydropdata() {
@@ -922,18 +929,17 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-
   updateDailydroptitle(Title: string, id: any) {
     console.log(id);
     const cityrefr = doc(this.firestore, `${'dailyDrop_section'}`, `${id}`);
-    return updateDoc(cityrefr, { DDrop_Title: Title }).then((datas: any) => {
-      if (datas) {
-        return "issue in update title.";
-      }
-      else {
-        return "title updated.";
-      }
-    })
+    return updateDoc(cityrefr, { DDrop_Title: Title })
+      .then((datas: any) => {
+        if (datas) {
+          return 'issue in update title.';
+        } else {
+          return 'title updated.';
+        }
+      })
       .catch((err) => {
         console.log(err);
         return false;
@@ -942,14 +948,14 @@ export class ApiserviceService {
 
   updateDailydropStitle(STitle: string, id: any) {
     const cityrefr = doc(this.firestore, `${'dailyDrop_section'}`, `${id}`);
-    return updateDoc(cityrefr, { DDrop_STitle: STitle }).then((datas: any) => {
-      if (datas) {
-        return "issue in update Sub-title.";
-      }
-      else {
-        return "Sub-title updated.";
-      }
-    })
+    return updateDoc(cityrefr, { DDrop_STitle: STitle })
+      .then((datas: any) => {
+        if (datas) {
+          return 'issue in update Sub-title.';
+        } else {
+          return 'Sub-title updated.';
+        }
+      })
       .catch((err) => {
         console.log(err);
         return false;
@@ -1033,23 +1039,31 @@ export class ApiserviceService {
 
   // info slide end
 
-
   cloudUpload(idX: string, base64String: string) {
     const imgID = idX + Date.now();
-    const bannerRef = ref(this.fireStorage, "store/" + imgID);
+    const bannerRef = ref(this.fireStorage, 'store/' + imgID);
     console.log(imgID);
     console.log(bannerRef);
     console.log(base64String);
-    return uploadString(bannerRef, base64String.split(',')[1], 'base64').then((snapshot) => {
-      console.log('Uploaded a base64 string!', snapshot);
-      return getDownloadURL(bannerRef).then(dlURL => {
-        console.log("getDownloadURL", dlURL)
-        return { success: true, url: dlURL }
+    return uploadString(bannerRef, base64String.split(',')[1], 'base64')
+      .then((snapshot) => {
+        console.log('Uploaded a base64 string!', snapshot);
+        return getDownloadURL(bannerRef).then((dlURL) => {
+          console.log('getDownloadURL', dlURL);
+          return { success: true, url: dlURL };
+        });
       })
-    }).catch(err => {
-      console.log('Uploaded a base64 string! Fail', err);
-      return { success: false, url: "" }
-    });
+      .catch((err) => {
+        console.log('Uploaded a base64 string! Fail', err);
+        return { success: false, url: '' };
+      });
   }
 
+  isareaAlreadyAdded(id:string,isallreadyadded:boolean){
+    console.log("isareaAlreadyAdded = ",id,isallreadyadded);
+    const area = doc(this.firestore, 'Areas', `${id}`);
+    return updateDoc(area, { isaddedinNode: isallreadyadded }).then(() => {
+      return ref;
+    });
+  }
 }

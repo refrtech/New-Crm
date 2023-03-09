@@ -1,19 +1,9 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ApiserviceService } from 'src/app/apiservice.service';
-import { FormBuilder, NgForm } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
-import { AuthService } from 'src/app/auth.service';
-
-
-// firebase
-import {
-  collection,
-  CollectionReference,
-  addDoc,
-} from 'firebase/firestore';
-import { Firestore } from '@angular/fire/firestore';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-addnode',
@@ -22,6 +12,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class AddnodeComponent implements OnInit {
   selectedareas: any = [];
+  selectedareas2: any = [];
   dropdownSettings!: IDropdownSettings;
   searchvalue: any;
   valuetype: number = 2;
@@ -29,171 +20,169 @@ export class AddnodeComponent implements OnInit {
   cityarr: Array<any> = [];
   dropdownList: Array<any> = [];
   cityindex?: number;
-  Nodename: string = "";
+  Nodename: string = '';
   @ViewChild('nodeForm') nodeForm?: NgForm;
   selectedareafiltered: Array<any> = [];
   selectedcity: any;
   isselectdisable: boolean = false;
-  nodeid: string = "";
+  nodeid: string = '';
   constructor(
     public api: ApiserviceService,
     public dialogRef: MatDialogRef<AddnodeComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    if (this.data.id != undefined && this.data.selectedcityid != undefined) {
-      this.selectedcity = this.data.selectedcityid;
-      this.isselectdisable = true;
+    console.log(this.data.Areas);
+    if (this.data.id == 2) {
+      this.dropdownList = this.data.Areas;
+      this.dropdownSettings = {
+        singleSelection: false,
+        idField: 'id',
+        textField: 'Area_N',
+        itemsShowLimit: 2,
+        allowSearchFilter: true,
+      };
     }
-    if (this.data.id != undefined && this.data.nodedata != undefined) {
-      this.Nodename = this.data.nodedata.name;
-      this.selectedcity = this.data.nodedata.city_id;
-      this.nodeid = this.data.nodedata.id;
-      this.isselectdisable = true;
-      for (let i = 0; i < this.data.nodedata.Nareas.length; i++) {
-        this.selectedareas.push({
-          Area_N: this.data.nodedata.Nareas[i].Area_N,
-          id: this.data.nodedata.Nareas[i].id,
-        })
+    if (this.data.id != 3) {
+      if (this.data.id != undefined && this.data.selectedcityid != undefined) {
+        this.selectedcity = this.data.selectedcityid;
+      }
+      if (this.data.id != undefined && this.data.nodedata != undefined) {
+        this.selectedcity = this.data.nodedata.city_id;
+        let a: string = this.data.nodedata.name;
+        this.Nodename = a.substring(7, a.length);
+        console.log(1);
+        if (this.data.nodedata.Nareas != undefined) {
+          for (let i = 0; i < this.data.nodedata.Nareas.length; i++) {
+            this.selectedareas2.push(this.data.nodedata.Nareas[i]);
+            this.selectedareas.push({
+              Area_N: this.data.nodedata.Nareas[i].Area_N,
+              id: this.data.nodedata.Nareas[i].id,
+            });
+          }
+          // this.dropdownList.push(this.data.nodedata.Nareas[i]);
+        }
       }
     }
   }
 
   ngOnInit(): void {
     this.getallcity();
-    this.dropdownSettings = {
-      singleSelection: false,
-      idField: 'id',
-      textField: 'Area_N',
-      itemsShowLimit: 2,
-      allowSearchFilter: true,
-    };
-  }
-
-  addarea(event: any) {
-    let index = this.dropdownList.findIndex((x: any) =>
-      x.id == event.id
-    );
-    let data = {
-      id: this.data.nodedata.id,
-      areadata: {
-        Area_N: this.dropdownList[index].Area_N,
-        Area_Pin: this.dropdownList[index].Area_Pin,
-        CDateTime: this.dropdownList[index].CDateTime,
-        MDateTime: this.dropdownList[index].MDateTime,
-        id: this.dropdownList[index].id,
-        isaddedincity: this.dropdownList[index].isaddedincity,
-      }
-    }
-    this.api.addnodearea(data);
-  }
-
-  removearea(event: any) {
-    let index = this.dropdownList.findIndex((x: any) =>
-      x.id == event.id
-    );
-    let data = {
-      id: this.data.nodedata.id,
-      areadata: {
-        Area_N: this.dropdownList[index].Area_N,
-        Area_Pin: this.dropdownList[index].Area_Pin,
-        CDateTime: this.dropdownList[index].CDateTime,
-        MDateTime: this.dropdownList[index].MDateTime,
-        id: this.dropdownList[index].id,
-        isaddedincity: this.dropdownList[index].isaddedincity,
-      }
-    }
-    this.api.removenodearea(data);
-  }
-
-  citychange(i: number) {
-    this.cityindex = i;
-    this.dropdownList = this.cityarr[i].Areas;
   }
 
   getallcity() {
-    this.api.getcity().subscribe((data: any) => {
-      this.cityarr = [];
-      this.cityarr = data;
-      if (this.data.id != undefined && this.data.nodedata != undefined) {
-        let index = this.cityarr.findIndex((x: any) =>
-          x.id == this.data.nodedata.city_id
+    this.api
+      .getcity()
+      .pipe(take(1))
+      .subscribe((data) => {
+        this.cityarr = data;
+        let index = this.cityarr.findIndex(
+          (x: any) => x.id == this.data.selectedcityid
         );
         this.cityindex = index;
-        this.dropdownList = this.cityarr[index].Areas;
-      }
-      else if (this.data.id != undefined && this.data.selectedcityid != undefined) {
-        let index = this.cityarr.findIndex((x: any) =>
-          x.id == this.data.selectedcityid
-        );
-        this.cityindex = index;
-        this.dropdownList = this.cityarr[index].Areas;
-      }
-    });
+      });
+  }
+
+  addarea(event: any) {
+    let index = this.dropdownList.findIndex((x: any) => x.id == event.id);
+    this.selectedareas2.push(this.dropdownList[index]);
+  }
+
+  removearea(event: any) {
+    let index = this.selectedareas2.findIndex((x: any) => x.id == event.id);
+    this.selectedareas2.splice(index, 1);
   }
 
   addnode() {
-    if (this.Nodename == undefined) {
-      alert("Please enter the node name.")
-    }
-    else if (this.cityindex == undefined) {
-      alert("please select the city");
-    }
-    else if (this.selectedareas.length == 0) {
-      alert("please select the areas.")
-    }
-    else {
-      for (let i = 0; i < this.selectedareas.length; i++) {
-        let j = this.cityarr[this.cityindex].Areas.findIndex((a: any) => a.id == this.selectedareas[i].id);
-        this.selectedareafiltered.push(this.cityarr[this.cityindex].Areas[j]);
-      }
+    let index = this.data.alreadyaddnodes.findIndex(
+      (x: any) => x.name == 'Node - ' + this.Nodename.toUpperCase()
+    );
+    if (index >= 0) {
+      alert('Node name already exist.');
+    } else if (this.Nodename == undefined || this.Nodename == '') {
+      alert('Please enter the node name.');
+    } else if (this.cityindex == undefined || this.cityindex == -1) {
+      alert('please select the city');
+    } else {
       let datas = {
         city: this.cityarr[this.cityindex].CityN,
         city_id: this.cityarr[this.cityindex].id,
-        name: this.Nodename,
-        Nareas: this.selectedareafiltered,
+        name: 'Node - ' + this.Nodename.toUpperCase(),
         created_at: this.api.newTimestamp,
         updated_at: this.api.newTimestamp,
-      }
-      this.api.addnode(datas).then((data) => {
-        if (data == undefined) {
-          this.dialogRef.close();
-          alert("Node added");
-        }
-      }).catch(() => {
-        return false;
+      };
+      this.api.addnode(datas).then((data: any) => {
+        this.dialogRef.close();
       });
     }
   }
 
-  updatenode() {
+  async updatenode() {
     if (this.Nodename == undefined) {
-      alert("Please enter the node name.")
-    }
-    else if (this.cityindex == undefined) {
-      alert("please select the city");
-    }
-    else if (this.selectedareas.length == 0) {
-      alert("please select the areas.")
-    }
-    else {
-      for (let i = 0; i < this.selectedareas.length; i++) {
-        let j = this.cityarr[this.cityindex].Areas.findIndex((a: any) => a.id == this.selectedareas[i].id);
-        this.selectedareafiltered.push(this.cityarr[this.cityindex].Areas[j]);
-      }
-      
+      alert('Please enter the node name.');
+    } else if (this.cityindex == undefined) {
+      alert('please select the city');
+    } else if (this.selectedareas.length == 0) {
+      alert('please select the areas.');
+    } else {
+      await this.updateareastatus();
       let datas = {
-        name: this.Nodename,
-        id: this.nodeid,
-        Nareas: this.selectedareafiltered,
-      }
-      this.api.updateNodeData(datas).then((data) => {
-        if (data == undefined) {
-          this.dialogRef.close();
-          alert("Node updated");
-        }
-      }).catch(() => {
-        return false;
-      });
+        id: this.data.nodedata.id,
+        name: 'Node - ' + this.Nodename.toUpperCase(),
+        updated_at: this.api.newTimestamp,
+        Nareas: this.selectedareas2,
+      };
+      this.api
+        .updateNodeData(datas)
+        .then((data) => {
+          if (data == undefined) {
+            this.dialogRef.close();
+            alert('Node updated');
+          }
+        })
+        .catch(() => {
+          return false;
+        });
     }
+  }
+
+  updateareastatus() {
+    for (let i = 0; i < this.selectedareas2.length; i++) {
+      let index = -1;
+      if (this.data.nodedata.Nareas != undefined) {
+        index = this.data.nodedata.Nareas.findIndex(
+          (x: any) => x.id == this.selectedareas2[i].id
+        );
+      }
+      console.log(index < 0 ? 'need to add' : 'acascas');
+      if (index < 0) {
+        this.api.isareaAlreadyAdded(this.selectedareas2[i].id, true);
+        this.selectedareas2[i].isaddedinNode = true;
+      }
+    }
+    if (this.data.nodedata.Nareas != undefined) {
+      for (let i = 0; i < this.data.nodedata.Nareas.length; i++) {
+        let index = -1;
+
+        if (this.selectedareas2 != undefined) {
+          index = this.selectedareas2.findIndex(
+            (x: any) => x.id == this.data.nodedata.Nareas[i].id
+          );
+        }
+        console.log(index < 0 ? 'Already Added need to remove' : 'aidbiabsdjb');
+        if (index < 0) {
+          this.api.isareaAlreadyAdded(this.data.nodedata.Nareas[i].id, false);
+        }
+      }
+    }
+  }
+
+  cancel() {
+    this.dialogRef.close({ success: false });
+  }
+
+  Deletenode() {
+    this.api.deletenode(this.data.Nodeid).then((data: any) => {
+      this.dialogRef.close({ success: true });
+    });
   }
 }

@@ -147,12 +147,12 @@ export class MerchantsComponent implements OnInit {
       this.MerchantdataSource = new MatTableDataSource(recentStore);
       this.MerchantdataSource.sort = this.sort;
       console.log("data",this.MerchantdataSource);
-      
     });
   }
 
   exportexcel() {
     this.apiservice.getRecentStores(100, this.getall, this.parameters, this.operators, this.searchvalue).pipe(take(1)).subscribe((recentStore: any) => {
+      console.log(recentStore);
       for (let i = 0; i < recentStore.length; i++) {
         this.excelarr.push({
           Merchant_date_time: new Date(recentStore[i].sin.seconds * 1000).toDateString(),

@@ -75,7 +75,7 @@ const routes: Routes = [
       { path: 'homegrownintsec', component: HomegrownbrandsComponent },
       { path: 'categorysec', component: CategorysectioninternalComponent },
       { path: 'settings', component: SettingComponent },
-      { path: 'addcityarea/:id', component: AddcityAndAreaComponent },
+      { path: 'addcityarea', component: AddcityAndAreaComponent },
       { path: 'visitshareinternal', component: VisitshareinternalComponent },
       { path: 'infoslide', component: InformationslideComponent },
       { path: 'addinfoslide', component: AddinfoslideComponent },
