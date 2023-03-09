@@ -60,6 +60,7 @@ import { Storage, ref, uploadString } from '@angular/fire/storage';
 //import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { getDownloadURL } from '@firebase/storage';
 import { HttpClient } from '@angular/common/http';
+import { WindowService } from './window.service';
 
 @Injectable({
   providedIn: 'root',
@@ -84,7 +85,8 @@ export class AuthService {
     private firestore: Firestore,
     private fireStorage: Storage,
 
-    public resource: ResourceService // private win: WindowService, //private fb: Facebook //private gP: GooglePlus //private googlePlus: GooglePlus
+    public resource: ResourceService,
+    private win: WindowService //private fb: Facebook //private gP: GooglePlus //private googlePlus: GooglePlus
   ) {
     // Get the auth state, then fetch the Firestore user document or return null
     //this.user$ = this.getLogUSER();
@@ -95,16 +97,19 @@ export class AuthService {
   }
 
   setupReCapca() {
+    console.log('!11111111');
+
     //this.afAuth.settings.appVerificationDisabledForTesting = true;
 
     //AuthSettings()
     //appVerificationDisabledForTesting(true) //= true;
-    // this.windowRef = this.win.windowRef;
+    this.windowRef = this.win.windowRef;
     this.windowRef.recaptchaVerifier = new RecaptchaVerifier(
       'recaptcha-container',
       { size: 'invisible' },
       this.afAuth
     );
+    console.log('!11111111');
 
     // new RecaptchaVerifier(/*'sign-in-button', {
     //   'size': 'invisible',
@@ -558,16 +563,12 @@ export class AuthService {
               displayName: displayName,
               photoURL: photoURL,
             })
-              .then((resName) => {
-              })
-              .catch((err) => {
-              });
+              .then((resName) => {})
+              .catch((err) => {});
           })
-          .catch((err) => {
-          });
+          .catch((err) => {});
       })
-      .catch((err) => {
-      }); /*
+      .catch((err) => {}); /*
     //app.auth.EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD
     // app.auth().currentUser.getIdToken(/ * forceRefresh * / true).then(function(idToken) {
     //   // Send token to your backend via HTTPS
@@ -1131,7 +1132,6 @@ export class AuthService {
       upd: newTimestamp,
     };
 
-
     //const shopRef: AngularFirestoreDocument<Shop> = this.afs.doc(`${this.resource.env.db.shops}/${data.by}`);
     //return shopRef.set(dataSend, { merge: true }).then(() => {
     const shopRefC = collection(
@@ -1422,13 +1422,20 @@ export class AuthService {
   }
 
   async updateStoreBanner(id: string, banner: string) {
+    console.log('123456');
+    console.log('id', id);
+
     const newTimestamp = this.getServerTimestamp();
     const userRef = doc(
       this.firestore,
       `${this.resource.env.db.shops}`,
       `${id}`
     );
+    console.log('09876543');
+
     const cloudUpload = await this.cloudUpload(id, banner);
+    console.log('cloudupload url', cloudUpload.url);
+
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -1443,11 +1450,15 @@ export class AuthService {
 
   async addStoreBanners(id: string, banner: string) {
     const newTimestamp = this.getServerTimestamp();
+    console.log('1234567890');
+
     const userRef = doc(
       this.firestore,
       `${this.resource.env.db.shops}`,
       `${id}`
     );
+    console.log('123', userRef);
+
     const cloudUpload = await this.cloudUpload(id, banner);
     if (!cloudUpload.success) {
       return cloudUpload;
@@ -1657,5 +1668,19 @@ export class AuthService {
     );
     return collectionData( qu )
     */
+  }
+
+  async updateUserSNS(uid: string, token: string) {
+    const newTimestamp = this.getServerTimestamp();
+    const userRef = doc(
+      this.firestore,
+      `${this.resource.env.db.users}`,
+      `${uid}`
+    );
+    return updateDoc(userRef, {
+      tokenSNS: token,
+      tokenSNS_: arrayUnion(token),
+      upd: newTimestamp,
+    });
   }
 }

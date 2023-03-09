@@ -43,61 +43,225 @@ import { TransactionComponent } from './components/tabs/transaction/transaction.
 import { UserProfileComponent } from './components/tabs/users/user-profile/user-profile.component';
 import { UsersComponent } from './components/tabs/users/users.component';
 import { WebsiteformComponent } from './components/tabs/websiteform/websiteform.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
+  { path: '', component: WelcomeComponent },
+
   {
     path: '',
     component: TabsComponent,
+    canActivate: [AuthGuard],
     children: [
-      { path: '', redirectTo: '/Dash', pathMatch: 'full' },
-      { path: 'websiteform', component: WebsiteformComponent },
-      { path: 'orders', component: OrdersComponent },
-      { path: 'Dash', component: DashboardComponent },
-      { path: 'merchant', component: MerchantsComponent },
-      { path: 'users', component: UsersComponent },
-      { path: 'merchantProfile/:id', component: MerchantsProfileComponent },
-      { path: 'userProfile/:id', component: UserProfileComponent },
-      { path: 'Redeemreq', component: RedeemreqComponent },
-      { path: 'transaction', component: TransactionComponent },
-      { path: 'Notification', component: NotificationComponent },
-      { path: 'nodemanage/:id', component: NodemanagementComponent },
-      { path: 'addnode/:id', component: AddnodeComponent },
-      { path: 'homescreen', component: HomescreenComponent },
-      { path: 'feedmodule', component: TopfeedmoduleComponent },
-      { path: 'feedsection', component: FeedsectionComponent },
-      { path: 'visitmodule', component: VisitsharemoduleComponent },
-      { path: 'storedetails/:id', component: VisitallstoredetailsComponent },
-      { path: 'addstore', component: VisitaddstoredetailsComponent },
-      { path: 'visit_editstore', component: VisiteditstoredetailsComponent },
-      { path: 'brands', component: BrandsneighbourhoodComponent },
-      { path: 'homebrands', component: HomegrowbrandsComponent },
-      { path: 'internalsec', component: InternalsectionComponent },
-      { path: 'homegrownintsec', component: HomegrownbrandsComponent },
-      { path: 'categorysec', component: CategorysectioninternalComponent },
-      { path: 'settings', component: SettingComponent },
-      { path: 'addcityarea', component: AddcityAndAreaComponent },
-      { path: 'visitshareinternal', component: VisitshareinternalComponent },
-      { path: 'infoslide', component: InformationslideComponent },
-      { path: 'addinfoslide', component: AddinfoslideComponent },
-      { path: 'brandspotlight', component: BrandSpotlightComponent },
-      { path: 'nodebrands', component: BrandsdetailComponent },
-      { path: 'storebrands', component: BrandsstoreComponent },
-      { path: 'newstoreinyourhood', component: NewstoreinhoodComponent },
-      { path: 'newstoreinyourhooddetails', component: NewstoredetailsComponent },
-      { path: 'dailydrops', component: DailydropsComponent },
-      { path: 'dailydropsbrands', component: DaildropsbrandsComponent },
+      { path: '', redirectTo: '/dash', pathMatch: 'full' },
+      { path: 'dash', component: DashboardComponent, canActivate: [AuthGuard] },
+
+      {
+        path: 'websiteform',
+        component: WebsiteformComponent,
+        canActivate: [AuthGuard],
+      },
+      { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
+      {
+        path: 'merchant',
+        component: MerchantsComponent,
+        canActivate: [AuthGuard],
+      },
+      { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
+      {
+        path: 'merchantProfile/:id',
+        component: MerchantsProfileComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'userProfile/:id',
+        component: UserProfileComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'Redeemreq',
+        component: RedeemreqComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'transaction',
+        component: TransactionComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'Notification',
+        component: NotificationComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'nodemanage/:id',
+        component: NodemanagementComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'addnode/:id',
+        component: AddnodeComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'homescreen',
+        component: HomescreenComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'feedmodule',
+        component: TopfeedmoduleComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'feedsection',
+        component: FeedsectionComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'visitmodule',
+        component: VisitsharemoduleComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'storedetails/:id',
+        component: VisitallstoredetailsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'addstore',
+        component: VisitaddstoredetailsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'visit_editstore',
+        component: VisiteditstoredetailsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'brands',
+        component: BrandsneighbourhoodComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'homebrands',
+        component: HomegrowbrandsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'internalsec',
+        component: InternalsectionComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'homegrownintsec',
+        component: HomegrownbrandsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'categorysec',
+        component: CategorysectioninternalComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'settings',
+        component: SettingComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'addcityarea/:id',
+        component: AddcityAndAreaComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'visitshareinternal',
+        component: VisitshareinternalComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'infoslide',
+        component: InformationslideComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'addinfoslide',
+        component: AddinfoslideComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'brandspotlight',
+        component: BrandSpotlightComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'nodebrands',
+        component: BrandsdetailComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'storebrands',
+        component: BrandsstoreComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'newstoreinyourhood',
+        component: NewstoreinhoodComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'newstoreinyourhooddetails',
+        component: NewstoredetailsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'dailydrops',
+        component: DailydropsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'dailydropsbrands',
+        component: DaildropsbrandsComponent,
+        canActivate: [AuthGuard],
+      },
       { path: 'Nodecity', component: NodemanagementCitysComponent },
-      { path: 'VSAcat', component: VSAnodescatComponent },
-      { path: 'VSAcatstores', component: VSAnodecatstoresComponent },
+      {
+        path: 'VSAcat',
+        component: VSAnodescatComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'VSAcatstores',
+        component: VSAnodecatstoresComponent,
+        canActivate: [AuthGuard],
+      },
 
-      { path: 'HGBcat', component: HbnodescatComponent },
-      { path: 'HGBcreatecat', component: HgbcreatecategoryComponent },
-      { path: 'HGBcreatecat', component: HgbcreatecategoryComponent },
-      { path: 'HGBcatstores', component: HgbnodecatstoresComponent },
-
-
+      {
+        path: 'HGBcat',
+        component: HbnodescatComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'HGBcreatecat',
+        component: HgbcreatecategoryComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'HGBcreatecat',
+        component: HgbcreatecategoryComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'HGBcatstores',
+        component: HgbnodecatstoresComponent,
+        canActivate: [AuthGuard],
+      },
     ],
   },
+
+  // { path: 'welcome', component: WelcomeComponent },
+  // { path: '404', component: WelcomeComponent },
+  // { path: '**', redirectTo: '/404' },
 ];
 
 @NgModule({

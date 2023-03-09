@@ -12,7 +12,7 @@ export class TabsComponent implements OnInit {
   showMenu = false;
 
   navRoutes = [
-    { tit: 'Dashboard', link: '/Dash' },
+    { tit: 'Dashboard', link: '/dash' },
     { tit: 'Merchants', link: '/merchant' },
     { tit: 'Users', link: '/users' },
     { tit: 'Orders', link: '/orders' },
@@ -31,7 +31,6 @@ export class TabsComponent implements OnInit {
         { tit: 'Homescreen', link: '/homescreen' },
         { tit: 'Internal section', link: '/internalsec' },
         { tit: 'Settings', link: '/settings' },
-
       ],
     },
   ];

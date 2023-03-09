@@ -17,7 +17,7 @@ export class CropperComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<CropperComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     let type = this.data.type;
@@ -31,6 +31,9 @@ export class CropperComponent implements OnInit {
     if (type == 'banners') {
       this.aspectRatio = 16 / 9;
     }
+    if (type == 'homeBanner') {
+      this.aspectRatio = 16 / 9;
+    }
   }
 
   fileChangeEvent(event: Event): void {
@@ -40,7 +43,7 @@ export class CropperComponent implements OnInit {
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64;
   }
-  
+
   cropperReady() {
     this.showCropper = true;
   }
@@ -48,7 +51,7 @@ export class CropperComponent implements OnInit {
   loadImageFailed() {
     this.dialogRef.close({ success: false, info: 'Failed to load image.' });
   }
-  
+
   loadCropFailed() {
     this.dialogRef.close({ success: false, info: 'Cropper has been closed.' });
   }

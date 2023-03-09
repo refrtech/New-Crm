@@ -4,11 +4,15 @@
 $crm-main-primary: mat.define-palette(mat.$indigo-palette);
 $crm-main-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
 $crm-main-warn: mat.define-palette(mat.$red-palette);
-$crm-main-theme: mat.define-light-theme((color: (primary: $crm-main-primary,
-        accent: $crm-main-accent,
-        warn: $crm-main-warn,
-      ),
-    ));
+$crm-main-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $crm-main-primary,
+      accent: $crm-main-accent,
+      warn: $crm-main-warn,
+    ),
+  )
+);
 @include mat.all-component-themes($crm-main-theme);
 
 html,
@@ -407,7 +411,7 @@ body {
   margin-bottom: 5px !important;
 }
 
-.tb2margin{
+.tb2margin {
   margin-top: 2px !important;
   margin-bottom: 2px !important;
 }
@@ -918,7 +922,7 @@ body {
 
     .mat-form-field-suffix {
       background-color: #874bf9 !important;
-      color: #FFF !important;
+      color: #fff !important;
     }
   }
 }
@@ -928,11 +932,11 @@ body {
 }
 
 .mat-form-field-appearance-outline .mat-form-field-prefix {
-  top:0px !important
+  top: 0px !important;
 }
 
 .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
-  transform : none !important
+  transform: none !important;
 }
 
 .thanksscreen mat-dialog-container {
