@@ -6,18 +6,10 @@
                 <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round" />
             </svg>
-
         </a>
         <span class="fs_24 boldtext lr15padding AScenter">Top Feed module</span>
-
     </div>
-
-
-
-
-
     <div class="dottedborder A20padding c_align t50margin bg_fb">
-
         <div class="m_size gray_txt">
             Drag or drop your file here
         </div>
@@ -25,17 +17,10 @@
             or
         </div>
         <div>
-            <!-- <button mat-button
-                class="Apurpleborder s_size normallineheight purple_txt browse b10margin cursor_pointer">Browse</button> -->
-
             <input class="b10margin d_none" #hiddenfileinput type="file" (change)="onSelectFile($event)">
-
-
             <button mat-button (click)="hiddenfileinput.click()"
                 class="file-upload Apurpleborder s_size normallineheight purple_txt browse b10margin cursor_pointer d_inline">
-
                 {{"Browse"}}
-
             </button>
         </div>
         <div class="s_size gray_txt b5margin">
@@ -45,7 +30,6 @@
             Media ratio - 16 : 9
         </div>
     </div>
-
     <div class="dflex AIcenter Aborder A5padding t20margin A5radius" *ngIf="fileName >= '0'">
         <div class="feedmoduleImg">
             <img #imagePreview [src]="url" *ngIf="format==='image' && url">
@@ -67,11 +51,7 @@
                 delete
             </mat-icon>
         </div>
-
     </div>
-
-
-
     <div>
         <div class="t20margin b15margin">
             <div class="s_size semiboldtext crminput r15padding AScenter">URL path <span>(optional)</span>
@@ -83,15 +63,8 @@
             </mat-form-field>
         </div>
     </div>
-    <!--
-    <img [src]="url" *ngIf="format==='image' && url" height="200"> <br />
-    <video [src]="url" *ngIf="format==='video' && url" height="200" controls></video> -->
-
     <div>
         <button (click)="addVideo()" mat-button
             class="s_size normallineheight purple_background White_txt browse t50margin">Save</button>
     </div>
 </div>
-
-
-<!--  -->

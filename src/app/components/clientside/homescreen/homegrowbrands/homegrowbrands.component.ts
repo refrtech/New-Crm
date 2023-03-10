@@ -112,7 +112,6 @@ export class HomegrowbrandsComponent implements OnInit {
       else {
         this.api.updateHGtitle(this.homegrownT, this.HGmoduledata.id).then((data) => {
           if (data != undefined) {
-            console.log("title updated");
           }
         }).catch(() => {
           return false;
@@ -135,7 +134,6 @@ export class HomegrowbrandsComponent implements OnInit {
       else {
         this.api.updateHGStitle(this.homegrownST, this.HGmoduledata.id).then((data) => {
           if (data != undefined) {
-            console.log("Sub-title updated");
           }
         }).catch(() => {
           return false;
@@ -145,7 +143,6 @@ export class HomegrowbrandsComponent implements OnInit {
   }
 
   action(data: any, rowno?: string) {
-    console.log(this.rowno);
     if (this.isstorealreadyadded == true || rowno != undefined) {
       if (this.rowno == "1" || rowno == "1") {
         this.api.removeHGFRstores(data, this.HGmoduledata.id);

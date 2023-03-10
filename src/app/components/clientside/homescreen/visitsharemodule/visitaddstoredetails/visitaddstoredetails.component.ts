@@ -48,7 +48,6 @@ export class VisitaddstoredetailsComponent implements OnInit {
   }
 
   startCropper(webPath: string, type: string) {
-    console.log('click');
     let isPhone = this.auth.resource.getWidth < 768;
     let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
     const refDialog = this.auth.resource.dialog.open(CropperComponent, {
@@ -61,7 +60,6 @@ export class VisitaddstoredetailsComponent implements OnInit {
       panelClass: 'dialogLayout',
     });
     refDialog.afterClosed().subscribe((result) => {
-      console.log(result);
       if (type == 'banner') {
       }
     });

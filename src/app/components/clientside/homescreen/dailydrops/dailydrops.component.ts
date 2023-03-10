@@ -55,7 +55,6 @@ export class DailydropsComponent implements OnInit {
 
   getDailydropdata() {
     this.api.getDailydropdata().pipe(take(1)).subscribe((daildropsdata: any) => {
-      console.log(daildropsdata);
       this.dailydropmoduledata = daildropsdata[0];
       this.DailydropTitle = daildropsdata[0].DDrop_Title;
       this.DailydropSTitle = daildropsdata[0].DDrop_STitle;
@@ -78,7 +77,6 @@ export class DailydropsComponent implements OnInit {
         this.api.updateDailydroptitle(this.DailydropTitle, this.dailydropmoduledata.id).then((data) => {
           if (data != undefined) {
             this.editTitle = !this.editTitle;
-            console.log("title updated");
           }
         }).catch(() => {
           return false;
@@ -101,7 +99,6 @@ export class DailydropsComponent implements OnInit {
       else {
         this.api.updateDailydropStitle(this.DailydropSTitle, this.dailydropmoduledata.id).then((data) => {
           if (data != undefined) {
-            console.log("Sub-title updated");
           }
         }).catch(() => {
           return false;

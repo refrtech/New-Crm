@@ -45,7 +45,6 @@ export class NodemanagementComponent implements OnInit {
       .getNodeDataaspercity(this.cityID)
       .pipe(take(1))
       .subscribe((data: any) => {
-        console.log(data);
         this.nodesarr = data;
         this.nodes = new MatTableDataSource(data);
         this.nodes.paginator = this.paginator;
@@ -63,7 +62,6 @@ export class NodemanagementComponent implements OnInit {
   }
 
   opennode(id: any, data?: any) {
-    console.log(data);
     if (data != undefined && data.Nareas != undefined ) {
       for (let i = 0; i < data.Nareas.length; i++) {
         this.dropdownList.unshift(data.Nareas[i]);
@@ -83,7 +81,6 @@ export class NodemanagementComponent implements OnInit {
       panelClass: 'thanksscreen',
     });
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
       this.getAreasbycity(this.cityID);
       this.getallnode();
     });
@@ -102,8 +99,6 @@ export class NodemanagementComponent implements OnInit {
         }
       })
       dialogRef.afterClosed().subscribe((result) => {
-        console.log("-----");
-        console.log(result);
         if(result.success == true){
           this.getAreasbycity(this.cityID);
         this.getallnode();

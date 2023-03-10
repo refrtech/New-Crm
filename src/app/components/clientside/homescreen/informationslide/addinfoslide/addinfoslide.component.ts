@@ -18,7 +18,7 @@ export class AddinfoslideComponent implements OnInit {
   onFileSelected($event: Event) {
     throw new Error('Method not implemented.');
   }
-  
+
   constructor(
     private http: HttpClient,
     public api: ApiserviceService,
@@ -44,9 +44,7 @@ export class AddinfoslideComponent implements OnInit {
 
       upload$.subscribe((res: any) => {
         this.videoPath = res;
-        console.log('res', res),
           (err: any) => {
-            console.log(err);
           };
       });
 
@@ -69,7 +67,6 @@ export class AddinfoslideComponent implements OnInit {
       path: this.videoPath,
     };
     this.api.infoUploadVideo(datas).then((data) => {
-      console.log('sucess', data);
     });
     this.dialogRef.close();
   }

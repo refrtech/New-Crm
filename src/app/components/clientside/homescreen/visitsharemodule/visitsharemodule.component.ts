@@ -36,7 +36,6 @@ export class VisitsharemoduleComponent implements OnInit {
 
   getvsadata() {
     this.api.getVSAData().pipe(take(1)).subscribe((VSAdata: any) => {
-      console.log(VSAdata);
       this.VSAmoduledata = VSAdata[0];
       this.VSATitle = VSAdata[0].VSA_Title;
       this.VSASTitle = VSAdata[0].VSA_STitle;
@@ -49,7 +48,6 @@ export class VisitsharemoduleComponent implements OnInit {
   }
 
   allstores(creatednode?: any) {
-    console.log(creatednode);
     if (this.Selectedcity == "") {
       alert("please select city.")
     }
@@ -95,7 +93,6 @@ export class VisitsharemoduleComponent implements OnInit {
         this.api.updateVSAtitle(this.VSATitle, this.VSAmoduledata.id).then((data) => {
           if (data != undefined) {
             this.editTitle = !this.editTitle;
-            console.log("title updated");
           }
         }).catch(() => {
           return false;
@@ -118,7 +115,6 @@ export class VisitsharemoduleComponent implements OnInit {
       else {
         this.api.updateVSAStitle(this.VSATitle, this.VSAmoduledata.id).then((data) => {
           if (data != undefined) {
-            console.log("Sub-title updated");
           }
         }).catch(() => {
           return false;

@@ -30,7 +30,7 @@ export class TopfeedmoduleComponent implements OnInit {
       disableClose: true,
       panelClass: 'thanksscreen',
     });
-    
+
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -53,10 +53,6 @@ export class TopfeedmoduleComponent implements OnInit {
   getVideo() {
     this.api.getuploadVideo().subscribe((data: any) => {
       this.getVideoData = data;
-      console.log('get data', data);
-      for (let i = 1; i < data.length; i++) {
-          console.log("length", i);
-      }
     });
   }
 

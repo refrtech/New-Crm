@@ -678,12 +678,6 @@ export class AddcityAndAreaComponent implements OnInit {
   // }
 
   async cratearea(datass: any) {
-    // if (this.AreaN == undefined || this.AreaN.length < 4) {
-    //   alert('please enter the name of the area');
-    // } else if (this.AreaPIN.length != 6) {
-    //   alert('Please enter the valid PIN code.');
-    // } else {
-      console.log(datass.Area_pin);
     await this.httpClient
       .get('https://api.postalpincode.in/pincode/' + datass.Area_pin + '')
       .subscribe((data: any) => {
@@ -699,9 +693,6 @@ export class AddcityAndAreaComponent implements OnInit {
             .addarea(datas)
             .then((data) => {
               if (data != undefined) {
-                console.log(datass.Area_pin);
-                // this.dialogRef.close();
-                // alert('new area added');
               }
             })
             .catch(() => {

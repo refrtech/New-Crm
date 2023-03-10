@@ -64,7 +64,6 @@ export class StoresinhoodComponent implements OnInit {
     this.isstorealreadyadded = false;
     this.api.getRecentStores(1, false, this.parameters, this.operators, this.searchvalue).pipe(take(1)).subscribe((recentStore: any) => {
       this.MerchantdataSource = new MatTableDataSource(recentStore);
-      console.log(recentStore);
       this.isstorealreadyadded = this.storelist.findIndex((x) => x.id == recentStore[0].id) < 0 ? false : true;
     });
   }
@@ -81,7 +80,6 @@ export class StoresinhoodComponent implements OnInit {
         stores: this.storelist,
         updated_at: this.data.node.updated_at,
       }
-      console.log(data);
       this.api.addNSIYHstores(data, this.data.id).then((data: any) => {
         if (!data) {
           this.dialogRef.close();
@@ -89,7 +87,6 @@ export class StoresinhoodComponent implements OnInit {
       });
     }
     else {
-      console.log(this.data.selectednode.id);
       let index = this.data.creatednodes.findIndex((x: any) => x.id == this.data.selectednode.id);
       this.data.creatednodes[index].stores = this.storelist;
       this.api.editNSIYHstores(this.data.creatednodes, this.data.id).then((data: any) => {
@@ -97,7 +94,6 @@ export class StoresinhoodComponent implements OnInit {
           this.dialogRef.close();
         }
       });
-      console.log(this.data.creatednodes);
     }
   }
 

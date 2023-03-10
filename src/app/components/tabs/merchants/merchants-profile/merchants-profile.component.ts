@@ -123,7 +123,7 @@ export class MerchantsProfileComponent implements OnInit {
     }, 1000);
   }
 
-  
+
 
   execute() {
     this.storeID = this.actRoute.snapshot.params["id"];
@@ -136,13 +136,12 @@ export class MerchantsProfileComponent implements OnInit {
         this.catindex = this.auth.resource.categoryList.findIndex(x=>
           x.id == store.cat
         );
-        this.subcatindex = this.auth.resource.categoryList[this.catindex].items.findIndex((x:any)=> 
+        this.subcatindex = this.auth.resource.categoryList[this.catindex].items.findIndex((x:any)=>
           x.id == store.subCat
           );
-        this.Selsubcategory = this.auth.resource.categoryList[this.catindex].items[this.subcatindex].id;        
+        this.Selsubcategory = this.auth.resource.categoryList[this.catindex].items[this.subcatindex].id;
         this.apiservice.getUserByUID(store.by).then(storeuser => {
           const storeuserD: any = storeuser.exists() ? storeuser.data() : null;
-          console.log(storeuserD);
           this.storeuid = storeuserD.uid;
           this.storeinfoDetails = storeuserD;
         })

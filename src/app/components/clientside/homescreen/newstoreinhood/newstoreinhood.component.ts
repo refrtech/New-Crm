@@ -57,7 +57,6 @@ export class NewstoreinhoodComponent implements OnInit {
 
   getNSIYHdata() {
     this.api.getNSIYHData().pipe(take(1)).subscribe((NSIYNdata: any) => {
-      console.log(NSIYNdata);
       this.NSIYHmoduledata = NSIYNdata[0];
       this.NSIYHTitle = NSIYNdata[0].NSIYH_Title;
       this.NSIYHSTitle = NSIYNdata[0].NSIYH_STitle;
@@ -80,7 +79,6 @@ export class NewstoreinhoodComponent implements OnInit {
         this.api.updateNSIYHtitle(this.NSIYHTitle, this.NSIYHmoduledata.id).then((data) => {
           if (data != undefined) {
             this.editTitle = !this.editTitle;
-            console.log("title updated");
           }
         }).catch(() => {
           return false;
@@ -103,7 +101,6 @@ export class NewstoreinhoodComponent implements OnInit {
       else {
         this.api.updateNSIYHStitle(this.NSIYHSTitle, this.NSIYHmoduledata.id).then((data) => {
           if (data != undefined) {
-            console.log("Sub-title updated");
           }
         }).catch(() => {
           return false;

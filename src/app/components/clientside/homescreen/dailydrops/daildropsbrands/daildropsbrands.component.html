@@ -1,127 +1,122 @@
 <div class="A20padding">
-    <div class="dflex AIcenter">
-        <span (click)="close()">
-            <svg width="38" height="24" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M24 12H5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" />
-            </svg>
-        </span>
-        <span class="xxl_size boldtext lr15padding AScenter">
-            All store details
-        </span>
+  <div class="dflex AIcenter">
+    <span (click)="close()">
+      <svg width="38" height="24" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 12H5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </span>
+    <span class="xxl_size boldtext lr15padding AScenter">
+      All store details
+    </span>
+  </div>
+  <div class="t50margin lr55padding">
+    <div class="boldtext l_size t30margin b20margin">Apply Filter to search store</div>
+    <div class="Aborder A5radius A20padding b20margin ">
+      <div class="dflex">
+        <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
+          <mat-select placeholder="Filter Type" [(ngModel)]="parameters">
+            <mat-option *ngFor="let item of ParaArr" [value]="item.titvalue">
+              {{item.Title}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
+          <mat-select placeholder="Operator's" [(ngModel)]="operators">
+            <mat-option value="==">
+              Equal to
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="Aborder l5margin r5margin M30width searchinput" appearance="fill">
+          <input type="string" matInput [(ngModel)]="searchvalue">
+        </mat-form-field>
+      </div>
+      <div class="dflex JCcenter">
+        <button class="viewbtn t10padding b10padding l30padding r30padding t10margin b15margin" (click)="ApplyFilter()">
+          Apply Filter
+        </button>
+      </div>
+      <table class="crmtable" mat-table [dataSource]="MerchantdataSource" matSort>
+        <ng-container matColumnDef="MerchantId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Merchant ID</th>
+          <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+        </ng-container>
+        <ng-container matColumnDef="storename">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Store Name</th>
+          <td mat-cell *matCellDef="let row">
+            {{row.name}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="contact">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Contact</th>
+          <td mat-cell *matCellDef="let row">
+            <div>{{row.phone}}</div>
+            <div class="gray_txt xxs_size">{{row.email}}</div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="storetype">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Store Type</th>
+          <td mat-cell *matCellDef="let row">
+            <div *ngIf="row.type == 'Both' ">Hybrid</div>
+            <div *ngIf="row.type == 'Onli' ">Online</div>
+            <div *ngIf="row.type == 'Offl' ">Offline</div>
+            <div class="gray_txt xxs_size">{{row.cat}}</div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="city">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading"> City </th>
+          <td mat-cell *matCellDef="let row">{{row.loc[0].city}}</td>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading"> Action </th>
+          <td mat-cell *matCellDef="let row" (click)="action(row)">
+            <mat-icon>
+              {{isstorealreadyadded ?'remove':'add_circle'}}
+            </mat-icon>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="marchantColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: marchantColumns;"></tr>
+        <tr class="mat-row" *matNoDataRow>
+        </tr>
+      </table>
     </div>
-
-    <div class="t50margin lr55padding">
-        <div class="boldtext l_size t30margin b20margin">Apply Filter to search store</div>
-        <div class="Aborder A5radius A20padding b20margin ">
-            <div class="dflex">
-                <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
-                    <mat-select placeholder="Filter Type" [(ngModel)]="parameters">
-                        <mat-option *ngFor="let item of ParaArr" [value]="item.titvalue">
-                            {{item.Title}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
-                    <mat-select placeholder="Operator's" [(ngModel)]="operators">
-                        <mat-option value="==">
-                            Equal to
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field class="Aborder l5margin r5margin M30width searchinput" appearance="fill">
-                    <input type="string" matInput [(ngModel)]="searchvalue">
-                </mat-form-field>
-            </div>
-            <div class="dflex JCcenter">
-                <button class="viewbtn t10padding b10padding l30padding r30padding t10margin b15margin"
-                    (click)="ApplyFilter()">
-                    Apply Filter
-                </button>
-            </div>
-            <table class="crmtable" mat-table [dataSource]="MerchantdataSource" matSort>
-                <ng-container matColumnDef="MerchantId">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Merchant ID</th>
-                    <td mat-cell *matCellDef="let row"> {{row.id}} </td>
-                </ng-container>
-                <ng-container matColumnDef="storename">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Store Name</th>
-                    <td mat-cell *matCellDef="let row">
-                        {{row.name}}
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="contact">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Contact</th>
-                    <td mat-cell *matCellDef="let row">
-                        <div>{{row.phone}}</div>
-                        <div class="gray_txt xxs_size">{{row.email}}</div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="storetype">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Store Type</th>
-                    <td mat-cell *matCellDef="let row">
-                        <div *ngIf="row.type == 'Both' ">Hybrid</div>
-                        <div *ngIf="row.type == 'Onli' ">Online</div>
-                        <div *ngIf="row.type == 'Offl' ">Offline</div>
-                        <div class="gray_txt xxs_size">{{row.cat}}</div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="city">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading"> City </th>
-                    <td mat-cell *matCellDef="let row">{{row.loc[0].city}}</td>
-                </ng-container>
-                <ng-container matColumnDef="action">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading"> Action </th>
-                    <td mat-cell *matCellDef="let row" (click)="action(row)">
-                        <mat-icon>
-                            {{isstorealreadyadded ?'remove':'add_circle'}}
-                        </mat-icon>
-                    </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="marchantColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: marchantColumns;"></tr>
-                <tr class="mat-row" *matNoDataRow>
-                </tr>
-            </table>
+  </div>
+  <div class="t50margin">
+    <div class="dflex">
+      <div class="boxshw M100width">
+        <div class="dflex JCevenly M100width tb15padding s_size">
+          <div class="regulartext M30width l15padding">Store name</div>
+          <div class="regulartext M20width c_align">Category</div>
+          <div class="M25width"></div>
+          <div class="regulartext M25width c_align">Action</div>
         </div>
-    </div>
-
-
-    <div class="t50margin">
-        <div class="dflex">
-            <div class="boxshw M100width">
-                <div class="dflex JCevenly M100width tb15padding s_size">
-                    <div class="regulartext M30width l15padding">Store name</div>
-                    <div class="regulartext M20width c_align">Category</div>
-                    <div class="M25width"></div>
-                    <div class="regulartext M25width c_align">Action</div>
+        <div cdkDropListGroup>
+          <div class="example-container M100width">
+            <div cdkDropList class="example-list">
+              <ng-container *ngFor="let item of storelist;let i =index">
+                <div class="example-box tborder dflex s_size White_bg">
+                  <div class="M30width l_align l15padding">
+                    {{item.name}}
+                  </div>
+                  <div class="M20width c_align">
+                    {{item.cat}}
+                  </div>
+                  <div class="M25width"></div>
+                  <div class="M25width c_align">
+                    <mat-icon class="black_text" (click)="takePicture('banner',i,item)">edit</mat-icon>
+                  </div>
                 </div>
-                <div cdkDropListGroup>
-                    <div class="example-container M100width">
-                        <div cdkDropList class="example-list">
-                            <ng-container *ngFor="let item of storelist;let i =index">
-                                <div class="example-box tborder dflex s_size White_bg">
-                                    <div class="M30width l_align l15padding">
-                                        {{item.name}}
-                                    </div>
-                                    <div class="M20width c_align">
-                                        {{item.cat}}
-                                    </div>
-                                    <div class="M25width"></div>
-                                    <div class="M25width c_align">
-                                        <mat-icon class="black_text" (click)="takePicture('banner',i,item)">edit</mat-icon>
-                                    </div>
-                                </div>
-                            </ng-container>
-                        </div>
-                    </div>
-                </div>
+              </ng-container>
             </div>
+          </div>
         </div>
-        <div>
-            <button mat-button (click)="updatestore()"
-                class="viewbtn t5padding b5padding l30padding r30padding t30margin b15margin">Update</button>
-        </div>
+      </div>
     </div>
+    <div>
+      <button mat-button (click)="updatestore()"
+        class="viewbtn t5padding b5padding l30padding r30padding t30margin b15margin">Update</button>
+    </div>
+  </div>
 </div>

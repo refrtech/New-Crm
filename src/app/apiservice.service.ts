@@ -161,9 +161,6 @@ export class ApiserviceService {
     ) {
       orderbyvalue = Para;
     }
-    console.log(Parametere);
-    console.log(conditions);
-    console.log(value);
 
     if (getall == true) {
       if (
@@ -398,7 +395,6 @@ export class ApiserviceService {
         return { success: true };
       })
       .catch((err) => {
-        console.log(err);
         return { success: false };
       });
   }
@@ -472,7 +468,6 @@ export class ApiserviceService {
         }
       })
       .catch((err) => {
-        console.log(err);
         return false;
       });
   }
@@ -488,7 +483,6 @@ export class ApiserviceService {
         }
       })
       .catch((err) => {
-        console.log(err);
         return false;
       });
   }
@@ -555,7 +549,6 @@ export class ApiserviceService {
         }
       })
       .catch((err) => {
-        console.log(err);
         return false;
       });
   }
@@ -571,7 +564,6 @@ export class ApiserviceService {
         }
       })
       .catch((err) => {
-        console.log(err);
         return false;
       });
   }
@@ -595,9 +587,6 @@ export class ApiserviceService {
       MDateTime: data.MDateTime,
     })
       .then((datas: any) => {
-        console.log('*****');
-        console.log(datas);
-        console.log('*****');
         if (datas) {
           return 'issue in city update';
         } else {
@@ -605,7 +594,6 @@ export class ApiserviceService {
         }
       })
       .catch((err) => {
-        console.log(err);
         return false;
       });
   }
@@ -690,12 +678,10 @@ export class ApiserviceService {
             return ref.id;
           })
           .catch((err) => {
-            console.log(err);
             return false;
           });
       })
       .catch((err) => {
-        console.log(err);
         return false;
       });
   }
@@ -758,7 +744,6 @@ export class ApiserviceService {
         }
       })
       .catch((err) => {
-        console.log(err);
         return false;
       });
   }
@@ -774,7 +759,6 @@ export class ApiserviceService {
         }
       })
       .catch((err) => {
-        console.log(err);
         return false;
       });
   }
@@ -817,7 +801,6 @@ export class ApiserviceService {
         }
       })
       .catch((err) => {
-        console.log(err);
         return false;
       });
   }
@@ -833,7 +816,6 @@ export class ApiserviceService {
         }
       })
       .catch((err) => {
-        console.log(err);
         return false;
       });
   }
@@ -879,7 +861,6 @@ export class ApiserviceService {
         }
       })
       .catch((err) => {
-        console.log(err);
         return false;
       });
   }
@@ -895,7 +876,6 @@ export class ApiserviceService {
         }
       })
       .catch((err) => {
-        console.log(err);
         return false;
       });
   }
@@ -931,7 +911,6 @@ export class ApiserviceService {
   }
 
   updateDailydroptitle(Title: string, id: any) {
-    console.log(id);
     const cityrefr = doc(this.firestore, `${'dailyDrop_section'}`, `${id}`);
     return updateDoc(cityrefr, { DDrop_Title: Title })
       .then((datas: any) => {
@@ -942,7 +921,6 @@ export class ApiserviceService {
         }
       })
       .catch((err) => {
-        console.log(err);
         return false;
       });
   }
@@ -958,7 +936,6 @@ export class ApiserviceService {
         }
       })
       .catch((err) => {
-        console.log(err);
         return false;
       });
   }
@@ -1043,25 +1020,18 @@ export class ApiserviceService {
   cloudUpload(idX: string, base64String: string) {
     const imgID = idX + Date.now();
     const bannerRef = ref(this.fireStorage, 'store/' + imgID);
-    console.log(imgID);
-    console.log(bannerRef);
-    console.log(base64String);
     return uploadString(bannerRef, base64String.split(',')[1], 'base64')
       .then((snapshot) => {
-        console.log('Uploaded a base64 string!', snapshot);
         return getDownloadURL(bannerRef).then((dlURL) => {
-          console.log('getDownloadURL', dlURL);
           return { success: true, url: dlURL };
         });
       })
       .catch((err) => {
-        console.log('Uploaded a base64 string! Fail', err);
         return { success: false, url: '' };
       });
   }
 
   isareaAlreadyAdded(id:string,isallreadyadded:boolean){
-    console.log("isareaAlreadyAdded = ",id,isallreadyadded);
     const area = doc(this.firestore, 'Areas', `${id}`);
     return updateDoc(area, { isaddedinNode: isallreadyadded }).then(() => {
       return ref;

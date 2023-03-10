@@ -31,7 +31,6 @@ export class AddnodeComponent implements OnInit {
     public dialogRef: MatDialogRef<AddnodeComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    console.log(this.data.Areas);
     if (this.data.id == 2) {
       this.dropdownList = this.data.Areas;
       this.dropdownSettings = {
@@ -50,7 +49,6 @@ export class AddnodeComponent implements OnInit {
         this.selectedcity = this.data.nodedata.city_id;
         let a: string = this.data.nodedata.name;
         this.Nodename = a.substring(7, a.length);
-        console.log(1);
         if (this.data.nodedata.Nareas != undefined) {
           for (let i = 0; i < this.data.nodedata.Nareas.length; i++) {
             this.selectedareas2.push(this.data.nodedata.Nareas[i]);
@@ -153,7 +151,6 @@ export class AddnodeComponent implements OnInit {
           (x: any) => x.id == this.selectedareas2[i].id
         );
       }
-      console.log(index < 0 ? 'need to add' : 'acascas');
       if (index < 0) {
         this.api.isareaAlreadyAdded(this.selectedareas2[i].id, true);
         this.selectedareas2[i].isaddedinNode = true;
@@ -168,7 +165,6 @@ export class AddnodeComponent implements OnInit {
             (x: any) => x.id == this.data.nodedata.Nareas[i].id
           );
         }
-        console.log(index < 0 ? 'Already Added need to remove' : 'aidbiabsdjb');
         if (index < 0) {
           this.api.isareaAlreadyAdded(this.data.nodedata.Nareas[i].id, false);
         }

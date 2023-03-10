@@ -35,7 +35,6 @@ export class InformationslideComponent implements OnInit {
   getVideo() {
     this.api.infogetuploadVideo().subscribe((data: any) => {
       this.getVideoData = data;
-      console.log('get data', data);
     });
   }
 

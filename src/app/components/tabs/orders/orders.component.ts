@@ -122,17 +122,14 @@ export class OrdersComponent implements OnInit {
 
     if (this.parameters == 'ordrTYPE') {
       if (this.searchvalue == 'online') {
-        console.log(1);
         this.operators = "in";
         this.searchvalue = ["RefrCASH","RefrCASH+ONLINE","ONLINE"];
       }
       else if (this.searchvalue == 'offline') {
-        console.log(2);
         this.operators = "==";
         this.searchvalue = "CASH";
       }
       else {
-        console.log(3);
         alert("please select the option.");
         return;
       }
@@ -147,7 +144,6 @@ export class OrdersComponent implements OnInit {
       )
       .pipe(take(1))
       .subscribe((recentorders: any) => {
-        console.log(recentorders);
         this.orderdatasource = new MatTableDataSource(recentorders);
         this.orderdatasource.sort = this.sort;
       });
@@ -169,17 +165,14 @@ export class OrdersComponent implements OnInit {
   exportexcel() {
     if (this.parameters == 'ordrTYPE') {
       if (this.searchvalue == 'online') {
-        console.log(1);
         this.operators = "in";
         this.searchvalue = ["RefrCASH","RefrCASH+ONLINE","ONLINE"];
       }
       else if (this.searchvalue == 'offline') {
-        console.log(2);
         this.operators = "==";
         this.searchvalue = "CASH";
       }
       else {
-        console.log(3);
         alert("please select the option.");
         return;
       }

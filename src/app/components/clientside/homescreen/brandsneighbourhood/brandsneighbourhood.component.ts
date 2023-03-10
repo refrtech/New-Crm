@@ -40,7 +40,6 @@ export class BrandsneighbourhoodComponent implements OnInit {
   }
 
   allstores(creatednode?: any) {
-    console.log(creatednode);
     if (this.Selectedcity == "") {
       alert("please select city.")
     }
@@ -64,7 +63,6 @@ export class BrandsneighbourhoodComponent implements OnInit {
 
   getBNTdata() {
     this.api.getBIYNData().pipe(take(1)).subscribe((BNdata: any) => {
-      console.log(BNdata);
       this.BIYNmoduledata = BNdata[0];
       this.BIYNTitle = BNdata[0].BN_Title;
       this.BIYNSTitle = BNdata[0].BN_STitle;
@@ -87,7 +85,6 @@ export class BrandsneighbourhoodComponent implements OnInit {
         this.api.updateBIYNtitle(this.BIYNTitle, this.BIYNmoduledata.id).then((data) => {
           if (data != undefined) {
             this.editTitle = !this.editTitle;
-            console.log("title updated");
           }
         }).catch(() => {
           return false;
@@ -110,7 +107,6 @@ export class BrandsneighbourhoodComponent implements OnInit {
       else {
         this.api.updateBIYNStitle(this.BIYNSTitle, this.BIYNmoduledata.id).then((data) => {
           if (data != undefined) {
-            console.log("Sub-title updated");
           }
         }).catch(() => {
           return false;
@@ -131,5 +127,4 @@ export class BrandsneighbourhoodComponent implements OnInit {
       this.nodes$ = of(nodearr);
     })
   }
-
 }

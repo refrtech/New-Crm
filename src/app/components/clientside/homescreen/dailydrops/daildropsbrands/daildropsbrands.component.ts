@@ -70,7 +70,6 @@ export class DaildropsbrandsComponent implements OnInit {
     this.isstorealreadyadded = false;
     this.api.getRecentStores(1, false, this.parameters, this.operators, this.searchvalue).pipe(take(1)).subscribe((recentStore: any) => {
       this.MerchantdataSource = new MatTableDataSource(recentStore);
-      console.log(recentStore);
       this.isstorealreadyadded = this.storelist.findIndex((x) => x.id == recentStore[0].id) < 0 ? false : true;
     });
   }
@@ -87,7 +86,6 @@ export class DaildropsbrandsComponent implements OnInit {
         stores: this.storelist,
         updated_at: this.data.node.updated_at,
       }
-      console.log(data);
       this.api.addDailydropstores(data, this.data.id).then((data: any) => {
         if (!data) {
           this.dialogRef.close();
@@ -95,7 +93,6 @@ export class DaildropsbrandsComponent implements OnInit {
       });
     }
     else {
-      console.log(this.data.selectednode.id);
       let index = this.data.creatednodes.findIndex((x: any) => x.id == this.data.selectednode.id);
       this.data.creatednodes[index].stores = this.storelist;
       this.api.editDailydropstores(this.data.creatednodes, this.data.id).then((data: any) => {
@@ -103,13 +100,11 @@ export class DaildropsbrandsComponent implements OnInit {
           this.dialogRef.close();
         }
       });
-      // console.log(this.data.creatednodes);
     }
   }
 
 
   async takePicture(type: string, index: number, item: any) {
-    console.log(item);
     const image = await Camera.getPhoto({
       quality: 100,
       height: 300,
@@ -117,12 +112,9 @@ export class DaildropsbrandsComponent implements OnInit {
       allowEditing: false,
       resultType: CameraResultType.Uri,
     });
-
-    console.log('image', image);
     const imageUrl = image.webPath || '';
     if (imageUrl) {
       this.startCropper(imageUrl, type, index, item);
-    } else {
     }
   }
 
@@ -147,9 +139,6 @@ export class DaildropsbrandsComponent implements OnInit {
         if (type == 'banner') {
           let index = this.data.creatednodes.findIndex((x: any) => x.id == this.data.selectednode.id);
           const cloudUpload = await this.api.cloudUpload(this.data.creatednodes[index].stores[index].id, result.croppedImage);
-          console.log("--------- banner --------");
-          console.log(cloudUpload);
-          console.log("--------- banner --------");
         }
       }
     });

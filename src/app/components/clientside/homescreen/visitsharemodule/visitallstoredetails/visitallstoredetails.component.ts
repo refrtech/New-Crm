@@ -45,10 +45,7 @@ export class VisitallstoredetailsComponent implements OnInit {
     public dialogRef: MatDialogRef<VisitallstoredetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
-    console.log("----");
-    console.log(this.data.creatednodes);
     this.storelist = this.data.selectednode != undefined ? this.data.selectednode.stores : [];
-    console.log("----");
   }
 
   ngOnInit(): void { }
@@ -57,7 +54,6 @@ export class VisitallstoredetailsComponent implements OnInit {
     this.isstorealreadyadded = false;
     this.api.getRecentStores(1, false, this.parameters, this.operators, this.searchvalue).pipe(take(1)).subscribe((recentStore: any) => {
       this.MerchantdataSource = new MatTableDataSource(recentStore);
-      console.log(recentStore);
       this.isstorealreadyadded = this.storelist.findIndex((x) => x.id == recentStore[0].id) < 0 ? false : true;
     });
   }
@@ -90,7 +86,6 @@ export class VisitallstoredetailsComponent implements OnInit {
         stores: this.storelist,
         updated_at: this.data.node.updated_at,
       }
-      console.log(data);
       this.api.addVSAstores(data, this.data.id).then((data: any) => {
         if (!data) {
           this.dialogRef.close();
@@ -109,7 +104,6 @@ export class VisitallstoredetailsComponent implements OnInit {
   }
 
   async takePicture(type: string, index: number, item: any) {
-    console.log(item);
     const image = await Camera.getPhoto({
       quality: 100,
       height: 300,
@@ -117,8 +111,6 @@ export class VisitallstoredetailsComponent implements OnInit {
       allowEditing: false,
       resultType: CameraResultType.Uri,
     });
-
-    console.log('image', image);
     const imageUrl = image.webPath || '';
     if (imageUrl) {
       this.startCropper(imageUrl, type, index, item);
@@ -142,14 +134,11 @@ export class VisitallstoredetailsComponent implements OnInit {
       if (!result.success) {
         if (result.info) {
           this.auth.resource.startSnackBar(result.info)
-        } 
+        }
       } else {
         if (type == 'banner') {
           let index = this.data.creatednodes.findIndex((x: any) => x.id == this.data.selectednode.id);
           const cloudUpload = await this.api.cloudUpload(this.data.creatednodes[index].stores[index].id, result.croppedImage);
-          console.log("--------- banner --------");
-          console.log(cloudUpload);
-          console.log("--------- banner --------");
         }
       }
     });

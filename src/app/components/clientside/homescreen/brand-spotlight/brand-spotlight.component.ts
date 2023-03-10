@@ -75,7 +75,6 @@ export class BrandSpotlightComponent implements OnInit {
       else {
         this.api.updateBStitle(this.brandspotT, this.BSmoduledata.id).then((data) => {
           if (data != undefined) {
-            console.log("title updated");
           }
         }).catch(() => {
           return false;
@@ -98,7 +97,6 @@ export class BrandSpotlightComponent implements OnInit {
       else {
         this.api.updateBSStitle(this.brandspotST, this.BSmoduledata.id).then((data) => {
           if (data != undefined) {
-            console.log("Sub-title updated");
           }
         }).catch(() => {
           return false;
