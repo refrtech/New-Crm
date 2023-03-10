@@ -1500,6 +1500,46 @@ export class AuthService {
       });
   }
 
+  // top feed video start
+
+  async UploadVideo(id: any, video: any) {
+    const newTimestamp = this.getServerTimestamp();
+    const userRef = doc(
+      this.firestore,
+      `${this.resource.env.db.shops}`,
+      `${id}`
+    );
+
+    const cloudUpload = await this.cloudVideoUpload(id, video);
+    console.log('cloudupload url', cloudUpload.url);
+
+    if (!cloudUpload.success) {
+      return cloudUpload;
+    } else {
+      return updateDoc(userRef, {
+        video: cloudUpload.url,
+        upd: newTimestamp,
+      }).then(() => {
+        return cloudUpload;
+      });
+    }
+  }
+
+  cloudVideoUpload(idX: string, base64String: string) {
+    const imgID = idX + Date.now();
+    const bannerRef = ref(this.fireStorage, 'video/' + imgID);
+
+    return uploadString(bannerRef, base64String.split(',')[1], 'base64')
+      .then((snapshot) => {
+        return getDownloadURL(bannerRef).then((dlURL) => {
+          return { success: true, url: dlURL };
+        });
+      })
+      .catch((err) => {
+        return { success: false, url: '' };
+      });
+  }
+
   /*
   startX(){
   
