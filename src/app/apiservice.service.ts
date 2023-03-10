@@ -25,7 +25,6 @@ import {
   WhereFilterOp,
 } from 'firebase/firestore';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -384,7 +383,11 @@ export class ApiserviceService {
       this.firestore,
       `${'Areas'}`
     );
-    const qu = query(manageNode, where('City_id', '==', cityid),where("isaddedinNode","==",false) );
+    const qu = query(
+      manageNode,
+      where('City_id', '==', cityid),
+      where('isaddedinNode', '==', false)
+    );
     return collectionData(qu);
   }
 
@@ -717,7 +720,7 @@ export class ApiserviceService {
     const qu = doc(this.firestore, 'node_manager', `${nodeData.id}`);
     return updateDoc(qu, {
       name: nodeData.name,
-      updated_at:nodeData.updated_at,
+      updated_at: nodeData.updated_at,
       Nareas: nodeData.Nareas,
     });
   }
@@ -959,18 +962,18 @@ export class ApiserviceService {
 
   // Daily drop end
 
-  // top feed video start
+  // // top feed video start
 
-  async UploadVideo(data: any) {
-    await addDoc(collection(this.firestore, `${'Top_Feed'}`), data).then(
-      (ref) => {
-        const video = doc(this.firestore, 'Top_Feed', `${ref.id}`);
-        return updateDoc(video, { id: ref.id }).then(() => {
-          return ref;
-        });
-      }
-    );
-  }
+  // async UploadVideo(data: any) {
+  //   await addDoc(collection(this.firestore, `${'Top_Feed'}`), data).then(
+  //     (ref) => {
+  //       const video = doc(this.firestore, 'Top_Feed', `${ref.id}`);
+  //       return updateDoc(video, { id: ref.id }).then(() => {
+  //         return ref;
+  //       });
+  //     }
+  //   );
+  // }
 
   getuploadVideo() {
     const getuploadVideo: CollectionReference = collection(
@@ -1031,7 +1034,7 @@ export class ApiserviceService {
       });
   }
 
-  isareaAlreadyAdded(id:string,isallreadyadded:boolean){
+  isareaAlreadyAdded(id: string, isallreadyadded: boolean) {
     const area = doc(this.firestore, 'Areas', `${id}`);
     return updateDoc(area, { isaddedinNode: isallreadyadded }).then(() => {
       return ref;

@@ -66,6 +66,7 @@
                                 <ng-container *ngIf="cityList$ | async as cityList">
                                     <mat-option *ngFor="let item of cityList" [value]="item.id">
                                         {{item.CityN}}
+                                        
                                     </mat-option>
                                 </ng-container>
                             </mat-select>

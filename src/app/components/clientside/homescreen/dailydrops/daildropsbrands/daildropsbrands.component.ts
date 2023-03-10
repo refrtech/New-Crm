@@ -14,27 +14,29 @@ import { AuthService } from 'src/app/auth.service';
   styleUrls: ['./daildropsbrands.component.scss'],
 })
 export class DaildropsbrandsComponent implements OnInit {
-  parameters: string = "phone";
-  operators: string = "==";
-  searchvalue: string = "9833006431";//9833006431
+  parameters: string = 'phone';
+  operators: string = '==';
+  searchvalue: string = '9833006431'; //9833006431
   isstorealreadyadded: boolean = false;
 
   ParaArr: Array<any> = [
     {
-      Title: "Store Phone Number", titvalue: "phone",
+      Title: 'Store Phone Number',
+      titvalue: 'phone',
     },
     {
-      Title: "Store Id", titvalue: "id",
-    }
+      Title: 'Store Id',
+      titvalue: 'id',
+    },
   ];
 
   marchantColumns: string[] = [
-    "MerchantId",
-    "storename",
-    "contact",
-    "storetype",
-    "city",
-    "action"
+    'MerchantId',
+    'storename',
+    'contact',
+    'storetype',
+    'city',
+    'action',
   ];
   storelist: Array<any> = [];
   MerchantdataSource!: MatTableDataSource<any>;
@@ -42,21 +44,20 @@ export class DaildropsbrandsComponent implements OnInit {
     public api: ApiserviceService,
     public dialogRef: MatDialogRef<DaildropsbrandsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public auth: AuthService,
+    public auth: AuthService
   ) {
-    this.storelist = this.data.selectednode != undefined ? this.data.selectednode.stores : [];
+    this.storelist =
+      this.data.selectednode != undefined ? this.data.selectednode.stores : [];
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   action(data: any) {
-
     let i = this.storelist.findIndex((x) => x.id == data.id);
     if (i < 0) {
       this.storelist.push(data);
       this.isstorealreadyadded = true;
-    }
-    else {
+    } else {
       this.storelist.splice(i, i + 1);
       this.isstorealreadyadded = false;
     }
@@ -68,10 +69,22 @@ export class DaildropsbrandsComponent implements OnInit {
 
   ApplyFilter() {
     this.isstorealreadyadded = false;
-    this.api.getRecentStores(1, false, this.parameters, this.operators, this.searchvalue).pipe(take(1)).subscribe((recentStore: any) => {
-      this.MerchantdataSource = new MatTableDataSource(recentStore);
-      this.isstorealreadyadded = this.storelist.findIndex((x) => x.id == recentStore[0].id) < 0 ? false : true;
-    });
+    this.api
+      .getRecentStores(
+        1,
+        false,
+        this.parameters,
+        this.operators,
+        this.searchvalue
+      )
+      .pipe(take(1))
+      .subscribe((recentStore: any) => {
+        this.MerchantdataSource = new MatTableDataSource(recentStore);
+        this.isstorealreadyadded =
+          this.storelist.findIndex((x) => x.id == recentStore[0].id) < 0
+            ? false
+            : true;
+      });
   }
 
   updatestore() {
@@ -85,24 +98,26 @@ export class DaildropsbrandsComponent implements OnInit {
         name: this.data.node.name,
         stores: this.storelist,
         updated_at: this.data.node.updated_at,
-      }
+      };
       this.api.addDailydropstores(data, this.data.id).then((data: any) => {
         if (!data) {
           this.dialogRef.close();
         }
       });
-    }
-    else {
-      let index = this.data.creatednodes.findIndex((x: any) => x.id == this.data.selectednode.id);
+    } else {
+      let index = this.data.creatednodes.findIndex(
+        (x: any) => x.id == this.data.selectednode.id
+      );
       this.data.creatednodes[index].stores = this.storelist;
-      this.api.editDailydropstores(this.data.creatednodes, this.data.id).then((data: any) => {
-        if (!data) {
-          this.dialogRef.close();
-        }
-      });
+      this.api
+        .editDailydropstores(this.data.creatednodes, this.data.id)
+        .then((data: any) => {
+          if (!data) {
+            this.dialogRef.close();
+          }
+        });
     }
   }
-
 
   async takePicture(type: string, index: number, item: any) {
     const image = await Camera.getPhoto({
@@ -118,7 +133,7 @@ export class DaildropsbrandsComponent implements OnInit {
     }
   }
 
-  async startCropper(webPath: string, type: string, index: number, item: any) {
+  async startCropper(webPath: string, type: string, sindex: number, item: any) {
     let isPhone = this.auth.resource.getWidth < 768;
     let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
     const refDialog = this.auth.resource.dialog.open(CropperComponent, {
@@ -133,16 +148,30 @@ export class DaildropsbrandsComponent implements OnInit {
     refDialog.afterClosed().subscribe(async (result) => {
       if (!result.success) {
         if (result.info) {
-          this.auth.resource.startSnackBar(result.info)
+          this.auth.resource.startSnackBar(result.info);
         }
       } else {
         if (type == 'banner') {
-          let index = this.data.creatednodes.findIndex((x: any) => x.id == this.data.selectednode.id);
-          const cloudUpload = await this.api.cloudUpload(this.data.creatednodes[index].stores[index].id, result.croppedImage);
+          console.log(this.data);
+
+          let index = this.data.creatednodes.findIndex(
+            (x: any) => x.id == this.data.selectednode.id
+          );
+          console.log('index', index);
+
+          const cloudUpload = await this.api
+            .cloudUpload(
+              this.data.creatednodes[index].stores[sindex].id,
+              result.croppedImage
+            )
+            .then((data) => {
+              console.log('ads', this.data.creatednodes[index].stores[sindex]);
+              this.data.creatednodes[index].stores[sindex].homeBanner =
+                data.url;
+              console.log('cloud data', data);
+            });
         }
       }
     });
   }
-
 }
-

@@ -7,24 +7,22 @@ import { DaildropsbrandsComponent } from './daildropsbrands/daildropsbrands.comp
 @Component({
   selector: 'app-dailydrops',
   templateUrl: './dailydrops.component.html',
-  styleUrls: ['./dailydrops.component.scss']
+  styleUrls: ['./dailydrops.component.scss'],
 })
 export class DailydropsComponent implements OnInit {
-  DailydropTitle: string = "";
-  DailydropSTitle: string = "";
+  DailydropTitle: string = '';
+  DailydropSTitle: string = '';
   editSubt: boolean = false;
   editTitle: boolean = false;
-  Selectedcity: string = "";
+  Selectedcity: string = '';
   cityList$: Observable<any[]> = of();
   nodes$: Observable<any[]> = of();
-  Selectednode: string = "";
+  Selectednode: string = '';
   creatednodes: Array<any> = [];
   selectednodedata: any;
-  dailydropmoduledata:any=[];
-  constructor(
-    public dialog: MatDialog,
-    public api: ApiserviceService,
-  ) { }
+  dailydropmoduledata: any = [];
+
+  constructor(public dialog: MatDialog, public api: ApiserviceService) {}
 
   ngOnInit(): void {
     this.getDailydropdata();
@@ -32,19 +30,22 @@ export class DailydropsComponent implements OnInit {
   }
 
   allstores(creatednode?: any) {
-    if (this.Selectedcity == "") {
-      alert("please select city.");
-    }
-    else if (creatednode == undefined && this.Selectednode == "") {
-      alert("please select node.")
-    }
-    else {
+    if (this.Selectedcity == '') {
+      alert('please select city.');
+    } else if (creatednode == undefined && this.Selectednode == '') {
+      alert('please select node.');
+    } else {
       const dialogRef = this.dialog.open(DaildropsbrandsComponent, {
-        width: "90%",
-        data: { node: this.selectednodedata, id: this.dailydropmoduledata.id, selectednode: creatednode, creatednodes: this.creatednodes },
+        width: '90%',
+        data: {
+          node: this.selectednodedata,
+          id: this.dailydropmoduledata.id,
+          selectednode: creatednode,
+          creatednodes: this.creatednodes,
+        },
         hasBackdrop: true,
         disableClose: true,
-        panelClass: 'thanksscreen'
+        panelClass: 'thanksscreen',
       });
     }
   }
@@ -54,33 +55,39 @@ export class DailydropsComponent implements OnInit {
   }
 
   getDailydropdata() {
-    this.api.getDailydropdata().pipe(take(1)).subscribe((daildropsdata: any) => {
-      this.dailydropmoduledata = daildropsdata[0];
-      this.DailydropTitle = daildropsdata[0].DDrop_Title;
-      this.DailydropSTitle = daildropsdata[0].DDrop_STitle;
-      this.creatednodes = daildropsdata[0].Nodes;
-    });
+    this.api
+      .getDailydropdata()
+      .pipe(take(1))
+      .subscribe((daildropsdata: any) => {
+        this.dailydropmoduledata = daildropsdata[0];
+        this.DailydropTitle = daildropsdata[0].DDrop_Title;
+        this.DailydropSTitle = daildropsdata[0].DDrop_STitle;
+        this.creatednodes = daildropsdata[0].Nodes;
+      });
   }
 
   updateNSIYHTitle() {
     if (!this.editTitle) {
       this.editTitle = !this.editTitle;
-    }
-    else if (this.DailydropTitle == this.dailydropmoduledata.DDrop_Title) {
+    } else if (this.DailydropTitle == this.dailydropmoduledata.DDrop_Title) {
       this.editTitle = !this.editTitle;
-    }
-    else {
+    } else {
       if (!this.DailydropTitle) {
-        alert("please enter the Title.");
-      }
-      else {
-        this.api.updateDailydroptitle(this.DailydropTitle, this.dailydropmoduledata.id).then((data) => {
-          if (data != undefined) {
-            this.editTitle = !this.editTitle;
-          }
-        }).catch(() => {
-          return false;
-        });
+        alert('please enter the Title.');
+      } else {
+        this.api
+          .updateDailydroptitle(
+            this.DailydropTitle,
+            this.dailydropmoduledata.id
+          )
+          .then((data) => {
+            if (data != undefined) {
+              this.editTitle = !this.editTitle;
+            }
+          })
+          .catch(() => {
+            return false;
+          });
       }
     }
   }
@@ -88,25 +95,27 @@ export class DailydropsComponent implements OnInit {
   updateNSIYHTSTitle() {
     if (!this.editSubt) {
       this.editSubt = !this.editSubt;
-    }
-    else if (this.DailydropSTitle == this.dailydropmoduledata.DDrop_STitle) {
+    } else if (this.DailydropSTitle == this.dailydropmoduledata.DDrop_STitle) {
       this.editSubt = !this.editSubt;
-    }
-    else {
+    } else {
       if (!this.DailydropSTitle) {
-        alert("please enter the sub Title.");
-      }
-      else {
-        this.api.updateDailydropStitle(this.DailydropSTitle, this.dailydropmoduledata.id).then((data) => {
-          if (data != undefined) {
-          }
-        }).catch(() => {
-          return false;
-        });
+        alert('please enter the sub Title.');
+      } else {
+        this.api
+          .updateDailydropStitle(
+            this.DailydropSTitle,
+            this.dailydropmoduledata.id
+          )
+          .then((data) => {
+            if (data != undefined) {
+            }
+          })
+          .catch(() => {
+            return false;
+          });
       }
     }
   }
-
 
   citychange() {
     this.api.getNodeDataaspercity(this.Selectedcity).subscribe((data: any) => {
@@ -118,9 +127,8 @@ export class DailydropsComponent implements OnInit {
         }
       }
       this.nodes$ = of(nodearr);
-    })
+    });
   }
-
 
   //   adddata() {
   //   let data ={
@@ -312,6 +320,4 @@ export class DailydropsComponent implements OnInit {
   //     alert("data added.");
   //   })
   // }
-
-
 }

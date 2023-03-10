@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiserviceService } from 'src/app/apiservice.service';
+import { AuthService } from 'src/app/auth.service';
 // import { Storage } from '@google-cloud/storage';
 
 @Component({
@@ -33,12 +34,12 @@ export class FeedsectionComponent implements OnInit {
     throw new Error('Method not implemented.');
   }
 
-
   constructor(
     private http: HttpClient,
     public dialogRef: MatDialogRef<FeedsectionComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public api: ApiserviceService,
+    public auth: AuthService
   ) {}
 
   ngOnInit(): void {}
@@ -58,8 +59,7 @@ export class FeedsectionComponent implements OnInit {
 
       upload$.subscribe((res: any) => {
         this.videoPath = res;
-          (err: any) => {
-          };
+        (err: any) => {};
       });
 
       if (file.type.indexOf('video') > -1) {
@@ -80,8 +80,7 @@ export class FeedsectionComponent implements OnInit {
       name: this.fileName,
       path: this.videoPath,
     };
-    this.api.UploadVideo(datas).then((data) => {
-    });
+    // this.auth.UploadVideo(datas).then((data) => {});
     this.dialogRef.close();
   }
 
@@ -89,8 +88,5 @@ export class FeedsectionComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  async uploadFile(file: File) {
-  }
-
-
+  async uploadFile(file: File) {}
 }
