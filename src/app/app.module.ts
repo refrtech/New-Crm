@@ -84,6 +84,8 @@ import { VSAnodesubcatstoresComponent } from './components/clientside/homescreen
 import { HbnodescatComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hbnodescat/hbnodescat.component';
 import { HgbcreatecategoryComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hgbcreatecategory/hgbcreatecategory.component';
 import { HgbnodecatstoresComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hgbnodecatstores/hgbnodecatstores.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
+import { SignComponent } from './components/welcome/sign/sign.component';
 
 @NgModule({
   declarations: [
@@ -137,6 +139,8 @@ import { HgbnodecatstoresComponent } from './components/clientside/homescreen/ho
     HbnodescatComponent,
     HgbcreatecategoryComponent,
     HgbnodecatstoresComponent,
+    WelcomeComponent,
+    SignComponent,
   ],
   imports: [
     MatDialogModule,

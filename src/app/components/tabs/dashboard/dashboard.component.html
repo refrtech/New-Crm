@@ -1,6 +1,12 @@
-<div class="A20padding">
-    <div class="l_size b15padding t20padding">
-        <span class="boldtext AScenter">Overview</span>
+<div class="A20padding"  *ngIf="auth.user$ | async as mine">
+    <div class="dflex AIcenter">
+        <div class="l_size b15padding t20padding">
+            <span class="boldtext AScenter">Overview</span>
+        </div>
+        <span class="divide"></span>
+        <div >
+            <button mat-button (click)="auth.signOut()" aria-label="" color="warn"><mat-icon>logout</mat-icon><span> Sign out</span></button>    
+        </div>
     </div>
     <div class="dflex JCspace">
         <div class="card">

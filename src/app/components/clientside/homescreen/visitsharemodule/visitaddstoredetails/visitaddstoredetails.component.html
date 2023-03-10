@@ -1,4 +1,4 @@
-<div class="A20padding">
+<div class="A20padding"  *ngIf="auth.user$ | async as mine">
     <div class="dflex AIcenter">
         <a>
             <svg width="38" height="24" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -27,8 +27,8 @@
                 <div>
                     <div class="img ">
 
-                        <img [src]=" storeBanner ? storeBanner : 'assets/brand/opengraph.png' " alt="banner" />
-                        {{storeBanner}}
+                        <img [src]=" homeBanner ? homeBanner : 'assets/brand/opengraph.png' " alt="banner" />
+                        {{homeBanner}}
                         <!-- <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
                             [aspectRatio]="4 / 3" format="png" (imageCropped)="imageCropped($event)"
                             (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div class="dflex flex_col l15margin JEend">
-                    <button mat-button disableRipple
+                    <button mat-button disableRipple  (click)="takePicture('homeBanner')"
                         class="c_align  M100width tb5padding cursor_pointer purple_txt regulartext s_size normallineheight lr20padding Aborder">
                         <svg class="r5margin cursor_pointer" width="17" height="15" viewBox="0 0 17 15" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -48,11 +48,11 @@
                                 stroke="#8111E8" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
 
-                        Create
+                        Upload
                     </button>
 
                     <!-- <input class="b10margin d_none" #hiddenfileinput type="file" (change)="onSelectFile($event)" /> -->
-                    <button mat-button disableRipple (click)="takePicture('banner')"
+                    <!-- <button mat-button disableRipple
                         class="w200 Aborder dflex  JCcenter AIcenter t10margin  tb5padding regulartext s_size normallineheight lr20padding Aborder">
                         <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g clip-path="url(#clip0_470_17467)">
@@ -71,7 +71,7 @@
                         </svg>
 
                         Edit
-                    </button>
+                    </button> -->
                     <button mat-button disableRipple
                         class="w200 Aborder dflex  JCcenter AIcenter t10margin  tb5padding regulartext s_size red_txt normallineheight lr20padding Aborder">
                         <svg class="r5margin cursor_pointer" width="18" height="18" viewBox="0 0 18 18" fill="none"
