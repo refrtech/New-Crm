@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -86,6 +86,11 @@ import { HgbcreatecategoryComponent } from './components/clientside/homescreen/h
 import { HgbnodecatstoresComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hgbnodecatstores/hgbnodecatstores.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { SignComponent } from './components/welcome/sign/sign.component';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { AuthService } from './auth.service';
+import { DependencyService } from './dependency.service';
+import { ThemeService } from './theme.service';
+import { take } from 'rxjs';
 
 @NgModule({
   declarations: [
@@ -177,7 +182,138 @@ import { SignComponent } from './components/welcome/sign/sign.component';
     NgMultiSelectDropDownModule.forRoot(),
     ImageCropperModule,
   ],
-  providers: [AngularFirestore,],
+  providers: [AngularFirestore],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  title = 'Refr';
+  showWarn = false;
+
+  constructor(
+    public auth: AuthService,
+    public depends: DependencyService,
+    public themeService: ThemeService,
+    private bottomSheet: MatBottomSheet
+  ) {
+    this.themeService.load();
+    this.internetChecks();
+  }
+
+  async executeApp(cX: string) {
+    // Hide the splash (you should do this on app launch)
+    //await SplashScreen.hide();
+    // Display content under transparent status bar (Android only)
+    //StatusBar.setOverlaysWebView({ overlay: true });
+    //await StatusBar.setStyle({ style: Style.Dark });
+    // await StatusBar.setStyle({ style: Style.Light });
+    //await StatusBar.setStyle({ style: Style.Default });
+    // await StatusBar.setBackgroundColor({color:cX})
+    //await StatusBar.hide();
+  }
+
+  internetChecks() {
+    let firstTry = false;
+    this.auth.resource
+      .internetConnected()
+      .then((res) => {
+        if (!res) {
+          this.showWarn = true;
+          console.log('No Internet...');
+          this.auth.resource.startSnackBar('No Internet...');
+        } else {
+          //this.showWarn = true;
+          setTimeout(
+            () => {
+              this.showWarn = false;
+              if (!firstTry) {
+                firstTry = true;
+                this.execute();
+              }
+            },
+            !firstTry ? 1000 : 3000
+          );
+        }
+      })
+      .catch((err) => {
+        console.log('No Internet...');
+        this.auth.resource.startSnackBar('No Internet: ' + err);
+      });
+  }
+
+  execute() {
+    if (this.auth.resource.appMode && environment.production) {
+      //this.executeApp("#512DA8");
+    }
+    // Setup Data for resources
+    console.log('Setup Data for resources');
+    //this.auth.resource.onlineOffline().pipe(take(1)).subscribe(net => {
+    //if( net ){
+    this.depends
+      .getState() /*.pipe(take(1))*/
+      .subscribe((getStateRes: any) => {
+        // {
+        //   vr: 101.1,
+        //   web:1.1, andi: 1.1, ios: 1.1,
+        //   env: enviroment.prod,
+        //   code:"Albatrosses", date: 1644195271637
+        // }
+        if (
+          !getStateRes ||
+          getStateRes.vr > environment.refrBot.vr ||
+          (!this.auth.resource.appMode &&
+            getStateRes.web > environment.refrBot.web) ||
+          (this.auth.resource.appMode &&
+            getStateRes.andi > environment.refrBot.andi)
+          // getStateRes.ios > environment.ios
+        ) {
+          // vr check
+          // device check
+          // os check
+          this.auth.resource.updateAvil = true;
+          this.openBottomSheet(getStateRes);
+          this.themeService.update(
+            this.themeService.colorScheme == 'dark' ? 'light' : 'light'
+          );
+        } else {
+          this.auth.resource.foreignMarks = getStateRes.markets;
+          this.auth.resource.merchandiseList = getStateRes.merchandise;
+          this.auth.resource.campaignPlans = getStateRes.campaignPlans;
+          console.log('category1');
+
+          this.auth
+            .getCategoryList()
+            .pipe(take(1))
+            .subscribe((cat) => {
+              console.log('category');
+              console.log(cat);
+              this.auth.resource.categoryList = cat;
+            });
+        }
+      });
+    //}else{
+
+    //}
+    //})
+  }
+
+  openBottomSheet(data: any): void {
+    // let isPhone = this.auth.resource.getWidth < 768;
+    // let w = isPhone ? this.auth.resource.getWidth + "px" : "480px";
+    // let h = isPhone ? this.auth.resource.getHeight + "px" : "";
+
+    this.bottomSheet.open(BottomSheetUpdate, {
+      data: data,
+      panelClass: 'bottomSheetClassUpdate',
+      hasBackdrop: true,
+      disableClose: true,
+    });
+  }
+}
+
+@Component({
+  selector: 'bottom-sheet-update',
+  templateUrl: './tasks/bottom-sheet-update.html',
+})
+export class BottomSheetUpdate {
+  constructor(public auth: AuthService) {}
+}

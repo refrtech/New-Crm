@@ -74,7 +74,6 @@ export class VisitaddstoredetailsComponent implements OnInit {
       } else {
         console.log('4');
         console.log(type);
-
         if (type == 'homeBanner') {
           console.log('5');
           this.auth

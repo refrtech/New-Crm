@@ -26,7 +26,7 @@ export const environment = {
     apiKey: 'AIzaSyDH4KRqGtrYXyIQVy2pW-C9IHihoYc1akQ',
     authDomain: 'refr-india.firebaseapp.com',
     projectId: 'refr-india',
-    storageBucket: 'refr-india.appspot.com',
+    storageBucket: 'refr',
     messagingSenderId: '471641178783',
     appId: '1:471641178783:web:9bf5a6b2df843f145f18aa',
 

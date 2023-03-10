@@ -20,7 +20,8 @@
             </th>
             <th class="textR">
               <!-- img *ngIf="!auth.resource.appMode" src="assets/other/locate.svg" / -->
-              <span *ngIf="auth.step !== 4">Sign
+              <span *ngIf="auth.step !== 4">
+              Sign
                 <span *ngIf="auth.step == 0"> in/up</span>
                 <span *ngIf="auth.step !== 0 && auth.step !== 3 && auth.step !== 4 && auth.step !== 5"> up</span>
                 <span *ngIf="auth.step == 3 || auth.step == 5"> in</span><!-- with {{auth.resource.env.brand}}--></span>

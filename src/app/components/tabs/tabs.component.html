@@ -37,7 +37,7 @@
                 </div>
                 <div *ngFor="let nR of navRoutes;let i = index">
                     <button mat-button (click)="expand(i)" [routerLink]=" nR.link "
-                        routerLinkActive="f_primary b_accent c_primary">
+                        routerLinkActive="f_primary c_primary">
                         <!-- <svg class="svgColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                             *ngIf=" nR.link == '/dash' ">
                             <path
@@ -52,7 +52,7 @@
                     </button>
                     <div *ngFor="let child of nR.childern">
                         <button *ngIf="nR.isexpanded" mat-button [routerLink]="child.link"
-                            routerLinkActive="f_primary b_accent c_primary">
+                            routerLinkActive="f_primary c_primary">
                             <span class="title">{{child.tit}}</span>
                         </button>
                     </div>
