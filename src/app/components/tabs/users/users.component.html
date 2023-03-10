@@ -32,8 +32,8 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field class="searchinput" appearance="fill">
-            <input [type]="inputtype" matInput [(ngModel)]="searchvalue">
+        <mat-form-field class="crminput searchinput M30width" appearance="outline">
+            <input matInput [type]="inputtype" [(ngModel)]="searchvalue">
         </mat-form-field>
     </div>
     <div *ngIf="showerror == true" class="c_align red_txt">

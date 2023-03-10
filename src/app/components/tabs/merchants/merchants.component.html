@@ -32,8 +32,8 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field class="searchinput Aborder" appearance="fill" *ngIf="valuetype == 2">
-            <input [type]="inputtype" matInput [(ngModel)]="searchvalue">
+        <mat-form-field class="crminput searchinput M30width" appearance="outline" *ngIf="valuetype == 2">
+            <input matInput [type]="inputtype" [(ngModel)]="searchvalue">
         </mat-form-field>
         <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline" *ngIf="valuetype == 1">
             <mat-select placeholder="Operator's" [(ngModel)]="searchvalue">

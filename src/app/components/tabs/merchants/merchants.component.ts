@@ -143,7 +143,7 @@ export class MerchantsComponent implements OnInit {
   }
 
   execute() {
-    this.apiservice.getRecentStores(10000, this.getall, this.parameters, this.operators, this.searchvalue).pipe(take(1)).subscribe((recentStore: any) => {
+    this.apiservice.getRecentStores(100, this.getall, this.parameters, this.operators, this.searchvalue).pipe(take(1)).subscribe((recentStore: any) => {
       this.MerchantdataSource = new MatTableDataSource(recentStore);
       this.MerchantdataSource.sort = this.sort;
     });

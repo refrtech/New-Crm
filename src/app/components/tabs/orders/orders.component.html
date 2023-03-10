@@ -32,7 +32,7 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field class="searchinput" appearance="fill" *ngIf="valuetype == 2">
+        <mat-form-field class="crminput searchinput M30width" appearance="outline" *ngIf="valuetype == 2">
             <input [type]="inputtype" matInput [(ngModel)]="searchvalue">
         </mat-form-field>
         <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline" *ngIf="valuetype == 1">
@@ -87,12 +87,6 @@
                     </div>
                 </td>
             </ng-container>
-            <!-- <ng-container matColumnDef="Order_type">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Payment Type</th>
-                <td mat-cell *matCellDef="let row">
-
-                </td>
-            </ng-container> -->
             <ng-container matColumnDef="Vendor_Amt">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Store Amount</th>
                 <td mat-cell *matCellDef="let row">

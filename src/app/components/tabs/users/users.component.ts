@@ -108,14 +108,14 @@ export class UsersComponent implements OnInit {
   }
 
   execute(para?: string, operator?: string, value?: any) {
-    this.apiservice.getUserList(1000, this.getall, para, operator, value).pipe(take(1)).subscribe((recentusers: any) => {
+    this.apiservice.getUserList(100, this.getall, para, operator, value).pipe(take(1)).subscribe((recentusers: any) => {
       this.UserdataSource = new MatTableDataSource(recentusers);
       this.UserdataSource.sort = this.sort;
     });
   }
 
   exportexcel() {
-    this.apiservice.getUserList(1000, this.getall, this.parameters, this.operators, this.searchvalue).pipe(take(1)).subscribe((recentusers: any) => {
+    this.apiservice.getUserList(100, this.getall, this.parameters, this.operators, this.searchvalue).pipe(take(1)).subscribe((recentusers: any) => {
       let userdataarr: Array<any> = [];
       for (let i = 0; i < recentusers.length; i++) {
         userdataarr.push({

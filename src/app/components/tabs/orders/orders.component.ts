@@ -136,7 +136,7 @@ export class OrdersComponent implements OnInit {
     }
     this.apiservice
       .getRecentAddedOrder(
-        1000,
+        100,
         this.getall,
         this.parameters,
         this.operators,
@@ -179,7 +179,7 @@ export class OrdersComponent implements OnInit {
     }
     this.apiservice
       .getRecentAddedOrder(
-        1000,
+        100,
         this.getall,
         this.parameters,
         this.operators,

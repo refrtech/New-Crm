@@ -264,6 +264,14 @@ $gradient: linear-gradient(170deg, #ff3269, #ff794d);
   background: $primaryLight !important;
 }
 
+.Ab_primaryLight {
+  background: #fff !important;
+}
+
+.br0radious {
+  border-radius: 0px !important;
+}
+
 .c_primaryLight {
   color: $primaryLight !important;
 }
@@ -1242,4 +1250,8 @@ img[src="https://maps.gstatic.com/mapfiles/api-3/images/google4_hdpi.png"]
       border-top: 1px solid #eeeeee;
     }
   }
+}
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background-color: #ff4081 !important;
 }
