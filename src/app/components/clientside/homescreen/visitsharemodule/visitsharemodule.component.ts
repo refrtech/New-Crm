@@ -36,10 +36,11 @@ export class VisitsharemoduleComponent implements OnInit {
 
   getvsadata() {
     this.api.getVSAData().pipe(take(1)).subscribe((VSAdata: any) => {
+      console.log(VSAdata);
       this.VSAmoduledata = VSAdata[0];
       this.VSATitle = VSAdata[0].VSA_Title;
       this.VSASTitle = VSAdata[0].VSA_STitle;
-      this.creatednodes = VSAdata[0].Nodes;
+      this.creatednodes = VSAdata[0].Nodes == undefined ? [] : VSAdata[0].Nodes;
     });
   }
 

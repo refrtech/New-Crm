@@ -245,7 +245,6 @@ export class AppModule {
       //this.executeApp("#512DA8");
     }
     // Setup Data for resources
-    console.log('Setup Data for resources');
     //this.auth.resource.onlineOffline().pipe(take(1)).subscribe(net => {
     //if( net ){
     this.depends

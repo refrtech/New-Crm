@@ -21,11 +21,10 @@ export class NodemanagementComponent implements OnInit {
   Valuearr: Array<any> = [];
   nodes!: MatTableDataSource<any>;
   dropdownList: Array<any> = [];
-
   nodesarr: Array<any> = [];
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  nodeColumns: string[] = ['node', 'area', 'used_in', 'action'];
+  nodeColumns: string[] = ['node', 'area', 'action'];
   constructor(
     public api: ApiserviceService,
     public rs: Router,

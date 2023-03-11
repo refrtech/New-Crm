@@ -86,6 +86,9 @@ export class VisitallstoredetailsComponent implements OnInit {
         stores: this.storelist,
         updated_at: this.data.node.updated_at,
       }
+      console.log(this.data.selectednode);
+console.log(this.data.id);
+console.log(data);
       this.api.addVSAstores(data, this.data.id).then((data: any) => {
         if (!data) {
           this.dialogRef.close();
