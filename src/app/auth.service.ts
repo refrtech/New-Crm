@@ -1500,37 +1500,49 @@ export class AuthService {
       });
   }
 
+  // --
+
+  // async videoUpload(id: string, banner: string) {
+  //   console.log('123456');
+  //   console.log('id', id);
+
+  //   const newTimestamp = this.getServerTimestamp();
+  //   const userRef = doc(
+  //     this.firestore,
+  //     `${this.resource.env.db.shops}`,
+  //     `${id}`
+  //   );
+  //   console.log('09876543');
+
+  //   const cloudUpload = await this.videoUploadF(id, banner);
+  //   console.log('cloudupload url', cloudUpload.url);
+
+  //   if (!cloudUpload.success) {
+  //     return cloudUpload;
+  //   } else {
+  //     return updateDoc(userRef, {
+  //       banner: cloudUpload.url,
+  //       upd: newTimestamp,
+  //     }).then(() => {
+  //       return cloudUpload;
+  //     });
+  //   }
+  // }
+
   // top feed video start
 
-  async UploadVideo(id: any, video: any) {
-    const newTimestamp = this.getServerTimestamp();
-    const userRef = doc(
-      this.firestore,
-      `${this.resource.env.db.shops}`,
-      `${id}`
-    );
+  cloudVideoUpload(base64String: string) {
+    console.log('1111');
 
-    const cloudUpload = await this.cloudVideoUpload(id, video);
-    console.log('cloudupload url', cloudUpload.url);
+    const imgID = 'feedVideos' + Date.now();
+    console.log('2222');
 
-    if (!cloudUpload.success) {
-      return cloudUpload;
-    } else {
-      return updateDoc(userRef, {
-        video: cloudUpload.url,
-        upd: newTimestamp,
-      }).then(() => {
-        return cloudUpload;
-      });
-    }
-  }
-
-  cloudVideoUpload(idX: string, base64String: string) {
-    const imgID = idX + Date.now();
-    const bannerRef = ref(this.fireStorage, 'video/' + imgID);
+    const bannerRef = ref(this.fireStorage, 'FeedVideos/' + imgID);
+    console.log('3333');
 
     return uploadString(bannerRef, base64String.split(',')[1], 'base64')
       .then((snapshot) => {
+        console.log('4444');
         return getDownloadURL(bannerRef).then((dlURL) => {
           return { success: true, url: dlURL };
         });

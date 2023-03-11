@@ -953,28 +953,6 @@ export class ApiserviceService {
     return updateDoc(cityrefr, { Nodes: nodes });
   }
 
-  // async addDailydrop(data: any) {
-  //    await addDoc(collection(this.firestore, "dailyDrop_section"), data).then(ref => {
-  //     const areeas = doc(this.firestore, 'dailyDrop_section', `${ref.id}`)
-  //     return updateDoc(areeas, { id: ref.id }).then(() => { return ref; })
-  //   })
-  // }
-
-  // Daily drop end
-
-  // // top feed video start
-
-  // async UploadVideo(data: any) {
-  //   await addDoc(collection(this.firestore, `${'Top_Feed'}`), data).then(
-  //     (ref) => {
-  //       const video = doc(this.firestore, 'Top_Feed', `${ref.id}`);
-  //       return updateDoc(video, { id: ref.id }).then(() => {
-  //         return ref;
-  //       });
-  //     }
-  //   );
-  // }
-
   getuploadVideo() {
     const getuploadVideo: CollectionReference = collection(
       this.firestore,
@@ -1019,6 +997,22 @@ export class ApiserviceService {
   }
 
   // info slide end
+
+  // homeCloudUpload(idX: string, base64String: string) {
+  //   const imgID = idX + Date.now();
+  //   console.log('1');
+
+  //   const bannerRef = ref(this.fireStorage, 'FeedVideos/' + imgID);
+  //   return uploadString(bannerRef, base64String.split(',')[1], 'base64')
+  //     .then((snapshot) => {
+  //       return getDownloadURL(bannerRef).then((dlURL) => {
+  //         return { success: true, url: dlURL };
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       return { success: false, url: '' };
+  //     });
+  // }
 
   cloudUpload(idX: string, base64String: string) {
     const imgID = idX + Date.now();

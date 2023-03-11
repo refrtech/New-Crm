@@ -52,41 +52,54 @@ export class FeedsectionComponent implements OnInit {
       this.fileName = file.name;
       const formData = new FormData();
       formData.append('video', file);
-      let upload$ = this.http.post(
-        'http://localhost:3000/upload-video',
-        formData
-      );
+      // let upload$ = this.http.post(
+      //   'http://localhost:3000/upload-video',
+      //   formData
+      // );
 
-      upload$.subscribe((res: any) => {
-        this.videoPath = res;
-        (err: any) => {};
-      });
+      // upload$.subscribe((res: any) => {
+      //   this.videoPath = res;
+      //   (err: any) => {};
+      // });
+      let a: string = file.type.toString();
+      this.format = a.substring(0, a.indexOf('/'));
 
-      if (file.type.indexOf('video') > -1) {
-        this.format = 'video';
-      } else if (file.type.indexOf('image') > -1) {
-        this.format = 'image';
-      }
+      // if ( == 'video') {
+      // } else if (file.type.indexOf('image') > -1) {
+      //   this.format = 'image';
+      // }
       reader.onload = (event) => {
         this.url = (<FileReader>event.target).result;
       };
     }
   }
 
-  addVideo() {
+  // addVideo() {
+  //   let datas = {
+  //     created_at: this.api.newTimestamp,
+  //     updated_at: this.api.newTimestamp,
+  //     name: this.fileName,
+  //     path: this.videoPath,
+  //   };
+  //   // this.auth.UploadVideo(datas).then((data) => {});
+  //   this.dialogRef.close();
+  // }
+
+  close() {
+    this.dialogRef.close();
+  }
+
+  uploadFile(res: any) {
     let datas = {
       created_at: this.api.newTimestamp,
       updated_at: this.api.newTimestamp,
       name: this.fileName,
       path: this.videoPath,
     };
-    // this.auth.UploadVideo(datas).then((data) => {});
+    console.log('1');
+    this.auth.cloudVideoUpload(res).then((data) => {
+      console.log(data);
+    });
     this.dialogRef.close();
   }
-
-  close() {
-    this.dialogRef.close();
-  }
-
-  async uploadFile(file: File) {}
 }
