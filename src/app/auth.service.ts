@@ -243,8 +243,8 @@ export class AuthService {
     // return x ? responce: "x";
   }
   /*
-    async step1_newUSER(phone:string, 
-      //password:string, name:string, 
+    async step1_newUSER(phone:string,
+      //password:string, name:string,
       //iso:string, coin:string
       ){//CREATE USER WITH artificial EMAIL & PASSWORD
       this.stepDisable = true;
@@ -253,9 +253,9 @@ export class AuthService {
       if(fetchSignMethod?.length > 0){// USER PHONE@EMAIL.com EXIST
         return {success:false,info:"401"}
       }else{
-        return {success:true, phone:phone}  
-  
-  
+        return {success:true, phone:phone}
+
+
         / *
         const credential = await this.afAuth.createUserWithEmailAndPassword(email,password);
         // CREATE USER DOC TO FIRESTORE
@@ -268,7 +268,7 @@ export class AuthService {
           return storeData
         }else{
           // SEND OTP
-          return {success:true, phone:phone}  
+          return {success:true, phone:phone}
         }
         * /
       }
@@ -286,7 +286,7 @@ export class AuthService {
       const email = phone + "@" + "refr.club";
       const fetchSignMethod = await this.afAuth.fetchSignInMethodsForEmail(email);
       const appVerifier = this.windowRef.recaptchaVerifier;
-  
+
       if(fetchSignMethod?.length > 0){// USER PHONE@EMAIL.com EXIST
         return {"success":false,info:"401"}
       }else{
@@ -313,7 +313,7 @@ export class AuthService {
         //   return storeData
         // }else{
         //   // SEND OTP
-        //   return {success:true, phone:phone}  
+        //   return {success:true, phone:phone}
         // }
       }
     }
@@ -471,11 +471,11 @@ export class AuthService {
       acBalVr: 0,
       acBalH: 0,
       axess: [medium],
-      /* 
+      /*
       check: false,
       email: user.email, username:"",
       info:status, url:"",
-      cR: 0, cA: 0, cL: [], 
+      cR: 0, cA: 0, cL: [],
       pANX: [], pKIN: [], pFTR: [], pSALE: [],
       typ:1, sex:0, stat:"",
       sub:[],
@@ -703,7 +703,7 @@ export class AuthService {
         clientId:"471641178783-poa1lb0fjdv7amnvh5ntftepaskgohh2.apps.googleusercontent.com",
         scopes:["profile", "email"]
       });
-      
+
       let googleUser = await GoogleAuth.signIn();
       const provider = GoogleAuthProvider.credential(googleUser.authentication.idToken);
 
@@ -798,7 +798,7 @@ export class AuthService {
             axess: arrayUnion("google"),
             emails: arrayUnion(newEmail)
           }
-        
+
         const userRef = doc(this.firestore, `${this.resource.env.db.users}`, `${lin?.user?.uid}`);
         return updateDoc(userRef, userData).then(() => {
           return {"success":true, info:""}
@@ -893,7 +893,7 @@ export class AuthService {
                 axess: arrayUnion("facebook"),
                 emails: arrayUnion(newEmail)
               }
-            
+
             const userRef = doc(this.firestore, `${this.resource.env.db.users}`, `${lin?.user?.uid}`)
             return updateDoc(userRef, userData).then(() => {
               return {"success":true, info:""}
@@ -1206,15 +1206,15 @@ export class AuthService {
   addProduct(data:any, banners:string[]){
     const newTimestamp = this.getServerTimestamp();
     //const productID = Date.now() + "_" + "";
-  
+
     const dataSend:Product =   {
       id: "",//productID,
-      
+
       title:data.productName, description:data.description, banners:[],
       price:data.price, cost:data.cost, quota: 0, sold:0,
       category:data.category, code:data.code, variants:data.variants,
       warranty:data.warranty, content:data.content,
-  
+
       sin:newTimestamp, upd:newTimestamp, by:data.by, sid:data.storeID
     }
     const thingsRefC = collection(this.firestore, `${this.resource.env.db.things}`)
@@ -1225,15 +1225,15 @@ export class AuthService {
         proCat: arrayUnion(data.category),
       }).then(async () => {
         const thingsRef = doc(this.firestore, `${this.resource.env.db.things}`, `${ref.id}`);
-  
+
         if(banners.length == 0){
-          
+
           return updateDoc(thingsRef, {id:ref.id, banners:[] }).then(() => {
             return ref;
           })
-  
+
         }else{
-  
+
           const bannersList = [];
           for (let i = 0; i < banners.length; i++) {
             const cloudUpload = await this.cloudUpload(ref.id, banners[i]);
@@ -1244,21 +1244,21 @@ export class AuthService {
               })
             }
           }
-  
+
         }
-  
-  
+
+
       })
-      
+
       // return this.afs.doc<User>(`${this.resource.env.db.users}/${data.by}`).update({storeLoc: arrayUnion(ref.id)}).then(() => {
       //   return ref.update({id:ref.id, logo:logo, banner:banner}).then(() => {
       //   }).catch(err => {
       //     return err;
       //   })
     })
-      //proCat: arrayUnion(data.category), 
-      //products: arrayUnion(dataSend), 
-      //upd: newTimestamp }) 
+      //proCat: arrayUnion(data.category),
+      //products: arrayUnion(dataSend),
+      //upd: newTimestamp })
   }
   */
   getMyStore(uid: string) {
@@ -1422,20 +1422,13 @@ export class AuthService {
   }
 
   async updateStoreBanner(id: string, banner: string) {
-    console.log('123456');
-    console.log('id', id);
-
     const newTimestamp = this.getServerTimestamp();
     const userRef = doc(
       this.firestore,
       `${this.resource.env.db.shops}`,
       `${id}`
     );
-    console.log('09876543');
-
     const cloudUpload = await this.cloudUpload(id, banner);
-    console.log('cloudupload url', cloudUpload.url);
-
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -1542,9 +1535,9 @@ export class AuthService {
 
   /*
   startX(){
-  
+
     const x = [
-  
+
       {
           id:"healthcare", title:"Healthcare", icon:"", anim:"", img:"", rank:0, count:0,
           items:[// Healthcare
@@ -1562,7 +1555,7 @@ export class AuthService {
               {id:"sc-healthcare-ayurveda", icon:"", anim:"", img:"", name:"Ayurveda", type:"healthcare", rank:0, count:0},
           ]
       },
-  
+
       {
           id:"food_and_beverages", title:"Food & Beverages", icon:"", anim:"", img:"", rank:0, count:0,
           items:[// food & beverages
@@ -1572,7 +1565,7 @@ export class AuthService {
               {id:"sc-food_and_beverages-clubs_and_bars", icon:"", anim:"", img:"", name:"Clubs & Bars", type:"food_and_beverages", rank:0, count:0},
           ]
       },
-  
+
       {
           id:"electronics", title:"Electronics", icon:"", anim:"", img:"", rank:0, count:0,
           items:[// Electronics
@@ -1581,7 +1574,7 @@ export class AuthService {
               {id:"sc-electronics-mobile_phones", icon:"", anim:"", img:"", name:"Mobile Phones", type:"electronics", rank:0, count:0},
           ]
       },
-  
+
       {
           id:"fitness", title:"Fitness", icon:"", anim:"", img:"", rank:0, count:0,
           items:[// fitness
@@ -1592,7 +1585,7 @@ export class AuthService {
               {id:"sc-fitness-gym", icon:"", anim:"", img:"", name:"Gym", type:"fitness", rank:0, count:0},
           ]
       },
-  
+
       {
           id:"fashion_brand", title:"Fashion brand", icon:"", anim:"", img:"", rank:0, count:0,
           items:[// Fashion brand
@@ -1601,7 +1594,7 @@ export class AuthService {
               {id:"sc-fashion_brand-womens_fashion", icon:"", anim:"", img:"", name:"Womens Fashion", type:"fashion_brand", rank:0, count:0},
           ]
       },
-  
+
       {
           id:"salons_and_spa", title:"Salons & Spa", icon:"", anim:"", img:"", rank:0, count:0,
           items:[// Salons & Spa
@@ -1613,7 +1606,7 @@ export class AuthService {
               {id:"sc-salons_and_spa-unisex_spa", icon:"", anim:"", img:"", name:"Unisex Spa", type:"salons_and_spa", rank:0, count:0},
           ]
       },
-  
+
       {
           id:"professionals", title:"Professionals", icon:"", anim:"", img:"", rank:0, count:0,
           items:[// Professionals
@@ -1624,21 +1617,21 @@ export class AuthService {
               {id:"sc-professionals-teachers", icon:"", anim:"", img:"", name:"Teachers", type:"professionals"},
           ]
       },
-  
+
       {
           id:"supermarket", title:"Supermarket", icon:"", anim:"", img:"", rank:0, count:0,
           items:[// Supermarket
           ]
       },
-  
+
   ];
-  
+
     for (let i = 0; i < x.length; i++) {
       const element = x[i];
-      
+
       const userRef = doc(this.firestore, `${this.resource.env.db.categories}`, `${element.id}`);
       setDoc(userRef, element);
-    } 
+    }
   }
   */
 
@@ -1701,7 +1694,7 @@ export class AuthService {
   getOrderList(c: number) {
     /*
     const catData:CollectionReference = collection(this.firestore, `${this.resource.env.db.things}`)
-    const qu = query(catData, 
+    const qu = query(catData,
       //where("ban", "==", false),
       orderBy("sin", "asc"),
       limit(c)

@@ -1,144 +1,139 @@
 <div class="A20padding">
-    <div class="dflex AIcenter">
-        <a routerLink="/homescreen">
-            <svg width="38" height="24" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M24 12H5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" />
-            </svg>
-        </a>
-        <span class="xxl_size boldtext lr15padding AScenter">Visit share earn</span>
-    </div>
-    <div class="t50margin lr55padding">
-        <div>
-            <div class="boldtext l_size t30margin b20margin">Module details</div>
-            <div class="Aborder A5radius A20padding b20margin dflex">
-                <div class="M50width">
-                    <div class="b15margin">
-                        <div class="m_size crminput r15padding AScenter">Module name</div>
-                    </div>
-                    <div>
-                        <mat-form-field class="crminput l5margin r5margin M80width Editableinput" appearance="outline">
-                            <input type="text" [(ngModel)]="VSATitle" matInput placeholder="Enter the module name"
-                                [disabled]="!editTitle">
-                            <button matSuffix mat-icon-button aria-label="Clear" class="purple_background"
-                                (click)="updateVSTitle()">
-                                <mat-icon>
-                                    {{editTitle ? 'check': 'edit'}}
-                                </mat-icon>
-                            </button>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="M50width">
-                    <div class="b15margin">
-                        <div class="m_size crminput r15padding AScenter">Subtext</div>
-                    </div>
-                    <div>
-                        <mat-form-field class="crminput l5margin r5margin M80width Editableinput" appearance="outline">
-                            <input type="text" [(ngModel)]="VSASTitle" matInput placeholder="Enter the subtext name"
-                                [disabled]="!editSubt">
-                            <button matSuffix mat-icon-button aria-label="Clear" class="purple_background"
-                                (click)="updateVSASTitle()">
-                                <mat-icon>
-                                    {{editSubt ? 'check': 'edit'}}
-                                </mat-icon>
-                            </button>
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div>
+  <div class="dflex AIcenter">
+    <a routerLink="/homescreen">
+      <svg width="38" height="24" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 12H5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </a>
+    <span class="xxl_size boldtext lr15padding AScenter">Visit share earn</span>
+  </div>
+  <div class="t50margin lr55padding">
+    <div>
+      <div class="boldtext l_size t30margin b20margin">Module details</div>
+      <div class="Aborder A5radius A20padding b20margin dflex">
+        <div class="M50width">
+          <div class="b15margin">
+            <div class="m_size crminput r15padding AScenter">Module name</div>
+          </div>
+          <div>
+            <mat-form-field class="crminput l5margin r5margin M80width Editableinput" appearance="outline">
+              <input type="text" [(ngModel)]="VSATitle" matInput placeholder="Enter the module name"
+                [disabled]="!editTitle">
+              <button matSuffix mat-icon-button aria-label="Clear" class="purple_background" (click)="updateVSTitle()">
+                <mat-icon>
+                  {{editTitle ? 'check': 'edit'}}
+                </mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
         </div>
-    </div>
-    <div class="t50margin lr55padding">
-        <div class="boldtext l_size b20margin">Node details</div>
-        <div class="Aborder A5radius A20padding">
-            <div class="dflex JCspace">
-                <div class="M50width">
-                    <div class="b15margin">
-                        <div class="m_size crminput r15padding AScenter lr5padding">City</div>
-                    </div>
-                    <div>
-                        <mat-form-field class="crminput l5margin r5margin M70width" appearance="outline">
-                            <mat-select placeholder="Select city" [(ngModel)]="Selectedcity"
-                                (selectionChange)="citychange()">
-                                <ng-container *ngIf="cityList$ | async as cityList">
-                                    <mat-option *ngFor="let item of cityList" [value]="item.id">
-                                        {{item.CityN}}
-                                    </mat-option>
-                                </ng-container>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="M50width">
-                    <div class="b15margin">
-                        <div class="m_size crminput r15padding AScenter lr5padding">Node</div>
-                    </div>
-                    <div>
-                        <mat-form-field class="crminput l5margin r5margin M70width" appearance="outline">
-                            <mat-select placeholder="Select node" [(ngModel)]="Selectednode">
-                                <ng-container *ngIf="nodes$ | async as nodeList">
-                                    <mat-option *ngFor="let item of nodeList" [value]="item.id"
-                                        (click)="selectednodedata = item">
-                                        {{item.name}}
-                                    </mat-option>
-                                </ng-container>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <button mat-button (click)="allstores()"
-                    class="viewbtn t5padding b5padding l30padding r30padding t15margin b15margin">Next</button>
-            </div>
+        <div class="M50width">
+          <div class="b15margin">
+            <div class="m_size crminput r15padding AScenter">Subtext</div>
+          </div>
+          <div>
+            <mat-form-field class="crminput l5margin r5margin M80width Editableinput" appearance="outline">
+              <input type="text" [(ngModel)]="VSASTitle" matInput placeholder="Enter the subtext name"
+                [disabled]="!editSubt">
+              <button matSuffix mat-icon-button aria-label="Clear" class="purple_background"
+                (click)="updateVSASTitle()">
+                <mat-icon>
+                  {{editSubt ? 'check': 'edit'}}
+                </mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
         </div>
+      </div>
     </div>
-    <div class="t50margin boxshw lr55margin">
-        <div class="dflex M100width tb15padding s_size">
-            <div class="regulartext M20width l10padding">Node name</div>
-            <div class="regulartext M10width c_align">No of stores</div>
-            <div class="regulartext M35width c_align">Store name</div>
-            <div class="regulartext M15width c_align"></div>
-            <div class="regulartext M20width c_align">Action</div>
+  </div>
+  <div class="t50margin lr55padding">
+    <div class="boldtext l_size b20margin">Node details</div>
+    <div class="Aborder A5radius A20padding">
+      <div class="dflex JCspace">
+        <div class="M50width">
+          <div class="b15margin">
+            <div class="m_size crminput r15padding AScenter lr5padding">City</div>
+          </div>
+          <div>
+            <mat-form-field class="crminput l5margin r5margin M70width" appearance="outline">
+              <mat-select placeholder="Select city" [(ngModel)]="Selectedcity" (selectionChange)="citychange()">
+                <ng-container *ngIf="cityList$ | async as cityList">
+                  <mat-option *ngFor="let item of cityList" [value]="item.id">
+                    {{item.CityN}}
+                  </mat-option>
+                </ng-container>
+              </mat-select>
+            </mat-form-field>
+          </div>
         </div>
-        <div>
-            <div class="example-container M100width">
-                <div class="example-list">
-                    <ng-container *ngFor="let item of creatednodes">
-                        <ng-container *ngIf="item.city_id == Selectedcity">
-                            <div class="dflex tborder s_size tb15padding">
-                                <div class="regulartext M20width l10padding">
-                                    {{item.name}}
-                                </div>
-                                <div class="regulartext M10width c_align">
-                                    {{item.stores.length}}
-                                </div>
-                                <div class="regulartext M35width c_align">
-                                    <ng-container *ngFor="let items of item.stores">
-                                        <span class="lightgray_bg lr15padding tb5padding A20radius r5margin">
-                                            {{items.name}}
-                                        </span>
-                                    </ng-container>
-                                </div>
-                                <div class="M15width c_align">
-                                    <a routerlink="/VSAcat">
-                                        <button mat-button class="viewbtn t5padding b5padding l30padding r30padding">
-                                            Go to internal
-                                        </button>
-                                    </a>
-                                </div>
-                                <div class="regulartext M20width c_align">
-                                    <mat-icon (click)="allstores(item)">
-                                        edit
-                                    </mat-icon>
-                                </div>
-                            </div>
-                        </ng-container>
-                    </ng-container>
+        <div class="M50width">
+          <div class="b15margin">
+            <div class="m_size crminput r15padding AScenter lr5padding">Node</div>
+          </div>
+          <div>
+            <mat-form-field class="crminput l5margin r5margin M70width" appearance="outline">
+              <mat-select placeholder="Select node" [(ngModel)]="Selectednode">
+                <ng-container *ngIf="nodes$ | async as nodeList">
+                  <mat-option *ngFor="let item of nodeList" [value]="item.id" (click)="selectednodedata = item">
+                    {{item.name}}
+                  </mat-option>
+                </ng-container>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div>
+        <button mat-button (click)="allstores()"
+          class="viewbtn t5padding b5padding l30padding r30padding t15margin b15margin">Next</button>
+      </div>
+    </div>
+  </div>
+  <div class="t50margin boxshw lr55margin">
+    <div class="dflex M100width tb15padding s_size">
+      <div class="regulartext M20width l10padding">Node name</div>
+      <div class="regulartext M10width c_align">No of stores</div>
+      <div class="regulartext M35width c_align">Store name</div>
+      <div class="regulartext M15width c_align"></div>
+      <div class="regulartext M20width c_align">Action</div>
+    </div>
+    <div>
+      <div class="example-container M100width">
+        <div class="example-list">
+          <ng-container *ngFor="let item of creatednodes">
+            <ng-container *ngIf="item.city_id == Selectedcity">
+              <div class="dflex tborder s_size tb15padding">
+                <div class="regulartext M20width l10padding">
+                  {{item.name}}
                 </div>
-            </div>
+                <div class="regulartext M10width c_align">
+                  {{item.stores.length}}
+                </div>
+                <div class="regulartext M35width c_align">
+                  <ng-container *ngFor="let items of item.stores">
+                    <span class="lightgray_bg lr15padding tb5padding A20radius r5margin">
+                      {{items.name}}
+                    </span>
+                  </ng-container>
+                </div>
+                <div class="M15width c_align">
+                  <button mat-button class="viewbtn t5padding b5padding l30padding r30padding"
+                    (click)="navigatetointernal(item)">
+                    Go to internal
+                  </button>
+                </div>
+                <div class="regulartext M20width c_align">
+                  <mat-icon (click)="allstores(item)">
+                    edit
+                  </mat-icon>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
         </div>
+      </div>
     </div>
+  </div>
 </div>

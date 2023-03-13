@@ -23,11 +23,9 @@ export class VisitaddstoredetailsComponent implements OnInit {
   listLoc: any[] = [];
   makingChanges = true;
   imageLOADED: string[] = [];
-  //
   homeBanner = '';
   homeBannerActive = '';
   homeBannerList: string[] = [];
-
   constructor(public router: Router, public auth: AuthService) {}
 
   ngOnInit(): void {}
@@ -43,7 +41,6 @@ export class VisitaddstoredetailsComponent implements OnInit {
     const imageUrl = image.webPath || '';
     if (imageUrl) {
       this.startCropper(imageUrl, type);
-    } else {
     }
   }
 
@@ -60,22 +57,12 @@ export class VisitaddstoredetailsComponent implements OnInit {
       panelClass: 'dialogLayout',
     });
     refDialog.afterClosed().subscribe((result) => {
-      console.log('cropper closed');
-      console.log('result', result);
-      console.log('1');
-
       if (!result.success) {
-        console.log('2');
         if (result.info) {
-          console.log('3');
-          console.log('result info', result.info);
           this.auth.resource.startSnackBar(result.info);
         }
       } else {
-        console.log('4');
-        console.log(type);
         if (type == 'homeBanner') {
-          console.log('5');
           this.auth
             .updateStoreBanner(this.storeID, result.croppedImage)
             .then((ref) => {

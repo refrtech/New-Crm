@@ -123,4 +123,9 @@ export class VisitsharemoduleComponent implements OnInit {
       }
     }
   }
+
+
+  navigatetointernal(item:any){
+    this.router.navigateByUrl('/VSAcat/'+item.id);
+  }
 }

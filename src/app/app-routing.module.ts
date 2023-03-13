@@ -19,9 +19,8 @@ import { FeedsectionComponent } from './components/clientside/homescreen/topfeed
 import { TopfeedmoduleComponent } from './components/clientside/homescreen/topfeedmodule/topfeedmodule.component';
 import { VisitaddstoredetailsComponent } from './components/clientside/homescreen/visitsharemodule/visitaddstoredetails/visitaddstoredetails.component';
 import { VisitallstoredetailsComponent } from './components/clientside/homescreen/visitsharemodule/visitallstoredetails/visitallstoredetails.component';
-import { VSAnodecatstoresComponent } from './components/clientside/homescreen/visitsharemodule/visitallstoredetails/vsanodescat/vsanodecatstores/vsanodecatstores.component';
-import { VSAnodescatComponent } from './components/clientside/homescreen/visitsharemodule/visitallstoredetails/vsanodescat/vsanodescat.component';
-import { VisiteditstoredetailsComponent } from './components/clientside/homescreen/visitsharemodule/visiteditstoredetails/visiteditstoredetails.component';
+import { VSAnodecatstoresComponent } from './components/clientside/homescreen/visitsharemodule/vsanodescat/vsanodecatstores/vsanodecatstores.component';
+import { VSAnodescatComponent } from './components/clientside/homescreen/visitsharemodule/vsanodescat/vsanodescat.component';
 import { VisitsharemoduleComponent } from './components/clientside/homescreen/visitsharemodule/visitsharemodule.component';
 import { NodemanagementCitysComponent } from './components/clientside/nodemanagement-citys/nodemanagement-citys.component';
 import { AddnodeComponent } from './components/clientside/nodemanagement-citys/nodemanagement/addnode/addnode.component';
@@ -45,6 +44,7 @@ import { UsersComponent } from './components/tabs/users/users.component';
 import { WebsiteformComponent } from './components/tabs/websiteform/websiteform.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { AuthGuard } from './guards/auth.guard';
+import { VSAnodesubcatstoresComponent } from './components/clientside/homescreen/visitsharemodule/vsanodescat/vsanodecatstores/vsanodesubcatstores/vsanodesubcatstores.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -135,11 +135,6 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: 'visit_editstore',
-        component: VisiteditstoredetailsComponent,
-        canActivate: [AuthGuard],
-      },
-      {
         path: 'brands',
         component: BrandsneighbourhoodComponent,
         canActivate: [AuthGuard],
@@ -226,13 +221,19 @@ const routes: Routes = [
       },
       { path: 'Nodecity', component: NodemanagementCitysComponent },
       {
-        path: 'VSAcat',
+        path: 'VSAcat/:id',
         component: VSAnodescatComponent,
         canActivate: [AuthGuard],
       },
       {
-        path: 'VSAcatstores',
+        path: 'VSAcatstores/:nodeid/:catid',
         component: VSAnodecatstoresComponent,
+        canActivate: [AuthGuard],
+      },
+
+      {
+        path: 'VSAsubcatstores/:nodeid/:catid',
+        component: VSAnodesubcatstoresComponent,
         canActivate: [AuthGuard],
       },
 
@@ -258,10 +259,6 @@ const routes: Routes = [
       },
     ],
   },
-
-  // { path: 'welcome', component: WelcomeComponent },
-  // { path: '404', component: WelcomeComponent },
-  // { path: '**', redirectTo: '/404' },
 ];
 
 @NgModule({

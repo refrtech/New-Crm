@@ -55,7 +55,6 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { VisitsharemoduleComponent } from './components/clientside/homescreen/visitsharemodule/visitsharemodule.component';
 import { VisitallstoredetailsComponent } from './components/clientside/homescreen/visitsharemodule/visitallstoredetails/visitallstoredetails.component';
 import { VisitaddstoredetailsComponent } from './components/clientside/homescreen/visitsharemodule/visitaddstoredetails/visitaddstoredetails.component';
-import { VisiteditstoredetailsComponent } from './components/clientside/homescreen/visitsharemodule/visiteditstoredetails/visiteditstoredetails.component';
 import { BrandsneighbourhoodComponent } from './components/clientside/homescreen/brandsneighbourhood/brandsneighbourhood.component';
 import { HomegrowbrandsComponent } from './components/clientside/homescreen/homegrowbrands/homegrowbrands.component';
 import { HomegrownbrandsComponent } from './components/internalsection/homegrownbrands/homegrownbrands.component';
@@ -78,9 +77,9 @@ import { ContentComponent } from './placeholders/content/content.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { NodemanagementCitysComponent } from './components/clientside/nodemanagement-citys/nodemanagement-citys.component';
 import { StoresinhoodComponent } from './components/clientside/homescreen/newstoreinhood/storesinhood/storesinhood.component';
-import { VSAnodescatComponent } from './components/clientside/homescreen/visitsharemodule/visitallstoredetails/vsanodescat/vsanodescat.component';
-import { VSAnodecatstoresComponent } from './components/clientside/homescreen/visitsharemodule/visitallstoredetails/vsanodescat/vsanodecatstores/vsanodecatstores.component';
-import { VSAnodesubcatstoresComponent } from './components/clientside/homescreen/visitsharemodule/visitallstoredetails/vsanodescat/vsanodecatstores/vsanodesubcatstores/vsanodesubcatstores.component';
+import { VSAnodescatComponent } from './components/clientside/homescreen/visitsharemodule/vsanodescat/vsanodescat.component';
+import { VSAnodecatstoresComponent } from './components/clientside/homescreen/visitsharemodule/vsanodescat/vsanodecatstores/vsanodecatstores.component';
+import { VSAnodesubcatstoresComponent } from './components/clientside/homescreen/visitsharemodule/vsanodescat/vsanodecatstores/vsanodesubcatstores/vsanodesubcatstores.component';
 import { HbnodescatComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hbnodescat/hbnodescat.component';
 import { HgbcreatecategoryComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hgbcreatecategory/hgbcreatecategory.component';
 import { HgbnodecatstoresComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hgbnodecatstores/hgbnodecatstores.component';
@@ -116,7 +115,6 @@ import { take } from 'rxjs';
     VisitsharemoduleComponent,
     VisitallstoredetailsComponent,
     VisitaddstoredetailsComponent,
-    VisiteditstoredetailsComponent,
     BrandsneighbourhoodComponent,
     HomegrowbrandsComponent,
     HomegrownbrandsComponent,

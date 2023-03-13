@@ -776,6 +776,135 @@ export class ApiserviceService {
     return updateDoc(cityrefr, { Nodes: nodes });
   }
 
+  getnodeinterdata(nodeid: string) {
+    const VSA_section: CollectionReference = collection(
+      this.firestore,
+      `${'vsa_internal'}`
+    );
+    const qu = query(VSA_section, where('node_id', '==', nodeid));
+    return collectionData(qu);
+  }
+
+  async addnodeinternal(Data: any) {
+    const nodeinternal = await addDoc(
+      collection(this.firestore, 'vsa_internal'),
+      Data
+    ).then((ref) => {
+      const node = doc(this.firestore, 'vsa_internal', `${ref.id}`);
+      return updateDoc(node, { id: ref.id }).then(() => {
+        return ref;
+      });
+    });
+  }
+
+  async addstoretoPeoplechoice(Data: any) {
+    const nodeinternal = await addDoc(
+      collection(this.firestore, 'people_choice_store'),
+      Data
+    ).then((ref) => {
+      const areeas = doc(this.firestore, 'people_choice_store', `${ref.id}`);
+      return updateDoc(areeas, { VSAid: ref.id }).then(() => {
+        return ref;
+      });
+    });
+  }
+
+  async addstoretoTrendingStore(Data: any) {
+    const nodeinternal = await addDoc(
+      collection(this.firestore, 'trending_store'),
+      Data
+    ).then((ref) => {
+      const areeas = doc(this.firestore, 'trending_store', `${ref.id}`);
+      return updateDoc(areeas, { VSAid: ref.id }).then(() => {
+        return ref;
+      });
+    });
+  }
+
+  deletestorefrompeopleStore(id: any) {
+    const vidRef = doc(this.firestore, 'people_choice_store', `${id}`);
+    return deleteDoc(vidRef);
+  }
+
+  deletestorefromTrendingStore(id: any) {
+    const vidRef = doc(this.firestore, 'trending_store', `${id}`);
+    return deleteDoc(vidRef);
+  }
+
+  getPeoplechoiceCatstores(nodeid: string, catId: string) {
+    const VSA_section: CollectionReference = collection(
+      this.firestore,
+      `${'people_choice_store'}`
+    );
+    const qu = query(
+      VSA_section,
+      where('Nodeid', '==', nodeid),
+      where('catId', '==', catId),
+      where('iscat_subCatstore', '==', 'Cat')
+    );
+    return collectionData(qu);
+  }
+
+  gettrendingCatstores(nodeid: string, catId: string) {
+    const VSA_section: CollectionReference = collection(
+      this.firestore,
+      `${'trending_store'}`
+    );
+    const qu = query(
+      VSA_section,
+      where('Nodeid', '==', nodeid),
+      where('catId', '==', catId),
+      where('iscat_subCatstore', '==', 'Cat')
+    );
+    return collectionData(qu);
+  }
+
+  getPeoplechoicesubCatstores(nodeid: string, subcatId: string) {
+    const VSA_section: CollectionReference = collection(
+      this.firestore,
+      `${'people_choice_store'}`
+    );
+    const qu = query(
+      VSA_section,
+      where('Nodeid', '==', nodeid),
+      where('SubcatId', '==', subcatId),
+      where('iscat_subCatstore', '==', 'SubCat')
+    );
+    return collectionData(qu);
+  }
+
+  gettrendingsubCatstores(nodeid: string, subcatId: string) {
+    const VSA_section: CollectionReference = collection(
+      this.firestore,
+      `${'trending_store'}`
+    );
+    const qu = query(
+      VSA_section,
+      where('Nodeid', '==', nodeid),
+      where('SubcatId', '==', subcatId),
+      where('iscat_subCatstore', '==', 'SubCat')
+    );
+    return collectionData(qu);
+  }
+
+
+  async updateNodeinternalBanner(id:string,croppedImage:string){
+    const newTimestamp = this.getServerTimestamp();
+    const cityrefr = doc(this.firestore, `${'vsa_internal'}`, `${id}`);
+    const cloudUpload = await this.cloudUpload(id, croppedImage);
+    if (!cloudUpload.success) {
+      return cloudUpload;
+    } else {
+      return updateDoc(cityrefr, {
+        node_banner_url: cloudUpload.url,
+        upd: newTimestamp,
+      }).then(() => {
+        return cloudUpload;
+      });
+    }
+    // return updateDoc(cityrefr, { Nodebanner:croppedImage  });
+  }
+
   // VSAupdatestore(nodes: any, id: any) {
   //   const cityrefr = doc(this.firestore, `${'VSA_section'}`, `${id}`);
   //   return updateDoc(cityrefr, { Nodes: nodes });
@@ -1040,4 +1169,6 @@ export class ApiserviceService {
       return ref;
     });
   }
+
+  ////
 }

@@ -643,6 +643,10 @@ body {
   display: flex;
 }
 
+.dWrap {
+  flex-wrap: wrap !important;
+}
+
 .dblock {
   display: block !important;
 }
