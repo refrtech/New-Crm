@@ -52,15 +52,15 @@ export class FeedsectionComponent implements OnInit {
       this.fileName = file.name;
       const formData = new FormData();
       formData.append('video', file);
-      // let upload$ = this.http.post(
-      //   'http://localhost:3000/upload-video',
-      //   formData
-      // );
+      let upload$ = this.http.post(
+        'http://localhost:3000/upload-video',
+        formData
+      );
 
-      // upload$.subscribe((res: any) => {
-      //   this.videoPath = res;
-      //   (err: any) => {};
-      // });
+      upload$.subscribe((res: any) => {
+        this.videoPath = res;
+        (err: any) => {};
+      });
       let a: string = file.type.toString();
       this.format = a.substring(0, a.indexOf('/'));
 
@@ -74,32 +74,34 @@ export class FeedsectionComponent implements OnInit {
     }
   }
 
-  // addVideo() {
-  //   let datas = {
-  //     created_at: this.api.newTimestamp,
-  //     updated_at: this.api.newTimestamp,
-  //     name: this.fileName,
-  //     path: this.videoPath,
-  //   };
-  //   // this.auth.UploadVideo(datas).then((data) => {});
-  //   this.dialogRef.close();
-  // }
-
-  close() {
-    this.dialogRef.close();
-  }
-
-  uploadFile(res: any) {
+  addVideo() {
     let datas = {
       created_at: this.api.newTimestamp,
       updated_at: this.api.newTimestamp,
       name: this.fileName,
       path: this.videoPath,
     };
-    console.log('1');
-    this.auth.cloudVideoUpload(res).then((data) => {
-      console.log(data);
-    });
+    console.log('datas', datas);
+
+    // this.auth.UploadVideo(datas).then((data) => {});
+    this.dialogRef.close({ data: datas });
+  }
+
+  close() {
     this.dialogRef.close();
   }
+
+  // uploadFile(res: any) {
+  //   let datas = {
+  //     created_at: this.api.newTimestamp,
+  //     updated_at: this.api.newTimestamp,
+  //     name: this.fileName,
+  //     path: this.videoPath,
+  //   };
+  //   console.log('1');
+  //   this.auth.cloudVideoUpload(res).then((data) => {
+  //     console.log(data);
+  //   });
+  //   this.dialogRef.close();
+  // }
 }

@@ -84,7 +84,7 @@ export class AuthService {
     //private afs: AngularFirestore,
     private firestore: Firestore,
     private fireStorage: Storage,
-
+    private http: HttpClient,
     public resource: ResourceService,
     private win: WindowService //private fb: Facebook //private gP: GooglePlus //private googlePlus: GooglePlus
   ) {
@@ -1551,6 +1551,8 @@ export class AuthService {
         return { success: false, url: '' };
       });
   }
+
+  // --------------------------------------
 
   /*
   startX(){
