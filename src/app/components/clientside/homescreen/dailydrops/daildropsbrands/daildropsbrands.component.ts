@@ -48,6 +48,7 @@ export class DaildropsbrandsComponent implements OnInit {
   ) {
     this.storelist =
       this.data.selectednode != undefined ? this.data.selectednode.stores : [];
+    console.log('this.storelist', this.storelist);
   }
 
   ngOnInit(): void {}
@@ -165,8 +166,8 @@ export class DaildropsbrandsComponent implements OnInit {
               result.croppedImage
             )
             .then((data) => {
-              console.log('ads', this.data.creatednodes[index].stores[sindex]);
-              this.data.creatednodes[index].stores[sindex].homeBanner =
+              // console.log('ads', this.data.creatednodes[index].stores[sindex]);
+              this.data.creatednodes[index].stores[sindex].homeBanners =
                 data.url;
               console.log('cloud data', data);
             });

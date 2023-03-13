@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 import { FeedsectionComponent } from './feedsection/feedsection.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiserviceService } from 'src/app/apiservice.service';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-topfeedmodule',
@@ -15,9 +21,15 @@ export class TopfeedmoduleComponent implements OnInit {
   getVideoData: any;
   id: string = '';
   videoData: any = '';
+  //
 
-  constructor(private dailog: MatDialog, public api: ApiserviceService) {
-    this.getVideo();
+  constructor(
+    private dailog: MatDialog,
+    public api: ApiserviceService,
+    private http: HttpClient,
+    public auth: AuthService
+  ) {
+    // this.getVideo();
   }
 
   ngOnInit(): void {}
@@ -30,7 +42,6 @@ export class TopfeedmoduleComponent implements OnInit {
       disableClose: true,
       panelClass: 'thanksscreen',
     });
-
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -50,11 +61,11 @@ export class TopfeedmoduleComponent implements OnInit {
     }
   }
 
-  getVideo() {
-    this.api.getuploadVideo().subscribe((data: any) => {
-      this.getVideoData = data;
-    });
-  }
+  // getVideo() {
+  //   this.api.getuploadVideo().subscribe((data: any) => {
+  //     this.getVideoData = data;
+  //   });
+  // }
 
   deleteVid(id: any) {
     if (id == undefined) {
@@ -65,4 +76,8 @@ export class TopfeedmoduleComponent implements OnInit {
       });
     }
   }
+
+  // getVideo() {
+  //   const url = 'http://localhost:3000/upload-video';
+  // }
 }
