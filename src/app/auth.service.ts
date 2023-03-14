@@ -61,6 +61,7 @@ import { Storage, ref, uploadString } from '@angular/fire/storage';
 import { getDownloadURL } from '@firebase/storage';
 import { HttpClient } from '@angular/common/http';
 import { WindowService } from './window.service';
+import { deleteDoc } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -1524,28 +1525,65 @@ export class AuthService {
 
   // top feed video start
 
-  cloudVideoUpload(base64String: string) {
-    console.log('1111');
-
-    const imgID = 'feedVideos' + Date.now();
-    console.log('2222');
-
-    const bannerRef = ref(this.fireStorage, 'FeedVideos/' + imgID);
-    console.log('3333');
-
-    return uploadString(bannerRef, base64String.split(',')[1], 'base64')
-      .then((snapshot) => {
-        console.log('4444');
-        return getDownloadURL(bannerRef).then((dlURL) => {
-          return { success: true, url: dlURL };
+  async addVideo(data: any) {
+    await addDoc(collection(this.firestore, `${'feedVideos'}`), data).then(
+      (ref) => {
+        const vid = doc(this.firestore, `${'feedVideos'}`, `${ref.id}`);
+        return updateDoc(vid, { id: ref.id }).then(() => {
+          return ref;
         });
-      })
-      .catch((err) => {
-        return { success: false, url: '' };
-      });
+      }
+    );
   }
 
-  // --------------------------------------
+  async getFeedVideos() {
+    const vid: CollectionReference = collection(this.firestore, 'feedVideos');
+
+    const qu = query(vid);
+    return collectionData(qu);
+  }
+
+  async deleteVideo(id: any) {
+    const vidRef = await doc(this.firestore, 'feedVideos', `${id}`);
+    return deleteDoc(vidRef);
+  }
+
+  // -----------feed end---------------------------
+
+  // ---------info start---------------
+
+  async addInfoVideo(data: any) {
+    await addDoc(collection(this.firestore, `${'info_slide'}`), data).then(
+      (ref) => {
+        const vid = doc(this.firestore, `${'info_slide'}`, `${ref.id}`);
+        return updateDoc(vid, { id: ref.id }).then(() => {
+          return ref;
+        });
+      }
+    );
+  }
+
+  async getInfoVideos() {
+    const vid: CollectionReference = await collection(
+      this.firestore,
+      'info_slide'
+    );
+
+    const qu = query(vid);
+    return collectionData(qu);
+  }
+
+  async deleteInfoVideo(id: any) {
+    const vidRef = await doc(this.firestore, 'info_slide', `${id}`);
+    return deleteDoc(vidRef);
+  }
+
+  async infodeleteVideo(id: any) {
+    const vidRef = await doc(this.firestore, 'info_slide', `${id}`);
+    return deleteDoc(vidRef);
+  }
+
+  // ----------info end--------
 
   /*
   startX(){

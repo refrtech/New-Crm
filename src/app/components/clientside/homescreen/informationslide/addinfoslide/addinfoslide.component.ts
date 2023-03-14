@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiserviceService } from 'src/app/apiservice.service';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-addinfoslide',
@@ -23,9 +24,9 @@ export class AddinfoslideComponent implements OnInit {
     private http: HttpClient,
     public api: ApiserviceService,
     public dialogRef: MatDialogRef<AddinfoslideComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-  }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public auth: AuthService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -44,8 +45,7 @@ export class AddinfoslideComponent implements OnInit {
 
       upload$.subscribe((res: any) => {
         this.videoPath = res;
-          (err: any) => {
-          };
+        (err: any) => {};
       });
 
       if (file.type.indexOf('video') > -1) {
@@ -66,8 +66,11 @@ export class AddinfoslideComponent implements OnInit {
       name: this.fileName,
       path: this.videoPath,
     };
-    this.api.infoUploadVideo(datas).then((data) => {
+    this.auth.addInfoVideo(datas).then((d) => {
+      console.log('d', d);
     });
+    console.log('datas', datas);
+    // this.dialogRef.close({ data: datas });
     this.dialogRef.close();
   }
 

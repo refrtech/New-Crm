@@ -29,9 +29,7 @@ export const environment = {
     storageBucket: 'refr',
     messagingSenderId: '471641178783',
     appId: '1:471641178783:web:9bf5a6b2df843f145f18aa',
-
     measurementId: 'G-3566SKDF47',
-
     databaseURL:
       'https://refr-india-default-rtdb.asia-southeast1.firebasedatabase.app',
     vapidKey:

@@ -40,7 +40,9 @@ export class FeedsectionComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public api: ApiserviceService,
     public auth: AuthService
-  ) {}
+  ) {
+    console.log('popupedit', data);
+  }
 
   ngOnInit(): void {}
 
@@ -81,27 +83,14 @@ export class FeedsectionComponent implements OnInit {
       name: this.fileName,
       path: this.videoPath,
     };
+    this.auth.addVideo(datas).then((d) => {
+      console.log('d', d);
+    });
     console.log('datas', datas);
-
-    // this.auth.UploadVideo(datas).then((data) => {});
     this.dialogRef.close({ data: datas });
   }
 
   close() {
     this.dialogRef.close();
   }
-
-  // uploadFile(res: any) {
-  //   let datas = {
-  //     created_at: this.api.newTimestamp,
-  //     updated_at: this.api.newTimestamp,
-  //     name: this.fileName,
-  //     path: this.videoPath,
-  //   };
-  //   console.log('1');
-  //   this.auth.cloudVideoUpload(res).then((data) => {
-  //     console.log(data);
-  //   });
-  //   this.dialogRef.close();
-  // }
 }
