@@ -8,6 +8,10 @@ import { ApiserviceService } from 'src/app/apiservice.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { take } from 'rxjs';
+import { Camera } from '@capacitor/camera';
+import { CameraResultType } from '@capacitor/camera/dist/esm/definitions';
+import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-vsanodecatstores',
@@ -65,27 +69,49 @@ export class VSAnodecatstoresComponent implements OnInit {
 
   PChoiceStores: Array<any> = [];
   trendingStores: Array<any> = [];
-  catarray:Array<any> = [];
+  catarray: Array<any> = [];
   constructor(
-    private router:Router,
+    public auth: AuthService,
+    private router: Router,
     private api: ApiserviceService,
     private actRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.api
-    .getnodeinterdata(this.actRoute.snapshot.params['nodeid'])
-    .pipe(take(1))
-    .subscribe((data: any) => {
-        this.catarray = data[0].Catbanners != undefined ? data[0].Catbanners : [];
-    });
+      .getnodeinterdata(this.actRoute.snapshot.params['nodeid'])
+      .pipe(take(1))
+      .subscribe((data: any) => {
+        console.log(data);
+        this.catarray =
+          data[0].CategoryBanners != undefined ? data[0].CategoryBanners : [];
+        console.log(this.catarray);
 
-    this.api.getPeoplechoiceCatstores(this.actRoute.snapshot.params['nodeid'],this.actRoute.snapshot.params['catid']).subscribe((data:any)=>{
-      this.PChoiceStores = data;
-    });
-    this.api.gettrendingCatstores(this.actRoute.snapshot.params['nodeid'],this.actRoute.snapshot.params['catid']).subscribe((data:any)=>{
-      this.trendingStores = data;
-    });
+        let i = this.catarray.findIndex(
+          (x: any) => x.Catid == this.actRoute.snapshot.params['catid']
+        );
+        if (i != -1) {
+          this.storeBanner = this.catarray[i].Catbanner;
+        }
+      });
+
+    this.api
+      .getPeoplechoiceCatstores(
+        this.actRoute.snapshot.params['nodeid'],
+        this.actRoute.snapshot.params['catid']
+      )
+      .subscribe((data: any) => {
+        this.PChoiceStores = data;
+      });
+
+    this.api
+      .gettrendingCatstores(
+        this.actRoute.snapshot.params['nodeid'],
+        this.actRoute.snapshot.params['catid']
+      )
+      .subscribe((data: any) => {
+        this.trendingStores = data;
+      });
   }
 
   ApplyFilter(i: number) {
@@ -97,7 +123,7 @@ export class VSAnodecatstoresComponent implements OnInit {
         false,
         i == 1 ? this.parameters : this.parameters1,
         i == 1 ? this.operators : this.operators1,
-        i == 1 ? this.searchvalue :this.searchvalue1
+        i == 1 ? this.searchvalue : this.searchvalue1
       )
       .pipe(take(1))
       .subscribe((recentStore: any) => {
@@ -158,22 +184,112 @@ export class VSAnodecatstoresComponent implements OnInit {
     }
   }
 
-  gotointernal(){
-    this.router.navigateByUrl("/VSAsubcatstores/"+this.actRoute.snapshot.params['nodeid']+"/"+this.actRoute.snapshot.params['catid'])
+  gotointernal() {
+    this.router.navigateByUrl(
+      '/VSAsubcatstores/' +
+        this.actRoute.snapshot.params['internalid'] +
+        '/' +
+        this.actRoute.snapshot.params['nodeid'] +
+        '/' +
+        this.actRoute.snapshot.params['catid']
+    );
   }
 
   deletestore(i: number, id: string) {
     console.log(i);
     console.log(id);
     if (i == 1) {
-      this.api.deletestorefrompeopleStore(id).then((data:any)=>{
-        this.MerchantdataSource= new MatTableDataSource();
+      this.api.deletestorefrompeopleStore(id).then((data: any) => {
+        this.MerchantdataSource = new MatTableDataSource();
+      });
+    } else {
+      this.api.deletestorefromTrendingStore(id).then((data: any) => {
+        this.MerchantdataSource1 = new MatTableDataSource();
       });
     }
-    else {
-      this.api.deletestorefromTrendingStore(id).then((data:any)=>{
-        this.MerchantdataSource1= new MatTableDataSource();
-      });
+  }
+
+  async takePicture(type: string,id?:string) {
+    const image = await Camera.getPhoto({
+      quality: 100,
+      height: 300,
+      width: 300,
+      allowEditing: false,
+      resultType: CameraResultType.Uri,
+    });
+    const imageUrl = image.webPath || '';
+    if (imageUrl) {
+      this.startCropper(imageUrl, type, id);
     }
+  }
+
+  startCropper(webPath: string, type: string,id?:string) {
+    let isPhone = this.auth.resource.getWidth < 768;
+    let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
+    const refDialog = this.auth.resource.dialog.open(CropperComponent, {
+      width: w,
+      minWidth: '320px',
+      maxWidth: '480px',
+      height: '360px',
+      data: { webPath: webPath, type: type },
+      disableClose: true,
+      panelClass: 'dialogLayout',
+    });
+    refDialog.afterClosed().subscribe((result) => {
+      if (!result.success) {
+        if (result.info) {
+          this.auth.resource.startSnackBar(result.info);
+        }
+      } else {
+        if (type == 'homeBanner') {
+          this.api
+            .updateNodecatinternalBanner(
+              this.actRoute.snapshot.params['internalid'],
+              result.croppedImage,
+              this.catarray,
+              this.actRoute.snapshot.params['catid']
+            )
+            .then((ref) => {
+              if (!ref || !ref.success) {
+                this.auth.resource.startSnackBar('Upload Failed!');
+              } else {
+                this.storeBanner = ref.url;
+                this.auth.resource.startSnackBar('Banner Update Under Review!');
+              }
+            });
+        }
+
+        else if(type == 'trendingstorebanner'){
+          this.api
+          .updateTrendingstorebanner(
+            id == undefined ? "" : id,
+            result.croppedImage,
+          )
+          .then((ref) => {
+            if (!ref || !ref.success) {
+              this.auth.resource.startSnackBar('Upload Failed!');
+            } else {
+              this.storeBanner = ref.url;
+              this.auth.resource.startSnackBar('Banner Update Under Review!');
+            }
+          });
+        }
+        else if(type == "peopleCstorebanner"){
+          this.api
+          .updatePchoicestorebanner(
+            id == undefined ? "" : id,
+            result.croppedImage,
+          )
+          .then((ref) => {
+            if (!ref || !ref.success) {
+              this.auth.resource.startSnackBar('Upload Failed!');
+            } else {
+              this.storeBanner = ref.url;
+              this.auth.resource.startSnackBar('Banner Update Under Review!');
+            }
+          });
+        }
+      }
+    });
   }
 }

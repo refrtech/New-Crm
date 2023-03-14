@@ -424,10 +424,10 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-  deletecity(id: any) {
-    const cityrefr = doc(this.firestore, `${'cities'}`, `${id}`);
-    return deleteDoc(cityrefr);
-  }
+  // deletecity(id: any) {
+  //   const cityrefr = doc(this.firestore, `${'cities'}`, `${id}`);
+  //   return deleteDoc(cityrefr);
+  // }
 
   async addcity(data: any) {
     await addDoc(collection(this.firestore, `${'cities'}`), data).then(
@@ -887,8 +887,7 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-
-  async updateNodeinternalBanner(id:string,croppedImage:string){
+  async updateNodeinternalBanner(id: string, croppedImage: string) {
     const newTimestamp = this.getServerTimestamp();
     const cityrefr = doc(this.firestore, `${'vsa_internal'}`, `${id}`);
     const cloudUpload = await this.cloudUpload(id, croppedImage);
@@ -902,7 +901,123 @@ export class ApiserviceService {
         return cloudUpload;
       });
     }
-    // return updateDoc(cityrefr, { Nodebanner:croppedImage  });
+  }
+
+  async updateTrendingstorebanner(
+    id: string,
+    croppedImage: string,
+  ){
+    const newTimestamp = this.getServerTimestamp();
+    const cityrefr = doc(this.firestore, `${'trending_store'}`, `${id}`);
+    const cloudUpload = await this.cloudUpload(id, croppedImage);
+    if (!cloudUpload.success) {
+      return cloudUpload;
+    } else {
+      return updateDoc(cityrefr, {
+        TrendingSBanner: cloudUpload.url,
+        upd: newTimestamp,
+      }).then(() => {
+        return cloudUpload;
+      });
+    }
+  }
+
+  async updatePchoicestorebanner(
+    id: string,
+    croppedImage: string,
+  ){
+    const newTimestamp = this.getServerTimestamp();
+    const cityrefr = doc(this.firestore, `${'people_choice_store'}`, `${id}`);
+    const cloudUpload = await this.cloudUpload(id, croppedImage);
+    if (!cloudUpload.success) {
+      return cloudUpload;
+    } else {
+      return updateDoc(cityrefr, {
+        PchoiceSBanner: cloudUpload.url,
+        upd: newTimestamp,
+      }).then(() => {
+        return cloudUpload;
+      });
+    }
+  }
+
+  async updateNodecatinternalBanner(
+    id: string,
+    croppedImage: string,
+    catarray: any,
+    catid: any
+  ) {
+    const newTimestamp = this.getServerTimestamp();
+    const cityrefr = doc(this.firestore, `${'vsa_internal'}`, `${id}`);
+    const cloudUpload = await this.cloudUpload(id, croppedImage);
+    if (!cloudUpload.success) {
+      return cloudUpload;
+    } else {
+      let i = catarray.findIndex((x: any) => x.Catid == catid);
+      console.log(i);
+      if (i == -1) {
+        catarray.push({
+          Catid: catid,
+          Catbanner: cloudUpload.url,
+        });
+      } else {
+        catarray[i].Catbanner = cloudUpload.url;
+      }
+
+      console.log(catarray);
+      return updateDoc(cityrefr, {
+        CategoryBanners: catarray,
+        upd: newTimestamp,
+      }).then(() => {
+        return cloudUpload;
+      });
+    }
+  }
+
+
+
+  async updateNodesubcatinternalBanner(
+    id: string,
+    croppedImage: string,
+    catarray: any,
+    catid: any,
+    subcatid: any
+  ) {
+    const newTimestamp = this.getServerTimestamp();
+    const cityrefr = doc(this.firestore, `${'vsa_internal'}`, `${id}`);
+    const cloudUpload = await this.cloudUpload(id, croppedImage);
+    if (!cloudUpload.success) {
+      return cloudUpload;
+    } else {
+      let i = catarray.findIndex((x: any) => x.Catid == catid);
+      let j;
+      if (catarray[i].subcatbanners != undefined) {
+        j = catarray[i].subcatbanners.findIndex(
+          (x: any) => x.Subcatid == subcatid
+        );
+        if (j == -1) {
+          catarray[i].subcatbanners.push({
+            Subcatid: subcatid,
+            Subcatbanner: cloudUpload.url,
+          });
+        } else {
+          catarray[i].subcatbanners[j].Subcatbanner = cloudUpload.url;
+        }
+      }
+      else {
+        catarray[i].subcatbanners = [{
+          Subcatid: subcatid,
+            Subcatbanner: cloudUpload.url,
+        }]
+      }
+
+      return updateDoc(cityrefr, {
+        CategoryBanners: catarray,
+        upd: newTimestamp,
+      }).then(() => {
+        return cloudUpload;
+      });
+    }
   }
 
   // VSAupdatestore(nodes: any, id: any) {

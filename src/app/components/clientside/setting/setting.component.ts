@@ -25,9 +25,9 @@ export class SettingComponent implements OnInit {
       alert("invalid data");
     }
     else {
-      this.api.deletecity(id).then((data: any) => {
-        alert("city deleted");
-      });
+      // this.api.deletecity(id).then((data: any) => {
+      //   alert("city deleted");
+      // });
     }
   }
 

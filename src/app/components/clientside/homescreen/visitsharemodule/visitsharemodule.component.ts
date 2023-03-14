@@ -46,6 +46,7 @@ export class VisitsharemoduleComponent implements OnInit {
 
   getallcity() {
     this.cityList$ = this.api.getcity().pipe(take(1));
+    console.log(this.api.getcity().pipe(take(1)));
   }
 
   allstores(creatednode?: any) {
