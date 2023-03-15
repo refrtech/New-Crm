@@ -516,6 +516,37 @@ export class ApiserviceService {
     return updateDoc(cityrefr, { First_Stores: arrayUnion(stores) });
   }
 
+  async updatehomegrownbanners(
+    id: string,
+    croppedImage: string,
+    catarray: any,
+    catname: any,
+    index: number
+  ) {
+    const newTimestamp = this.getServerTimestamp();
+    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
+    const cloudUpload = await this.cloudUpload(id, croppedImage);
+    if (!cloudUpload.success) {
+      return cloudUpload;
+    } else {
+      let i = catarray.findIndex((x: any) => x.title == catname);
+      console.log(i);
+      if (index == 1) {
+        catarray[i].Thumbnail = cloudUpload.url;
+      } else {
+        catarray[i].catbanner = cloudUpload.url;
+      }
+
+      console.log(catarray);
+      return updateDoc(cityrefr, {
+        Categories: catarray,
+        upd: newTimestamp,
+      }).then(() => {
+        return cloudUpload;
+      });
+    }
+  }
+
   addHGSRstores(stores: any, id: any) {
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
     return updateDoc(cityrefr, { Second_Stores: arrayUnion(stores) });
@@ -803,7 +834,7 @@ export class ApiserviceService {
       Data
     ).then((ref) => {
       const areeas = doc(this.firestore, 'people_choice_store', `${ref.id}`);
-      return updateDoc(areeas, { VSAid: ref.id }).then(() => {
+      return updateDoc(areeas, { sectionid: ref.id }).then(() => {
         return ref;
       });
     });
@@ -815,7 +846,7 @@ export class ApiserviceService {
       Data
     ).then((ref) => {
       const areeas = doc(this.firestore, 'trending_store', `${ref.id}`);
-      return updateDoc(areeas, { VSAid: ref.id }).then(() => {
+      return updateDoc(areeas, { sectionid: ref.id }).then(() => {
         return ref;
       });
     });
@@ -831,7 +862,7 @@ export class ApiserviceService {
     return deleteDoc(vidRef);
   }
 
-  getPeoplechoiceCatstores(nodeid: string, catId: string) {
+  getVSAPeoplechoiceCatstores(nodeid: string, catId: string) {
     const VSA_section: CollectionReference = collection(
       this.firestore,
       `${'people_choice_store'}`
@@ -840,12 +871,13 @@ export class ApiserviceService {
       VSA_section,
       where('Nodeid', '==', nodeid),
       where('catId', '==', catId),
-      where('iscat_subCatstore', '==', 'Cat')
+      where('iscat_subCatstore', '==', 'Cat'),
+      where('sectionName', '==', 'VSAsection')
     );
     return collectionData(qu);
   }
 
-  gettrendingCatstores(nodeid: string, catId: string) {
+  getVSAtrendingCatstores(nodeid: string, catId: string) {
     const VSA_section: CollectionReference = collection(
       this.firestore,
       `${'trending_store'}`
@@ -854,12 +886,41 @@ export class ApiserviceService {
       VSA_section,
       where('Nodeid', '==', nodeid),
       where('catId', '==', catId),
-      where('iscat_subCatstore', '==', 'Cat')
+      where('iscat_subCatstore', '==', 'Cat'),
+      where('sectionName', '==', 'VSAsection')
     );
     return collectionData(qu);
   }
 
-  getPeoplechoicesubCatstores(nodeid: string, subcatId: string) {
+  getHgrownPeoplechoiceCatstores(catId: string) {
+    const VSA_section: CollectionReference = collection(
+      this.firestore,
+      `${'people_choice_store'}`
+    );
+    const qu = query(
+      VSA_section,
+      where('catId', '==', catId),
+      where('iscat_subCatstore', '==', 'Cat'),
+      where('sectionName', '==', 'HomegrownSection')
+    );
+    return collectionData(qu);
+  }
+
+  getHgrowntrendingCatstores(catId: string) {
+    const VSA_section: CollectionReference = collection(
+      this.firestore,
+      `${'trending_store'}`
+    );
+    const qu = query(
+      VSA_section,
+      where('catId', '==', catId),
+      where('iscat_subCatstore', '==', 'Cat'),
+      where('sectionName', '==', 'HomegrownSection')
+    );
+    return collectionData(qu);
+  }
+
+  getVSAPeoplechoicesubCatstores(nodeid: string, subcatId: string) {
     const VSA_section: CollectionReference = collection(
       this.firestore,
       `${'people_choice_store'}`
@@ -868,12 +929,29 @@ export class ApiserviceService {
       VSA_section,
       where('Nodeid', '==', nodeid),
       where('SubcatId', '==', subcatId),
-      where('iscat_subCatstore', '==', 'SubCat')
+      where('iscat_subCatstore', '==', 'SubCat'),
+      where('sectionName', '==', 'VSAsection')
     );
     return collectionData(qu);
   }
 
-  gettrendingsubCatstores(nodeid: string, subcatId: string) {
+
+  gethomegrowPeoplechoicesubCatstores(catId: string) {
+    const VSA_section: CollectionReference = collection(
+      this.firestore,
+      `${'people_choice_store'}`
+    );
+    const qu = query(
+      VSA_section,
+      where('catId', '==', catId),
+      where('iscat_subCatstore', '==', 'SubCat'),
+      where('sectionName', '==', 'HomegrownSection')
+    );
+    return collectionData(qu);
+  }
+
+
+  getVSAtrendingsubCatstores(nodeid: string, subcatId: string) {
     const VSA_section: CollectionReference = collection(
       this.firestore,
       `${'trending_store'}`
@@ -882,7 +960,8 @@ export class ApiserviceService {
       VSA_section,
       where('Nodeid', '==', nodeid),
       where('SubcatId', '==', subcatId),
-      where('iscat_subCatstore', '==', 'SubCat')
+      where('iscat_subCatstore', '==', 'SubCat'),
+      where('sectionName', '==', 'VSAsection')
     );
     return collectionData(qu);
   }
@@ -903,10 +982,7 @@ export class ApiserviceService {
     }
   }
 
-  async updateTrendingstorebanner(
-    id: string,
-    croppedImage: string,
-  ){
+  async updateTrendingstorebanner(id: string, croppedImage: string) {
     const newTimestamp = this.getServerTimestamp();
     const cityrefr = doc(this.firestore, `${'trending_store'}`, `${id}`);
     const cloudUpload = await this.cloudUpload(id, croppedImage);
@@ -922,10 +998,7 @@ export class ApiserviceService {
     }
   }
 
-  async updatePchoicestorebanner(
-    id: string,
-    croppedImage: string,
-  ){
+  async updatePchoicestorebanner(id: string, croppedImage: string) {
     const newTimestamp = this.getServerTimestamp();
     const cityrefr = doc(this.firestore, `${'people_choice_store'}`, `${id}`);
     const cloudUpload = await this.cloudUpload(id, croppedImage);
@@ -974,8 +1047,6 @@ export class ApiserviceService {
     }
   }
 
-
-
   async updateNodesubcatinternalBanner(
     id: string,
     croppedImage: string,
@@ -1003,12 +1074,13 @@ export class ApiserviceService {
         } else {
           catarray[i].subcatbanners[j].Subcatbanner = cloudUpload.url;
         }
-      }
-      else {
-        catarray[i].subcatbanners = [{
-          Subcatid: subcatid,
+      } else {
+        catarray[i].subcatbanners = [
+          {
+            Subcatid: subcatid,
             Subcatbanner: cloudUpload.url,
-        }]
+          },
+        ];
       }
 
       return updateDoc(cityrefr, {

@@ -7,7 +7,6 @@ import { BrandsstoreComponent } from './components/clientside/homescreen/brandsn
 import { DaildropsbrandsComponent } from './components/clientside/homescreen/dailydrops/daildropsbrands/daildropsbrands.component';
 import { DailydropsComponent } from './components/clientside/homescreen/dailydrops/dailydrops.component';
 import { HomegrowbrandsComponent } from './components/clientside/homescreen/homegrowbrands/homegrowbrands.component';
-import { HbnodescatComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hbnodescat/hbnodescat.component';
 import { HgbcreatecategoryComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hgbcreatecategory/hgbcreatecategory.component';
 import { HgbnodecatstoresComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hgbnodecatstores/hgbnodecatstores.component';
 import { HomescreenComponent } from './components/clientside/homescreen/homescreen.component';
@@ -45,6 +44,7 @@ import { WebsiteformComponent } from './components/tabs/websiteform/websiteform.
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { AuthGuard } from './guards/auth.guard';
 import { VSAnodesubcatstoresComponent } from './components/clientside/homescreen/visitsharemodule/vsanodescat/vsanodecatstores/vsanodesubcatstores/vsanodesubcatstores.component';
+import { HgbnodesubcatstoresComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hgbnodecatstores/hgbnodesubcatstores/hgbnodesubcatstores.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -236,27 +236,22 @@ const routes: Routes = [
         component: VSAnodesubcatstoresComponent,
         canActivate: [AuthGuard],
       },
-
       {
-        path: 'HGBcat',
-        component: HbnodescatComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'HGBcreatecat',
+        path: 'HGBcatList',
         component: HgbcreatecategoryComponent,
         canActivate: [AuthGuard],
       },
       {
-        path: 'HGBcreatecat',
-        component: HgbcreatecategoryComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'HGBcatstores',
+        path: 'HGBcatstores/:catid',
         component: HgbnodecatstoresComponent,
         canActivate: [AuthGuard],
       },
+      {
+        path: 'HGBsubcatstores/:catid',
+        component: HgbnodesubcatstoresComponent,
+        canActivate: [AuthGuard],
+      },
+
     ],
   },
 ];

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import { AuthService } from 'src/app/auth.service';
 
 
 @Component({
@@ -8,15 +9,10 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/dra
   styleUrls: ['./hgbcreatecategory.component.scss']
 })
 export class HgbcreatecategoryComponent implements OnInit {
-
-  
-  feedSection:Array<any>=[
-    {dateAdded:'23/2/2023',storeName:'La French',Catname:"Food",},
-    {dateAdded:'23/2/2023',storeName:'La French',Catname:"Fashion",},
-    {dateAdded:'23/2/2023',storeName:'La French',Catname:"Healthcare",}];
   storeBanner = '';
-
-  constructor() { }
+  constructor( public auth : AuthService) {
+    console.log(this.auth.resource.categoryList);
+   }
 
   ngOnInit(): void {
   }
@@ -37,5 +33,4 @@ export class HgbcreatecategoryComponent implements OnInit {
       );
     }
   }
-
 }

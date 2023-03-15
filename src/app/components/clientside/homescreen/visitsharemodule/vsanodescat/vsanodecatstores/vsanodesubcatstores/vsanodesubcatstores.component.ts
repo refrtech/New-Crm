@@ -93,7 +93,7 @@ export class VSAnodesubcatstoresComponent implements OnInit {
     this.PChoiceStores = [];
     this.trendingStores = [];
     this.api
-      .getPeoplechoicesubCatstores(
+      .getVSAPeoplechoicesubCatstores(
         this.actRoute.snapshot.params['nodeid'],
         this.SelectedSubCat
       )
@@ -130,7 +130,7 @@ export class VSAnodesubcatstoresComponent implements OnInit {
       });
 
     this.api
-      .gettrendingsubCatstores(
+      .getVSAtrendingsubCatstores(
         this.actRoute.snapshot.params['nodeid'],
         this.SelectedSubCat
       )
@@ -173,6 +173,7 @@ export class VSAnodesubcatstoresComponent implements OnInit {
       Data.Nodeid = this.actRoute.snapshot.params['nodeid'];
       Data.catId = this.actRoute.snapshot.params['catid'];
       Data.iscat_subCatstore = 'SubCat';
+      Data.sectionName = "VSAsection";
       Data.SubcatId = this.SelectedSubCat;
       this.api.addstoretoPeoplechoice(Data).then((data: any) => {
         this.isstorealreadyadded = true;
@@ -185,6 +186,7 @@ export class VSAnodesubcatstoresComponent implements OnInit {
       Data.catId = this.actRoute.snapshot.params['catid'];
       Data.SubcatId = this.SelectedSubCat;
       Data.iscat_subCatstore = 'SubCat';
+      Data.sectionName = "VSAsection";
       this.api.addstoretoTrendingStore(Data).then((data: any) => {
         this.isstorealreadyadded1 = true;
         this.trendingStores.push(Data);
@@ -286,7 +288,7 @@ export class VSAnodesubcatstoresComponent implements OnInit {
             if (!ref || !ref.success) {
               this.auth.resource.startSnackBar('Upload Failed!');
             } else {
-              this.storeBanner = ref.url;
+              // this.storeBanner = ref.url;
               this.auth.resource.startSnackBar('Banner Update Under Review!');
             }
           });
@@ -301,7 +303,7 @@ export class VSAnodesubcatstoresComponent implements OnInit {
             if (!ref || !ref.success) {
               this.auth.resource.startSnackBar('Upload Failed!');
             } else {
-              this.storeBanner = ref.url;
+              // this.storeBanner = ref.url;
               this.auth.resource.startSnackBar('Banner Update Under Review!');
             }
           });

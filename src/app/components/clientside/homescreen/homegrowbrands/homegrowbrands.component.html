@@ -1,276 +1,254 @@
 <div class="A20padding">
-    <div class="dflex AIcenter">
-        <a routerLink="/homescreen">
-            <svg width="38" height="24" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M24 12H5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" />
-            </svg>
-        </a>
-        <span class="xxl_size boldtext lr15padding AScenter">Homegrown brand</span>
+  <div class="dflex AIcenter JCspace">
+    <div>
+      <a routerLink="/homescreen">
+        <svg width="38" height="24" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 12H5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+      <span class="xxl_size boldtext lr15padding AScenter">Homegrown brand</span>
     </div>
-    <div class="t50margin lr55padding">
+    <button (click)="navigatecat()" mat-button class="viewbtn t5padding b5padding l30padding r30padding">
+      Go to internal
+    </button>
+  </div>
+  <div class="t50margin lr55padding">
+    <div>
+      <div class="boldtext l_size t30margin b20margin">Module details</div>
+      <div class="Aborder A5radius A20padding b20margin dflex">
+        <div class="M50width">
+          <div class="t20margin b15margin">
+            <div class="m_size crminput r15padding AScenter">Module name</div>
+          </div>
+          <div>
+            <mat-form-field class="crminput l5margin r5margin M80width Editableinput" appearance="outline">
+              <input type="text" [(ngModel)]="homegrownT" matInput placeholder="Enter the module name"
+                [disabled]="!editTitle">
+              <button matSuffix mat-icon-button aria-label="Clear" class="purple_background" (click)="updateHGTitle();">
+                <mat-icon>
+                  {{editTitle ? 'check': 'edit'}}
+                </mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="M50width">
+          <div class="t20margin b15margin">
+            <div class="m_size crminput r15padding AScenter">Subtext</div>
+          </div>
+          <div>
+            <mat-form-field class="crminput l5margin r5margin M80width Editableinput" appearance="outline">
+              <input type="text" [(ngModel)]="homegrownST" matInput placeholder="Enter the subtext name"
+                [disabled]="!editSubt">
+              <button matSuffix mat-icon-button aria-label="Clear" class="purple_background" (click)="updateHGSTitle()">
+                <mat-icon>
+                  {{editSubt ? 'check': 'edit'}}
+                </mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="t50margin lr55padding">
+    <div class="boldtext l_size t30margin b20margin">Apply Filter to search store</div>
+    <div class="Aborder A5radius A20padding b20margin ">
+      <div class="dflex">
+        <mat-form-field class="crminput l5margin r5margin M20width" appearance="outline">
+          <mat-select placeholder="Filter Type" [(ngModel)]="rowno" (selectionChange)=" rowchange()">
+            <mat-option value="1">First Row</mat-option>
+            <mat-option value="2">Second Row</mat-option>
+            <mat-option value="3">Third Row</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="crminput l5margin r5margin M20width" appearance="outline">
+          <mat-select placeholder="Filter Type" [(ngModel)]="parameters">
+            <mat-option *ngFor="let item of ParaArr" [value]="item.titvalue">
+              {{item.Title}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="crminput l5margin r5margin M20width" appearance="outline">
+          <mat-select placeholder="Operator's" [(ngModel)]="operators">
+            <mat-option value="==">
+              Equal to
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="l5margin r5margin M20width crminput" appearance="outline">
+          <input type="string" matInput [(ngModel)]="searchvalue">
+        </mat-form-field>
+      </div>
+      <div class="dflex JCcenter">
+        <button class="viewbtn t10padding b10padding l30padding r30padding t10margin b15margin"
+          (click)="ApplyFilter()">Apply Filter</button>
+      </div>
+      <table class="crmtable" mat-table [dataSource]="MerchantdataSource" matSort>
+        <ng-container matColumnDef="MerchantId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Merchant ID</th>
+          <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+        </ng-container>
+        <ng-container matColumnDef="storename">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Store Name</th>
+          <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="contact">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Contact</th>
+          <td mat-cell *matCellDef="let row">
+            <div>{{row.phone}}</div>
+            <div class="gray_txt xxs_size">{{row.email}}</div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="storetype">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Store Type</th>
+          <td mat-cell *matCellDef="let row">
+            <div *ngIf="row.type == 'Both' ">Hybrid</div>
+            <div *ngIf="row.type == 'Onli' ">Online</div>
+            <div *ngIf="row.type == 'Offl' ">Offline</div>
+            <div class="gray_txt xxs_size">{{row.cat}}</div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="city">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading"> City </th>
+          <td mat-cell *matCellDef="let row">{{row.loc[0].city}}</td>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading"> Action </th>
+          <td mat-cell *matCellDef="let row" (click)="action(row)">
+            <mat-icon>
+              {{isstorealreadyadded ?'remove':'add_circle'}}
+            </mat-icon>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="marchantColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: marchantColumns;"></tr>
+        <tr class="mat-row" *matNoDataRow>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="lr55padding">
+    <div class="boldtext l_size b20margin">First Row stores</div>
+    <div class="dflex M100width">
+      <div class="boxshw M100width">
+        <div class="dflex M100width tb15padding s_size">
+          <div class="regulartext M25width l10padding">Store name</div>
+          <div class="regulartext M25width c_align">Category</div>
+          <div class="regulartext M25width c_align"></div>
+          <div class="regulartext M25width c_align">Action</div>
+        </div>
         <div>
-            <div class="boldtext l_size t30margin b20margin">Module details</div>
-            <div class="Aborder A5radius A20padding b20margin dflex">
-                <div class="M50width">
-                    <div class="t20margin b15margin">
-                        <div class="m_size crminput r15padding AScenter">Module name</div>
+          <div class="example-container M100width">
+            <div class="example-list">
+              <ng-container *ngFor="let item of HGmoduledata.First_Stores">
+                <ng-container>
+                  <div class="dflex tborder s_size tb15padding">
+                    <div class="regulartext M50width l10padding">
+                      {{item.name}}
                     </div>
-                    <div>
-                        <mat-form-field class="crminput l5margin r5margin M80width Editableinput" appearance="outline">
-                            <input type="text" [(ngModel)]="homegrownT" matInput placeholder="Enter the module name"
-                                [disabled]="!editTitle">
-                            <button matSuffix mat-icon-button aria-label="Clear" class="purple_background"
-                                (click)="updateHGTitle();">
-                                <mat-icon>
-                                    {{editTitle ? 'check': 'edit'}}
-                                </mat-icon>
-                            </button>
-                        </mat-form-field>
+                    <div class="regulartext M25width c_align">
+                      {{item.cat}}
                     </div>
-                </div>
-                <div class="M50width">
-                    <div class="t20margin b15margin">
-                        <div class="m_size crminput r15padding AScenter">Subtext</div>
+
+                    <div class="regulartext M25width c_align">
+                      <mat-icon>
+                        edit
+                      </mat-icon>
+                      <mat-icon (click)="action(item,'1')">
+                        delete
+                      </mat-icon>
                     </div>
-                    <div>
-                        <mat-form-field class="crminput l5margin r5margin M80width Editableinput" appearance="outline">
-                            <input type="text" [(ngModel)]="homegrownST" matInput placeholder="Enter the subtext name"
-                                [disabled]="!editSubt">
-                            <button matSuffix mat-icon-button aria-label="Clear" class="purple_background"
-                                (click)="updateHGSTitle()">
-                                <mat-icon>
-                                    {{editSubt ? 'check': 'edit'}}
-                                </mat-icon>
-                            </button>
-                        </mat-form-field>
-                    </div>
-                </div>
+                  </div>
+                </ng-container>
+              </ng-container>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-    <div class="t50margin lr55padding">
-        <div class="boldtext l_size t30margin b20margin">Apply Filter to search store</div>
-        <div class="Aborder A5radius A20padding b20margin ">
-            <div class="dflex">
-                <mat-form-field class="crminput l5margin r5margin M20width" appearance="outline">
-                    <mat-select placeholder="Filter Type" [(ngModel)]="rowno" (selectionChange)=" rowchange()">
-                        <mat-option value="1">First Row</mat-option>
-                        <mat-option value="2">Second Row</mat-option>
-                        <mat-option value="3">Third Row</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field class="crminput l5margin r5margin M20width" appearance="outline">
-                    <mat-select placeholder="Filter Type" [(ngModel)]="parameters">
-                        <mat-option *ngFor="let item of ParaArr" [value]="item.titvalue">
-                            {{item.Title}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field class="crminput l5margin r5margin M20width" appearance="outline">
-                    <mat-select placeholder="Operator's" [(ngModel)]="operators">
-                        <mat-option value="==">
-                            Equal to
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field class="l5margin r5margin M20width crminput" appearance="outline">
-                    <input type="string" matInput [(ngModel)]="searchvalue">
-                </mat-form-field>
-            </div>
-            <div class="dflex JCcenter">
-                <button class="viewbtn t10padding b10padding l30padding r30padding t10margin b15margin"
-                    (click)="ApplyFilter()">Apply Filter</button>
-            </div>
-            <table class="crmtable" mat-table [dataSource]="MerchantdataSource" matSort>
-                <ng-container matColumnDef="MerchantId">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Merchant ID</th>
-                    <td mat-cell *matCellDef="let row"> {{row.id}} </td>
-                </ng-container>
-                <ng-container matColumnDef="storename">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Store Name</th>
-                    <td mat-cell *matCellDef="let row"> {{row.name}} </td>
-                </ng-container>
-                <ng-container matColumnDef="contact">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Contact</th>
-                    <td mat-cell *matCellDef="let row">
-                        <div>{{row.phone}}</div>
-                        <div class="gray_txt xxs_size">{{row.email}}</div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="storetype">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Store Type</th>
-                    <td mat-cell *matCellDef="let row">
-                        <div *ngIf="row.type == 'Both' ">Hybrid</div>
-                        <div *ngIf="row.type == 'Onli' ">Online</div>
-                        <div *ngIf="row.type == 'Offl' ">Offline</div>
-                        <div class="gray_txt xxs_size">{{row.cat}}</div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="city">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading"> City </th>
-                    <td mat-cell *matCellDef="let row">{{row.loc[0].city}}</td>
-                </ng-container>
-                <ng-container matColumnDef="action">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading"> Action </th>
-                    <td mat-cell *matCellDef="let row" (click)="action(row)">
-                        <mat-icon>
-                            {{isstorealreadyadded ?'remove':'add_circle'}}
-                        </mat-icon>
-                    </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="marchantColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: marchantColumns;"></tr>
-                <tr class="mat-row" *matNoDataRow>
-                </tr>
-            </table>
+  </div>
+
+
+
+
+  <div class="lr55padding">
+    <div class="boldtext l_size b20margin t20margin">Second Row stores</div>
+    <div class="dflex M100width">
+      <div class="boxshw M100width">
+        <div class="dflex M100width tb15padding s_size">
+          <div class="regulartext M25width l10padding">Store name</div>
+          <div class="regulartext M25width c_align">Category</div>
+          <div class="regulartext M25width c_align"></div>
+          <div class="regulartext M25width c_align">Action</div>
         </div>
-    </div>
-    <div class="lr55padding">
-        <div class="boldtext l_size b20margin">First Row stores</div>
-        <div class="dflex M100width">
-            <div class="boxshw M100width">
-                <div class="dflex M100width tb15padding s_size">
-                    <div class="regulartext M25width l10padding">Store name</div>
-                    <div class="regulartext M25width c_align">Category</div>
-                    <div class="regulartext M25width c_align"></div>
-                    <div class="regulartext M25width c_align">Action</div>
-                </div>
-                <div>
-                    <div class="example-container M100width">
-                        <div class="example-list">
-                            <ng-container *ngFor="let item of HGmoduledata.First_Stores">
-                                <ng-container>
-                                    <div class="dflex tborder s_size tb15padding">
-                                        <div class="regulartext M25width l10padding">
-                                            {{item.name}}
-                                        </div>
-                                        <div class="regulartext M25width c_align">
-                                            {{item.cat}}
-                                        </div>
-                                        <div class="M25width c_align">
-                                            <a routerlink="/VSAcat">
-                                                <button mat-button class="viewbtn t5padding b5padding l30padding r30padding">
-                                                    Go to internal
-                                                </button>
-                                            </a>
-                                        </div>
-                                        <div class="regulartext M25width c_align">
-                                            <mat-icon>
-                                                edit
-                                            </mat-icon>
-                                            <mat-icon (click)="action(item,'1')">
-                                                delete
-                                            </mat-icon>
-                                        </div>
-                                    </div>
-                                </ng-container>
-                            </ng-container>
-                        </div>
+        <div>
+          <div class="example-container M100width">
+            <div class="example-list">
+              <ng-container *ngFor="let item of HGmoduledata.Second_Stores">
+                <ng-container>
+                  <div class="dflex tborder s_size tb15padding">
+                    <div class="regulartext M50width l10padding">
+                      {{item.name}}
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-    <div class="lr55padding">
-        <div class="boldtext l_size b20margin t20margin">Second Row stores</div>
-        <div class="dflex M100width">
-            <div class="boxshw M100width">
-                <div class="dflex M100width tb15padding s_size">
-                    <div class="regulartext M25width l10padding">Store name</div>
-                    <div class="regulartext M25width c_align">Category</div>
-                    <div class="regulartext M25width c_align"></div>
-                    <div class="regulartext M25width c_align">Action</div>
-                </div>
-                <div>
-                    <div class="example-container M100width">
-                        <div class="example-list">
-                            <ng-container *ngFor="let item of HGmoduledata.Second_Stores">
-                                <ng-container>
-                                    <div class="dflex tborder s_size tb15padding">
-                                        <div class="regulartext M25width l10padding">
-                                            {{item.name}}
-                                        </div>
-                                        <div class="regulartext M25width c_align">
-                                            {{item.cat}}
-                                        </div>
-                                        <div class="M25width c_align">
-                                            <a routerlink="/VSAcat">
-                                                <button mat-button class="viewbtn t5padding b5padding l30padding r30padding">
-                                                    Go to internal
-                                                </button>
-                                            </a>
-                                        </div>
-                                        <div class="regulartext M25width c_align">
-                                            <mat-icon>
-                                                edit
-                                            </mat-icon>
-                                            <mat-icon (click)="action(item,'2')">
-                                                delete
-                                            </mat-icon>
-                                        </div>
-                                    </div>
-                                </ng-container>
-                            </ng-container>
-                        </div>
+                    <div class="regulartext M25width c_align">
+                      {{item.cat}}
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-    <div class="lr55padding">
-        <div class="boldtext l_size b20margin t20margin">Third Row stores</div>
-        <div class="dflex M100width">
-            <div class="boxshw M100width">
-                <div class="dflex M100width tb15padding s_size">
-                    <div class="regulartext M25width l10padding">Store name</div>
-                    <div class="regulartext M25width c_align">Category</div>
-                    <div class="regulartext M25width c_align"></div>
-                    <div class="regulartext M25width c_align">Action</div>
-                </div>
-                <div>
-                    <div class="example-container M100width">
-                        <div class="example-list">
-                            <ng-container *ngFor="let item of HGmoduledata.third_Stores">
-                                <ng-container>
-                                    <div class="dflex tborder s_size tb15padding">
-                                        <div class="regulartext M25width l10padding">
-                                            {{item.name}}
-                                        </div>
-                                        <div class="regulartext M25width c_align">
-                                            {{item.cat}}
-                                        </div>
-                                        <div class="M25width c_align">
-                                            <a routerlink="/VSAcat">
-                                                <button mat-button class="viewbtn t5padding b5padding l30padding r30padding">
-                                                    Go to internal
-                                                </button>
-                                            </a>
-                                        </div>
-                                        <div class="regulartext M25width c_align">
-                                            <mat-icon routerLink="/addstore">
-                                                edit
-                                            </mat-icon>
-                                            <mat-icon class="l10padding" (click)="action(item,'3')">
-                                                delete
-                                            </mat-icon>
-                                        </div>
-                                    </div>
-                                </ng-container>
-                            </ng-container>
-                        </div>
+                    <div class="regulartext M25width c_align">
+                      <mat-icon>
+                        edit
+                      </mat-icon>
+                      <mat-icon (click)="action(item,'2')">
+                        delete
+                      </mat-icon>
                     </div>
-                </div>
+                  </div>
+                </ng-container>
+              </ng-container>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
+  <div class="lr55padding">
+    <div class="boldtext l_size b20margin t20margin">Third Row stores</div>
+    <div class="dflex M100width">
+      <div class="boxshw M100width">
+        <div class="dflex M100width tb15padding s_size">
+          <div class="regulartext M25width l10padding">Store name</div>
+          <div class="regulartext M25width c_align">Category</div>
+          <div class="regulartext M25width c_align"></div>
+          <div class="regulartext M25width c_align">Action</div>
+        </div>
+        <div>
+          <div class="example-container M100width">
+            <div class="example-list">
+              <ng-container *ngFor="let item of HGmoduledata.third_Stores">
+                <ng-container>
+                  <div class="dflex tborder s_size tb15padding">
+                    <div class="regulartext M50width l10padding">
+                      {{item.name}}
+                    </div>
+                    <div class="regulartext M25width c_align">
+                      {{item.cat}}
+                    </div>
+                    <div class="regulartext M25width c_align">
+                      <mat-icon routerLink="/addstore">
+                        edit
+                      </mat-icon>
+                      <mat-icon class="l10padding" (click)="action(item,'3')">
+                        delete
+                      </mat-icon>
+                    </div>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

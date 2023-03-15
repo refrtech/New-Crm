@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { take } from 'rxjs';
 import { ApiserviceService } from 'src/app/apiservice.service';
 
@@ -37,7 +38,7 @@ export class HomegrowbrandsComponent implements OnInit {
     "action"
   ];
   MerchantdataSource!: MatTableDataSource<any>;
-  constructor(public api: ApiserviceService) { }
+  constructor(public api: ApiserviceService, private router: Router) { }
 
   ngOnInit(): void {
     this.gethomegrowndata();
@@ -171,5 +172,9 @@ export class HomegrowbrandsComponent implements OnInit {
 
   rowchange(){
     this.MerchantdataSource = new MatTableDataSource();
+  }
+
+  navigatecat(){
+    this.router.navigateByUrl("HGBcatList");
   }
 }

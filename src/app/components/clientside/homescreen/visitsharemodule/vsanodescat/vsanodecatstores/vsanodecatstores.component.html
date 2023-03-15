@@ -41,7 +41,7 @@
     </div>
   </main>
   <div class="boldtext l_size t30margin b20margin">Apply Filter to search store</div>
-  <div class="Aborder A5radius A20padding b20margin ">
+  <div class="Aborder A5radius A20padding b20margin">
     <div class="dflex">
       <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
         <mat-select placeholder="Filter Type" [(ngModel)]="parameters">
@@ -135,10 +135,10 @@
               {{item.cat}}
             </div>
             <div class="M25width c_align dflex JCcenter">
-              <a (click)="deletestore(1,item.VSAid)" class="r20margin">
+              <a (click)="deletestore(1,item.sectionid)" class="r20margin">
                 <mat-icon class="black_text">delete</mat-icon>
               </a>
-              <a (click)="takePicture('peopleCstorebanner',item.VSAid)">
+              <a (click)="takePicture('peopleCstorebanner',item.sectionid)">
                 <mat-icon class="black_text">photo_camera</mat-icon>
               </a>
             </div>
@@ -208,7 +208,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading"> Action </th>
         <td mat-cell *matCellDef="let row">
           <mat-icon (click)="action(2,row)" *ngIf="isstorealreadyadded1 == false">
-            {{isstorealreadyadded ?'remove':'add_circle'}}
+            {{isstorealreadyadded1 ?'remove':'add_circle'}}
           </mat-icon>
         </td>
       </ng-container>
@@ -242,10 +242,10 @@
               {{item.cat}}
             </div>
             <div class="M25width c_align dflex JCcenter">
-              <a (click)="deletestore(2,item.VSAid)" class="r20margin">
+              <a (click)="deletestore(2,item.sectionid)" class="r20margin">
                 <mat-icon class="black_text">delete</mat-icon>
               </a>
-              <a (click)="takePicture('trendingstorebanner',item.VSAid)">
+              <a (click)="takePicture('trendingstorebanner',item.sectionid)">
                 <mat-icon class="black_text">photo_camera</mat-icon>
               </a>
             </div>

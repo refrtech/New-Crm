@@ -80,7 +80,6 @@ import { StoresinhoodComponent } from './components/clientside/homescreen/newsto
 import { VSAnodescatComponent } from './components/clientside/homescreen/visitsharemodule/vsanodescat/vsanodescat.component';
 import { VSAnodecatstoresComponent } from './components/clientside/homescreen/visitsharemodule/vsanodescat/vsanodecatstores/vsanodecatstores.component';
 import { VSAnodesubcatstoresComponent } from './components/clientside/homescreen/visitsharemodule/vsanodescat/vsanodecatstores/vsanodesubcatstores/vsanodesubcatstores.component';
-import { HbnodescatComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hbnodescat/hbnodescat.component';
 import { HgbcreatecategoryComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hgbcreatecategory/hgbcreatecategory.component';
 import { HgbnodecatstoresComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hgbnodecatstores/hgbnodecatstores.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
@@ -90,10 +89,12 @@ import { AuthService } from './auth.service';
 import { DependencyService } from './dependency.service';
 import { ThemeService } from './theme.service';
 import { take } from 'rxjs';
+import { HgbnodesubcatstoresComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hgbnodecatstores/hgbnodesubcatstores/hgbnodesubcatstores.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    HgbnodesubcatstoresComponent,
     TabsComponent,
     OrdersComponent,
     DashboardComponent,
@@ -139,7 +140,6 @@ import { take } from 'rxjs';
     VSAnodescatComponent,
     VSAnodecatstoresComponent,
     VSAnodesubcatstoresComponent,
-    HbnodescatComponent,
     HgbcreatecategoryComponent,
     HgbnodecatstoresComponent,
     WelcomeComponent,
