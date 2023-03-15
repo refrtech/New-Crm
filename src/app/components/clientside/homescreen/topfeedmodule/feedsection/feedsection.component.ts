@@ -40,12 +40,14 @@ export class FeedsectionComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public api: ApiserviceService,
     public auth: AuthService
-  ) {}
+  ) {
+    // console.log('popupedit', data);
+  }
 
   ngOnInit(): void {}
 
-  onSelectFile(event: any) {
-    const file = event.target.files && event.target.files[0];
+  async onSelectFile(event: any) {
+    const file = (await event.target.files) && event.target.files[0];
     if (file) {
       var reader = new FileReader();
       reader.readAsDataURL(file);
@@ -61,7 +63,7 @@ export class FeedsectionComponent implements OnInit {
         this.videoPath = res;
         (err: any) => {};
       });
-      let a: string = file.type.toString();
+      let a: string = await file.type.toString();
       this.format = a.substring(0, a.indexOf('/'));
 
       // if ( == 'video') {
@@ -72,6 +74,27 @@ export class FeedsectionComponent implements OnInit {
         this.url = (<FileReader>event.target).result;
       };
     }
+
+    // -------
+    const readerer = new FileReader();
+    readerer.onloadend = async () => {
+      const content = reader.result?.toString();
+      const mimeType = content?.split(',')[0].split(':')[1].split(';')[0];
+      if (mimeType === 'image/webp' || mimeType === 'image/png') {
+        console.log('This is an image file.');
+        this.auth.addInfoVideo(event).then((d) => {
+          console.log('image added', d);
+        });
+      } else if (mimeType === 'video/mp4' || mimeType === 'video/mpeg') {
+        console.log('This is a video file.');
+        this.auth.addInfoVideo(event).then((d) => {
+          console.log('video added', d);
+        });
+      } else {
+        console.log('This is not an image or video file.');
+      }
+    };
+    readerer.readAsDataURL(file);
   }
 
   addVideo() {
@@ -81,27 +104,14 @@ export class FeedsectionComponent implements OnInit {
       name: this.fileName,
       path: this.videoPath,
     };
+    this.auth.addVideo(datas).then((d) => {
+      console.log('d', d);
+    });
     console.log('datas', datas);
-
-    // this.auth.UploadVideo(datas).then((data) => {});
     this.dialogRef.close({ data: datas });
   }
 
   close() {
     this.dialogRef.close();
   }
-
-  // uploadFile(res: any) {
-  //   let datas = {
-  //     created_at: this.api.newTimestamp,
-  //     updated_at: this.api.newTimestamp,
-  //     name: this.fileName,
-  //     path: this.videoPath,
-  //   };
-  //   console.log('1');
-  //   this.auth.cloudVideoUpload(res).then((data) => {
-  //     console.log(data);
-  //   });
-  //   this.dialogRef.close();
-  // }
 }

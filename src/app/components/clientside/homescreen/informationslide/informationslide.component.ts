@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AddinfoslideComponent } from './addinfoslide/addinfoslide.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiserviceService } from 'src/app/apiservice.service';
+import { AuthService } from 'src/app/auth.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-informationslide',
@@ -13,14 +15,14 @@ export class InformationslideComponent implements OnInit {
   currentSlide: any[] = [];
   getVideoData: any;
   id: string = '';
-  videoData: string = '';
+  videoData: any;
   videoPath: string = '';
 
-  constructor(private dailog: MatDialog, public api: ApiserviceService) {}
-
-  ngOnInit(): void {
+  constructor(private dailog: MatDialog, public auth: AuthService) {
     this.getVideo();
   }
+
+  ngOnInit(): void {}
 
   addSlide(id: number, data?: any) {
     const dialogRef = this.dailog.open(AddinfoslideComponent, {
@@ -32,9 +34,9 @@ export class InformationslideComponent implements OnInit {
     });
   }
 
-  getVideo() {
-    this.api.infogetuploadVideo().subscribe((data: any) => {
-      this.getVideoData = data;
+  async getVideo() {
+    (await this.auth.getInfoVideos()).subscribe((d) => {
+      this.getVideoData = d;
     });
   }
 
@@ -42,19 +44,9 @@ export class InformationslideComponent implements OnInit {
     if (id == undefined) {
       alert('invalid data');
     } else {
-      this.api.infodeleteVideo(id).then((data: any) => {
-        alert('area deleted');
+      this.auth.infodeleteVideo(id).then((data: any) => {
+        alert('deleted');
       });
     }
-  }
-
-  view(data?: any) {
-    const dialogRef = this.dailog.open(AddinfoslideComponent, {
-      width: '50%',
-      data: { videoData: data },
-      hasBackdrop: true,
-      disableClose: false,
-      panelClass: 'thanksscreen',
-    });
   }
 }

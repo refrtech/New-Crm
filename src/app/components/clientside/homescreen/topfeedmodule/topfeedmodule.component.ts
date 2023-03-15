@@ -9,6 +9,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ApiserviceService } from 'src/app/apiservice.service';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/auth.service';
+import { Observable, of, take } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-topfeedmodule',
@@ -21,15 +23,17 @@ export class TopfeedmoduleComponent implements OnInit {
   getVideoData: any;
   id: string = '';
   videoData: any = '';
+  url: any;
   //
 
   constructor(
     private dailog: MatDialog,
     public api: ApiserviceService,
     private http: HttpClient,
-    public auth: AuthService
+    public auth: AuthService,
+    private sanitizer: DomSanitizer
   ) {
-    // this.getVideo();
+    this.getVideo(this.id);
   }
 
   ngOnInit(): void {}
@@ -44,40 +48,29 @@ export class TopfeedmoduleComponent implements OnInit {
     });
   }
 
-  drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    }
-  }
-
-  // getVideo() {
-  //   this.api.getuploadVideo().subscribe((data: any) => {
-  //     this.getVideoData = data;
-  //   });
-  // }
-
   deleteVid(id: any) {
     if (id == undefined) {
       alert('invalid data');
     } else {
-      this.api.deleteVideo(id).then((data: any) => {
-        alert('area deleted');
+      this.auth.deleteVideo(id).then((data: any) => {
+        alert('deleted');
       });
     }
   }
 
-  // getVideo() {
-  //   const url = 'http://localhost:3000/upload-video';
-  // }
+  async getVideo(id: any) {
+    (await this.auth.getFeedVideos()).subscribe((d) => {
+      this.getVideoData = d;
+      console.log('dasdas', d);
+    });
+  }
+
+  openUrl(id: any) {
+    console.log('clicked url');
+
+    this.auth.addVideo(this.url).then((ref) => {
+      this.url = id;
+      console.log(this.url, 'refff');
+    });
+  }
 }

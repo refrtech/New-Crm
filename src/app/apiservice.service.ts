@@ -1269,22 +1269,6 @@ export class ApiserviceService {
     return updateDoc(cityrefr, { Nodes: nodes });
   }
 
-  getuploadVideo() {
-    const getuploadVideo: CollectionReference = collection(
-      this.firestore,
-      `${'Top_Feed'}`
-    );
-    const qu = query(getuploadVideo);
-    return collectionData(qu);
-  }
-
-  deleteVideo(id: any) {
-    const vidRef = doc(this.firestore, 'Top_Feed', `${id}`);
-    return deleteDoc(vidRef);
-  }
-
-  // top feed video end
-
   // info slide start
 
   async infoUploadVideo(data: any) {
@@ -1297,22 +1281,6 @@ export class ApiserviceService {
       }
     );
   }
-
-  infogetuploadVideo() {
-    const getuploadVideo: CollectionReference = collection(
-      this.firestore,
-      `${'info_slide'}`
-    );
-    const qu = query(getuploadVideo);
-    return collectionData(qu);
-  }
-
-  infodeleteVideo(id: any) {
-    const vidRef = doc(this.firestore, 'info_slide', `${id}`);
-    return deleteDoc(vidRef);
-  }
-
-  // info slide end
 
   // homeCloudUpload(idX: string, base64String: string) {
   //   const imgID = idX + Date.now();

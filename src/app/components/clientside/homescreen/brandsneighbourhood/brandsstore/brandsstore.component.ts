@@ -9,45 +9,50 @@ import { ApiserviceService } from 'src/app/apiservice.service';
 import { AuthService } from 'src/app/auth.service';
 import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component';
 
-
 @Component({
   selector: 'app-brandsstore',
   templateUrl: './brandsstore.component.html',
   styleUrls: ['./brandsstore.component.scss'],
 })
 export class BrandsstoreComponent implements OnInit {
-  parameters: string = "phone";
-  operators: string = "==";
-  searchvalue: string = "9833006431";//9833006431
+  parameters: string = 'phone';
+  operators: string = '==';
+  searchvalue: string = '9833006431'; //9833006431
   isstorealreadyadded: boolean = false;
 
   ParaArr: Array<any> = [
     {
-      Title: "Store Phone Number", titvalue: "phone",
+      Title: 'Store Phone Number',
+      titvalue: 'phone',
     },
     {
-      Title: "Store Id", titvalue: "id",
-    }
+      Title: 'Store Id',
+      titvalue: 'id',
+    },
   ];
 
   marchantColumns: string[] = [
-    "MerchantId",
-    "storename",
-    "contact",
-    "storetype",
-    "city",
-    "action"
+    'MerchantId',
+    'storename',
+    'contact',
+    'storetype',
+    'city',
+    'action',
   ];
   storelist: Array<any> = [];
   MerchantdataSource!: MatTableDataSource<any>;
 
-  constructor(public router: Router,
+  constructor(
+    public router: Router,
     public api: ApiserviceService,
     public dialogRef: MatDialogRef<BrandsstoreComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public auth: AuthService,) {
-    this.storelist = this.data.selectednode != undefined ? this.data.selectednode.stores : [];
-    }
+    public auth: AuthService
+  ) {
+    this.storelist =
+      this.data.selectednode != undefined ? this.data.selectednode.stores : [];
+    console.log('this.storelist', this.storelist);
+  }
 
   ngOnInit(): void {}
 
@@ -56,8 +61,7 @@ export class BrandsstoreComponent implements OnInit {
     if (i < 0) {
       this.storelist.push(data);
       this.isstorealreadyadded = true;
-    }
-    else {
+    } else {
       this.storelist.splice(i, i + 1);
       this.isstorealreadyadded = false;
     }
@@ -69,10 +73,22 @@ export class BrandsstoreComponent implements OnInit {
 
   ApplyFilter() {
     this.isstorealreadyadded = false;
-    this.api.getRecentStores(1, false, this.parameters, this.operators, this.searchvalue).pipe(take(1)).subscribe((recentStore: any) => {
-      this.MerchantdataSource = new MatTableDataSource(recentStore);
-      this.isstorealreadyadded = this.storelist.findIndex((x) => x.id == recentStore[0].id) < 0 ? false : true;
-    });
+    this.api
+      .getRecentStores(
+        1,
+        false,
+        this.parameters,
+        this.operators,
+        this.searchvalue
+      )
+      .pipe(take(1))
+      .subscribe((recentStore: any) => {
+        this.MerchantdataSource = new MatTableDataSource(recentStore);
+        this.isstorealreadyadded =
+          this.storelist.findIndex((x) => x.id == recentStore[0].id) < 0
+            ? false
+            : true;
+      });
   }
 
   updatestore() {
@@ -86,24 +102,26 @@ export class BrandsstoreComponent implements OnInit {
         name: this.data.node.name,
         stores: this.storelist,
         updated_at: this.data.node.updated_at,
-      }
+      };
       this.api.addBIYNstores(data, this.data.id).then((data: any) => {
         if (!data) {
           this.dialogRef.close();
         }
       });
-    }
-    else {
-      let index = this.data.creatednodes.findIndex((x: any) => x.id == this.data.selectednode.id);
+    } else {
+      let index = this.data.creatednodes.findIndex(
+        (x: any) => x.id == this.data.selectednode.id
+      );
       this.data.creatednodes[index].stores = this.storelist;
-      this.api.editBIYNstores(this.data.creatednodes, this.data.id).then((data: any) => {
-        if (!data) {
-          this.dialogRef.close();
-        }
-      });
+      this.api
+        .editBIYNstores(this.data.creatednodes, this.data.id)
+        .then((data: any) => {
+          if (!data) {
+            this.dialogRef.close();
+          }
+        });
     }
   }
-
 
   async takePicture(type: string, index: number, item: any) {
     const image = await Camera.getPhoto({
@@ -116,11 +134,10 @@ export class BrandsstoreComponent implements OnInit {
     const imageUrl = image.webPath || '';
     if (imageUrl) {
       this.startCropper(imageUrl, type, index, item);
-    } else {
     }
   }
 
-  async startCropper(webPath: string, type: string, index: number, item: any) {
+  async startCropper(webPath: string, type: string, sindex: number, item: any) {
     let isPhone = this.auth.resource.getWidth < 768;
     let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
     const refDialog = this.auth.resource.dialog.open(CropperComponent, {
@@ -135,15 +152,31 @@ export class BrandsstoreComponent implements OnInit {
     refDialog.afterClosed().subscribe(async (result) => {
       if (!result.success) {
         if (result.info) {
-          this.auth.resource.startSnackBar(result.info)
+          this.auth.resource.startSnackBar(result.info);
         }
       } else {
         if (type == 'banner') {
-          let index = this.data.creatednodes.findIndex((x: any) => x.id == this.data.selectednode.id);
-          const cloudUpload = await this.api.cloudUpload(this.data.creatednodes[index].stores[index].id, result.croppedImage);
+          console.log('this.data', this.data);
+          console.log('11111');
+
+          let index = this.data.creatednodes.findIndex(
+            (x: any) => x.id == this.data.selectednode.id
+          );
+          console.log('index', index);
+
+          const cloudUpload = await this.api
+            .cloudUpload(
+              this.data.creatednodes[index].stores[sindex].id,
+              result.croppedImage
+            )
+            .then((data) => {
+              console.log('ads', this.data.creatednodes[index].stores[sindex]);
+              this.data.creatednodes[index].stores[sindex].homeBanners =
+                data.url;
+              console.log('cloud data', data);
+            });
         }
       }
     });
   }
-
 }

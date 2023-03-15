@@ -41,18 +41,18 @@
         <span class="divide"></span>
         <div>
             <input class="b10margin d_none" #hiddenfileinput type="file" (change)="onSelectFile($event)">
-            <a class="text_decoration_none r20margin purple_txt semiboldtext cursor_pointer">{{"Update"}}</a>
+            <!-- <a class="text_decoration_none r20margin purple_txt semiboldtext cursor_pointer">{{"Update"}}</a> -->
         </div>
-        <div>
+        <!-- <div>
             <a class="text_decoration_none r20margin purple_txt semiboldtext cursor_pointer">Preview</a>
         </div>
         <div>
             <mat-icon class="r20margin cursor_pointer">
                 delete
             </mat-icon>
-        </div>
+        </div> -->
     </div>
-    <div>
+    <!-- <div>
         <div class="t20margin b15margin">
             <div class="s_size semiboldtext crminput r15padding AScenter">URL path <span>(optional)</span>
             </div>
@@ -62,7 +62,7 @@
                 <input type="number" matInput placeholder="Enter the URL path">
             </mat-form-field>
         </div>
-    </div>
+    </div> -->
     <div>
         <button (click)="addVideo()" mat-button
             class="s_size normallineheight purple_background White_txt browse t50margin">Save</button>
