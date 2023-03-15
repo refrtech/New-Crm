@@ -1555,6 +1555,8 @@ export class AuthService {
   async addInfoVideo(data: any) {
     await addDoc(collection(this.firestore, `${'info_slide'}`), data).then(
       (ref) => {
+        console.log('data', data);
+
         const vid = doc(this.firestore, `${'info_slide'}`, `${ref.id}`);
         return updateDoc(vid, { id: ref.id }).then(() => {
           return ref;
