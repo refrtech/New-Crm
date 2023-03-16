@@ -66,7 +66,7 @@
         Apply Filter
       </button>
     </div>
-    <table class="crmtable" mat-table [dataSource]="MerchantdataSource" matSort>
+    <table *ngIf="MerchantdataSource" class="crmtable" mat-table [dataSource]="MerchantdataSource" matSort>
       <ng-container matColumnDef="MerchantId">
         <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Merchant ID</th>
         <td mat-cell *matCellDef="let row"> {{row.id}} </td>
@@ -114,7 +114,7 @@
   <div class="boldtext m_size t20margin">
     People choice stores
   </div>
-  <div class="t15margin boxshw">
+  <div *ngIf="PChoiceStores.length > 0" class="t15margin boxshw">
     <div class="dflex JCevenly M100width tb15padding s_size">
       <div class="M10width c_align">Rank</div>
       <div class="regulartext M40width">Store Name</div>
@@ -173,7 +173,7 @@
         Apply Filter
       </button>
     </div>
-    <table class="crmtable" mat-table [dataSource]="MerchantdataSource1" matSort>
+    <table *ngIf="MerchantdataSource1" class="crmtable" mat-table [dataSource]="MerchantdataSource1" matSort>
       <ng-container matColumnDef="MerchantId">
         <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Merchant ID</th>
         <td mat-cell *matCellDef="let row"> {{row.id}} </td>
@@ -221,7 +221,7 @@
   <div class="boldtext m_size t20margin">
     Trending stores
   </div>
-  <div class="t15margin boxshw">
+  <div *ngIf="trendingStores.length > 0" class="t15margin boxshw">
     <div class="dflex JCevenly M100width tb15padding s_size">
       <div class="M10width c_align">Rank</div>
       <div class="regulartext M40width">Store Name</div>

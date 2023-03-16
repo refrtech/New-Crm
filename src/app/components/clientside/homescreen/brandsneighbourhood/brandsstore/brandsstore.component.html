@@ -39,7 +39,7 @@
                     Apply Filter
                 </button>
             </div>
-            <table class="crmtable" mat-table [dataSource]="MerchantdataSource" matSort>
+            <table *ngIf="MerchantdataSource" class="crmtable" mat-table [dataSource]="MerchantdataSource" matSort>
                 <ng-container matColumnDef="MerchantId">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Merchant ID</th>
                     <td mat-cell *matCellDef="let row"> {{row.id}} </td>
