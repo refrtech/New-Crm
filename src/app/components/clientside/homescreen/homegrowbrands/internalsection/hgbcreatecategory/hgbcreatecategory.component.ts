@@ -11,7 +11,6 @@ import { AuthService } from 'src/app/auth.service';
 export class HgbcreatecategoryComponent implements OnInit {
   storeBanner = '';
   constructor( public auth : AuthService) {
-    console.log(this.auth.resource.categoryList);
    }
 
   ngOnInit(): void {

@@ -23,7 +23,6 @@ export class VSAnodescatComponent implements OnInit {
     private api: ApiserviceService,
     private actRoute: ActivatedRoute
   ) {
-    console.log(this.auth.resource.categoryList);
   }
 
   ngOnInit(): void {

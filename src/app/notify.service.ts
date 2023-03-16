@@ -6,8 +6,8 @@ import { BehaviorSubject, Subject } from 'rxjs';
 //import { AngularFireMessaging } from '@angular/fire/compat/messaging';
 import { take } from 'rxjs/operators';
 
-import { 
-  Messaging, onMessage, getMessaging, 
+import {
+  Messaging, onMessage, getMessaging,
   getToken, deleteToken, GetTokenOptions
 } from '@angular/fire/messaging';
 
@@ -33,7 +33,7 @@ export class NotifyService {
       //   _messaging.onMessage = _messaging.onMessage.bind(_messaging);
       //   _messaging.onTokenRefresh = _messaging.onTokenRefresh.bind(_messaging);
       // })
-      
+
     }
 
     listen() {
@@ -44,30 +44,24 @@ export class NotifyService {
           // ...
         } else {
           // Show permission request UI
-          console.log('No registration token available. Request permission to generate one.');
           // ...
         }
       }).catch((err) => {
-        console.log('An error occurred while retrieving token. ', err);
         // ...
       });
 
-      // this.angularFireMessaging.messages.subscribe((message) => { 
-      //   console.log(message); 
+      // this.angularFireMessaging.messages.subscribe((message) => {
       // });
     }
 
     requestPermission() {
       // this.angularFireMessaging.requestToken.subscribe((token) => {
-      //   console.log(token);
       // },(err) => {
-      //   console.error('Unable to get permission to notify.', err);
       // });
     }
 
     receiveMessage() {
       // this.angularFireMessaging.messages.subscribe((payload) => {
-      // console.log("new message received. ", payload);
       // this.currentMessage.next(payload);
       // })
     }
@@ -75,9 +69,7 @@ export class NotifyService {
   // Listen for token refresh
   monitorRefresh(user:any) {
     // this.angularFireMessaging.tokenChanges.subscribe(token => {
-    //   console.log('Token refreshed.', token);
     //   // this.messaging.getToken.pipe(take(1)).subscribe(token => {
-    //   //   console.log('older token',token)
     //      this.saveToken(user, token)
     //   // })
     // });
@@ -86,7 +78,6 @@ export class NotifyService {
   // save the permission token in firestore
   private saveToken(user:any, token:any): void {
     // const currentTokens = user.fcmTokens || { }
-    // console.log(currentTokens, token)
 
     // // If token does not exist in firestore, update db
     // if (!currentTokens[token]) {
@@ -100,13 +91,11 @@ export class NotifyService {
       return this.afM;
     }
 
-  
+
   // get permission to send messages
   getPermission(user:any) {
     this.messaging.requestPermission.pipe(take(1)).subscribe(() => {
-      console.log('Notification permission granted.');
       this.messaging.getToken.pipe(take(1)).subscribe(token => {
-        console.log('created new token',token)
         this.saveToken(user, token)
       })
     })
@@ -116,9 +105,7 @@ export class NotifyService {
   // Listen for token refresh
   monitorRefresh(user:any) {
     this.messaging.onTokenRefresh(() => {
-      console.log('Token refreshed.');
       this.messaging.getToken.pipe(take(1)).subscribe(token => {
-        console.log('older token',token)
         this.saveToken(user, token)
       })
     });
@@ -127,7 +114,6 @@ export class NotifyService {
   // used to show message when app is open
   receiveMessages() {
     this.messaging.onMessage(payload => {
-     console.log('Message received. ', payload);
      this.messageSource.next(payload)
    });
   }
@@ -135,7 +121,6 @@ export class NotifyService {
   // save the permission token in firestore
   private saveToken(user:any, token:any): void {
       const currentTokens = user.fcmTokens || { }
-      //console.log(currentTokens, token)
 
       // If token does not exist in firestore, update db
       if (!currentTokens[token]) {

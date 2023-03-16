@@ -12,7 +12,8 @@
     <div class="JCspace dflex">
       <div class="boldtext l_size b10margin">Store banner</div>
       <div>
-        <button class="viewbtn t10padding b10padding l30padding r30padding t10margin b15margin" (click)="gotointernal()">
+        <button class="viewbtn t10padding b10padding l30padding r30padding t10margin b15margin"
+          (click)="gotointernal()">
           Internal Section
         </button>
       </div>
@@ -40,8 +41,8 @@
       </div>
     </div>
   </main>
-  <div class="boldtext l_size t30margin b20margin">Apply Filter to search store</div>
   <div class="Aborder A5radius A20padding b20margin">
+    <div class="boldtext l_size t30margin b20margin">Apply Filter to search store</div>
     <div class="dflex">
       <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
         <mat-select placeholder="Filter Type" [(ngModel)]="parameters">
@@ -99,7 +100,7 @@
       </ng-container>
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading"> Action </th>
-        <td mat-cell *matCellDef="let row" >
+        <td mat-cell *matCellDef="let row">
           <mat-icon (click)="action(1,row)" *ngIf="isstorealreadyadded == false">
             {{isstorealreadyadded ?'remove':'add_circle'}}
           </mat-icon>
@@ -147,8 +148,8 @@
       </div>
     </div>
   </div>
-  <div class="boldtext l_size t30margin b20margin">Apply Filter to search store</div>
-  <div class="Aborder A5radius A20padding b20margin ">
+  <div class="Aborder A5radius A20padding b20margin">
+    <div class="boldtext l_size t30margin b20margin">Apply Filter to search store</div>
     <div class="dflex">
       <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
         <mat-select placeholder="Filter Type" [(ngModel)]="parameters1">

@@ -36,7 +36,6 @@ export class VisitsharemoduleComponent implements OnInit {
 
   getvsadata() {
     this.api.getVSAData().pipe(take(1)).subscribe((VSAdata: any) => {
-      console.log(VSAdata);
       this.VSAmoduledata = VSAdata[0];
       this.VSATitle = VSAdata[0].VSA_Title;
       this.VSASTitle = VSAdata[0].VSA_STitle;
@@ -46,7 +45,6 @@ export class VisitsharemoduleComponent implements OnInit {
 
   getallcity() {
     this.cityList$ = this.api.getcity().pipe(take(1));
-    console.log(this.api.getcity().pipe(take(1)));
   }
 
   allstores(creatednode?: any) {
@@ -124,7 +122,6 @@ export class VisitsharemoduleComponent implements OnInit {
       }
     }
   }
-
 
   navigatetointernal(item:any){
     this.router.navigateByUrl('/VSAcat/'+item.id);

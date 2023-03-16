@@ -61,16 +61,12 @@ export class TopfeedmoduleComponent implements OnInit {
   async getVideo(id: any) {
     (await this.auth.getFeedVideos()).subscribe((d) => {
       this.getVideoData = d;
-      console.log('dasdas', d);
     });
   }
 
   openUrl(id: any) {
-    console.log('clicked url');
-
     this.auth.addVideo(this.url).then((ref) => {
       this.url = id;
-      console.log(this.url, 'refff');
     });
   }
 }

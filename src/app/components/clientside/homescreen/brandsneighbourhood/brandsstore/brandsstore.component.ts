@@ -51,7 +51,6 @@ export class BrandsstoreComponent implements OnInit {
   ) {
     this.storelist =
       this.data.selectednode != undefined ? this.data.selectednode.stores : [];
-    console.log('this.storelist', this.storelist);
   }
 
   ngOnInit(): void {}
@@ -156,13 +155,10 @@ export class BrandsstoreComponent implements OnInit {
         }
       } else {
         if (type == 'banner') {
-          console.log('this.data', this.data);
-          console.log('11111');
 
           let index = this.data.creatednodes.findIndex(
             (x: any) => x.id == this.data.selectednode.id
           );
-          console.log('index', index);
 
           const cloudUpload = await this.api
             .cloudUpload(
@@ -170,10 +166,8 @@ export class BrandsstoreComponent implements OnInit {
               result.croppedImage
             )
             .then((data) => {
-              console.log('ads', this.data.creatednodes[index].stores[sindex]);
               this.data.creatednodes[index].stores[sindex].homeBanners =
                 data.url;
-              console.log('cloud data', data);
             });
         }
       }

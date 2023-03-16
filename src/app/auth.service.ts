@@ -98,7 +98,6 @@ export class AuthService {
   }
 
   setupReCapca() {
-    console.log('!11111111');
 
     //this.afAuth.settings.appVerificationDisabledForTesting = true;
 
@@ -110,7 +109,6 @@ export class AuthService {
       { size: 'invisible' },
       this.afAuth
     );
-    console.log('!11111111');
 
     // new RecaptchaVerifier(/*'sign-in-button', {
     //   'size': 'invisible',
@@ -1444,14 +1442,11 @@ export class AuthService {
 
   async addStoreBanners(id: string, banner: string) {
     const newTimestamp = this.getServerTimestamp();
-    console.log('1234567890');
-
     const userRef = doc(
       this.firestore,
       `${this.resource.env.db.shops}`,
       `${id}`
     );
-    console.log('123', userRef);
 
     const cloudUpload = await this.cloudUpload(id, banner);
     if (!cloudUpload.success) {
@@ -1497,8 +1492,6 @@ export class AuthService {
   // --
 
   // async videoUpload(id: string, banner: string) {
-  //   console.log('123456');
-  //   console.log('id', id);
 
   //   const newTimestamp = this.getServerTimestamp();
   //   const userRef = doc(
@@ -1506,10 +1499,9 @@ export class AuthService {
   //     `${this.resource.env.db.shops}`,
   //     `${id}`
   //   );
-  //   console.log('09876543');
 
   //   const cloudUpload = await this.videoUploadF(id, banner);
-  //   console.log('cloudupload url', cloudUpload.url);
+
 
   //   if (!cloudUpload.success) {
   //     return cloudUpload;
@@ -1555,8 +1547,6 @@ export class AuthService {
   async addInfoVideo(data: any) {
     await addDoc(collection(this.firestore, `${'info_slide'}`), data).then(
       (ref) => {
-        console.log('data', data);
-
         const vid = doc(this.firestore, `${'info_slide'}`, `${ref.id}`);
         return updateDoc(vid, { id: ref.id }).then(() => {
           return ref;

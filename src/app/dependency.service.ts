@@ -21,7 +21,6 @@ export class DependencyService {
     const body = {
       phone, mes
     }
-      console.log("send Sms")
       return this.httpClient.post(`${environment.server}/api/SMS/sendSMS/${ iso }`, body);
   }
 
@@ -29,15 +28,13 @@ export class DependencyService {
     const body = {
       email, mes
     }
-      console.log("send email")
       return this.httpClient.post(`${environment.server}/api/SES/sendSES/${ iso }`, body);
   }
-  
+
   sendSNS(iso:string, token:string, mes:string){
     const body = {
       token, mes
     }
-      console.log("send notification")
       return this.httpClient.post(`${environment.server}/api/SNS/sendSNS/${ iso }`, body);
   }
 
@@ -45,7 +42,6 @@ export class DependencyService {
     const body = {
       lat, lon
     }
-      console.log("get Location")
       return this.httpClient.post(`${environment.server}/api/locate/about/${ iso }`, body);
   }
 

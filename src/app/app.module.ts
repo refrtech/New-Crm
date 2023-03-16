@@ -216,7 +216,6 @@ export class AppModule {
       .then((res) => {
         if (!res) {
           this.showWarn = true;
-          console.log('No Internet...');
           this.auth.resource.startSnackBar('No Internet...');
         } else {
           //this.showWarn = true;
@@ -233,7 +232,6 @@ export class AppModule {
         }
       })
       .catch((err) => {
-        console.log('No Internet...');
         this.auth.resource.startSnackBar('No Internet: ' + err);
       });
   }
@@ -275,14 +273,10 @@ export class AppModule {
           this.auth.resource.foreignMarks = getStateRes.markets;
           this.auth.resource.merchandiseList = getStateRes.merchandise;
           this.auth.resource.campaignPlans = getStateRes.campaignPlans;
-          console.log('category1');
-
           this.auth
             .getCategoryList()
             .pipe(take(1))
             .subscribe((cat) => {
-              console.log('category');
-              console.log(cat);
               this.auth.resource.categoryList = cat;
             });
         }

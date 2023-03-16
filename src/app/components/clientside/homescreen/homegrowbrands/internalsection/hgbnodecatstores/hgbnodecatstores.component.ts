@@ -23,6 +23,9 @@ export class HgbnodecatstoresComponent implements OnInit {
   Catthumbnail = '';
   Catbanner = '';
   HGBdata: any;
+
+  editpeoplechoice:boolean = false;
+
   parameters: string = 'phone';
   parameters1: string = 'phone';
 
@@ -59,6 +62,9 @@ export class HgbnodecatstoresComponent implements OnInit {
       titvalue: 'id',
     },
   ];
+
+  peoplechoicecatpara:string="";
+
   marchantColumns: string[] = [
     'MerchantId',
     'storename',
@@ -152,8 +158,6 @@ export class HgbnodecatstoresComponent implements OnInit {
       this.api.addstoretoPeoplechoice(Data).then((data: any) => {
         this.isstorealreadyadded = true;
         this.PChoiceStores.push(Data);
-        console.log(this.PChoiceStores);
-        console.log('Store has been added in People choice section.');
       });
     } else {
       Data.catId = this.actRoute.snapshot.params['catid'];
@@ -162,15 +166,11 @@ export class HgbnodecatstoresComponent implements OnInit {
       this.api.addstoretoTrendingStore(Data).then((data: any) => {
         this.isstorealreadyadded1 = true;
         this.trendingStores.push(Data);
-        console.log(this.trendingStores);
-        console.log('Store has been added in trending section.');
       });
     }
   }
 
   deletestore(i: number, id: string) {
-    console.log(i);
-    console.log(id);
     if (i == 1) {
       this.api.deletestorefrompeopleStore(id).then((data: any) => {
         this.MerchantdataSource = new MatTableDataSource();
@@ -199,14 +199,13 @@ export class HgbnodecatstoresComponent implements OnInit {
   gethomegrowndata() {
     this.api.gethomegrowndata().subscribe((data: any) => {
       this.HGBdata = data[0];
-      console.log(data);
-      console.log(data[0].Categories);
       let i = data[0].Categories.findIndex(
         (x: any) => x.id == this.actRoute.snapshot.params['catid']
       );
       this.selectedcat = this.auth.resource.categoryList[i].title;
       this.Catthumbnail = data[0].Categories[i].Thumbnail;
       this.Catbanner = data[0].Categories[i].catbanner;
+      this.peoplechoicecatpara = data[0].Categories[i].peoplechoicecatpara
     });
   }
 
@@ -292,4 +291,30 @@ export class HgbnodecatstoresComponent implements OnInit {
       }
     });
   }
+
+  updatepeoplechoice() {
+    let index = this.HGBdata.Categories.findIndex((x:any)=>x.id == this.actRoute.snapshot.params['catid'])
+    if (!this.editpeoplechoice) {
+      this.editpeoplechoice = !this.editpeoplechoice;
+    }
+    else if (this.peoplechoicecatpara == this.HGBdata.Categories[index].peoplechoicecatpara) {
+      this.editpeoplechoice = !this.editpeoplechoice;
+    }
+    else {
+      if (this.peoplechoicecatpara == "") {
+        alert("please enter the People choice.");
+      }
+      else {
+        this.HGBdata.Categories[index].peoplechoicecatpara = this.peoplechoicecatpara
+        this.api.updatepeoplechoicepara(this.HGBdata.id, this.HGBdata.Categories).then((data) => {
+          if (data != undefined) {
+            this.editpeoplechoice = !this.editpeoplechoice;
+          }
+        }).catch(() => {
+          return false;
+        });
+      }
+    }
+  }
+
 }

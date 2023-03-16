@@ -529,8 +529,6 @@ export class MasterService {
       `${this.auth.resource.env.db.hypes}`
     );
     return addDoc(hypeRefC, dataSend).then((ref) => {
-      console.log('DONE', ref.id);
-
       const cB = data.type == 'flat' ? data.cbNew : data.max;
       const userRef = doc(
         this.firestore,
@@ -546,8 +544,6 @@ export class MasterService {
       return updateDoc(userRef, { storeCam: arrayUnion(ref.id), cashback: cB })
         .then(() => {
           return updateDoc(shopRef, { cashback: cB }).then(() => {
-            console.log('DONE2');
-
             const hypeRef = doc(
               this.firestore,
               `${this.auth.resource.env.db.hypes}`,
@@ -555,19 +551,16 @@ export class MasterService {
             );
             return updateDoc(hypeRef, { id: ref.id })
               .then(() => {
-                //console.log("DONE2", ref.id)
                 return ref;
               })
               .catch((err) => {
                 // HANDLE ISSUE
-                console.log('DONE3', err);
                 return err;
               });
           });
         })
         .catch((err) => {
           // HANDLE ISSUE
-          console.log('DONE1', err);
           return err;
         });
     });
@@ -659,8 +652,6 @@ export class MasterService {
   }
 
   async updateStoreGST(id: string) {
-    console.log('GST UPDATED         sdadd       -----------' + id);
-
     const newTimestamp = this.getServerTimestamp();
     const userRef = doc(
       this.firestore,
@@ -717,14 +708,11 @@ export class MasterService {
     const bannerRef = ref(this.fireStorage, 'store/' + imgID);
     return uploadString(bannerRef, base64String.split(',')[1], 'base64')
       .then((snapshot) => {
-        console.log('Uploaded a base64 string!', snapshot);
         return getDownloadURL(bannerRef).then((dlURL) => {
-          console.log('getDownloadURL', dlURL);
           return { success: true, url: dlURL };
         });
       })
       .catch((err) => {
-        console.log('Uploaded a base64 string! Fail', err);
         return { success: false, url: '' };
       });
   }
@@ -896,7 +884,6 @@ export class MasterService {
       by: data.by,
       sid: data.storeID,
     };
-    console.log('dataSend', dataSend);
     const thingsRefC = collection(
       this.firestore,
       `${this.auth.resource.env.db.things}`
@@ -1036,14 +1023,11 @@ export class MasterService {
 
     return uploadString(bannerRef, base64String.split(',')[1], 'base64')
       .then((snapshot) => {
-        console.log('Uploaded a base64 string!', snapshot);
         return getDownloadURL(bannerRef).then((dlURL) => {
-          console.log('getDownloadURL', dlURL);
           return { success: true, url: dlURL };
         });
       })
       .catch((err) => {
-        console.log('Uploaded a base64 string! Fail', err);
         return { success: false, url: '' };
       });
   }
@@ -1087,7 +1071,7 @@ export class MasterService {
 }
 /*
   if(banners.length == 0){
-        
+
     return updateDoc(thingsRef, {
       title:data.productName, description:data.description, //banners:[],
       price:data.price, cost:data.cost,

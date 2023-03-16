@@ -44,17 +44,9 @@ export class SignComponent implements OnInit {
   }
 
   setContactNumber() {
-    console.log(this.phoneNumFull);
-    // if(!know){
-    //   this.phoneNumber.area = "";
-    //   this.phoneNumber.prefix = "";
-    //   this.phoneNumber.line = "";
-    // }else{
     this.phoneNumber.area = this.phoneNumFull.slice(0, 3);
     this.phoneNumber.prefix = this.phoneNumFull.slice(3, 6);
     this.phoneNumber.line = this.phoneNumFull.slice(6, this.phoneNumber.digits);
-
-    //}
   }
 
   step0() {
@@ -71,9 +63,7 @@ export class SignComponent implements OnInit {
       const phone = this.phoneNumber.e164;
       const step0_CheckUserExist = this.auth.step0_userForward(phone, false);
       step0_CheckUserExist.then((data: any) => {
-        console.log('Mega', data);
         if (!data.success) {
-          //console.log("Dip Err")
           this.finalRESULT(data);
         } else {
           if (!data.exist) {
@@ -81,7 +71,7 @@ export class SignComponent implements OnInit {
             this.auth.resource.startSnackBar('No such account exists.');
             /*
             this.auth.verifyPhoneWithOTPX( phone, false ).then(dataV => {
-              //this.auth.stepDisable = false; 
+              //this.auth.stepDisable = false;
               //this.finalRESULT(dataV);
               if(!dataV.success){
                 this.finalRESULT(dataV);
@@ -94,7 +84,6 @@ export class SignComponent implements OnInit {
               }
             })
             // .catch(err => {
-            //   console.log("Dip Err")
             //   this.finalRESULT({"success":false,info:"401"});
             // });
 */
@@ -119,26 +108,24 @@ export class SignComponent implements OnInit {
         }
 
         /*
-        const step1_newUSER = this.auth.step1_newUSER( 
-          this.phoneNumber.e164, //validatePassword, name, 
-          //this.phoneNumber.iso, this.phoneNumber.coin 
+        const step1_newUSER = this.auth.step1_newUSER(
+          this.phoneNumber.e164, //validatePassword, name,
+          //this.phoneNumber.iso, this.phoneNumber.coin
           );
 
        step1_newUSER.then((ref:any) =>{
-         console.log(ref)
         if(ref.success){
           this.auth.verifyPhoneWithOTPX( ref.phone, false ).then(dataV => {
-            this.auth.stepDisable = false; 
+            this.auth.stepDisable = false;
             this.finalRESULT(dataV);
             this.auth.step = 1;
           });
           // this.auth.verifyPhoneWithOTP( ref.phone, false ).then(dataV => {
-          //   this.auth.stepDisable = false; 
+          //   this.auth.stepDisable = false;
           //   //this.finalRESULT(dataV);
           //   this.auth.step = 1;
           // });
         }else{
-          console.log("Something here...")
         }
         //this.finalRESULT(data);
        })
@@ -170,7 +157,6 @@ export class SignComponent implements OnInit {
         this.auth.confirmationResult
           .confirm(this.verificationCode)
           .then((credential: any) => {
-            //console.log(credential.user)
             this.auth
               .step2X_varifyCODE(
                 credential,
@@ -184,7 +170,6 @@ export class SignComponent implements OnInit {
                 this.goToDash();
               });
             // .catch(err =>{
-            //   console.log("Err", err)
             //   this.auth.resource.startSnackBar(err);
             // })
           })
@@ -193,12 +178,10 @@ export class SignComponent implements OnInit {
             this.verificationCode = '';
             this.auth.resource.startSnackBar(err);
           });
-        // console.log(this.verificationCode, "", name, pass)
         // this.auth.step2X_varifyCODE(this.verificationCode, "", name, pass,
         // this.phoneNumber.e164, //validatePassword, name,
         // this.phoneNumber.iso, this.phoneNumber.coin
         // ).then(data => {
-        //   console.log(data)
         //   //this.auth.resource.playSound('beep')
         //   //this.finalRESULT(data);
         // })
@@ -213,19 +196,16 @@ export class SignComponent implements OnInit {
       this.auth.confirmationResult
         .confirm(this.verificationCode)
         .then((credential: any) => {
-          //console.log(credential.user)
           //this.auth.step2X_varifyCODE(credential, //name, //pass,
           //this.phoneNumber.e164, this.phoneNumber.iso, this.phoneNumber.coin ).then(creUser => {
           //this.finalRESULT(creUser);
           this.goToDash();
           //})
           // .catch(err =>{
-          //   console.log("Err", err)
           //   this.auth.resource.startSnackBar(err);
           // })
         })
         .catch((err: any) => {
-          console.error(err);
           this.verificationCode = '';
           this.auth.resource.startSnackBar(err);
         });
@@ -255,7 +235,6 @@ export class SignComponent implements OnInit {
   //           this.finalRESULT(data);
   //         });
   //       }else{
-  //         console.log("Something here...")
   //       }
   //     })
   //   }
@@ -343,7 +322,6 @@ export class SignComponent implements OnInit {
     /*
     if(signFor == "google"){
       this.auth.googleSignin().then((data:any) => {
-        console.log(data)
         this.finalRESULT(data)
       }).catch(err => {
         this.credentialX = "Ve: " + err;
@@ -359,15 +337,12 @@ export class SignComponent implements OnInit {
   }
 
   signWithSocial(cred: any, medium: string) {
-    //console.log("Maron 5", cred)
-
     const step0_CheckUserExist = this.auth.step0_socialForward(
       cred.uid,
       cred.email
     );
 
     step0_CheckUserExist.then((ref) => {
-      console.log('MEGA', ref);
       if (!ref) {
         const data = { success: false, info: '401' };
         this.finalRESULT(data);
@@ -378,7 +353,6 @@ export class SignComponent implements OnInit {
           // create new user
           this.auth.socialCreate(cred, medium).then((x: any) => {
             this.goToDash();
-            //console.log("One",x)
             //this.auth.upgradeSocial();
           });
         } else {
@@ -390,7 +364,6 @@ export class SignComponent implements OnInit {
       }
       /*
       v.pipe(take(1)).subscribe((ref:any) => {
-        console.log("MEGA", ref)
         if(!ref){
           const data = {"success":false, info:"401"}
           this.finalRESULT(data);
@@ -402,7 +375,6 @@ export class SignComponent implements OnInit {
 
     /*
       v.pipe(take(1)).subscribe((ref:any) => {
-        console.log("Maddam", ref)
            if(!ref){
              const data = {"success":false, info:"401"}
              this.finalRESULT(data);
@@ -411,7 +383,6 @@ export class SignComponent implements OnInit {
                   // create new user
                   this.auth.socialCreate(cred, medium).then((x:any) => {
                     this.goToDash()
-                    //console.log("One",x)
                     //this.auth.upgradeSocial();
                   })
                 }else{
@@ -483,7 +454,6 @@ export class SignComponent implements OnInit {
   goToDash() {
     this.auth.user$.pipe(take(1)).subscribe((mine: any) => {
       if (mine) {
-        console.log('MINE', mine);
         if (mine.admin) {
           this.auth.resource.router.navigate(['/dash']);
         } else {

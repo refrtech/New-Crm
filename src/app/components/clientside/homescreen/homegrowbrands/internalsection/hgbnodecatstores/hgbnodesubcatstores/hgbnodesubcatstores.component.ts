@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/auth.service';
 import { Camera } from '@capacitor/camera';
 import { CameraResultType } from '@capacitor/camera/dist/esm/definitions';
 import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-hgbnodesubcatstores',
@@ -20,31 +21,27 @@ import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component
 })
 export class HgbnodesubcatstoresComponent implements OnInit {
   selectedcat: string = '';
+  editpeoplechoice: boolean = false;
+  peoplechoicesubcatpara: string = '';
+  HGBdata: any;
+  Searchtxt: string = '';
 
   parameters: string = 'phone';
   parameters1: string = 'phone';
-  parameters2: string = 'phone';
-
 
   operators: string = '==';
   operators1: string = '==';
-  operators2: string = '==';
-
 
   searchvalue: string = '9833006431'; //9833006431
   searchvalue1: string = '9833006431'; //9833006431
-  searchvalue2: string = '9833006431'; //9833006431
-
 
   isstorealreadyadded: boolean = false;
   isstorealreadyadded1: boolean = false;
   isstorealreadyadded2: boolean = false;
 
-
   MerchantdataSource!: MatTableDataSource<any>;
   MerchantdataSource1!: MatTableDataSource<any>;
   MerchantdataSource2!: MatTableDataSource<any>;
-
 
   ParaArr: Array<any> = [
     {
@@ -88,14 +85,16 @@ export class HgbnodesubcatstoresComponent implements OnInit {
   ];
   PChoiceStores: Array<any> = [];
   trendingStores: Array<any> = [];
-
+  homegrownproducts: Array<any> = [];
   constructor(
     private api: ApiserviceService,
     private actRoute: ActivatedRoute,
-    private auth :AuthService
+    private auth: AuthService,
+    private https: HttpClient
   ) {}
 
   ngOnInit(): void {
+    this.gethomegrowndata();
     this.selectedcat = this.actRoute.snapshot.params['catid'];
     this.api
       .gethomegrowPeoplechoicesubCatstores(
@@ -103,6 +102,16 @@ export class HgbnodesubcatstoresComponent implements OnInit {
       )
       .subscribe((data: any) => {
         this.PChoiceStores = data;
+      });
+      this.api.gethomegrowbrandsUlovesubCatstores(
+        this.actRoute.snapshot.params['catid']
+      )
+      .subscribe((data: any) => {
+        this.trendingStores = data;
+      });
+      this.api.gethomegrowproductssubCatstores()
+      .subscribe((data: any) => {
+        this.homegrownproducts = data;
       });
   }
 
@@ -131,22 +140,22 @@ export class HgbnodesubcatstoresComponent implements OnInit {
       this.api.addstoretoPeoplechoice(Data).then((data: any) => {
         this.isstorealreadyadded = true;
         this.PChoiceStores.push(Data);
-        console.log(this.PChoiceStores);
-        console.log('Store has been added in People choice section.');
       });
-    } else if(i == 2){
+    } else if (i == 2) {
       Data.catId = this.actRoute.snapshot.params['catid'];
       Data.iscat_subCatstore = 'SubCat';
       Data.sectionName = 'HomegrownSection';
       this.api.addstoretoTrendingStore(Data).then((data: any) => {
         this.isstorealreadyadded1 = true;
         this.trendingStores.push(Data);
-        console.log(this.trendingStores);
-        console.log('Store has been added in trending section.');
       });
-    }
-    else {
-
+    } else {
+      Data.catId = this.actRoute.snapshot.params['catid'];
+      Data.iscat_subCatstore = 'SubCat';
+      Data.sectionName = 'HomegrownSection';
+      this.api.addProductTohomegrown(Data).then((data: any) => {
+        this.trendingStores.push(Data);
+      });
     }
   }
 
@@ -157,9 +166,9 @@ export class HgbnodesubcatstoresComponent implements OnInit {
       .getRecentStores(
         1,
         false,
-        i == 1 ? this.parameters : (i == 2 ? this.parameters1 : this.parameters2),
-        i == 1 ? this.operators : (i == 2 ? this.operators1 : this.operators2),
-        i == 1 ? this.searchvalue : (i == 2 ? this.searchvalue1 : this.searchvalue2),
+        i == 1 ? this.parameters : this.parameters1,
+        i == 1 ? this.operators : this.operators1,
+        i == 1 ? this.searchvalue : this.searchvalue1
       )
       .pipe(take(1))
       .subscribe((recentStore: any) => {
@@ -169,22 +178,19 @@ export class HgbnodesubcatstoresComponent implements OnInit {
             this.PChoiceStores.findIndex((x) => x.id == recentStore[0].id) < 0
               ? false
               : true;
-        } else if( i == 2) {
+        } else if (i == 2) {
           this.MerchantdataSource1 = new MatTableDataSource(recentStore);
           this.isstorealreadyadded =
             this.trendingStores.findIndex((x) => x.id == recentStore[0].id) < 0
               ? false
               : true;
-        }
-        else{
+        } else {
           this.MerchantdataSource = new MatTableDataSource(recentStore);
         }
       });
   }
 
   deletestore(i: number, id: string) {
-    console.log(i);
-    console.log(id);
     if (i == 1) {
       this.api.deletestorefrompeopleStore(id).then((data: any) => {
         this.MerchantdataSource = new MatTableDataSource();
@@ -194,6 +200,12 @@ export class HgbnodesubcatstoresComponent implements OnInit {
         this.MerchantdataSource1 = new MatTableDataSource();
       });
     }
+  }
+
+  deleteproduct(id:any){
+    this.api.deleteproductfromhomegrown(id).then((data:any)=>{
+      this.Searchtxt = "";
+    })
   }
 
   async takePicture(type: string, id?: string) {
@@ -242,8 +254,95 @@ export class HgbnodesubcatstoresComponent implements OnInit {
               }
             });
         }
+        else if (type == 'trendingstorebanner') {
+          this.api
+            .updateTrendingstorebanner(
+              id == undefined ? '' : id,
+              result.croppedImage
+            )
+            .then((ref) => {
+              if (!ref || !ref.success) {
+                this.auth.resource.startSnackBar('Upload Failed!');
+              } else {
+                this.auth.resource.startSnackBar('Banner Update Under Review!');
+              }
+            });
+        }
+        else {
+          this.api
+            .updatesubcatproductbanner(id == undefined ? '' : id,
+            result.croppedImage)
+            .then((ref) => {
+              if (!ref || !ref.success) {
+                this.auth.resource.startSnackBar('Upload Failed!');
+              } else {
+                this.auth.resource.startSnackBar('Banner Update Under Review!');
+              }
+            });
+        }
+
       }
     });
   }
 
+  gethomegrowndata() {
+    this.api.gethomegrowndata().subscribe((data: any) => {
+      this.HGBdata = data[0];
+      let i = data[0].Categories.findIndex(
+        (x: any) => x.id == this.actRoute.snapshot.params['catid']
+      );
+      this.peoplechoicesubcatpara = data[0].Categories[i].peoplechoiceSubcatpara;
+    });
+  }
+
+  updatepeoplechoice() {
+    let index = this.HGBdata.Categories.findIndex(
+      (x: any) => x.id == this.actRoute.snapshot.params['catid']
+    );
+    if (!this.editpeoplechoice) {
+      this.editpeoplechoice = !this.editpeoplechoice;
+    } else if (
+      this.peoplechoicesubcatpara ==
+      this.HGBdata.Categories[index].peoplechoicecatpara
+    ) {
+      this.editpeoplechoice = !this.editpeoplechoice;
+    } else {
+      if (this.peoplechoicesubcatpara == '') {
+        alert('please enter the People choice.');
+      } else {
+        this.HGBdata.Categories[index].peoplechoiceSubcatpara =
+          this.peoplechoicesubcatpara;
+        this.api
+          .updatepeoplechoicepara(this.HGBdata.id, this.HGBdata.Categories)
+          .then((data) => {
+            if (data != undefined) {
+            this.editpeoplechoice = !this.editpeoplechoice;
+            }
+          })
+          .catch(() => {
+            return false;
+          });
+      }
+    }
+  }
+
+  searchdata() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Basic ' + btoa('elastic:bcFhFOqTCpvVJua+tnc-'),
+      }),
+    };
+    let url =
+      'https://app.refr.club/api/search/sendSearch/IN/things?q=' +
+      this.Searchtxt +
+      '';
+    this.https.get(url, httpOptions).subscribe((data: any) => {
+      let products: any = [];
+      for (let i = 0; i < data.hits.hits.length; i++) {
+        products.push(data.hits.hits[i]._source);
+      }
+      this.MerchantdataSource2 = new MatTableDataSource(products);
+    });
+  }
 }

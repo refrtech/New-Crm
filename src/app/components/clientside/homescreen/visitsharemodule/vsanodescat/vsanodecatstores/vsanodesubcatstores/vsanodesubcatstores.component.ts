@@ -105,12 +105,10 @@ export class VSAnodesubcatstoresComponent implements OnInit {
           .getnodeinterdata(this.actRoute.snapshot.params['nodeid'])
           .pipe(take(1))
           .subscribe((data: any) => {
-            console.log(data);
             this.catarray =
               data[0].CategoryBanners != undefined
                 ? data[0].CategoryBanners
                 : [];
-            console.log(this.catarray);
 
             let i = this.catarray.findIndex(
               (x: any) => x.Catid == this.actRoute.snapshot.params['catid']
@@ -178,8 +176,6 @@ export class VSAnodesubcatstoresComponent implements OnInit {
       this.api.addstoretoPeoplechoice(Data).then((data: any) => {
         this.isstorealreadyadded = true;
         this.PChoiceStores.push(Data);
-        console.log(this.PChoiceStores);
-        console.log('Store has been added in People choice section.');
       });
     } else {
       Data.Nodeid = this.actRoute.snapshot.params['nodeid'];
@@ -190,8 +186,6 @@ export class VSAnodesubcatstoresComponent implements OnInit {
       this.api.addstoretoTrendingStore(Data).then((data: any) => {
         this.isstorealreadyadded1 = true;
         this.trendingStores.push(Data);
-        console.log(this.trendingStores);
-        console.log('Store has been added in trending section.');
       });
     }
   }
@@ -214,9 +208,6 @@ export class VSAnodesubcatstoresComponent implements OnInit {
   }
 
   deletestore(i: number, id: string) {
-    console.log(i);
-    console.log(id);
-
     if (i == 1) {
       this.api.deletestorefrompeopleStore(id).then((data: any) => {
         this.MerchantdataSource = new MatTableDataSource();

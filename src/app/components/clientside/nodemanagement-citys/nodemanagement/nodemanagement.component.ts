@@ -56,7 +56,6 @@ export class NodemanagementComponent implements OnInit {
       .getareabycity(id)
       .pipe(take(1))
       .subscribe((Data: any) => {
-        console.log(Data);
         this.dropdownList = Data;
       });
   }

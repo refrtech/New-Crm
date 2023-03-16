@@ -530,14 +530,12 @@ export class ApiserviceService {
       return cloudUpload;
     } else {
       let i = catarray.findIndex((x: any) => x.title == catname);
-      console.log(i);
       if (index == 1) {
         catarray[i].Thumbnail = cloudUpload.url;
       } else {
         catarray[i].catbanner = cloudUpload.url;
       }
 
-      console.log(catarray);
       return updateDoc(cityrefr, {
         Categories: catarray,
         upd: newTimestamp,
@@ -570,6 +568,11 @@ export class ApiserviceService {
   removeHGTRstores(stores: any, id: any) {
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
     return updateDoc(cityrefr, { third_Stores: arrayRemove(stores) });
+  }
+
+  updatepeoplechoicepara(id:string,data:any){
+    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
+    return updateDoc(cityrefr, { Categories: data });
   }
 
   updateHGtitle(Title: string, id: any) {
@@ -852,6 +855,23 @@ export class ApiserviceService {
     });
   }
 
+  async addProductTohomegrown(Data:any){
+    const nodeinternal = await addDoc(
+      collection(this.firestore, 'ProductsYouHave'),
+      Data
+    ).then((ref) => {
+      const areeas = doc(this.firestore, 'ProductsYouHave', `${ref.id}`);
+      return updateDoc(areeas, { sectionid: ref.id }).then(() => {
+        return ref;
+      });
+    });
+  }
+
+  deleteproductfromhomegrown(id:any){
+    const vidRef = doc(this.firestore, 'ProductsYouHave', `${id}`);
+    return deleteDoc(vidRef);
+  }
+
   deletestorefrompeopleStore(id: any) {
     const vidRef = doc(this.firestore, 'people_choice_store', `${id}`);
     return deleteDoc(vidRef);
@@ -950,6 +970,30 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
+  gethomegrowbrandsUlovesubCatstores(catId: string) {
+    const VSA_section: CollectionReference = collection(
+      this.firestore,
+      `${'trending_store'}`
+    );
+    const qu = query(
+      VSA_section,
+      where('catId', '==', catId),
+      where('iscat_subCatstore', '==', 'SubCat'),
+      where('sectionName', '==', 'HomegrownSection')
+    );
+    return collectionData(qu);
+  }
+
+
+  gethomegrowproductssubCatstores() {
+    const VSA_section: CollectionReference = collection(
+      this.firestore,
+      `${'ProductsYouHave'}`
+    );
+    const qu = query(VSA_section);
+    return collectionData(qu);
+  }
+
 
   getVSAtrendingsubCatstores(nodeid: string, subcatId: string) {
     const VSA_section: CollectionReference = collection(
@@ -975,6 +1019,22 @@ export class ApiserviceService {
     } else {
       return updateDoc(cityrefr, {
         node_banner_url: cloudUpload.url,
+        upd: newTimestamp,
+      }).then(() => {
+        return cloudUpload;
+      });
+    }
+  }
+
+  async updatesubcatproductbanner(id: string, croppedImage: string) {
+    const newTimestamp = this.getServerTimestamp();
+    const cityrefr = doc(this.firestore, `${'ProductsYouHave'}`, `${id}`);
+    const cloudUpload = await this.cloudUpload(id, croppedImage);
+    if (!cloudUpload.success) {
+      return cloudUpload;
+    } else {
+      return updateDoc(cityrefr, {
+        TrendingSBanner: cloudUpload.url,
         upd: newTimestamp,
       }).then(() => {
         return cloudUpload;
@@ -1027,7 +1087,6 @@ export class ApiserviceService {
       return cloudUpload;
     } else {
       let i = catarray.findIndex((x: any) => x.Catid == catid);
-      console.log(i);
       if (i == -1) {
         catarray.push({
           Catid: catid,
@@ -1037,7 +1096,6 @@ export class ApiserviceService {
         catarray[i].Catbanner = cloudUpload.url;
       }
 
-      console.log(catarray);
       return updateDoc(cityrefr, {
         CategoryBanners: catarray,
         upd: newTimestamp,
@@ -1282,22 +1340,6 @@ export class ApiserviceService {
     );
   }
 
-  // homeCloudUpload(idX: string, base64String: string) {
-  //   const imgID = idX + Date.now();
-  //   console.log('1');
-
-  //   const bannerRef = ref(this.fireStorage, 'FeedVideos/' + imgID);
-  //   return uploadString(bannerRef, base64String.split(',')[1], 'base64')
-  //     .then((snapshot) => {
-  //       return getDownloadURL(bannerRef).then((dlURL) => {
-  //         return { success: true, url: dlURL };
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       return { success: false, url: '' };
-  //     });
-  // }
-
   cloudUpload(idX: string, base64String: string) {
     const imgID = idX + Date.now();
     const bannerRef = ref(this.fireStorage, 'store/' + imgID);
@@ -1318,6 +1360,4 @@ export class ApiserviceService {
       return ref;
     });
   }
-
-  ////
 }

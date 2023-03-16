@@ -41,7 +41,6 @@ export class FeedsectionComponent implements OnInit {
     public api: ApiserviceService,
     public auth: AuthService
   ) {
-    // console.log('popupedit', data);
   }
 
   ngOnInit(): void {}
@@ -81,17 +80,11 @@ export class FeedsectionComponent implements OnInit {
       const content = reader.result?.toString();
       const mimeType = content?.split(',')[0].split(':')[1].split(';')[0];
       if (mimeType === 'image/webp' || mimeType === 'image/png') {
-        console.log('This is an image file.');
         this.auth.addInfoVideo(event).then((d) => {
-          console.log('image added', d);
         });
       } else if (mimeType === 'video/mp4' || mimeType === 'video/mpeg') {
-        console.log('This is a video file.');
         this.auth.addInfoVideo(event).then((d) => {
-          console.log('video added', d);
         });
-      } else {
-        console.log('This is not an image or video file.');
       }
     };
     readerer.readAsDataURL(file);
@@ -105,9 +98,7 @@ export class FeedsectionComponent implements OnInit {
       path: this.videoPath,
     };
     this.auth.addVideo(datas).then((d) => {
-      console.log('d', d);
     });
-    console.log('datas', datas);
     this.dialogRef.close({ data: datas });
   }
 

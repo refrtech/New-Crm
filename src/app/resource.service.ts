@@ -74,14 +74,9 @@ export class ResourceService {
   actRoutes() {}
 
   getCat(catX: string, subCatX: string) {
-    // console.log(catX + "-------------------"+subCatX);
-    // console.log(this.categoryList);
     const cat =
       this.categoryList[this.categoryList.findIndex((x: any) => x.id == catX)];
-    // console.log(cat);
-
     if (!subCatX) {
-      // console.log(cat.title);
 
       return cat.title;
     } else {
@@ -165,7 +160,6 @@ profession = new FormControl('', [
   //   navigator.clipboard.writeText(mes);
   // }
   copyClipboard(text: any) {
-    // console.log(text)
     const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
@@ -183,7 +177,6 @@ profession = new FormControl('', [
   compareDates(date1: any) {
     const dateX = Date.parse(date1);
     const date2 = Date.now();
-    //console.log(dateX, date2)
     return dateX > date2;
   }
 
@@ -195,7 +188,6 @@ profession = new FormControl('', [
   //    );
   /*
   // Network.addListener('networkStatusChange', status => {
-  //   console.log('Network status changed', status);
   // });
   return of(
     this.internetConnected().then(res => {
@@ -223,16 +215,15 @@ profession = new FormControl('', [
   //  );
   /*
    const { Network } = Plugins;
-   
+
    let handler = Network.addListener('networkStatusChange', (status) => {
-     console.log("Network status changed", status);
    });
    // To stop listening:
    // handler.remove();
-   
+
    // Get the current network status
    let status = await Network.getStatus();
-   
+
    // Example output:
    {
      "connected": true,
@@ -245,7 +236,6 @@ profession = new FormControl('', [
     let x = false;
     try {
       const status = await Network.getStatus();
-      // console.log(status.connected, status.connectionType)s
       x = status.connected;
       return of(status.connected);
       // try{
