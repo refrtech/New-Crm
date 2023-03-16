@@ -19,7 +19,7 @@ export const environment = {
     apiKey: "AIzaSyDH4KRqGtrYXyIQVy2pW-C9IHihoYc1akQ",
     authDomain: "refr-india.firebaseapp.com",
     projectId: "refr-india",
-    storageBucket: "refr-india.appspot.com",
+    storageBucket: "refr",
     messagingSenderId: "471641178783",
     appId: "1:471641178783:web:43c8aa09c584db065f18aa",
     databaseURL: "https://refr-india-default-rtdb.asia-southeast1.firebasedatabase.app",

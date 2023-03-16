@@ -10,7 +10,7 @@
   </div>
   <main class="b20margin t50margin">
     <div class="JCspace dflex">
-      <div class="boldtext l_size b10margin">Store banner</div>
+      <div class="boldtext l_size AScenter">Node banner</div>
       <div>
         <button class="viewbtn t10padding b10padding l30padding r30padding t10margin b15margin"
           (click)="gotointernal()">
@@ -41,8 +41,11 @@
       </div>
     </div>
   </main>
+  <div class="boldtext m_size t40margin b20margin">
+    People choice stores
+  </div>
   <div class="Aborder A5radius A20padding b20margin">
-    <div class="boldtext l_size t30margin b20margin">Apply Filter to search store</div>
+    <div class="boldtext l_size b20margin">Apply Filter to search store</div>
     <div class="dflex">
       <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
         <mat-select placeholder="Filter Type" [(ngModel)]="parameters">
@@ -112,9 +115,7 @@
       </tr>
     </table>
   </div>
-  <div class="boldtext m_size t20margin">
-    People choice stores
-  </div>
+
   <div *ngIf="PChoiceStores.length > 0" class="t15margin boxshw">
     <div class="dflex JCevenly M100width tb15padding s_size">
       <div class="M10width c_align">Rank</div>
@@ -148,8 +149,11 @@
       </div>
     </div>
   </div>
+  <div class="boldtext m_size t40margin b20margin">
+    Trending stores
+  </div>
   <div class="Aborder A5radius A20padding b20margin">
-    <div class="boldtext l_size t30margin b20margin">Apply Filter to search store</div>
+    <div class="boldtext l_size b20margin">Apply Filter to search store</div>
     <div class="dflex">
       <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
         <mat-select placeholder="Filter Type" [(ngModel)]="parameters1">
@@ -219,9 +223,7 @@
       </tr>
     </table>
   </div>
-  <div class="boldtext m_size t20margin">
-    Trending stores
-  </div>
+
   <div *ngIf="trendingStores.length > 0" class="t15margin boxshw">
     <div class="dflex JCevenly M100width tb15padding s_size">
       <div class="M10width c_align">Rank</div>
