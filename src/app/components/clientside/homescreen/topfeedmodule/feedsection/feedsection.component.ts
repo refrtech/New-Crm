@@ -40,8 +40,7 @@ export class FeedsectionComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public api: ApiserviceService,
     public auth: AuthService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {}
 
@@ -54,7 +53,7 @@ export class FeedsectionComponent implements OnInit {
       const formData = new FormData();
       formData.append('video', file);
       let upload$ = this.http.post(
-        'http://localhost:3000/upload-video',
+        'https://us-central1-refr-india.cloudfunctions.net/ind_serve/api/video',
         formData
       );
 
@@ -80,11 +79,9 @@ export class FeedsectionComponent implements OnInit {
       const content = reader.result?.toString();
       const mimeType = content?.split(',')[0].split(':')[1].split(';')[0];
       if (mimeType === 'image/webp' || mimeType === 'image/png') {
-        this.auth.addInfoVideo(event).then((d) => {
-        });
+        this.auth.addInfoVideo(event).then((d) => {});
       } else if (mimeType === 'video/mp4' || mimeType === 'video/mpeg') {
-        this.auth.addInfoVideo(event).then((d) => {
-        });
+        this.auth.addInfoVideo(event).then((d) => {});
       }
     };
     readerer.readAsDataURL(file);
@@ -97,8 +94,7 @@ export class FeedsectionComponent implements OnInit {
       name: this.fileName,
       path: this.videoPath,
     };
-    this.auth.addVideo(datas).then((d) => {
-    });
+    this.auth.addVideo(datas).then((d) => {});
     this.dialogRef.close({ data: datas });
   }
 
