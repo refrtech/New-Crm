@@ -159,7 +159,7 @@ export class MerchantsComponent implements OnInit {
   execute() {
     this.apiservice
       .getRecentStores(
-        10000,
+        1000,
         this.getall,
         this.parameters,
         this.operators,
@@ -175,7 +175,7 @@ export class MerchantsComponent implements OnInit {
   exportexcel() {
     this.apiservice
       .getRecentStores(
-        100,
+        1000,
         this.getall,
         this.parameters,
         this.operators,
