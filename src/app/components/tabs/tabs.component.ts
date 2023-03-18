@@ -40,7 +40,9 @@ export class TabsComponent implements OnInit {
   ngOnInit(): void {}
 
   expand(index: any) {
-    if (index == 10) {
+    // console.log(index);
+
+    if (index == 6) {
       this.navRoutes[index].isexpanded = !this.navRoutes[index].isexpanded;
     }
   }
