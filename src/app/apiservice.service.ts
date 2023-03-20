@@ -22,6 +22,7 @@ import {
   arrayRemove,
   arrayUnion,
   deleteDoc,
+  getCountFromServer,
   WhereFilterOp,
 } from 'firebase/firestore';
 
@@ -570,7 +571,7 @@ export class ApiserviceService {
     return updateDoc(cityrefr, { third_Stores: arrayRemove(stores) });
   }
 
-  updatepeoplechoicepara(id:string,data:any){
+  updatepeoplechoicepara(id: string, data: any) {
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
     return updateDoc(cityrefr, { Categories: data });
   }
@@ -855,7 +856,7 @@ export class ApiserviceService {
     });
   }
 
-  async addProductTohomegrown(Data:any){
+  async addProductTohomegrown(Data: any) {
     const nodeinternal = await addDoc(
       collection(this.firestore, 'ProductsYouHave'),
       Data
@@ -867,7 +868,7 @@ export class ApiserviceService {
     });
   }
 
-  deleteproductfromhomegrown(id:any){
+  deleteproductfromhomegrown(id: any) {
     const vidRef = doc(this.firestore, 'ProductsYouHave', `${id}`);
     return deleteDoc(vidRef);
   }
@@ -955,7 +956,6 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-
   gethomegrowPeoplechoicesubCatstores(catId: string) {
     const VSA_section: CollectionReference = collection(
       this.firestore,
@@ -984,7 +984,6 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-
   gethomegrowproductssubCatstores() {
     const VSA_section: CollectionReference = collection(
       this.firestore,
@@ -993,7 +992,6 @@ export class ApiserviceService {
     const qu = query(VSA_section);
     return collectionData(qu);
   }
-
 
   getVSAtrendingsubCatstores(nodeid: string, subcatId: string) {
     const VSA_section: CollectionReference = collection(
@@ -1359,5 +1357,90 @@ export class ApiserviceService {
     return updateDoc(area, { isaddedinNode: isallreadyadded }).then(() => {
       return ref;
     });
+  }
+
+  async updatebsbanner(id: any, croppedImage: any, stores: any, index: number) {
+    const cityrefr = doc(this.firestore, `${'brandspotlight'}`, `${id}`);
+    const cloudUpload = await this.cloudUpload(id, croppedImage);
+    if (!cloudUpload.success) {
+      return cloudUpload;
+    } else {
+      stores[index].brandspotlightbanner = cloudUpload.url;
+      return updateDoc(cityrefr, { Stores: stores })
+        .then((datas: any) => {
+          if (datas) {
+            return 'issue in update Sub-title.';
+          } else {
+            return 'Sub-title updated.';
+          }
+        })
+        .catch((err) => {
+          return false;
+        });
+    }
+  }
+
+  async addstorewithnodeid(data: any) {
+    const addedcity = await addDoc(
+      collection(this.firestore, 'Storewithnodes'),
+      data
+    ).then((ref) => {
+      const areeas = doc(this.firestore, 'Storewithnodes', `${ref.id}`);
+      return updateDoc(areeas, { id: ref.id }).then(() => {
+        return ref;
+      });
+    });
+  }
+
+  getstoreaspernode(sectionname: string, nodeid: string) {
+    const Hgrown: CollectionReference = collection(
+      this.firestore,
+      `${'Storewithnodes'}`
+    );
+    const qu = query(
+      Hgrown,
+      where('sectionname', '==', sectionname),
+      where('nodeid', '==', nodeid)
+    );
+    return collectionData(qu);
+  }
+
+  deletestorefromnodes(id: string) {
+    const arearefr = doc(this.firestore, `Storewithnodes`, `${id}`);
+    return deleteDoc(arearefr)
+      .then((data) => {
+        return { success: true };
+      })
+      .catch((err) => {
+        return { success: false };
+      });
+  }
+
+  async updatestorewithnodebanner(id:string,croppedImage:any) {
+    const cityrefr = doc(this.firestore, `${'Storewithnodes'}`, `${id}`);
+    const cloudUpload = await this.cloudUpload(id, croppedImage);
+    if (!cloudUpload.success) {
+      return cloudUpload;
+    } else {
+      return updateDoc(cityrefr, { CRMbanner: cloudUpload.url })
+        .then((datas: any) => {
+          if (datas) {
+            return 'issue in update Sub-title.';
+          } else {
+            return 'Sub-title updated.';
+          }
+        })
+        .catch((err) => {
+          return false;
+        });
+    }
+  }
+
+  async getstorecount(sectionname:string,cityid:string,nodeid:string){
+    const coll = collection(this.firestore, "Storewithnodes");
+    const q = query(coll, where("sectionname", "==", sectionname),where("city_id","==",cityid),where("nodeid","==",nodeid));
+    const snapshot = await getCountFromServer(q);
+    return snapshot.data().count;
+
   }
 }

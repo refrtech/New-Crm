@@ -11,8 +11,9 @@ import { take } from 'rxjs';
   styleUrls: ['./addnode.component.scss'],
 })
 export class AddnodeComponent implements OnInit {
-  selectedareas: any = [];
-  selectedareas2: any = [];
+  selectedareas: Array<any> = [];
+  selectedareas2: Array<any> = [];
+  Areaspincodes:Array<any> = []
   dropdownSettings!: IDropdownSettings;
   searchvalue: any;
   valuetype: number = 2;
@@ -52,6 +53,7 @@ export class AddnodeComponent implements OnInit {
         if (this.data.nodedata.Nareas != undefined) {
           for (let i = 0; i < this.data.nodedata.Nareas.length; i++) {
             this.selectedareas2.push(this.data.nodedata.Nareas[i]);
+            this.Areaspincodes.push(this.data.nodedata.Nareas[i].Area_Pin);
             this.selectedareas.push({
               Area_N: this.data.nodedata.Nareas[i].Area_N,
               id: this.data.nodedata.Nareas[i].id,
@@ -83,11 +85,13 @@ export class AddnodeComponent implements OnInit {
   addarea(event: any) {
     let index = this.dropdownList.findIndex((x: any) => x.id == event.id);
     this.selectedareas2.push(this.dropdownList[index]);
+    this.Areaspincodes.push(this.dropdownList[index].Area_Pin);
   }
 
   removearea(event: any) {
     let index = this.selectedareas2.findIndex((x: any) => x.id == event.id);
     this.selectedareas2.splice(index, 1);
+    this.Areaspincodes.splice(index, 1);
   }
 
   addnode() {
@@ -128,6 +132,7 @@ export class AddnodeComponent implements OnInit {
         name: 'Node - ' + this.Nodename.toUpperCase(),
         updated_at: this.api.newTimestamp,
         Nareas: this.selectedareas2,
+        Areaspincodes: this.Areaspincodes,
       };
       this.api
         .updateNodeData(datas)

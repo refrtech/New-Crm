@@ -40,7 +40,7 @@ export class VisitallstoredetailsComponent implements OnInit {
   MerchantdataSource!: MatTableDataSource<any>;
   id: number = 0;
   nodestores$: Observable<any[]> = of();
-  storelist: Array<any> = [];
+  storelist$: Observable<any[]> = of();
 
   constructor(
     public router: Router,
@@ -49,11 +49,20 @@ export class VisitallstoredetailsComponent implements OnInit {
     public dialogRef: MatDialogRef<VisitallstoredetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.storelist =
-      this.data.selectednode != undefined ? this.data.selectednode.stores : [];
+    // this.storelist =
+    //   this.data.selectednode != undefined ? this.data.selectednode.stores : [];
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.data);
+    if (this.data.selectednode != undefined) {
+      this.api
+        .getstoreaspernode('VSAsection', this.data.selectednode.id)
+        .subscribe((data: any) => {
+          this.storelist$ = of(data);
+        });
+    }
+  }
 
   ApplyFilter() {
     this.isstorealreadyadded = false;
@@ -68,61 +77,60 @@ export class VisitallstoredetailsComponent implements OnInit {
       .pipe(take(1))
       .subscribe((recentStore: any) => {
         this.MerchantdataSource = new MatTableDataSource(recentStore);
-        this.isstorealreadyadded =
-          this.storelist.findIndex((x) => x.id == recentStore[0].id) < 0
-            ? false
-            : true;
+        // this.isstorealreadyadded =
+        //   this.storelist.findIndex((x) => x.id == recentStore[0].id) < 0
+        //     ? false
+        //     : true;
       });
   }
 
   action(data: any) {
-    let i = this.storelist.findIndex((x) => x.id == data.id);
-    if (i < 0) {
-      this.storelist.push(data);
+    data.city_id = this.data.cityid;
+    data.nodeid = this.data.selectednode == undefined ? this.data.node.id : this.data.selectednode.id;
+    data.sectionname = 'VSAsection';
+    this.api.addstorewithnodeid(data).then((data:any)=>{
       this.isstorealreadyadded = true;
-    } else {
-      this.storelist.splice(i, i + 1);
-      this.isstorealreadyadded = false;
-    }
+      console.log("store added");
+    });
   }
 
   close() {
     this.dialogRef.close();
   }
 
-  updatestore() {
-    if (this.data.selectednode == undefined) {
-      let data = {
-        Nareas: this.data.node.Nareas,
-        city: this.data.node.city,
-        city_id: this.data.node.city_id,
-        created_at: this.data.node.created_at,
-        id: this.data.node.id,
-        name: this.data.node.name,
-        stores: this.storelist,
-        updated_at: this.data.node.updated_at,
-      };
-      this.api.addVSAstores(data, this.data.id).then((data: any) => {
-        if (!data) {
-          this.dialogRef.close();
-        }
-      });
-    } else {
-      let index = this.data.creatednodes.findIndex(
-        (x: any) => x.id == this.data.selectednode.id
-      );
-      this.data.creatednodes[index].stores = this.storelist;
-      this.api
-        .editVSAstores(this.data.creatednodes, this.data.id)
-        .then((data: any) => {
-          if (!data) {
-            this.dialogRef.close();
-          }
-        });
-    }
-  }
+  // updatestore() {
+  //   if (this.data.selectednode == undefined) {
+  //     let data = {
+  //       Nareas: this.data.node.Nareas,
+  //       city: this.data.node.city,
+  //       city_id: this.data.node.city_id,
+  //       created_at: this.data.node.created_at,
+  //       id: this.data.node.id,
+  //       name: this.data.node.name,
+  //       stores: this.storelist,
+  //       updated_at: this.data.node.updated_at,
+  //     };
+  //     this.api.addVSAstores(data, this.data.id).then((data: any) => {
+  //       if (!data) {
+  //         this.dialogRef.close();
+  //       }
+  //     });
+  //   } else {
+  //     let index = this.data.creatednodes.findIndex(
+  //       (x: any) => x.id == this.data.selectednode.id
+  //     );
+  //     this.data.creatednodes[index].stores = this.storelist;
+  //     this.api
+  //       .editVSAstores(this.data.creatednodes, this.data.id)
+  //       .then((data: any) => {
+  //         if (!data) {
+  //           this.dialogRef.close();
+  //         }
+  //       });
+  //   }
+  // }
 
-  async takePicture(type: string, index: number, item: any) {
+  async takePicture(type: string, id: string, item: any) {
     const image = await Camera.getPhoto({
       quality: 100,
       height: 300,
@@ -132,12 +140,12 @@ export class VisitallstoredetailsComponent implements OnInit {
     });
     const imageUrl = image.webPath || '';
     if (imageUrl) {
-      this.startCropper(imageUrl, type, index, item);
+      this.startCropper(imageUrl, type, id, item);
     } else {
     }
   }
 
-  async startCropper(webPath: string, type: string, Sindex: number, item: any) {
+  async startCropper(webPath: string, type: string, id: string, item: any) {
     let isPhone = this.auth.resource.getWidth < 768;
     let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
     const refDialog = this.auth.resource.dialog.open(CropperComponent, {
@@ -156,20 +164,19 @@ export class VisitallstoredetailsComponent implements OnInit {
         }
       } else {
         if (type == 'banner') {
-          let index = this.data.creatednodes.findIndex(
-            (x: any) => x.id == this.data.selectednode.id
-          );
-          const cloudUpload = await this.api
-            .cloudUpload(
-              this.data.creatednodes[index].stores[Sindex].id,
-              result.croppedImage
-            )
-            .then((datas: any) => {
-              this.data.creatednodes[index].stores[Sindex].VSAbanner =
-                datas.url;
+          this.api
+            .updatestorewithnodebanner(id, result.croppedImage)
+            .then((data: any) => {
+              alert('banner uploaded');
             });
         }
       }
+    });
+  }
+
+  deletestore(id: string) {
+    this.api.deletestorefromnodes(id).then((data: any) => {
+      alert('store deleted');
     });
   }
 }

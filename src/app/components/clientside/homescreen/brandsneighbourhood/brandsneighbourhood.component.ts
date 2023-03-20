@@ -23,8 +23,10 @@ export class BrandsneighbourhoodComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   nodeColumns: string[] = ['node', 'no_stores', 'storename', 'date', 'action'];
   Selectedcity: string = "";
-  creatednodes: Array<any> = [];
+  // creatednodes: Array<any> = [];
   nodes$: Observable<any[]> = of();
+  alreadyCnodes$: Observable<any[]> = of();
+
   Selectednode: string = "";
   selectednodedata: any;
   BIYNmoduledata: any = [];
@@ -49,7 +51,8 @@ export class BrandsneighbourhoodComponent implements OnInit {
     else {
       const dialogRef = this.dialog.open(BrandsstoreComponent, {
         width: "90%",
-        data: { node: this.selectednodedata, id: this.BIYNmoduledata.id, selectednode: creatednode, creatednodes: this.creatednodes },
+        data: { node: this.selectednodedata, id: this.BIYNmoduledata.id, selectednode: creatednode,
+          cityid: this.Selectedcity },
         hasBackdrop: true,
         disableClose: true,
         panelClass: 'thanksscreen'
@@ -66,7 +69,7 @@ export class BrandsneighbourhoodComponent implements OnInit {
       this.BIYNmoduledata = BNdata[0];
       this.BIYNTitle = BNdata[0].BN_Title;
       this.BIYNSTitle = BNdata[0].BN_STitle;
-      this.creatednodes = BNdata[0].Nodes;
+      // this.creatednodes = BNdata[0].Nodes;
     });
   }
 
@@ -116,15 +119,26 @@ export class BrandsneighbourhoodComponent implements OnInit {
   }
 
   citychange() {
-    this.api.getNodeDataaspercity(this.Selectedcity).subscribe((data: any) => {
-      let nodearr: Array<any> = [];
-      for (let i = 0; i < data.length; i++) {
-        let index = this.creatednodes.findIndex((x: any) => x.id == data[i].id);
-        if (index < 0) {
-          nodearr.push(data[i]);
+    let alreadyCnode: Array<any> = [];
+    let newnodes: Array<any> = [];
+    this.api
+      .getNodeDataaspercity(this.Selectedcity)
+      .pipe(take(1))
+      .subscribe((data: any) => {
+        for (let i = 0; i < data.length; i++) {
+          this.api
+            .getstorecount('BIYNsection', this.Selectedcity, data[i].id)
+            .then((datas: any) => {
+              if (datas > 0) {
+                data[i].storecount = datas;
+                alreadyCnode.push(data[i]);
+              } else {
+                newnodes.push(data[i]);
+              }
+            });
         }
-      }
-      this.nodes$ = of(nodearr);
-    })
-  }
+        this.alreadyCnodes$ = of(alreadyCnode);
+        this.nodes$ = of(newnodes);
+      });
+    }
 }

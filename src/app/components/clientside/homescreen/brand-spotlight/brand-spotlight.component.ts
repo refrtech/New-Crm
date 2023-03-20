@@ -147,35 +147,35 @@ export class BrandSpotlightComponent implements OnInit {
     });
     const imageUrl = image.webPath || '';
     if (imageUrl) {
-      // this.startCropper(imageUrl, type, index, item);
+      this.startCropper(imageUrl, type, index, item);
     }
   }
 
-  // async startCropper(webPath: string, type: string, sindex: number, item: any) {
-  //   let isPhone = this.auth.resource.getWidth < 768;
-  //   let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
-  //   const refDialog = this.auth.resource.dialog.open(CropperComponent, {
-  //     width: w,
-  //     minWidth: '320px',
-  //     maxWidth: '480px',
-  //     height: '360px',
-  //     data: { webPath: webPath, type: type },
-  //     disableClose: true,
-  //     panelClass: 'dialogLayout',
-  //   });
-  //   refDialog.afterClosed().subscribe(async (result) => {
-  //     if (!result.success) {
-  //       if (result.info) {
-  //         this.auth.resource.startSnackBar(result.info);
-  //       }
-  //     } else {
-  //       if (type == 'homeBanner') {
-  //         this.BSmoduledata.Stores.findIndex((x:any)=>{
-  //           x.id == this.BSmoduledata.Stores
-
-  //         })
-  //       }
-  //     }
-  //   });
-  // }
+  async startCropper(webPath: string, type: string, sindex: number, item: any) {
+    let isPhone = this.auth.resource.getWidth < 768;
+    let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
+    const refDialog = this.auth.resource.dialog.open(CropperComponent, {
+      width: w,
+      minWidth: '320px',
+      maxWidth: '480px',
+      height: '360px',
+      data: { webPath: webPath, type: type },
+      disableClose: true,
+      panelClass: 'dialogLayout',
+    });
+    refDialog.afterClosed().subscribe(async (result) => {
+      if (!result.success) {
+        if (result.info) {
+          this.auth.resource.startSnackBar(result.info);
+        }
+      } else {
+        if (type == 'homeBanner') {
+          console.log(sindex);
+          this.api.updatebsbanner(this.BSmoduledata.id,result.croppedImage,this.BSmoduledata.Stores,sindex).then((data) => {
+            alert("banner updated");
+          });
+        }
+      }
+    });
+  }
 }

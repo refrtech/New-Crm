@@ -9,25 +9,28 @@ import { VisitallstoredetailsComponent } from './visitallstoredetails/visitallst
 @Component({
   selector: 'app-visitsharemodule',
   templateUrl: './visitsharemodule.component.html',
-  styleUrls: ['./visitsharemodule.component.scss']
+  styleUrls: ['./visitsharemodule.component.scss'],
 })
 export class VisitsharemoduleComponent implements OnInit {
-  VSATitle: string = "";
-  VSASTitle: string = "";
+  VSATitle: string = '';
+  VSASTitle: string = '';
   editSubt: boolean = false;
   editTitle: boolean = false;
   nodeColumns: string[] = ['node', 'no_stores', 'storename', 'date', 'action'];
   nodes!: MatTableDataSource<any>;
   cityList$: Observable<any[]> = of();
   nodes$: Observable<any[]> = of();
-  Selectedcity: string = "";
-  Selectednode: string = "";
-  creatednodes: Array<any> = [];
+  alreadyCnodes$: Observable<any[]> = of();
+  Selectedcity: string = '';
+  Selectednode: string = '';
+  // creatednodes: Array<any> = [];
   VSAmoduledata: any = [];
   selectednodedata: any;
-  constructor(public router: Router, public api: ApiserviceService,
+  constructor(
+    public router: Router,
+    public api: ApiserviceService,
     private dialog: MatDialog
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getvsadata();
@@ -35,12 +38,15 @@ export class VisitsharemoduleComponent implements OnInit {
   }
 
   getvsadata() {
-    this.api.getVSAData().pipe(take(1)).subscribe((VSAdata: any) => {
-      this.VSAmoduledata = VSAdata[0];
-      this.VSATitle = VSAdata[0].VSA_Title;
-      this.VSASTitle = VSAdata[0].VSA_STitle;
-      this.creatednodes = VSAdata[0].Nodes == undefined ? [] : VSAdata[0].Nodes;
-    });
+    this.api
+      .getVSAData()
+      .pipe(take(1))
+      .subscribe((VSAdata: any) => {
+        this.VSAmoduledata = VSAdata[0];
+        this.VSATitle = VSAdata[0].VSA_Title;
+        this.VSASTitle = VSAdata[0].VSA_STitle;
+        // this.creatednodes = VSAdata[0].Nodes == undefined ? [] : VSAdata[0].Nodes;
+      });
   }
 
   getallcity() {
@@ -48,55 +54,69 @@ export class VisitsharemoduleComponent implements OnInit {
   }
 
   allstores(creatednode?: any) {
-    if (this.Selectedcity == "") {
-      alert("please select city.")
-    }
-    else if (creatednode == undefined && this.Selectednode == "") {
-      alert("please select node.")
-    }
-    else {
+    if (this.Selectedcity == '') {
+      alert('please select city.');
+    } else if (creatednode == undefined && this.Selectednode == '') {
+      alert('please select node.');
+    } else {
       const dialogRef = this.dialog.open(VisitallstoredetailsComponent, {
-        width: "90%",
-        data: { node: this.selectednodedata, id: this.VSAmoduledata.id, selectednode: creatednode, creatednodes: this.creatednodes },
+        width: '90%',
+        data: {
+          node: this.selectednodedata,
+          id: this.VSAmoduledata.id,
+          selectednode: creatednode,
+          cityid: this.Selectedcity,
+        },
         hasBackdrop: true,
         disableClose: true,
-        panelClass: 'thanksscreen'
+        panelClass: 'thanksscreen',
       });
     }
   }
 
   citychange() {
-    this.api.getNodeDataaspercity(this.Selectedcity).subscribe((data: any) => {
-      let nodearr: Array<any> = [];
-      for (let i = 0; i < data.length; i++) {
-        let index = this.creatednodes.findIndex((x: any) => x.id == data[i].id);
-        if (index < 0) {
-          nodearr.push(data[i]);
+    let alreadyCnode: Array<any> = [];
+    let newnodes: Array<any> = [];
+    this.api
+      .getNodeDataaspercity(this.Selectedcity)
+      .pipe(take(1))
+      .subscribe((data: any) => {
+        for (let i = 0; i < data.length; i++) {
+          this.api
+            .getstorecount('VSAsection', this.Selectedcity, data[i].id)
+            .then((datas: any) => {
+              if (datas > 0) {
+                data[i].storecount = datas;
+                alreadyCnode.push(data[i]);
+              } else {
+                newnodes.push(data[i]);
+              }
+            });
         }
-      }
-      this.nodes$ = of(nodearr);
-    })
+        this.alreadyCnodes$ = of(alreadyCnode);
+        this.nodes$ = of(newnodes);
+      });
   }
 
   updateVSTitle() {
     if (!this.editTitle) {
       this.editTitle = !this.editTitle;
-    }
-    else if (this.VSATitle == this.VSAmoduledata.VSA_Title) {
+    } else if (this.VSATitle == this.VSAmoduledata.VSA_Title) {
       this.editTitle = !this.editTitle;
-    }
-    else {
+    } else {
       if (!this.VSATitle) {
-        alert("please enter the Title.");
-      }
-      else {
-        this.api.updateVSAtitle(this.VSATitle, this.VSAmoduledata.id).then((data) => {
-          if (data != undefined) {
-            this.editTitle = !this.editTitle;
-          }
-        }).catch(() => {
-          return false;
-        });
+        alert('please enter the Title.');
+      } else {
+        this.api
+          .updateVSAtitle(this.VSATitle, this.VSAmoduledata.id)
+          .then((data) => {
+            if (data != undefined) {
+              this.editTitle = !this.editTitle;
+            }
+          })
+          .catch(() => {
+            return false;
+          });
       }
     }
   }
@@ -104,26 +124,26 @@ export class VisitsharemoduleComponent implements OnInit {
   updateVSASTitle() {
     if (!this.editSubt) {
       this.editSubt = !this.editSubt;
-    }
-    else if (this.VSATitle == this.VSAmoduledata.VSA_STitle) {
+    } else if (this.VSATitle == this.VSAmoduledata.VSA_STitle) {
       this.editSubt = !this.editSubt;
-    }
-    else {
+    } else {
       if (!this.VSATitle) {
-        alert("please enter the sub Title.");
-      }
-      else {
-        this.api.updateVSAStitle(this.VSATitle, this.VSAmoduledata.id).then((data) => {
-          if (data != undefined) {
-          }
-        }).catch(() => {
-          return false;
-        });
+        alert('please enter the sub Title.');
+      } else {
+        this.api
+          .updateVSAStitle(this.VSATitle, this.VSAmoduledata.id)
+          .then((data) => {
+            if (data != undefined) {
+            }
+          })
+          .catch(() => {
+            return false;
+          });
       }
     }
   }
 
-  navigatetointernal(item:any){
-    this.router.navigateByUrl('/VSAcat/'+item.id);
+  navigatetointernal(item: any) {
+    this.router.navigateByUrl('/VSAcat/' + item.id);
   }
 }

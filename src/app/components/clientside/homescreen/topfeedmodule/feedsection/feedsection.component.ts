@@ -9,7 +9,6 @@ import {
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiserviceService } from 'src/app/apiservice.service';
 import { AuthService } from 'src/app/auth.service';
-// import { Storage } from '@google-cloud/storage';
 
 @Component({
   selector: 'app-feedsection',
@@ -55,59 +54,37 @@ export class FeedsectionComponent implements OnInit {
       reader.readAsDataURL(file);
       this.fileName = file.name;
       const formData = new FormData();
-      formData.append('video', file,this.fileName);
-      
-      const uploadUrl = `${this.storageUrl}/${this.bucketName}/${this.folderPath}`; // Set the upload URL
-  
+      formData.append('video', file, this.fileName);
+
+      const uploadUrl = `${this.storageUrl}/${this.bucketName}/${this.folderPath}`;
 
       const uploadOptions = {
         headers: {
-          'Content-Type': 'multipart/form-data', // Set the content type header
+          'Content-Type': 'multipart/form-data',
         },
       };
-  
-      // Make the upload request using the HttpClient module
-      this.http
-        .post(uploadUrl, formData, uploadOptions)
-        .subscribe((response) => {
+
+      this.http.post(uploadUrl, formData, uploadOptions).subscribe(
+        (response) => {
           console.log(`Video uploaded to ${uploadUrl}${this.fileName}.`);
-        }, (error) => {
+        },
+        (error) => {
           console.error('Error uploading video:', error);
-        });
-      // let upload$ = this.http.post(
-      //   'https://us-central1-refr-india.cloudfunctions.net/ind_serve/api/video',
-      //   formData
-      // );
+        }
+      );
 
-    //   upload$.subscribe((res: any) => {
-    //     this.videoPath = res;
-    //     (err: any) => {};
-    //   });
-    //   let a: string = await file.type.toString();
-    //   this.format = a.substring(0, a.indexOf('/'));
-
-    //   // if ( == 'video') {
-    //   // } else if (file.type.indexOf('image') > -1) {
-    //   //   this.format = 'image';
-    //   // }
-    //   reader.onload = (event) => {
-    //     this.url = (<FileReader>event.target).result;
-    //   };
-    // }
-
-    // -------
-    const readerer = new FileReader();
-    readerer.onloadend = async () => {
-      const content = reader.result?.toString();
-      const mimeType = content?.split(',')[0].split(':')[1].split(';')[0];
-      if (mimeType === 'image/webp' || mimeType === 'image/png') {
-        this.auth.addInfoVideo(event).then((d) => {});
-      } else if (mimeType === 'video/mp4' || mimeType === 'video/mpeg') {
-        this.auth.addInfoVideo(event).then((d) => {});
-      }
-    };
-    readerer.readAsDataURL(file);
-  }
+      const readerer = new FileReader();
+      readerer.onloadend = async () => {
+        const content = reader.result?.toString();
+        const mimeType = content?.split(',')[0].split(':')[1].split(';')[0];
+        if (mimeType === 'image/webp' || mimeType === 'image/png') {
+          this.auth.addInfoVideo(event).then((d) => {});
+        } else if (mimeType === 'video/mp4' || mimeType === 'video/mpeg') {
+          this.auth.addInfoVideo(event).then((d) => {});
+        }
+      };
+      readerer.readAsDataURL(file);
+    }
   }
 
   addVideo() {
@@ -124,4 +101,4 @@ export class FeedsectionComponent implements OnInit {
   close() {
     this.dialogRef.close();
   }
- }
+}
