@@ -17,7 +17,7 @@ import { AuthService } from 'src/app/auth.service';
 export class VisitallstoredetailsComponent implements OnInit {
   parameters: string = 'phone';
   operators: string = '==';
-  searchvalue: string = '9833006431'; //9833006431
+  searchvalue: string = "9876543210";
   isstorealreadyadded: boolean = false;
   ParaArr: Array<any> = [
     {
@@ -77,10 +77,6 @@ export class VisitallstoredetailsComponent implements OnInit {
       .pipe(take(1))
       .subscribe((recentStore: any) => {
         this.MerchantdataSource = new MatTableDataSource(recentStore);
-        // this.isstorealreadyadded =
-        //   this.storelist.findIndex((x) => x.id == recentStore[0].id) < 0
-        //     ? false
-        //     : true;
       });
   }
 

@@ -14,7 +14,7 @@ export class HomegrowbrandsComponent implements OnInit {
   editTitle: boolean = false;
   parameters: string = "phone";
   operators: string = "==";
-  searchvalue: string = "9833006431";
+  searchvalue: string = "9876543210";
   homegrownT: string = "";
   homegrownST: string = "";
   selectedstores: Array<any> = [];

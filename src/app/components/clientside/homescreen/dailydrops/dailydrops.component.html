@@ -66,7 +66,6 @@
                                 <ng-container *ngIf="cityList$ | async as cityList">
                                     <mat-option *ngFor="let item of cityList" [value]="item.id">
                                         {{item.CityN}}
-                                        
                                     </mat-option>
                                 </ng-container>
                             </mat-select>
@@ -97,41 +96,36 @@
         </div>
     </div>
     <div class="t50margin boxshw lr55margin">
-        <div class="dflex M100width tb15padding s_size">
-            <div class="regulartext M20width l10padding">Node name</div>
-            <div class="regulartext M10width c_align">No of stores</div>
-            <div class="regulartext M50width c_align">Store name</div>
-            <div class="regulartext M20width c_align">Action</div>
-        </div>
-        <div>
-            <div class="example-container M100width">
-                <div class="example-list">
-                    <ng-container *ngFor="let item of creatednodes">
-                        <ng-container *ngIf="item.city_id == Selectedcity">
-                            <div class="dflex tborder s_size tb15padding">
-                                <div class="regulartext M20width l10padding">
-                                    {{item.name}}
-                                </div>
-                                <div class="regulartext M10width c_align">
-                                    {{item.stores.length}}
-                                </div>
-                                <div class="regulartext M50width c_align">
-                                    <ng-container *ngFor="let items of item.stores">
-                                    <span class="lightgray_bg lr15padding tb5padding A20radius r5margin">
-                                        {{items.name}}
-                                    </span>
-                                </ng-container>
-                                </div>
-                                <div class="regulartext M20width c_align">
-                                    <mat-icon (click)="allstores(item)">
-                                        edit
-                                    </mat-icon>
-                                </div>
-                            </div>
-                        </ng-container>
-                    </ng-container>
+      <div class="dflex M100width tb15padding s_size">
+        <div class="regulartext M20width l10padding">Node name</div>
+        <div class="regulartext M10width c_align">No of stores</div>
+        <!-- <div class="regulartext M35width c_align">Store name</div> -->
+        <div class="regulartext M50width c_align"></div>
+        <div class="regulartext M20width c_align">Action</div>
+      </div>
+      <div>
+        <div class="example-container M100width">
+          <div class="example-list" *ngIf="alreadyCnodes$ | async as nodes">
+            <ng-container *ngFor="let item of nodes">
+              <ng-container *ngIf="item.city_id == Selectedcity">
+                <div class="dflex tborder s_size tb15padding">
+                  <div class="regulartext M20width l10padding">
+                    {{item.name}}
+                  </div>
+                  <div class="regulartext M10width c_align">
+                    {{item.storecount}}
+                  </div>
+                  <div class="M50width"></div>
+                  <div class="regulartext M20width c_align">
+                    <mat-icon (click)="allstores(item)">
+                      edit
+                    </mat-icon>
+                  </div>
                 </div>
-            </div>
+              </ng-container>
+            </ng-container>
+          </div>
         </div>
+      </div>
     </div>
 </div>

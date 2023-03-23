@@ -17,7 +17,7 @@ import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component
 export class BrandsstoreComponent implements OnInit {
   parameters: string = 'phone';
   operators: string = '==';
-  searchvalue: string = '9833006431'; //9833006431
+  searchvalue: string = "9876543210";
   isstorealreadyadded: boolean = false;
 
   ParaArr: Array<any> = [

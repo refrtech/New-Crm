@@ -30,8 +30,8 @@ export class VSAnodesubcatstoresComponent implements OnInit {
   operators: string = '==';
   operators1: string = '==';
 
-  searchvalue: string = '9833006431'; //9833006431
-  searchvalue1: string = '9833006431'; //9833006431
+  searchvalue: string = "9876543210";
+  searchvalue1: string = "9876543210";
 
   isstorealreadyadded: boolean = false;
   isstorealreadyadded1: boolean = false;
@@ -113,7 +113,10 @@ export class VSAnodesubcatstoresComponent implements OnInit {
             let i = this.catarray.findIndex(
               (x: any) => x.Catid == this.actRoute.snapshot.params['catid']
             );
+            console.log(i);
             if (i != -1) {
+              console.log(this.catarray);
+              console.log(i);
               let j = this.catarray[i].subcatbanners.findIndex(
                 (x: any) => x.Subcatid == this.SelectedSubCat
               );
@@ -252,6 +255,7 @@ export class VSAnodesubcatstoresComponent implements OnInit {
         }
       } else {
         if (type == 'homeBanner') {
+          console.log(type);
           this.api
             .updateNodesubcatinternalBanner(
               this.actRoute.snapshot.params['internalid'],

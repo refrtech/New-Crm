@@ -32,9 +32,8 @@ export class HgbnodesubcatstoresComponent implements OnInit {
   operators: string = '==';
   operators1: string = '==';
 
-  searchvalue: string = '9833006431'; //9833006431
-  searchvalue1: string = '9833006431'; //9833006431
-
+  searchvalue: string = "9876543210";
+  searchvalue1: string = "9876543210";
   isstorealreadyadded: boolean = false;
   isstorealreadyadded1: boolean = false;
   isstorealreadyadded2: boolean = false;

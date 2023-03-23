@@ -23,7 +23,6 @@ export class VisitsharemoduleComponent implements OnInit {
   alreadyCnodes$: Observable<any[]> = of();
   Selectedcity: string = '';
   Selectednode: string = '';
-  // creatednodes: Array<any> = [];
   VSAmoduledata: any = [];
   selectednodedata: any;
   constructor(
@@ -45,7 +44,6 @@ export class VisitsharemoduleComponent implements OnInit {
         this.VSAmoduledata = VSAdata[0];
         this.VSATitle = VSAdata[0].VSA_Title;
         this.VSASTitle = VSAdata[0].VSA_STitle;
-        // this.creatednodes = VSAdata[0].Nodes == undefined ? [] : VSAdata[0].Nodes;
       });
   }
 

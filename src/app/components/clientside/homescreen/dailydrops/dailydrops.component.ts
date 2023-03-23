@@ -18,9 +18,9 @@ export class DailydropsComponent implements OnInit {
   cityList$: Observable<any[]> = of();
   nodes$: Observable<any[]> = of();
   Selectednode: string = '';
-  creatednodes: Array<any> = [];
   selectednodedata: any;
   dailydropmoduledata: any = [];
+  alreadyCnodes$: Observable<any[]> = of();
 
   constructor(public dialog: MatDialog, public api: ApiserviceService) {}
 
@@ -41,7 +41,7 @@ export class DailydropsComponent implements OnInit {
           node: this.selectednodedata,
           id: this.dailydropmoduledata.id,
           selectednode: creatednode,
-          creatednodes: this.creatednodes,
+          cityid: this.Selectedcity,
         },
         hasBackdrop: true,
         disableClose: true,
@@ -62,7 +62,6 @@ export class DailydropsComponent implements OnInit {
         this.dailydropmoduledata = daildropsdata[0];
         this.DailydropTitle = daildropsdata[0].DDrop_Title;
         this.DailydropSTitle = daildropsdata[0].DDrop_STitle;
-        this.creatednodes = daildropsdata[0].Nodes;
       });
   }
 
@@ -118,16 +117,27 @@ export class DailydropsComponent implements OnInit {
   }
 
   citychange() {
-    this.api.getNodeDataaspercity(this.Selectedcity).subscribe((data: any) => {
-      let nodearr: Array<any> = [];
-      for (let i = 0; i < data.length; i++) {
-        let index = this.creatednodes.findIndex((x: any) => x.id == data[i].id);
-        if (index < 0) {
-          nodearr.push(data[i]);
+    let alreadyCnode: Array<any> = [];
+    let newnodes: Array<any> = [];
+    this.api
+      .getNodeDataaspercity(this.Selectedcity)
+      .pipe(take(1))
+      .subscribe((data: any) => {
+        for (let i = 0; i < data.length; i++) {
+          this.api
+            .getstorecount('dailydropsection', this.Selectedcity, data[i].id)
+            .then((datas: any) => {
+              if (datas > 0) {
+                data[i].storecount = datas;
+                alreadyCnode.push(data[i]);
+              } else {
+                newnodes.push(data[i]);
+              }
+            });
         }
-      }
-      this.nodes$ = of(nodearr);
-    });
+        this.alreadyCnodes$ = of(alreadyCnode);
+        this.nodes$ = of(newnodes);
+      });
   }
 
   //   adddata() {

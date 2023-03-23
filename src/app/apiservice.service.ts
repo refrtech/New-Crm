@@ -1118,6 +1118,7 @@ export class ApiserviceService {
     } else {
       let i = catarray.findIndex((x: any) => x.Catid == catid);
       let j;
+      console.log(catarray);
       if (catarray[i].subcatbanners != undefined) {
         j = catarray[i].subcatbanners.findIndex(
           (x: any) => x.Subcatid == subcatid
