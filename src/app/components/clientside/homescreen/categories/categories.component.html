@@ -1,0 +1,71 @@
+<div class="A20padding">
+  <div class="dflex JCspace">
+    <div class="M50width">
+      <div class="b15margin">
+        <div class="m_size crminput r15padding AScenter lr5padding">City</div>
+      </div>
+      <div>
+        <mat-form-field class="crminput l5margin r5margin M70width" appearance="outline">
+          <mat-select placeholder="Select city" [(ngModel)]="Selectedcity" (selectionChange)="citychange()">
+            <ng-container *ngIf="cityList$ | async as cityList">
+              <mat-option *ngFor="let item of cityList" [value]="item.id">
+                {{item.CityN}}
+              </mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="M50width">
+      <div class="b15margin">
+        <div class="m_size crminput r15padding AScenter lr5padding">Node</div>
+      </div>
+      <div>
+        <mat-form-field class="crminput l5margin r5margin M70width" appearance="outline">
+          <mat-select placeholder="Select node" [(ngModel)]="Selectednode">
+            <ng-container *ngIf="nodes$ | async as nodeList">
+              <mat-option *ngFor="let item of nodeList" [value]="item.id" >
+                {{item.name}}
+              </mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <ng-container *ngIf="Selectedcity != '' && Selectednode != ''">
+  <div class="t40margin boldtext m_size">
+    Categories
+  </div>
+  <div class="t15margin boxshw">
+    <div class="dflex JCevenly M100width tb15padding s_size purple_background White_txt">
+      <div class="M10width c_align">Rank</div>
+      <div class="regulartext M65width">Category name</div>
+      <div class="regulartext M25width c_align">Action</div>
+    </div>
+    <div>
+      <div class="example-container M100width">
+        <div class="example-list">
+          <div class="example-box tborder s_size dflex tb10padding" *ngFor="let item of auth.resource.categoryList">
+            <div class="M10width dflex JCcenter">
+              <mat-icon>menu</mat-icon>
+            </div>
+            <div class="M65width l_align">
+              {{item.title}}
+            </div>
+            <div class="M25width c_align">
+              <a [routerLink]="'/Category/'+Selectednode+'/'+item.id">
+                <mat-icon class="black_text">edit</mat-icon>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+</div>

@@ -45,6 +45,8 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { AuthGuard } from './guards/auth.guard';
 import { VSAnodesubcatstoresComponent } from './components/clientside/homescreen/visitsharemodule/vsanodescat/vsanodecatstores/vsanodesubcatstores/vsanodesubcatstores.component';
 import { HgbnodesubcatstoresComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hgbnodecatstores/hgbnodesubcatstores/hgbnodesubcatstores.component';
+import { CategoriesComponent } from './components/clientside/homescreen/categories/categories.component';
+import { CategoriesinternalComponent } from './components/clientside/homescreen/categories/categoriesinternal/categoriesinternal.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -190,6 +192,16 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
+        path: 'Categories',
+        component: CategoriesComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'Category/:nodeid/:cat',
+        component: CategoriesinternalComponent,
+        canActivate: [AuthGuard],
+      },
+      {
         path: 'nodebrands',
         component: BrandsdetailComponent,
         canActivate: [AuthGuard],
@@ -219,7 +231,11 @@ const routes: Routes = [
         component: DaildropsbrandsComponent,
         canActivate: [AuthGuard],
       },
-      { path: 'Nodecity', component: NodemanagementCitysComponent },
+      {
+        path: 'Nodecity',
+        component: NodemanagementCitysComponent,
+        canActivate: [AuthGuard],
+      },
       {
         path: 'VSAcat/:id',
         component: VSAnodescatComponent,
@@ -230,7 +246,6 @@ const routes: Routes = [
         component: VSAnodecatstoresComponent,
         canActivate: [AuthGuard],
       },
-
       {
         path: 'VSAsubcatstores/:internalid/:nodeid/:catid',
         component: VSAnodesubcatstoresComponent,
@@ -251,7 +266,6 @@ const routes: Routes = [
         component: HgbnodesubcatstoresComponent,
         canActivate: [AuthGuard],
       },
-
     ],
   },
 ];

@@ -913,6 +913,50 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
+  getPeoplechoiceCatstores(nodeid:string,catId: string) {
+    const VSA_section: CollectionReference = collection(
+      this.firestore,
+      `${'people_choice_store'}`
+    );
+    const qu = query(
+      VSA_section,
+      where('Nodeid', '==', nodeid),
+      where('catId', '==', catId),
+      where('sectionName', '==', 'Categorysection')
+    );
+    return collectionData(qu);
+  }
+
+  gettrendingCatstores(nodeid:string,catId: string) {
+    const VSA_section: CollectionReference = collection(
+      this.firestore,
+      `${'trending_store'}`
+    );
+    const qu = query(
+      VSA_section,
+      where('Nodeid', '==', nodeid),
+      where('catId', '==', catId),
+      where('sectionName', '==', 'Categorysection')
+    );
+    return collectionData(qu);
+  }
+
+
+  getcuratedtrendingCatstores(nodeid:string,catId: string) {
+    const VSA_section: CollectionReference = collection(
+      this.firestore,
+      `${'trending_store'}`
+    );
+    const qu = query(
+      VSA_section,
+      where('Nodeid', '==', nodeid),
+      where('catId', '==', catId),
+      where('sectionName', '==', 'Categorysection-CuratedStores')
+    );
+    return collectionData(qu);
+  }
+
+
   getHgrownPeoplechoiceCatstores(catId: string) {
     const VSA_section: CollectionReference = collection(
       this.firestore,
@@ -1100,6 +1144,35 @@ export class ApiserviceService {
       }).then(() => {
         return cloudUpload;
       });
+    }
+  }
+
+  async updatecatBannerORthumbnail(
+    catid: any,
+    croppedImage: string,
+    type: string
+  ) {
+    const newTimestamp = this.getServerTimestamp();
+    const categoryrefr = doc(this.firestore, `${'cats'}`, `${catid}`);
+    const cloudUpload = await this.cloudUpload(catid, croppedImage);
+    if (!cloudUpload.success) {
+      return cloudUpload;
+    } else {
+      if (type == 'homeBanner') {
+        return updateDoc(categoryrefr, {
+          CategoryBanner: cloudUpload.url,
+          upd: newTimestamp,
+        }).then(() => {
+          return cloudUpload;
+        });
+      } else {
+        return updateDoc(categoryrefr, {
+          thumbnail: cloudUpload.url,
+          upd: newTimestamp,
+        }).then(() => {
+          return cloudUpload;
+        });
+      }
     }
   }
 
@@ -1417,7 +1490,7 @@ export class ApiserviceService {
       });
   }
 
-  async updatestorewithnodebanner(id:string,croppedImage:any) {
+  async updatestorewithnodebanner(id: string, croppedImage: any) {
     const cityrefr = doc(this.firestore, `${'Storewithnodes'}`, `${id}`);
     const cloudUpload = await this.cloudUpload(id, croppedImage);
     if (!cloudUpload.success) {
@@ -1437,11 +1510,15 @@ export class ApiserviceService {
     }
   }
 
-  async getstorecount(sectionname:string,cityid:string,nodeid:string){
-    const coll = collection(this.firestore, "Storewithnodes");
-    const q = query(coll, where("sectionname", "==", sectionname),where("city_id","==",cityid),where("nodeid","==",nodeid));
+  async getstorecount(sectionname: string, cityid: string, nodeid: string) {
+    const coll = collection(this.firestore, 'Storewithnodes');
+    const q = query(
+      coll,
+      where('sectionname', '==', sectionname),
+      where('city_id', '==', cityid),
+      where('nodeid', '==', nodeid)
+    );
     const snapshot = await getCountFromServer(q);
     return snapshot.data().count;
-
   }
 }

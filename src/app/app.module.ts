@@ -90,6 +90,8 @@ import { DependencyService } from './dependency.service';
 import { ThemeService } from './theme.service';
 import { take } from 'rxjs';
 import { HgbnodesubcatstoresComponent } from './components/clientside/homescreen/homegrowbrands/internalsection/hgbnodecatstores/hgbnodesubcatstores/hgbnodesubcatstores.component';
+import { CategoriesComponent } from './components/clientside/homescreen/categories/categories.component';
+import { CategoriesinternalComponent } from './components/clientside/homescreen/categories/categoriesinternal/categoriesinternal.component';
 
 @NgModule({
   declarations: [
@@ -144,6 +146,8 @@ import { HgbnodesubcatstoresComponent } from './components/clientside/homescreen
     HgbnodecatstoresComponent,
     WelcomeComponent,
     SignComponent,
+    CategoriesComponent,
+    CategoriesinternalComponent,
   ],
   imports: [
     MatDialogModule,

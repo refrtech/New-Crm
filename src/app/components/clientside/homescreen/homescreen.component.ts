@@ -20,7 +20,7 @@ export class HomescreenComponent implements OnInit {
     { feed: 'Brand spotlight', link: '/brandspotlight' },
     { feed: 'What’s new in your hood', link: '/newstoreinyourhood' },
     { feed: 'Top drops', link: '/dailydrops' },
-    { feed: 'Student special', link: '/' },
+    { feed: 'Category', link: '/Categories' },
   ];
 
   drop(event: CdkDragDrop<string[]>) {
