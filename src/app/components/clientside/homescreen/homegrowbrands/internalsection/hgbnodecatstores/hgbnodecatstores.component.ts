@@ -40,7 +40,7 @@ export class HgbnodecatstoresComponent implements OnInit {
 
   MerchantdataSource!: MatTableDataSource<any>;
   MerchantdataSource1!: MatTableDataSource<any>;
-
+  catindex:number=-1;
   ParaArr: Array<any> = [
     {
       Title: 'Store Phone Number',
@@ -75,10 +75,10 @@ export class HgbnodecatstoresComponent implements OnInit {
   ];
   PChoiceStores: Array<any> = [];
   trendingStores: Array<any> = [];
-
+  subcatindex:number= -1;
   constructor(
     private api: ApiserviceService,
-    private actRoute: ActivatedRoute,
+    public actRoute: ActivatedRoute,
     private auth: AuthService,
     private router: Router
   ) {}
@@ -182,7 +182,26 @@ export class HgbnodecatstoresComponent implements OnInit {
     }
   }
 
-  async takePicture(type: string, id?: string) {
+
+
+  gethomegrowndata() {
+    this.api.gethomegrowndata().subscribe((data: any) => {
+      this.HGBdata = data[0];
+      let i = data[0].Categories.findIndex(
+        (x: any) => x.id == this.actRoute.snapshot.params['catid']
+      );
+      this.catindex = i;
+      this.selectedcat = this.auth.resource.categoryList[i].title;
+      this.Catthumbnail = data[0].Categories[i].Thumbnail;
+      this.Catbanner = data[0].Categories[i].catbanner;
+      this.peoplechoicecatpara = data[0].Categories[i].peoplechoicecatpara
+    });
+  }
+
+  async takePicture(type: string, id?: string,i?:number) {
+    console.log(i);
+    this.subcatindex = i || -1;
+    console.log(this.subcatindex);
     const image = await Camera.getPhoto({
       quality: 100,
       height: 300,
@@ -194,19 +213,6 @@ export class HgbnodecatstoresComponent implements OnInit {
     if (imageUrl) {
       this.startCropper(imageUrl, type, id);
     }
-  }
-
-  gethomegrowndata() {
-    this.api.gethomegrowndata().subscribe((data: any) => {
-      this.HGBdata = data[0];
-      let i = data[0].Categories.findIndex(
-        (x: any) => x.id == this.actRoute.snapshot.params['catid']
-      );
-      this.selectedcat = this.auth.resource.categoryList[i].title;
-      this.Catthumbnail = data[0].Categories[i].Thumbnail;
-      this.Catbanner = data[0].Categories[i].catbanner;
-      this.peoplechoicecatpara = data[0].Categories[i].peoplechoicecatpara
-    });
   }
 
   startCropper(webPath: string, type: string, id?: string) {
@@ -287,6 +293,16 @@ export class HgbnodecatstoresComponent implements OnInit {
                 this.auth.resource.startSnackBar('Banner Update Under Review!');
               }
             });
+        }
+        else {
+          console.log("asdads",this.HGBdata);
+          this.api.updateHGsubcatbanner(this.HGBdata,result.croppedImage,this.catindex,this.subcatindex).then((ref) => {
+            if (!ref ) {
+              this.auth.resource.startSnackBar('Upload Failed!');
+            } else {
+              this.auth.resource.startSnackBar('Banner Update Under Review!');
+            }
+          })
         }
       }
     });

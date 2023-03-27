@@ -66,8 +66,52 @@
     </div>
   </main>
 
+
   <div class="t40margin b20margin">
-    <div>
+    <div class="b20padding">
+      <span class="s_size boldtext">Select Sub-category </span>
+    </div>
+    <div
+      *ngIf="actRoute.snapshot.params['catid'] == 'food_and_beverages' || actRoute.snapshot.params['catid'] == 'fashion_brand' || actRoute.snapshot.params['catid'] == 'beauty' || actRoute.snapshot.params['catid'] == 'electronics'">
+
+
+
+      <div class="t15margin boxshw">
+        <div class="dflex JCevenly M100width tb15padding s_size purple_background White_txt">
+          <div class="regulartext M65width">Sub-Category name</div>
+          <div class="regulartext M25width c_align">Action</div>
+        </div>
+        <div>
+          <div class="example-container M100width">
+            <div class="example-list">
+              <div class="example-box JCevenly tborder s_size dflex tb10padding"
+                *ngFor="let item of HGBdata?.Categories[catindex].items;let i = index">
+                <div class="M65width l_align">
+                  {{item.name}}
+                </div>
+                <div class="M25width c_align" (click)="takePicture('subcatbanner',item.id,i)">
+                  <mat-icon class="black_text">photo_camera</mat-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+    </div>
+  </div>
+
+
+
+
+
+
+  <div class="t40margin b20margin">
+    <div class="b20padding">
       <span class="s_size boldtext">People’s Choice </span> <span class="xs_size gray_txt">(Maximum 250 words)</span>
     </div>
     <div>

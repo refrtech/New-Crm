@@ -512,10 +512,7 @@ export class ApiserviceService {
     );
   }
 
-  addHGFRstores(stores: any, id: any) {
-    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
-    return updateDoc(cityrefr, { First_Stores: arrayUnion(stores) });
-  }
+
 
   async updatehomegrownbanners(
     id: string,
@@ -544,6 +541,11 @@ export class ApiserviceService {
         return cloudUpload;
       });
     }
+  }
+
+  addHGFRstores(stores: any, id: any) {
+    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
+    return updateDoc(cityrefr, { First_Stores: arrayUnion(stores) });
   }
 
   addHGSRstores(stores: any, id: any) {
@@ -613,6 +615,64 @@ export class ApiserviceService {
     );
     const qu = query(manageNode);
     return collectionData(qu);
+  }
+
+  async updateHomegrownproducts(id:string,products:any){
+    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
+    return updateDoc(cityrefr, { products: products })
+  }
+
+  async updatehomegrownproductbanner(HGdata:any,croppedImage:any,index:number){
+    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${HGdata.id}`);
+    const cloudUpload = await this.cloudUpload(HGdata.id, croppedImage);
+    if (!cloudUpload.success) {
+      return cloudUpload;
+    } else {
+      HGdata.products[index].crmbanner = cloudUpload.url;
+      return updateDoc(cityrefr, { products: HGdata.products }).then(() => {
+        return cloudUpload;
+      })
+        .catch((err) => {
+          return false;
+        });
+    }
+  }
+
+  async updatehomegrownbanner(id:string,croppedImage:any){
+    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
+    const cloudUpload = await this.cloudUpload(id, croppedImage);
+    if (!cloudUpload.success) {
+      return cloudUpload;
+    } else {
+      return updateDoc(cityrefr, { HGbanner: cloudUpload.url }).then(() => {
+        return cloudUpload;
+      })
+        .catch((err) => {
+          return false;
+        });
+    }
+  }
+
+  async updateHGsubcatbanner(HGdata:any,croppedImage:any,catindex:number,subcatindex:number){
+    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${HGdata.id}`);
+    const cloudUpload = await this.cloudUpload(HGdata.id, croppedImage);
+    if (!cloudUpload.success) {
+      return cloudUpload;
+    } else {
+      console.log(catindex);
+      console.log(subcatindex);
+
+
+      HGdata.Categories[catindex].items[subcatindex].crmbanner=cloudUpload.url;
+      console.log(HGdata.Categories);
+      return updateDoc(cityrefr, { Categories: HGdata.Categories }).then(() => {
+        return cloudUpload;
+      })
+        .catch((err) => {
+          return false;
+        });
+    }
+
   }
 
   viewVideo(data: any) {}
@@ -956,7 +1016,6 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-
   getHgrownPeoplechoiceCatstores(catId: string) {
     const VSA_section: CollectionReference = collection(
       this.firestore,
@@ -1115,6 +1174,10 @@ export class ApiserviceService {
       });
     }
   }
+
+
+
+
 
   async updateNodecatinternalBanner(
     id: string,
@@ -1509,6 +1572,15 @@ export class ApiserviceService {
         });
     }
   }
+
+
+
+
+
+
+
+
+
 
   async getstorecount(sectionname: string, cityid: string, nodeid: string) {
     const coll = collection(this.firestore, 'Storewithnodes');
