@@ -199,9 +199,7 @@ export class HgbnodecatstoresComponent implements OnInit {
   }
 
   async takePicture(type: string, id?: string,i?:number) {
-    console.log(i);
     this.subcatindex = i || -1;
-    console.log(this.subcatindex);
     const image = await Camera.getPhoto({
       quality: 100,
       height: 300,
@@ -233,6 +231,7 @@ export class HgbnodecatstoresComponent implements OnInit {
           this.auth.resource.startSnackBar(result.info);
         }
       } else {
+
         if (type == 'Thumbnail') {
           this.api
             .updatehomegrownbanners(
@@ -295,7 +294,6 @@ export class HgbnodecatstoresComponent implements OnInit {
             });
         }
         else {
-          console.log("asdads",this.HGBdata);
           this.api.updateHGsubcatbanner(this.HGBdata,result.croppedImage,this.catindex,this.subcatindex).then((ref) => {
             if (!ref ) {
               this.auth.resource.startSnackBar('Upload Failed!');

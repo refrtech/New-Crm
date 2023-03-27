@@ -105,16 +105,14 @@ export class HgbcreatecategoryComponent implements OnInit {
           this.api
             .updatehomegrownbanner(this.HGdata.id, result.croppedImage)
             .then((data: any) => {
-              console.log(data);
               this.storeBanner = data.url;
               alert('banner uploaded');
             });
         }
         else {
           this.api
-          .updatehomegrownproductbanner(this.HGdata.id, result.croppedImage,index || 0)
+          .updatehomegrownproductbanner(this.HGdata, result.croppedImage,index || 0)
           .then((data: any) => {
-            console.log(data);
             this.storeBanner = data.url;
             alert('banner uploaded');
           });
@@ -144,12 +142,10 @@ export class HgbcreatecategoryComponent implements OnInit {
   }
 
   action(item: any) {
-    console.log(item);
     let index = -1;
     if (this.HGdata?.products != undefined) {
       index = this.HGdata?.products.findIndex((x: any) => x.id == item.id);
     }
-    console.log(index);
     if (index == -1) {
       if (this.HGdata.products == undefined) {
         this.HGdata.products = [item];
@@ -159,7 +155,6 @@ export class HgbcreatecategoryComponent implements OnInit {
     } else {
       this.HGdata.products.splice(index, 1);
     }
-    console.log(this.HGdata.products);
     this.api.updateHomegrownproducts(this.HGdata.id,this.HGdata.products)
     // this.api
   }
