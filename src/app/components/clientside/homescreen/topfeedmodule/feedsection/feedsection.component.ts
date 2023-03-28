@@ -54,25 +54,21 @@ export class FeedsectionComponent implements OnInit {
       reader.readAsDataURL(file);
       this.fileName = file.name;
       const formData = new FormData();
-      formData.append('video', file, this.fileName);
+      formData.append('file', file,this.fileName);
+     // formData.append('name', this.fileName);
 
-      const uploadUrl = `${this.storageUrl}/${this.bucketName}/${this.folderPath}`;
-
-      const uploadOptions = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      };
-
-      this.http.post(uploadUrl, formData, uploadOptions).subscribe(
-        (response) => {
-          console.log(`Video uploaded to ${uploadUrl}${this.fileName}.`);
+    //const uploadUrl = 'https://us-central1-refr-india.cloudfunctions.net/ind_serve/api/video/upload'//`${this.storageUrl}/${this.bucketName}/${this.folderPath}`;
+   // const uploadUrl = 'http://localhost:5001/api/video/upload'
+   //const uploadUrl = "https://us-central1-refr-india.cloudfunctions.net/upload_video_file/upload"
+   const uploadUrl = 'http://34.100.197.18:5001/upload';
+      this.http.post(uploadUrl, formData).subscribe(
+        (response:any) => {
+          console.log(`Video uploaded to ${response.url_link}.`);
         },
         (error) => {
           console.error('Error uploading video:', error);
         }
       );
-
       const readerer = new FileReader();
       readerer.onloadend = async () => {
         const content = reader.result?.toString();
