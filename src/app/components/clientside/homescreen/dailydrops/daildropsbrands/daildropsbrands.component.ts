@@ -62,14 +62,12 @@ export class DaildropsbrandsComponent implements OnInit {
   }
 
   action(data: any) {
-    console.log(this.data);
     data.city_id = this.data.cityid;
     data.nodeid = this.data.selectednode == undefined ? this.data.node.id : this.data.selectednode.id;
     data.sectionname = 'dailydropsection';
-    console.log(data);
     this.api.addstorewithnodeid(data).then((data:any)=>{
       this.isstorealreadyadded = true;
-      console.log("store added");
+      alert("store added");
     });
   }
 

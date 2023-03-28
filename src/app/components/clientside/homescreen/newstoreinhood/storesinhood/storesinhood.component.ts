@@ -53,7 +53,6 @@ export class StoresinhoodComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data);
     if (this.data.selectednode != undefined) {
       this.api
         .getstoreaspernode('NSIYHsection', this.data.selectednode.id)
@@ -78,7 +77,7 @@ export class StoresinhoodComponent implements OnInit {
     data.sectionname = 'NSIYHsection';
     this.api.addstorewithnodeid(data).then((data:any)=>{
       this.isstorealreadyadded = true;
-      console.log("store added");
+      alert("store added");
     });
 
   }

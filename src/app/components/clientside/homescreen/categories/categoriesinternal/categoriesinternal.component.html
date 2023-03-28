@@ -13,7 +13,7 @@
     <div class="dflex">
       <div class="M20width">
         <div class="cat_thumbnail">
-          <img class="M100width" [src]=" Catthumbnail ? Catthumbnail : 'assets/brand/opengraph.png' " alt="" />
+          <img class="M100width" [src]="auth.resource.categoryList[catindex].thumbnail ? auth.resource.categoryList[catindex].thumbnail : 'assets/brand/opengraph.png' " alt="" />
         </div>
       </div>
       <div (click)="takePicture('logo')" class="dflex flex_col l15margin JEend">
@@ -41,7 +41,7 @@
     <div class="dflex">
       <div class="M30width">
         <div class="img">
-          <img class="M100width" [src]=" storeBanner ? storeBanner : 'assets/brand/opengraph.png' " alt="banner" />
+          <img class="M100width" [src]=" auth.resource.categoryList[catindex].CategoryBanner ? auth.resource.categoryList[catindex].CategoryBanner : 'assets/brand/opengraph.png' " alt="banner" />
         </div>
       </div>
       <div class="dflex flex_col l15margin JEend">

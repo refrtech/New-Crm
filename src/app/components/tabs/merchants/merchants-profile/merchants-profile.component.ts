@@ -148,7 +148,6 @@ export class MerchantsProfileComponent implements OnInit {
         this.apiservice.getUserByUID(store.by).then((storeuser) => {
           const storeuserD: any = storeuser.exists() ? storeuser.data() : null;
           this.storeuid = storeuserD.uid;
-          console.log(this.storeuid);
           this.storeinfoDetails = storeuserD;
         });
       });

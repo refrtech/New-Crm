@@ -54,7 +54,6 @@ export class BrandsstoreComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data);
     if (this.data.selectednode != undefined) {
       this.api
         .getstoreaspernode('BIYNsection', this.data.selectednode.id)
@@ -78,7 +77,7 @@ export class BrandsstoreComponent implements OnInit {
     data.sectionname = 'BIYNsection';
     this.api.addstorewithnodeid(data).then((data:any)=>{
       this.isstorealreadyadded = true;
-      console.log("store added");
+      alert("store added");
     });
   }
 

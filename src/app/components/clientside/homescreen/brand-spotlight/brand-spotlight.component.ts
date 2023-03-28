@@ -170,7 +170,6 @@ export class BrandSpotlightComponent implements OnInit {
         }
       } else {
         if (type == 'homeBanner') {
-          console.log(sindex);
           this.api.updatebsbanner(this.BSmoduledata.id,result.croppedImage,this.BSmoduledata.Stores,sindex).then((data) => {
             alert("banner updated");
           });

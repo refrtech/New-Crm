@@ -659,12 +659,7 @@ export class ApiserviceService {
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
-      console.log(catindex);
-      console.log(subcatindex);
-
-
-      HGdata.Categories[catindex].items[subcatindex].crmbanner=cloudUpload.url;
-      console.log(HGdata.Categories);
+      HGdata.Categories[catindex].items[subcatindex].crmbanner = cloudUpload.url;
       return updateDoc(cityrefr, { Categories: HGdata.Categories }).then(() => {
         return cloudUpload;
       })
@@ -1254,7 +1249,6 @@ export class ApiserviceService {
     } else {
       let i = catarray.findIndex((x: any) => x.Catid == catid);
       let j;
-      console.log(catarray);
       if (catarray[i].subcatbanners != undefined) {
         j = catarray[i].subcatbanners.findIndex(
           (x: any) => x.Subcatid == subcatid
@@ -1523,7 +1517,7 @@ export class ApiserviceService {
       data
     ).then((ref) => {
       const areeas = doc(this.firestore, 'Storewithnodes', `${ref.id}`);
-      return updateDoc(areeas, { id: ref.id }).then(() => {
+      return updateDoc(areeas, { Docid: ref.id }).then(() => {
         return ref;
       });
     });

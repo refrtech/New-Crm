@@ -54,7 +54,6 @@ export class VisitallstoredetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data);
     if (this.data.selectednode != undefined) {
       this.api
         .getstoreaspernode('VSAsection', this.data.selectednode.id)
@@ -86,7 +85,7 @@ export class VisitallstoredetailsComponent implements OnInit {
     data.sectionname = 'VSAsection';
     this.api.addstorewithnodeid(data).then((data:any)=>{
       this.isstorealreadyadded = true;
-      console.log("store added");
+      alert("store added");
     });
   }
 

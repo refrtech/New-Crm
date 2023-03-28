@@ -156,6 +156,5 @@ export class HgbcreatecategoryComponent implements OnInit {
       this.HGdata.products.splice(index, 1);
     }
     this.api.updateHomegrownproducts(this.HGdata.id,this.HGdata.products)
-    // this.api
   }
 }

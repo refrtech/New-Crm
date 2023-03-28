@@ -74,7 +74,7 @@ export class VSAnodecatstoresComponent implements OnInit {
     public auth: AuthService,
     private router: Router,
     private api: ApiserviceService,
-    private actRoute: ActivatedRoute
+    public actRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {

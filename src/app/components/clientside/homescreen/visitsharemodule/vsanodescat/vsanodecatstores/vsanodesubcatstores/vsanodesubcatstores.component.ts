@@ -113,10 +113,7 @@ export class VSAnodesubcatstoresComponent implements OnInit {
             let i = this.catarray.findIndex(
               (x: any) => x.Catid == this.actRoute.snapshot.params['catid']
             );
-            console.log(i);
             if (i != -1) {
-              console.log(this.catarray);
-              console.log(i);
               let j = this.catarray[i].subcatbanners.findIndex(
                 (x: any) => x.Subcatid == this.SelectedSubCat
               );
@@ -255,7 +252,6 @@ export class VSAnodesubcatstoresComponent implements OnInit {
         }
       } else {
         if (type == 'homeBanner') {
-          console.log(type);
           this.api
             .updateNodesubcatinternalBanner(
               this.actRoute.snapshot.params['internalid'],

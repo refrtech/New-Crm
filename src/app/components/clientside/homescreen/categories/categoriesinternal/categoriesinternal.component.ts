@@ -86,7 +86,7 @@ export class CategoriesinternalComponent implements OnInit {
   trendingStores: Array<any> = [];
   curatedstores: Array<any> = [];
   homegrownproducts: Array<any> = [];
-
+  catindex: number = -1;
   constructor(
     private api: ApiserviceService,
     private actRoute: ActivatedRoute,
@@ -95,12 +95,16 @@ export class CategoriesinternalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.catindex = this.auth.resource.categoryList.findIndex(
+      (x: any) => x.id == this.actRoute.snapshot.params['cat']
+    );
     this.api
       .getPeoplechoiceCatstores(
         this.actRoute.snapshot.params['nodeid'],
         this.actRoute.snapshot.params['cat']
       )
       .subscribe((data: any) => {
+        console.log(data);
         this.PChoiceStores = data;
       });
 
@@ -178,15 +182,13 @@ export class CategoriesinternalComponent implements OnInit {
         Data.sectionName = 'Categorysection-CuratedStores';
       }
       this.api.addstoretoTrendingStore(Data).then((data: any) => {
-
-        if(i == 4){
+        if (i == 4) {
           this.isstorealreadyadded3 = true;
           this.curatedstores.push(Data);
+        } else {
+          this.isstorealreadyadded1 = true;
+          this.trendingStores.push(Data);
         }
-        else {
-        this.isstorealreadyadded1 = true;
-        this.trendingStores.push(Data);
-      }
       });
     } else {
       this.api.addProductTohomegrown(Data).then((data: any) => {
@@ -240,9 +242,12 @@ export class CategoriesinternalComponent implements OnInit {
                 this.auth.resource.startSnackBar('Upload Failed!');
               } else {
                 if (type == 'homeBanner') {
-                  this.storeBanner = ref.url;
+                  this.auth.resource.categoryList[
+                    this.catindex
+                  ].CategoryBanner = ref.url;
                 } else {
-                  this.Catthumbnail = ref.url;
+                  this.auth.resource.categoryList[this.catindex].thumbnail =
+                    ref.url;
                 }
                 this.auth.resource.startSnackBar('Banner Update Under Review!');
               }
