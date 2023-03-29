@@ -17,19 +17,18 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class CategoriesinternalComponent implements OnInit {
   storeBanner = '';
   Catthumbnail = '';
-  Searchtxt: string = '';
 
   parameters: string = 'phone';
   parameters1: string = 'phone';
   parameters2: string = 'phone';
+  parameters3: string = 'phone';
 
   operators: string = '==';
-  operators1: string = '==';
-  operators2: string = '==';
 
   searchvalue: string = '9876543210';
   searchvalue1: string = '9876543210';
   searchvalue2: string = '9876543210';
+  searchvalue3: string = '9876543210';
 
   isstorealreadyadded: boolean = false;
   isstorealreadyadded1: boolean = false;
@@ -40,6 +39,7 @@ export class CategoriesinternalComponent implements OnInit {
   MerchantdataSource1!: MatTableDataSource<any>;
   MerchantdataSource2!: MatTableDataSource<any>;
   MerchantdataSource3!: MatTableDataSource<any>;
+  MerchantdataSource4!: MatTableDataSource<any>;
 
   ParaArr: Array<any> = [
     {
@@ -125,24 +125,39 @@ export class CategoriesinternalComponent implements OnInit {
       .subscribe((data: any) => {
         this.curatedstores = data;
       });
+
+    this.api
+      .gethomegrowproductssubCatstores('Categorysection',this.actRoute.snapshot.params['cat'])
+      .subscribe((data: any) => {
+        this.homegrownproducts = data;
+      });
   }
 
   ApplyFilter(i: number) {
     this.isstorealreadyadded = false;
     this.isstorealreadyadded1 = false;
     this.isstorealreadyadded2 = false;
+    this.isstorealreadyadded3 = false;
 
     this.api
       .getRecentStores(
         1,
         false,
-        i == 1 ? this.parameters : i == 2 ? this.parameters1 : this.parameters2,
-        i == 1 ? this.operators : i == 2 ? this.operators1 : this.operators2,
+        i == 1
+          ? this.parameters
+          : i == 2
+          ? this.parameters1
+          : i == 3
+          ? this.parameters2
+          : this.parameters3,
+        this.operators,
         i == 1
           ? this.searchvalue
           : i == 2
           ? this.searchvalue1
-          : this.searchvalue2
+          : i == 3
+          ? this.searchvalue2
+          : this.searchvalue3
       )
       .pipe(take(1))
       .subscribe((recentStore: any) => {
@@ -158,10 +173,17 @@ export class CategoriesinternalComponent implements OnInit {
             this.trendingStores.findIndex((x) => x.id == recentStore[0].id) < 0
               ? false
               : true;
-        } else {
+        } else if (i == 3) {
           this.MerchantdataSource3 = new MatTableDataSource(recentStore);
-          this.isstorealreadyadded2 =
+          this.isstorealreadyadded3 =
             this.curatedstores.findIndex((x) => x.id == recentStore[0].id) < 0
+              ? false
+              : true;
+        } else {
+          this.MerchantdataSource2 = new MatTableDataSource(recentStore);
+          this.isstorealreadyadded2 =
+            this.homegrownproducts.findIndex((x) => x.id == recentStore[0].id) <
+            0
               ? false
               : true;
         }
@@ -252,6 +274,32 @@ export class CategoriesinternalComponent implements OnInit {
                 this.auth.resource.startSnackBar('Banner Update Under Review!');
               }
             });
+        } else if (type == 'trendingstorebanner') {
+          this.api
+            .updateTrendingstorebanner(
+              id == undefined ? '' : id,
+              result.croppedImage
+            )
+            .then((ref) => {
+              if (!ref || !ref.success) {
+                this.auth.resource.startSnackBar('Upload Failed!');
+              } else {
+                this.auth.resource.startSnackBar('Banner Update Under Review!');
+              }
+            });
+        } else if (type == 'peopleCstorebanner') {
+          this.api
+            .updatePchoicestorebanner(
+              id == undefined ? '' : id,
+              result.croppedImage
+            )
+            .then((ref) => {
+              if (!ref || !ref.success) {
+                this.auth.resource.startSnackBar('Upload Failed!');
+              } else {
+                this.auth.resource.startSnackBar('Banner Update Under Review!');
+              }
+            });
         } else {
           this.api
             .updatesubcatproductbanner(
@@ -266,36 +314,6 @@ export class CategoriesinternalComponent implements OnInit {
               }
             });
         }
-        // else if(type == 'trendingstorebanner'){
-        //   this.api
-        //   .updateTrendingstorebanner(
-        //     id == undefined ? "" : id,
-        //     result.croppedImage,
-        //   )
-        //   .then((ref) => {
-        //     if (!ref || !ref.success) {
-        //       this.auth.resource.startSnackBar('Upload Failed!');
-        //     } else {
-        //       // this.storeBanner = ref.url;
-        //       this.auth.resource.startSnackBar('Banner Update Under Review!');
-        //     }
-        //   });
-        // }
-        // else if(type == "peopleCstorebanner"){
-        //   this.api
-        //   .updatePchoicestorebanner(
-        //     id == undefined ? "" : id,
-        //     result.croppedImage,
-        //   )
-        //   .then((ref) => {
-        //     if (!ref || !ref.success) {
-        //       this.auth.resource.startSnackBar('Upload Failed!');
-        //     }
-        //      else {
-        //       this.auth.resource.startSnackBar('Banner Update Under Review!');
-        //     }
-        //   });
-        // }
       }
     });
   }
@@ -305,36 +323,36 @@ export class CategoriesinternalComponent implements OnInit {
       this.api.deletestorefrompeopleStore(id).then((data: any) => {
         this.MerchantdataSource = new MatTableDataSource();
       });
-    } else {
+    } else if (i == 2) {
       this.api.deletestorefromTrendingStore(id).then((data: any) => {
         this.MerchantdataSource1 = new MatTableDataSource();
+      });
+    } else if (i == 3) {
+      this.api.deleteproductfromhomegrown(id).then((data: any) => {
+        this.MerchantdataSource2 = new MatTableDataSource();
       });
     }
   }
 
-  deleteproduct(id: any) {
-    this.api.deleteproductfromhomegrown(id).then((data: any) => {
-      this.Searchtxt = '';
-    });
-  }
+  // deleteproduct(id: any) {}
 
-  searchdata() {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Basic ' + btoa('elastic:bcFhFOqTCpvVJua+tnc-'),
-      }),
-    };
-    let url =
-      'https://app.refr.club/api/search/sendSearch/IN/things?q=' +
-      this.Searchtxt +
-      '';
-    this.https.get(url, httpOptions).subscribe((data: any) => {
-      let products: any = [];
-      for (let i = 0; i < data.hits.hits.length; i++) {
-        products.push(data.hits.hits[i]._source);
-      }
-      this.MerchantdataSource2 = new MatTableDataSource(products);
-    });
-  }
+  // searchdata() {
+  //   const httpOptions = {
+  //     headers: new HttpHeaders({
+  //       'Content-Type': 'application/json',
+  //       Authorization: 'Basic ' + btoa('elastic:bcFhFOqTCpvVJua+tnc-'),
+  //     }),
+  //   };
+  //   let url =
+  //     'https://app.refr.club/api/search/sendSearch/IN/things?q=' +
+  //     this.Searchtxt +
+  //     '';
+  //   this.https.get(url, httpOptions).subscribe((data: any) => {
+  //     let products: any = [];
+  //     for (let i = 0; i < data.hits.hits.length; i++) {
+  //       products.push(data.hits.hits[i]._source);
+  //     }
+  //     this.MerchantdataSource2 = new MatTableDataSource(products);
+  //   });
+  // }
 }

@@ -122,23 +122,23 @@ export class HgbcreatecategoryComponent implements OnInit {
   }
 
   searchdata() {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Basic ' + btoa('elastic:bcFhFOqTCpvVJua+tnc-'),
-      }),
-    };
-    let url =
-      'https://app.refr.club/api/search/sendSearch/IN/things?q=' +
-      this.Searchtxt +
-      '';
-    this.https.get(url, httpOptions).subscribe((data: any) => {
-      let products: any = [];
-      for (let i = 0; i < data.hits.hits.length; i++) {
-        products.push(data.hits.hits[i]._source);
-      }
-      this.MerchantdataSource = new MatTableDataSource(products);
-    });
+    // const httpOptions = {
+    //   headers: new HttpHeaders({
+    //     'Content-Type': 'application/json',
+    //     Authorization: 'Basic ' + btoa('elastic:bcFhFOqTCpvVJua+tnc-'),
+    //   }),
+    // };
+    // let url =
+    //   'https://app.refr.club/api/search/sendSearch/IN/things?q=' +
+    //   this.Searchtxt +
+    //   '';
+    // this.https.get(url, httpOptions).subscribe((data: any) => {
+    //   let products: any = [];
+    //   for (let i = 0; i < data.hits.hits.length; i++) {
+    //     products.push(data.hits.hits[i]._source);
+    //   }
+    //   this.MerchantdataSource = new MatTableDataSource(products);
+    // });
   }
 
   action(item: any) {

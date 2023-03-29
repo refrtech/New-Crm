@@ -911,22 +911,7 @@ export class ApiserviceService {
     });
   }
 
-  async addProductTohomegrown(Data: any) {
-    const nodeinternal = await addDoc(
-      collection(this.firestore, 'ProductsYouHave'),
-      Data
-    ).then((ref) => {
-      const areeas = doc(this.firestore, 'ProductsYouHave', `${ref.id}`);
-      return updateDoc(areeas, { sectionid: ref.id }).then(() => {
-        return ref;
-      });
-    });
-  }
 
-  deleteproductfromhomegrown(id: any) {
-    const vidRef = doc(this.firestore, 'ProductsYouHave', `${id}`);
-    return deleteDoc(vidRef);
-  }
 
   deletestorefrompeopleStore(id: any) {
     const vidRef = doc(this.firestore, 'people_choice_store', `${id}`);
@@ -1082,14 +1067,7 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-  gethomegrowproductssubCatstores() {
-    const VSA_section: CollectionReference = collection(
-      this.firestore,
-      `${'ProductsYouHave'}`
-    );
-    const qu = query(VSA_section);
-    return collectionData(qu);
-  }
+
 
   getVSAtrendingsubCatstores(nodeid: string, subcatId: string) {
     const VSA_section: CollectionReference = collection(
@@ -1130,12 +1108,38 @@ export class ApiserviceService {
       return cloudUpload;
     } else {
       return updateDoc(cityrefr, {
-        TrendingSBanner: cloudUpload.url,
+        productbanner: cloudUpload.url,
         upd: newTimestamp,
       }).then(() => {
         return cloudUpload;
       });
     }
+  }
+
+  async addProductTohomegrown(Data: any) {
+    const nodeinternal = await addDoc(
+      collection(this.firestore, 'ProductsYouHave'),
+      Data
+    ).then((ref) => {
+      const areeas = doc(this.firestore, 'ProductsYouHave', `${ref.id}`);
+      return updateDoc(areeas, { Docid: ref.id }).then(() => {
+        return ref;
+      });
+    });
+  }
+
+  gethomegrowproductssubCatstores(sectionname:string,catid:string) {
+    const VSA_section: CollectionReference = collection(
+      this.firestore,
+      `${'ProductsYouHave'}`
+    );
+    const qu = query(VSA_section, where("sectionName","==",sectionname),where("catId","==",catid));
+    return collectionData(qu);
+  }
+
+  deleteproductfromhomegrown(id: any) {
+    const vidRef = doc(this.firestore, 'ProductsYouHave', `${id}`);
+    return deleteDoc(vidRef);
   }
 
   async updateTrendingstorebanner(id: string, croppedImage: string) {

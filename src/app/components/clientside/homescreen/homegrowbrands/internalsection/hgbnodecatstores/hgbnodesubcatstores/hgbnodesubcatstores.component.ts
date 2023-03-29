@@ -24,16 +24,18 @@ export class HgbnodesubcatstoresComponent implements OnInit {
   editpeoplechoice: boolean = false;
   peoplechoicesubcatpara: string = '';
   HGBdata: any;
-  Searchtxt: string = '';
 
   parameters: string = 'phone';
   parameters1: string = 'phone';
+  parameters2: string = 'phone';
+
 
   operators: string = '==';
-  operators1: string = '==';
 
   searchvalue: string = "9876543210";
   searchvalue1: string = "9876543210";
+  searchvalue2: string = "9876543210";
+
   isstorealreadyadded: boolean = false;
   isstorealreadyadded1: boolean = false;
   isstorealreadyadded2: boolean = false;
@@ -108,7 +110,7 @@ export class HgbnodesubcatstoresComponent implements OnInit {
       .subscribe((data: any) => {
         this.trendingStores = data;
       });
-      this.api.gethomegrowproductssubCatstores()
+      this.api.gethomegrowproductssubCatstores("HomegrownSection",this.actRoute.snapshot.params['cat'])
       .subscribe((data: any) => {
         this.homegrownproducts = data;
       });
@@ -162,16 +164,18 @@ export class HgbnodesubcatstoresComponent implements OnInit {
   ApplyFilter(i: number) {
     this.isstorealreadyadded = false;
     this.isstorealreadyadded1 = false;
+    this.isstorealreadyadded2 = false;
     this.api
       .getRecentStores(
         1,
         false,
-        i == 1 ? this.parameters : this.parameters1,
-        i == 1 ? this.operators : this.operators1,
-        i == 1 ? this.searchvalue : this.searchvalue1
+        i == 1 ? this.parameters : ( i == 2 ? this.parameters1 : this.parameters2 ),
+        this.operators,
+        i == 1 ? this.searchvalue : ( i == 2 ? this.searchvalue1 : this.searchvalue2 )
       )
       .pipe(take(1))
       .subscribe((recentStore: any) => {
+        console.log(recentStore);
         if (i == 1) {
           this.MerchantdataSource = new MatTableDataSource(recentStore);
           this.isstorealreadyadded =
@@ -180,12 +184,17 @@ export class HgbnodesubcatstoresComponent implements OnInit {
               : true;
         } else if (i == 2) {
           this.MerchantdataSource1 = new MatTableDataSource(recentStore);
-          this.isstorealreadyadded =
+          this.isstorealreadyadded1 =
             this.trendingStores.findIndex((x) => x.id == recentStore[0].id) < 0
               ? false
               : true;
-        } else {
-          this.MerchantdataSource = new MatTableDataSource(recentStore);
+        }
+        else {
+          this.MerchantdataSource2 = new MatTableDataSource(recentStore);
+          this.isstorealreadyadded2 =
+            this.homegrownproducts.findIndex((x) => x.id == recentStore[0].id) < 0
+              ? false
+              : true;
         }
       });
   }
@@ -195,17 +204,16 @@ export class HgbnodesubcatstoresComponent implements OnInit {
       this.api.deletestorefrompeopleStore(id).then((data: any) => {
         this.MerchantdataSource = new MatTableDataSource();
       });
-    } else {
+    } else if(i == 2) {
       this.api.deletestorefromTrendingStore(id).then((data: any) => {
         this.MerchantdataSource1 = new MatTableDataSource();
       });
     }
-  }
-
-  deleteproduct(id:any){
-    this.api.deleteproductfromhomegrown(id).then((data:any)=>{
-      this.Searchtxt = "";
-    })
+    else {
+      this.api.deleteproductfromhomegrown(id).then((data:any)=>{
+        this.MerchantdataSource2 = new MatTableDataSource();
+      })
+    }
   }
 
   async takePicture(type: string, id?: string) {
@@ -280,7 +288,6 @@ export class HgbnodesubcatstoresComponent implements OnInit {
               }
             });
         }
-
       }
     });
   }
@@ -326,23 +333,23 @@ export class HgbnodesubcatstoresComponent implements OnInit {
     }
   }
 
-  searchdata() {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Basic ' + btoa('elastic:bcFhFOqTCpvVJua+tnc-'),
-      }),
-    };
-    let url =
-      'https://app.refr.club/api/search/sendSearch/IN/things?q=' +
-      this.Searchtxt +
-      '';
-    this.https.get(url, httpOptions).subscribe((data: any) => {
-      let products: any = [];
-      for (let i = 0; i < data.hits.hits.length; i++) {
-        products.push(data.hits.hits[i]._source);
-      }
-      this.MerchantdataSource2 = new MatTableDataSource(products);
-    });
-  }
+  // searchdata() {
+  //   const httpOptions = {
+  //     headers: new HttpHeaders({
+  //       'Content-Type': 'application/json',
+  //       Authorization: 'Basic ' + btoa('elastic:bcFhFOqTCpvVJua+tnc-'),
+  //     }),
+  //   };
+  //   let url =
+  //     'https://app.refr.club/api/search/sendSearch/IN/things?q=' +
+  //     this.Searchtxt +
+  //     '';
+  //   this.https.get(url, httpOptions).subscribe((data: any) => {
+  //     let products: any = [];
+  //     for (let i = 0; i < data.hits.hits.length; i++) {
+  //       products.push(data.hits.hits[i]._source);
+  //     }
+  //     this.MerchantdataSource2 = new MatTableDataSource(products);
+  //   });
+  // }
 }
