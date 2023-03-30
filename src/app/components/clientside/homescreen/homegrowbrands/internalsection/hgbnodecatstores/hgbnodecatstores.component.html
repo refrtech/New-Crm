@@ -21,7 +21,7 @@
           <img class="M100width" [src]=" Catthumbnail ? Catthumbnail : 'assets/brand/opengraph.png' " alt="" />
         </div>
       </div>
-      <div (click)="takePicture('Thumbnail')" class="dflex flex_col l15margin JEend">
+      <div (click)="takePicture('3:4','Thumbnail')" class="dflex flex_col l15margin JEend">
         <button mat-button disableRipple
           class="c_align M100width tb5padding cursor_pointer purple_txt regulartext s_size normallineheight lr20padding Aborder">
           <svg class="r5margin cursor_pointer" width="17" height="15" viewBox="0 0 17 15" fill="none"
@@ -49,7 +49,7 @@
         </div>
       </div>
       <div class="dflex flex_col l15margin JEend">
-        <button (click)="takePicture('homeBanner')" mat-button disableRipple
+        <button (click)="takePicture('16:9','homeBanner')" mat-button disableRipple
           class="c_align  M100width tb5padding cursor_pointer purple_txt regulartext s_size normallineheight lr20padding Aborder">
           <svg class="r5margin cursor_pointer" width="17" height="15" viewBox="0 0 17 15" fill="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -86,7 +86,7 @@
                 <div class="M65width l_align">
                   {{item.name}}
                 </div>
-                <div class="M25width c_align" (click)="takePicture('subcatbanner',item.id,i)">
+                <div class="M25width c_align" (click)="takePicture('1:1','subcatbanner',item.id,i)">
                   <mat-icon class="black_text">photo_camera</mat-icon>
                 </div>
               </div>
@@ -94,11 +94,6 @@
           </div>
         </div>
       </div>
-
-
-
-
-
     </div>
   </div>
 
@@ -224,7 +219,7 @@
               <a (click)="deletestore(1,item.sectionid)" class="r20margin">
                 <mat-icon class="black_text">delete</mat-icon>
               </a>
-              <a (click)="takePicture('peopleCstorebanner',item.sectionid)">
+              <a (click)="takePicture('16:9','peopleCstorebanner',item.sectionid)">
                 <mat-icon class="black_text">photo_camera</mat-icon>
               </a>
             </div>
@@ -248,7 +243,7 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
-        <mat-select placeholder="Operator's" [(ngModel)]="operators1">
+        <mat-select placeholder="Operator's" [(ngModel)]="operators">
           <mat-option value="==">
             Equal to
           </mat-option>
@@ -334,7 +329,7 @@
               <a (click)="deletestore(2,item.sectionid)" class="r20margin">
                 <mat-icon class="black_text">delete</mat-icon>
               </a>
-              <a (click)="takePicture('trendingstorebanner',item.sectionid)">
+              <a (click)="takePicture('9:16','trendingstorebanner',item.sectionid)">
                 <mat-icon class="black_text">photo_camera</mat-icon>
               </a>
             </div>

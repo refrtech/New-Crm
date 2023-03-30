@@ -36,17 +36,12 @@
                             <mat-icon>menu</mat-icon>
                         </div>
                         <div class="M25width l_align gray_txt">
-                            {{item.created_at.toDate() | date:'MMM dd, yyyy'}}
+                            {{item?.created_at.toDate() | date:'MMM dd, yyyy'}}
                         </div>
                         <div class="M25width c_align semiboldtext cursor_pointer">
-                            <!-- slide {{i+1}} -->
                             {{item.name}}
                         </div>
                         <div class="M45width c_align">
-                            <a>
-                                <mat-icon
-                                    class="black_text r20margin cursor_pointer">visibility</mat-icon>
-                            </a>
                             <a>
                                 <mat-icon (click)="deleteVid(item.id)"
                                     class="black_text cursor_pointer">delete</mat-icon>

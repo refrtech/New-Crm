@@ -6,7 +6,6 @@
                 <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round" />
             </svg>
-
         </a>
         <span class="fs_24 boldtext lr15padding AScenter">Top Feed module</span>
         <span class="divide"></span>
@@ -19,8 +18,6 @@
         </div>
     </div>
 
-    <!-- slides -->
-    <!-- *ngIf="getVideoData.length >= 0" -->
 
     <div class="t50margin boxshw" (click)="slide = false">
         <div class="dflex JCevenly M100width tb15padding s_size">
@@ -40,13 +37,9 @@
                             {{item?.c_Date.toDate() | date:'MMM dd, yyyy'}}
                         </div>
                         <div class="M25width c_align semiboldtext" (click)="openUrl(1)">
-                            <!-- slide&nbsp;{{i+1}} -->
                             {{item.fileName}}
                         </div>
                         <div class="M45width c_align">
-                            <!-- <a>
-                                <mat-icon class="black_text r15margin cursor_pointer">visibility</mat-icon>
-                            </a> -->
                             <a>
                                 <mat-icon (click)="deleteVid(item.id)" class="black_text">delete</mat-icon>
                             </a>
@@ -55,10 +48,5 @@
                 </div>
             </div>
         </div>
-
     </div>
-
-
-    <!-- <div *ngIf="getVideoData.length == 0">hello</div> -->
-
 </div>

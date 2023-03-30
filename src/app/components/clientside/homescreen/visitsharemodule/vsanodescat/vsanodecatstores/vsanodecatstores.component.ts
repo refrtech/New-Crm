@@ -21,15 +21,16 @@ import { AuthService } from 'src/app/auth.service';
 export class VSAnodecatstoresComponent implements OnInit {
   storeBanner = '';
   nodeId: string = '';
+  peoplechoicecatpara: string = '';
+  editpeoplechoice: boolean = false;
 
   parameters: string = 'phone';
   parameters1: string = 'phone';
 
   operators: string = '==';
-  operators1: string = '==';
 
-  searchvalue: string = "9876543210";
-  searchvalue1: string = "9876543210";
+  searchvalue: string = '9876543210';
+  searchvalue1: string = '9876543210';
 
   isstorealreadyadded: boolean = false;
   isstorealreadyadded1: boolean = false;
@@ -70,6 +71,7 @@ export class VSAnodecatstoresComponent implements OnInit {
   PChoiceStores: Array<any> = [];
   trendingStores: Array<any> = [];
   catarray: Array<any> = [];
+  DocId: string = '';
   constructor(
     public auth: AuthService,
     private router: Router,
@@ -82,6 +84,7 @@ export class VSAnodecatstoresComponent implements OnInit {
       .getnodeinterdata(this.actRoute.snapshot.params['nodeid'])
       .pipe(take(1))
       .subscribe((data: any) => {
+        this.DocId = data[0].id;
         this.catarray =
           data[0].CategoryBanners != undefined ? data[0].CategoryBanners : [];
         let i = this.catarray.findIndex(
@@ -89,6 +92,7 @@ export class VSAnodecatstoresComponent implements OnInit {
         );
         if (i != -1) {
           this.storeBanner = this.catarray[i].Catbanner;
+          this.peoplechoicecatpara = this.catarray[i].peoplechoicecatpara;
         }
       });
 
@@ -119,7 +123,7 @@ export class VSAnodecatstoresComponent implements OnInit {
         1,
         false,
         i == 1 ? this.parameters : this.parameters1,
-        i == 1 ? this.operators : this.operators1,
+        this.operators,
         i == 1 ? this.searchvalue : this.searchvalue1
       )
       .pipe(take(1))
@@ -145,7 +149,7 @@ export class VSAnodecatstoresComponent implements OnInit {
       Data.Nodeid = this.actRoute.snapshot.params['nodeid'];
       Data.catId = this.actRoute.snapshot.params['catid'];
       Data.iscat_subCatstore = 'Cat';
-      Data.sectionName = "VSAsection";
+      Data.sectionName = 'VSAsection';
       this.api.addstoretoPeoplechoice(Data).then((data: any) => {
         this.isstorealreadyadded = true;
         this.PChoiceStores.push(Data);
@@ -154,7 +158,7 @@ export class VSAnodecatstoresComponent implements OnInit {
       Data.Nodeid = this.actRoute.snapshot.params['nodeid'];
       Data.catId = this.actRoute.snapshot.params['catid'];
       Data.iscat_subCatstore = 'Cat';
-      Data.sectionName = "VSAsection";
+      Data.sectionName = 'VSAsection';
 
       this.api.addstoretoTrendingStore(Data).then((data: any) => {
         this.isstorealreadyadded1 = true;
@@ -203,7 +207,7 @@ export class VSAnodecatstoresComponent implements OnInit {
     }
   }
 
-  async takePicture(type: string,id?:string) {
+  async takePicture(ratio:string,type: string, id?: string) {
     const image = await Camera.getPhoto({
       quality: 100,
       height: 300,
@@ -213,11 +217,11 @@ export class VSAnodecatstoresComponent implements OnInit {
     });
     const imageUrl = image.webPath || '';
     if (imageUrl) {
-      this.startCropper(imageUrl, type, id);
+      this.startCropper(ratio,imageUrl, type, id);
     }
   }
 
-  startCropper(webPath: string, type: string,id?:string) {
+  startCropper(ratio:string,webPath: string, type: string, id?: string) {
     let isPhone = this.auth.resource.getWidth < 768;
     let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
     const refDialog = this.auth.resource.dialog.open(CropperComponent, {
@@ -225,7 +229,7 @@ export class VSAnodecatstoresComponent implements OnInit {
       minWidth: '320px',
       maxWidth: '480px',
       height: '360px',
-      data: { webPath: webPath, type: type },
+      data: { webPath: webPath, type: type ,ratio:ratio},
       disableClose: true,
       panelClass: 'dialogLayout',
     });
@@ -251,39 +255,73 @@ export class VSAnodecatstoresComponent implements OnInit {
                 this.auth.resource.startSnackBar('Banner Update Under Review!');
               }
             });
-        }
-
-        else if(type == 'trendingstorebanner'){
+        } else if (type == 'trendingstorebanner') {
           this.api
-          .updateTrendingstorebanner(
-            id == undefined ? "" : id,
-            result.croppedImage,
-          )
-          .then((ref) => {
-            if (!ref || !ref.success) {
-              this.auth.resource.startSnackBar('Upload Failed!');
-            } else {
-              // this.storeBanner = ref.url;
-              this.auth.resource.startSnackBar('Banner Update Under Review!');
-            }
-          });
-        }
-        else if(type == "peopleCstorebanner"){
+            .updateTrendingstorebanner(
+              id == undefined ? '' : id,
+              result.croppedImage
+            )
+            .then((ref) => {
+              if (!ref || !ref.success) {
+                this.auth.resource.startSnackBar('Upload Failed!');
+              } else {
+                // this.storeBanner = ref.url;
+                this.auth.resource.startSnackBar('Banner Update Under Review!');
+              }
+            });
+        } else if (type == 'peopleCstorebanner') {
           this.api
-          .updatePchoicestorebanner(
-            id == undefined ? "" : id,
-            result.croppedImage,
-          )
-          .then((ref) => {
-            if (!ref || !ref.success) {
-              this.auth.resource.startSnackBar('Upload Failed!');
-            }
-             else {
-              this.auth.resource.startSnackBar('Banner Update Under Review!');
-            }
-          });
+            .updatePchoicestorebanner(
+              id == undefined ? '' : id,
+              result.croppedImage
+            )
+            .then((ref) => {
+              if (!ref || !ref.success) {
+                this.auth.resource.startSnackBar('Upload Failed!');
+              } else {
+                this.auth.resource.startSnackBar('Banner Update Under Review!');
+              }
+            });
         }
       }
     });
+  }
+
+  updatepeoplechoice() {
+    let index = this.catarray.findIndex(
+      (x: any) => x.Catid == this.actRoute.snapshot.params['catid']
+    );
+    if (!this.editpeoplechoice) {
+      this.editpeoplechoice = !this.editpeoplechoice;
+    } else if (
+      index != -1 &&
+      this.peoplechoicecatpara == this.catarray[index].peoplechoicecatpara
+    ) {
+      this.editpeoplechoice = !this.editpeoplechoice;
+    } else {
+      if (this.peoplechoicecatpara == '') {
+        alert('please enter the People choice.');
+      } else {
+        if (index != -1) {
+          this.catarray[index].peoplechoicecatpara = this.peoplechoicecatpara;
+        } else {
+          this.catarray.push({
+            Catbanner: '',
+            Catid: this.actRoute.snapshot.params['catid'],
+            peoplechoicecatpara:this.peoplechoicecatpara
+          });
+        }
+        this.api
+          .updatePeoplechoicepara(this.DocId, this.catarray)
+          .then((data) => {
+            if (data != undefined) {
+              this.editpeoplechoice = !this.editpeoplechoice;
+            }
+          })
+          .catch(() => {
+            return false;
+          });
+      }
+    }
   }
 }

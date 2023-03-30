@@ -9,25 +9,46 @@
     <span class="xxl_size boldtext lr15padding AScenter">Visit Share Earn Module</span>
   </div>
   <main class="b20margin t50margin">
-    <div class="boldtext l_size b10margin">Sub-category</div>
-    <div>
-      <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
-        <mat-select placeholder="Select Sub-Category" (selectionChange)="subcatchange()" [(ngModel)]="SelectedSubCat">
-          <mat-option *ngFor="let item of subcatlist" [value]="item.id">
-            {{item.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="boldtext l_size tb10margin ">Store banner</div>
+    <ng-container *ngIf="actRoute.snapshot.params['catid'] != 'in_the_mix'">
+      <div class="boldtext l_size b10margin">Sub-category</div>
+      <div>
+        <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
+          <mat-select placeholder="Select Sub-Category" (selectionChange)="subcatchange()" [(ngModel)]="SelectedSubCat">
+            <mat-option *ngFor="let item of subcatlist" [value]="item.id">
+              {{item.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="actRoute.snapshot.params['catid'] == 'in_the_mix'">
+      <div class="boldtext l_size b10margin">Category</div>
+      <div>
+        <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
+          <mat-select placeholder="Select Category" (selectionChange)="catchange()" [(ngModel)]="SelectedCat">
+            <ng-container *ngFor="let item of auth.resource.categoryList">
+              <ng-container
+                *ngIf="item.id != 'food_and_beverages' && item.id != 'salons_and_spa' && item.id != 'healthcare'">
+                <mat-option [value]="item.id">
+                  {{item.title}}
+                </mat-option>
+              </ng-container>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="actRoute.snapshot.params['catid'] != 'in_the_mix'">
+    <div class="boldtext l_size tb10margin">Store banner</div>
     <div class="dflex">
       <div class="M30width">
         <div class="img ">
-          <img class="M100width" [src]=" storeBanner ? storeBanner : 'assets/brand/opengraph.png' " alt="banner" />
+          <img class="M100width" [src]=" subCatBanner ? subCatBanner : 'assets/brand/opengraph.png' " alt="banner" />
         </div>
       </div>
       <div class="dflex flex_col l15margin JEend">
-        <button (click)="takePicture('homeBanner')" mat-button disableRipple
+        <button (click)="takePicture('16:9','homeBanner','1')" mat-button disableRipple
           class="c_align  M100width tb5padding cursor_pointer purple_txt regulartext s_size normallineheight lr20padding Aborder">
           <svg class="r5margin cursor_pointer" width="17" height="15" viewBox="0 0 17 15" fill="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -40,15 +61,58 @@
           </svg>
           Create
         </button>
-
       </div>
     </div>
+    </ng-container>
+    <ng-container *ngIf="actRoute.snapshot.params['catid'] == 'in_the_mix'">
+      <div class="boldtext l_size tb10margin">Store banner</div>
+      <div class="dflex">
+        <div class="M30width">
+          <div class="img">
+            <img class="M100width" [src]=" CatBanner ? CatBanner : 'assets/brand/opengraph.png' " alt="banner" />
+          </div>
+        </div>
+        <div class="dflex flex_col l15margin JEend">
+          <button (click)="takePicture('16:9','homeBanner','2')" mat-button disableRipple
+            class="c_align  M100width tb5padding cursor_pointer purple_txt regulartext s_size normallineheight lr20padding Aborder">
+            <svg class="r5margin cursor_pointer" width="17" height="15" viewBox="0 0 17 15" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M1.625 7.5C1.625 7.5 4.125 2.5 8.5 2.5C12.875 2.5 15.375 7.5 15.375 7.5C15.375 7.5 12.875 12.5 8.5 12.5C4.125 12.5 1.625 7.5 1.625 7.5Z"
+                stroke="#8111E8" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M8.5 9.375C9.53553 9.375 10.375 8.53553 10.375 7.5C10.375 6.46447 9.53553 5.625 8.5 5.625C7.46447 5.625 6.625 6.46447 6.625 7.5C6.625 8.53553 7.46447 9.375 8.5 9.375Z"
+                stroke="#8111E8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Create
+          </button>
+        </div>
+      </div>
+      </ng-container>
+
   </main>
   <div class="boldtext m_size t40margin">
     People choice stores
   </div>
+  <div class="t40margin b20margin">
+    <div class="b20padding">
+      <span class="s_size boldtext">People’s Choice </span> <span class="xs_size gray_txt">(Maximum 250 words)</span>
+    </div>
+    <div>
+      <mat-form-field class="l5margin r5margin M50width crminput Editableinput" appearance="outline">
+        <input type="string" matInput maxlength="250" [(ngModel)]="peoplechoicecatpara" [disabled]="!editpeoplechoice">
+        <button (click)="updatepeoplechoice()" matSuffix mat-icon-button aria-label="Clear" class="purple_background">
+          <mat-icon>
+            {{editpeoplechoice ? 'check': 'edit'}}
+          </mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+  </div>
+
+
   <div class="Aborder A5radius A20padding t20margin b20margin">
-  <div class="boldtext l_size b20margin">Apply Filter to search store</div>
+    <div class="boldtext l_size b20margin">Apply Filter to search store</div>
     <div class="dflex">
       <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
         <mat-select placeholder="Filter Type" [(ngModel)]="parameters">
@@ -143,7 +207,7 @@
               <a (click)="deletestore(1,item.sectionid)" class="r20margin">
                 <mat-icon class="black_text">delete</mat-icon>
               </a>
-              <a (click)="takePicture('peopleCstorebanner',item.sectionid)">
+              <a (click)="takePicture('9:16','peopleCstorebanner',item.sectionid)">
                 <mat-icon class="black_text">photo_camera</mat-icon>
               </a>
             </div>
@@ -156,7 +220,7 @@
     Trending stores
   </div>
   <div class="Aborder A5radius A20padding b20margin">
-  <div class="boldtext l_size b20margin">Apply Filter to search store</div>
+    <div class="boldtext l_size b20margin">Apply Filter to search store</div>
     <div class="dflex">
       <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
         <mat-select placeholder="Filter Type" [(ngModel)]="parameters1">
@@ -166,7 +230,7 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
-        <mat-select placeholder="Operator's" [(ngModel)]="operators1">
+        <mat-select placeholder="Operator's" [(ngModel)]="operators">
           <mat-option value="==">
             Equal to
           </mat-option>
@@ -228,7 +292,7 @@
   </div>
 
   <div *ngIf="trendingStores.length > 0" class="t15margin boxshw A10radius white_bg">
-    <div class="dflex JCevenly M100width tb15padding s_size" >
+    <div class="dflex JCevenly M100width tb15padding s_size">
       <div class="M10width c_align">Rank</div>
       <div class="regulartext M40width">Store Name</div>
       <div class="regulartext M25width">Category</div>
@@ -251,7 +315,7 @@
               <a (click)="deletestore(2,item.sectionid)" class="r20margin">
                 <mat-icon class="black_text">delete</mat-icon>
               </a>
-              <a (click)="takePicture('trendingstorebanner',item.sectionid)">
+              <a (click)="takePicture('16:9','trendingstorebanner',item.sectionid)">
                 <mat-icon class="black_text">photo_camera</mat-icon>
               </a>
             </div>

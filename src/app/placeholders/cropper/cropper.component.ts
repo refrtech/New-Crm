@@ -20,20 +20,21 @@ export class CropperComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    let type = this.data.type;
+    let ratio = this.data.ratio;
     this.imageUrl = this.data.webPath;
-    if (type == 'logo') {
+    if (ratio == '1:1') {
       this.aspectRatio = 1 / 1;
     }
-    if (type == 'banner') {
+    else if (ratio == '16:9') {
       this.aspectRatio = 16 / 9;
     }
-    if (type == 'banners') {
-      this.aspectRatio = 16 / 9;
+    else if(ratio == '3:4'){
+      this.aspectRatio = 3 / 4;
     }
-    if (type == 'homeBanner') {
-      this.aspectRatio = 16 / 9;
+    else if(ratio == '9:16'){
+      this.aspectRatio = 9 / 16;
     }
+
   }
 
   fileChangeEvent(event: Event): void {

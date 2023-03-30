@@ -69,7 +69,6 @@ export class BrandsneighbourhoodComponent implements OnInit {
       this.BIYNmoduledata = BNdata[0];
       this.BIYNTitle = BNdata[0].BN_Title;
       this.BIYNSTitle = BNdata[0].BN_STitle;
-      // this.creatednodes = BNdata[0].Nodes;
     });
   }
 

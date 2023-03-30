@@ -23,21 +23,14 @@ export class HgbnodecatstoresComponent implements OnInit {
   Catthumbnail = '';
   Catbanner = '';
   HGBdata: any;
-
   editpeoplechoice:boolean = false;
-
   parameters: string = 'phone';
   parameters1: string = 'phone';
-
   operators: string = '==';
-  operators1: string = '==';
-
   searchvalue: string = "9876543210";
   searchvalue1: string = "9876543210";
-
   isstorealreadyadded: boolean = false;
   isstorealreadyadded1: boolean = false;
-
   MerchantdataSource!: MatTableDataSource<any>;
   MerchantdataSource1!: MatTableDataSource<any>;
   catindex:number=-1;
@@ -128,7 +121,7 @@ export class HgbnodecatstoresComponent implements OnInit {
         1,
         false,
         i == 1 ? this.parameters : this.parameters1,
-        i == 1 ? this.operators : this.operators1,
+        this.operators,
         i == 1 ? this.searchvalue : this.searchvalue1
       )
       .pipe(take(1))
@@ -197,7 +190,7 @@ export class HgbnodecatstoresComponent implements OnInit {
     });
   }
 
-  async takePicture(type: string, id?: string,i?:number) {
+  async takePicture(ratio:string,type: string, id?: string,i?:number) {
     const image = await Camera.getPhoto({
       quality: 100,
       height: 300,
@@ -207,11 +200,11 @@ export class HgbnodecatstoresComponent implements OnInit {
     });
     const imageUrl = image.webPath || '';
     if (imageUrl) {
-      this.startCropper(imageUrl, type, id,i);
+      this.startCropper(ratio,imageUrl, type, id,i);
     }
   }
 
-  startCropper(webPath: string, type: string, id?: string,subcatindex?:number) {
+  startCropper(ratio:string,webPath: string, type: string, id?: string,subcatindex?:number) {
     let isPhone = this.auth.resource.getWidth < 768;
     let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
     const refDialog = this.auth.resource.dialog.open(CropperComponent, {
@@ -219,7 +212,7 @@ export class HgbnodecatstoresComponent implements OnInit {
       minWidth: '320px',
       maxWidth: '480px',
       height: '360px',
-      data: { webPath: webPath, type: type },
+      data: { webPath: webPath, type: type,ratio:ratio },
       disableClose: true,
       panelClass: 'dialogLayout',
     });
