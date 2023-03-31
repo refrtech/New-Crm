@@ -5,13 +5,15 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { AuthService } from 'src/app/auth.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiserviceService } from 'src/app/apiservice.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { take } from 'rxjs';
 import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component';
 import { Camera } from '@capacitor/camera';
 import { CameraResultType } from '@capacitor/camera/dist/esm/definitions';
+
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-vsanodesubcatstores',
@@ -73,7 +75,9 @@ export class VSAnodesubcatstoresComponent implements OnInit {
   constructor(
     public auth: AuthService,
     public actRoute: ActivatedRoute,
-    private api: ApiserviceService
+    private api: ApiserviceService,
+    private router: Router,
+    public Location: Location
   ) {
     if (this.actRoute.snapshot.params['catid'] != 'in_the_mix') {
       let i = this.auth.resource.categoryList.findIndex(
@@ -507,5 +511,9 @@ export class VSAnodesubcatstoresComponent implements OnInit {
           });
       }
     }
+  }
+
+  back() {
+    this.Location.back();
   }
 }

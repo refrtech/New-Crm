@@ -12,7 +12,7 @@ import { ApiserviceService } from 'src/app/apiservice.service';
 import { Observable, of, take } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-hgbcreatecategory',
   templateUrl: './hgbcreatecategory.component.html',
@@ -38,7 +38,8 @@ export class HgbcreatecategoryComponent implements OnInit {
   constructor(
     public auth: AuthService,
     public api: ApiserviceService,
-    private https: HttpClient
+    private https: HttpClient,
+    public Location: Location
   ) {}
 
   ngOnInit(): void {
@@ -69,7 +70,7 @@ export class HgbcreatecategoryComponent implements OnInit {
     }
   }
 
-  async takePicture(ratio:string,type: string,index?:number) {
+  async takePicture(ratio: string, type: string, index?: number) {
     const image = await Camera.getPhoto({
       quality: 100,
       height: 300,
@@ -79,11 +80,16 @@ export class HgbcreatecategoryComponent implements OnInit {
     });
     const imageUrl = image.webPath || '';
     if (imageUrl) {
-      this.startCropper(ratio,imageUrl, type,index);
+      this.startCropper(ratio, imageUrl, type, index);
     }
   }
 
-  async startCropper(ratio:string,webPath: string, type: string,index?:number) {
+  async startCropper(
+    ratio: string,
+    webPath: string,
+    type: string,
+    index?: number
+  ) {
     let isPhone = this.auth.resource.getWidth < 768;
     let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
     const refDialog = this.auth.resource.dialog.open(CropperComponent, {
@@ -91,7 +97,7 @@ export class HgbcreatecategoryComponent implements OnInit {
       minWidth: '320px',
       maxWidth: '480px',
       height: '360px',
-      data: { webPath: webPath, type: type,ratio:ratio },
+      data: { webPath: webPath, type: type, ratio: ratio },
       disableClose: true,
       panelClass: 'dialogLayout',
     });
@@ -108,14 +114,17 @@ export class HgbcreatecategoryComponent implements OnInit {
               this.storeBanner = data.url;
               alert('banner uploaded');
             });
-        }
-        else {
+        } else {
           this.api
-          .updatehomegrownproductbanner(this.HGdata, result.croppedImage,index || 0)
-          .then((data: any) => {
-            this.storeBanner = data.url;
-            alert('banner uploaded');
-          });
+            .updatehomegrownproductbanner(
+              this.HGdata,
+              result.croppedImage,
+              index || 0
+            )
+            .then((data: any) => {
+              this.storeBanner = data.url;
+              alert('banner uploaded');
+            });
         }
       }
     });
@@ -155,6 +164,10 @@ export class HgbcreatecategoryComponent implements OnInit {
     } else {
       this.HGdata.products.splice(index, 1);
     }
-    this.api.updateHomegrownproducts(this.HGdata.id,this.HGdata.products)
+    this.api.updateHomegrownproducts(this.HGdata.id, this.HGdata.products);
+  }
+
+  back() {
+    this.Location.back();
   }
 }

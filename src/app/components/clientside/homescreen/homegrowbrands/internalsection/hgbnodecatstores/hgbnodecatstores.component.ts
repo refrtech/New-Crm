@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/auth.service';
 import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component';
 import { Camera } from '@capacitor/camera';
 import { CameraResultType } from '@capacitor/camera/dist/esm/definitions';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-hgbnodecatstores',
@@ -23,17 +24,17 @@ export class HgbnodecatstoresComponent implements OnInit {
   Catthumbnail = '';
   Catbanner = '';
   HGBdata: any;
-  editpeoplechoice:boolean = false;
+  editpeoplechoice: boolean = false;
   parameters: string = 'phone';
   parameters1: string = 'phone';
   operators: string = '==';
-  searchvalue: string = "9876543210";
-  searchvalue1: string = "9876543210";
+  searchvalue: string = '9876543210';
+  searchvalue1: string = '9876543210';
   isstorealreadyadded: boolean = false;
   isstorealreadyadded1: boolean = false;
   MerchantdataSource!: MatTableDataSource<any>;
   MerchantdataSource1!: MatTableDataSource<any>;
-  catindex:number=-1;
+  catindex: number = -1;
   ParaArr: Array<any> = [
     {
       Title: 'Store Phone Number',
@@ -56,7 +57,7 @@ export class HgbnodecatstoresComponent implements OnInit {
     },
   ];
 
-  peoplechoicecatpara:string="";
+  peoplechoicecatpara: string = '';
 
   marchantColumns: string[] = [
     'MerchantId',
@@ -72,7 +73,8 @@ export class HgbnodecatstoresComponent implements OnInit {
     private api: ApiserviceService,
     public actRoute: ActivatedRoute,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    public Location: Location
   ) {}
 
   ngOnInit(): void {
@@ -174,8 +176,6 @@ export class HgbnodecatstoresComponent implements OnInit {
     }
   }
 
-
-
   gethomegrowndata() {
     this.api.gethomegrowndata().subscribe((data: any) => {
       this.HGBdata = data[0];
@@ -186,11 +186,11 @@ export class HgbnodecatstoresComponent implements OnInit {
       this.selectedcat = this.auth.resource.categoryList[i].title;
       this.Catthumbnail = data[0].Categories[i].Thumbnail;
       this.Catbanner = data[0].Categories[i].catbanner;
-      this.peoplechoicecatpara = data[0].Categories[i].peoplechoicecatpara
+      this.peoplechoicecatpara = data[0].Categories[i].peoplechoicecatpara;
     });
   }
 
-  async takePicture(ratio:string,type: string, id?: string,i?:number) {
+  async takePicture(ratio: string, type: string, id?: string, i?: number) {
     const image = await Camera.getPhoto({
       quality: 100,
       height: 300,
@@ -200,11 +200,17 @@ export class HgbnodecatstoresComponent implements OnInit {
     });
     const imageUrl = image.webPath || '';
     if (imageUrl) {
-      this.startCropper(ratio,imageUrl, type, id,i);
+      this.startCropper(ratio, imageUrl, type, id, i);
     }
   }
 
-  startCropper(ratio:string,webPath: string, type: string, id?: string,subcatindex?:number) {
+  startCropper(
+    ratio: string,
+    webPath: string,
+    type: string,
+    id?: string,
+    subcatindex?: number
+  ) {
     let isPhone = this.auth.resource.getWidth < 768;
     let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
     const refDialog = this.auth.resource.dialog.open(CropperComponent, {
@@ -212,7 +218,7 @@ export class HgbnodecatstoresComponent implements OnInit {
       minWidth: '320px',
       maxWidth: '480px',
       height: '360px',
-      data: { webPath: webPath, type: type,ratio:ratio },
+      data: { webPath: webPath, type: type, ratio: ratio },
       disableClose: true,
       panelClass: 'dialogLayout',
     });
@@ -222,7 +228,6 @@ export class HgbnodecatstoresComponent implements OnInit {
           this.auth.resource.startSnackBar(result.info);
         }
       } else {
-
         if (type == 'Thumbnail') {
           this.api
             .updatehomegrownbanners(
@@ -283,43 +288,58 @@ export class HgbnodecatstoresComponent implements OnInit {
                 this.auth.resource.startSnackBar('Banner Update Under Review!');
               }
             });
-        }
-        else {
-          this.api.updateHGsubcatbanner(this.HGBdata,result.croppedImage,this.catindex,subcatindex || 0).then((ref) => {
-            if (!ref ) {
-              this.auth.resource.startSnackBar('Upload Failed!');
-            } else {
-              this.auth.resource.startSnackBar('Banner Update Under Review!');
-            }
-          })
+        } else {
+          this.api
+            .updateHGsubcatbanner(
+              this.HGBdata,
+              result.croppedImage,
+              this.catindex,
+              subcatindex || 0
+            )
+            .then((ref) => {
+              if (!ref) {
+                this.auth.resource.startSnackBar('Upload Failed!');
+              } else {
+                this.auth.resource.startSnackBar('Banner Update Under Review!');
+              }
+            });
         }
       }
     });
   }
 
   updatepeoplechoice() {
-    let index = this.HGBdata.Categories.findIndex((x:any)=>x.id == this.actRoute.snapshot.params['catid'])
+    let index = this.HGBdata.Categories.findIndex(
+      (x: any) => x.id == this.actRoute.snapshot.params['catid']
+    );
     if (!this.editpeoplechoice) {
       this.editpeoplechoice = !this.editpeoplechoice;
-    }
-    else if (this.peoplechoicecatpara == this.HGBdata.Categories[index].peoplechoicecatpara) {
+    } else if (
+      this.peoplechoicecatpara ==
+      this.HGBdata.Categories[index].peoplechoicecatpara
+    ) {
       this.editpeoplechoice = !this.editpeoplechoice;
-    }
-    else {
-      if (this.peoplechoicecatpara == "") {
-        alert("please enter the People choice.");
-      }
-      else {
-        this.HGBdata.Categories[index].peoplechoicecatpara = this.peoplechoicecatpara
-        this.api.updatepeoplechoicepara(this.HGBdata.id, this.HGBdata.Categories).then((data) => {
-          if (data != undefined) {
-            this.editpeoplechoice = !this.editpeoplechoice;
-          }
-        }).catch(() => {
-          return false;
-        });
+    } else {
+      if (this.peoplechoicecatpara == '') {
+        alert('please enter the People choice.');
+      } else {
+        this.HGBdata.Categories[index].peoplechoicecatpara =
+          this.peoplechoicecatpara;
+        this.api
+          .updatepeoplechoicepara(this.HGBdata.id, this.HGBdata.Categories)
+          .then((data) => {
+            if (data != undefined) {
+              this.editpeoplechoice = !this.editpeoplechoice;
+            }
+          })
+          .catch(() => {
+            return false;
+          });
       }
     }
   }
 
+  back() {
+    this.Location.back();
+  }
 }

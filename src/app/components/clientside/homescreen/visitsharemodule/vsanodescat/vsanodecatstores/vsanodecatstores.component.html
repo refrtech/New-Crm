@@ -1,6 +1,6 @@
 <div class="A20padding">
   <div class="dflex AIcenter">
-    <a routerLink="/homescreen">
+    <a (click)="back()">
       <svg width="38" height="24" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M24 12H5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -24,7 +24,8 @@
           <img class="M100width" [src]=" storeBanner ? storeBanner : 'assets/brand/opengraph.png' " alt="banner" />
         </div>
       </div>
-      <div class="dflex flex_col l15margin JEend" *ngIf="actRoute.snapshot.params['catid'] == 'food_and_beverages' || actRoute.snapshot.params['catid'] =='salons_and_spa' || actRoute.snapshot.params['catid'] =='healthcare'">
+      <div class="dflex flex_col l15margin JEend"
+        *ngIf="actRoute.snapshot.params['catid'] == 'food_and_beverages' || actRoute.snapshot.params['catid'] =='salons_and_spa' || actRoute.snapshot.params['catid'] =='healthcare'">
         <button (click)="takePicture('1:1','logo')" mat-button disableRipple
           class="c_align  M100width tb5padding cursor_pointer purple_txt regulartext s_size normallineheight lr20padding Aborder">
           <svg class="r5margin cursor_pointer" width="17" height="15" viewBox="0 0 17 15" fill="none"

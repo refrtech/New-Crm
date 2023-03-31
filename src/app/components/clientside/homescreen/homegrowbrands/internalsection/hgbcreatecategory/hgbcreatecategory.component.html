@@ -1,6 +1,6 @@
 <div class="A20padding">
   <div class="dflex AIcenter">
-    <a routerLink="/homescreen">
+    <a (click)="back()">
       <svg width="38" height="24" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M24 12H5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -44,7 +44,7 @@
     Products
   </div>
   <div class="Aborder A5radius A20padding b20margin">
-  <div class="boldtext l_size b20margin">Apply Filter to search Products</div>
+    <div class="boldtext l_size b20margin">Apply Filter to search Products</div>
     <div class="dflex">
       <mat-form-field class="l5margin r5margin M30width crminput" appearance="outline">
         <input type="string" matInput [(ngModel)]="Searchtxt">
@@ -109,7 +109,8 @@
     <div cdkDropListGroup>
       <div class="example-container M100width">
         <div cdkDropList [cdkDropListData]="HGdata.products" class="example-list" (cdkDropListDropped)="drop($event)">
-          <div class="example-box tborder s_size dflex tb10padding" *ngFor="let item of HGdata.products;let i = index" cdkDrag>
+          <div class="example-box tborder s_size dflex tb10padding" *ngFor="let item of HGdata.products;let i = index"
+            cdkDrag>
             <div class="M10width dflex JCcenter">
               <mat-icon>menu</mat-icon>
             </div>
@@ -163,8 +164,10 @@
     </div>
     <div cdkDropListGroup>
       <div class="example-container M100width">
-        <div cdkDropList [cdkDropListData]="auth.resource.categoryList" class="example-list" (cdkDropListDropped)="drop($event)">
-          <div class="example-box tborder s_size dflex tb10padding" *ngFor="let item of auth.resource.categoryList" cdkDrag>
+        <div cdkDropList [cdkDropListData]="auth.resource.categoryList" class="example-list"
+          (cdkDropListDropped)="drop($event)">
+          <div class="example-box tborder s_size dflex tb10padding" *ngFor="let item of auth.resource.categoryList"
+            cdkDrag>
             <div class="M10width dflex JCcenter">
               <mat-icon>menu</mat-icon>
             </div>
