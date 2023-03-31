@@ -21,3 +21,15 @@
   cursor: move;
   background: white;
 }
+
+.store_logo {
+  border: 1px solid black;
+  width: 150px;
+  height: 60px;
+  margin: auto;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

@@ -52,7 +52,7 @@
     </div>
     <div class="t50margin lr55padding">
         <div class="Aborder A5radius A20padding b20margin">
-        <div class="boldtext l_size t30margin b20margin">Apply Filter to search store</div>
+            <div class="boldtext l_size t30margin b20margin">Apply Filter to search store</div>
             <div class="dflex">
                 <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
                     <mat-select placeholder="Filter Type" [(ngModel)]="parameters">
@@ -109,8 +109,7 @@
                 </ng-container>
                 <ng-container matColumnDef="action">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading"> Action </th>
-                    <td mat-cell *matCellDef="let row"
-                    (click)="action(row)">
+                    <td mat-cell *matCellDef="let row" (click)="action(row)">
                         <mat-icon>
                             {{isstorealreadyadded ?'remove':'add_circle'}}
                         </mat-icon>
@@ -128,11 +127,19 @@
         <div class="dWrap dflex">
             <section *ngFor="let x of BSmoduledata.Stores;let i =index">
                 <main class="section">
-                    <div class="w200 h200 Aborder dflex flex_col JCcenter AIcenter pos_relative">
+                    <div class="w200 h200 Aborder pos_relative">
+                        <div class="img ">
+                            <img class="M100width h200 object_fit_cover"
+                                [src]=" x.brandspotlightbanner != undefined ? x.brandspotlightbanner : x.banner "
+                                alt="banner" />
+                        </div>
+                    </div>
+                    <div class="w200 Aborder t10margin b10margin tb10padding regulartext s_size">
                         <div class="c_align boldtext m_size b15margin">
                             {{x.name}}
                         </div>
                         <div class="c_align">{{x.cat}}</div>
+
                     </div>
                     <div (click)="takePicture('16:9','homeBanner',i,x)"
                         class="w200 Aborder dflex  JCcenter AIcenter t10margin b10margin tb10padding regulartext s_size">

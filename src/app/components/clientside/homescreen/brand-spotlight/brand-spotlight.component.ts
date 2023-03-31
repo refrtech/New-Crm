@@ -137,7 +137,7 @@ export class BrandSpotlightComponent implements OnInit {
     }
   }
 
-  async takePicture(ratio:string,type: string, index: number, item: any) {
+  async takePicture(ratio: string, type: string, index: number, item: any) {
     const image = await Camera.getPhoto({
       quality: 100,
       height: 300,
@@ -147,11 +147,17 @@ export class BrandSpotlightComponent implements OnInit {
     });
     const imageUrl = image.webPath || '';
     if (imageUrl) {
-      this.startCropper(ratio,imageUrl, type, index, item);
+      this.startCropper(ratio, imageUrl, type, index, item);
     }
   }
 
-  async startCropper(ratio:string,webPath: string, type: string, sindex: number, item: any) {
+  async startCropper(
+    ratio: string,
+    webPath: string,
+    type: string,
+    sindex: number,
+    item: any
+  ) {
     let isPhone = this.auth.resource.getWidth < 768;
     let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
     const refDialog = this.auth.resource.dialog.open(CropperComponent, {
@@ -159,7 +165,7 @@ export class BrandSpotlightComponent implements OnInit {
       minWidth: '320px',
       maxWidth: '480px',
       height: '360px',
-      data: { webPath: webPath, type: type, ratio:ratio },
+      data: { webPath: webPath, type: type, ratio: ratio },
       disableClose: true,
       panelClass: 'dialogLayout',
     });
@@ -170,9 +176,16 @@ export class BrandSpotlightComponent implements OnInit {
         }
       } else {
         if (type == 'homeBanner') {
-          this.api.updatebsbanner(this.BSmoduledata.id,result.croppedImage,this.BSmoduledata.Stores,sindex).then((data) => {
-            alert("banner updated");
-          });
+          this.api
+            .updatebsbanner(
+              this.BSmoduledata.id,
+              result.croppedImage,
+              this.BSmoduledata.Stores,
+              sindex
+            )
+            .then((data) => {
+              alert('banner updated');
+            });
         }
       }
     });

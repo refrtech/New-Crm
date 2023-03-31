@@ -576,7 +576,6 @@ export class ApiserviceService {
     return updateDoc(cityrefr, { Categories: data });
   }
 
-
   updateHGtitle(Title: string, id: any) {
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
     return updateDoc(cityrefr, { HG_Title: Title })
@@ -876,8 +875,6 @@ export class ApiserviceService {
     const cityrefr = doc(this.firestore, `${'VSA_section'}`, `${id}`);
     return updateDoc(cityrefr, { Nodes: nodes });
   }
-
-
 
   async addstoretoPeoplechoice(Data: any) {
     const nodeinternal = await addDoc(
@@ -1187,7 +1184,7 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-  updatePeoplechoicepara(id:string,catarray:any){
+  updatePeoplechoicepara(id: string, catarray: any) {
     const cityrefr = doc(this.firestore, `${'vsa_internal'}`, `${id}`);
     return updateDoc(cityrefr, { CategoryBanners: catarray })
       .then((datas: any) => {
@@ -1292,24 +1289,22 @@ export class ApiserviceService {
         }
       } else {
         if (updloadId == '1') {
-
-        catarray.push({
-          Catbanner: '',
-          Catid: catid,
-          subcatbanners: [
-            {
-              Subcatid: subcatid,
-              Subcatbanner: cloudUpload.url,
-            },
-          ],
-        });
-      }
-      else {
-        catarray.push({
-          Catbanner: cloudUpload.url,
-          Catid: catid,
-        });
-      }
+          catarray.push({
+            Catbanner: '',
+            Catid: catid,
+            subcatbanners: [
+              {
+                Subcatid: subcatid,
+                Subcatbanner: cloudUpload.url,
+              },
+            ],
+          });
+        } else {
+          catarray.push({
+            Catbanner: cloudUpload.url,
+            Catid: catid,
+          });
+        }
       }
 
       return updateDoc(cityrefr, {

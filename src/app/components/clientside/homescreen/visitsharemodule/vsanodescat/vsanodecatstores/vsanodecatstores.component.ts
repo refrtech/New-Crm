@@ -12,6 +12,7 @@ import { Camera } from '@capacitor/camera';
 import { CameraResultType } from '@capacitor/camera/dist/esm/definitions';
 import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component';
 import { AuthService } from 'src/app/auth.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-vsanodecatstores',
@@ -76,7 +77,8 @@ export class VSAnodecatstoresComponent implements OnInit {
     public auth: AuthService,
     private router: Router,
     private api: ApiserviceService,
-    public actRoute: ActivatedRoute
+    public actRoute: ActivatedRoute,
+    public Location: Location
   ) {}
 
   ngOnInit(): void {
@@ -207,7 +209,7 @@ export class VSAnodecatstoresComponent implements OnInit {
     }
   }
 
-  async takePicture(ratio:string,type: string, id?: string) {
+  async takePicture(ratio: string, type: string, id?: string) {
     const image = await Camera.getPhoto({
       quality: 100,
       height: 300,
@@ -217,11 +219,11 @@ export class VSAnodecatstoresComponent implements OnInit {
     });
     const imageUrl = image.webPath || '';
     if (imageUrl) {
-      this.startCropper(ratio,imageUrl, type, id);
+      this.startCropper(ratio, imageUrl, type, id);
     }
   }
 
-  startCropper(ratio:string,webPath: string, type: string, id?: string) {
+  startCropper(ratio: string, webPath: string, type: string, id?: string) {
     let isPhone = this.auth.resource.getWidth < 768;
     let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
     const refDialog = this.auth.resource.dialog.open(CropperComponent, {
@@ -229,7 +231,7 @@ export class VSAnodecatstoresComponent implements OnInit {
       minWidth: '320px',
       maxWidth: '480px',
       height: '360px',
-      data: { webPath: webPath, type: type ,ratio:ratio},
+      data: { webPath: webPath, type: type, ratio: ratio },
       disableClose: true,
       panelClass: 'dialogLayout',
     });
@@ -308,7 +310,7 @@ export class VSAnodecatstoresComponent implements OnInit {
           this.catarray.push({
             Catbanner: '',
             Catid: this.actRoute.snapshot.params['catid'],
-            peoplechoicecatpara:this.peoplechoicecatpara
+            peoplechoicecatpara: this.peoplechoicecatpara,
           });
         }
         this.api
@@ -323,5 +325,9 @@ export class VSAnodecatstoresComponent implements OnInit {
           });
       }
     }
+  }
+
+  back() {
+    this.Location.back();
   }
 }

@@ -13,6 +13,7 @@ import { Camera } from '@capacitor/camera';
 import { CameraResultType } from '@capacitor/camera/dist/esm/definitions';
 import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-hgbnodesubcatstores',
@@ -29,12 +30,11 @@ export class HgbnodesubcatstoresComponent implements OnInit {
   parameters1: string = 'phone';
   parameters2: string = 'phone';
 
-
   operators: string = '==';
 
-  searchvalue: string = "9876543210";
-  searchvalue1: string = "9876543210";
-  searchvalue2: string = "9876543210";
+  searchvalue: string = '9876543210';
+  searchvalue1: string = '9876543210';
+  searchvalue2: string = '9876543210';
 
   isstorealreadyadded: boolean = false;
   isstorealreadyadded1: boolean = false;
@@ -91,7 +91,8 @@ export class HgbnodesubcatstoresComponent implements OnInit {
     private api: ApiserviceService,
     private actRoute: ActivatedRoute,
     private auth: AuthService,
-    private https: HttpClient
+    private https: HttpClient,
+    public Location: Location
   ) {}
 
   ngOnInit(): void {
@@ -104,13 +105,18 @@ export class HgbnodesubcatstoresComponent implements OnInit {
       .subscribe((data: any) => {
         this.PChoiceStores = data;
       });
-      this.api.gethomegrowbrandsUlovesubCatstores(
+    this.api
+      .gethomegrowbrandsUlovesubCatstores(
         this.actRoute.snapshot.params['catid']
       )
       .subscribe((data: any) => {
         this.trendingStores = data;
       });
-      this.api.gethomegrowproductssubCatstores("HomegrownSection",this.actRoute.snapshot.params['cat'])
+    this.api
+      .gethomegrowproductssubCatstores(
+        'HomegrownSection',
+        this.actRoute.snapshot.params['cat']
+      )
       .subscribe((data: any) => {
         this.homegrownproducts = data;
       });
@@ -169,9 +175,13 @@ export class HgbnodesubcatstoresComponent implements OnInit {
       .getRecentStores(
         1,
         false,
-        i == 1 ? this.parameters : ( i == 2 ? this.parameters1 : this.parameters2 ),
+        i == 1 ? this.parameters : i == 2 ? this.parameters1 : this.parameters2,
         this.operators,
-        i == 1 ? this.searchvalue : ( i == 2 ? this.searchvalue1 : this.searchvalue2 )
+        i == 1
+          ? this.searchvalue
+          : i == 2
+          ? this.searchvalue1
+          : this.searchvalue2
       )
       .pipe(take(1))
       .subscribe((recentStore: any) => {
@@ -187,11 +197,11 @@ export class HgbnodesubcatstoresComponent implements OnInit {
             this.trendingStores.findIndex((x) => x.id == recentStore[0].id) < 0
               ? false
               : true;
-        }
-        else {
+        } else {
           this.MerchantdataSource2 = new MatTableDataSource(recentStore);
           this.isstorealreadyadded2 =
-            this.homegrownproducts.findIndex((x) => x.id == recentStore[0].id) < 0
+            this.homegrownproducts.findIndex((x) => x.id == recentStore[0].id) <
+            0
               ? false
               : true;
         }
@@ -203,19 +213,18 @@ export class HgbnodesubcatstoresComponent implements OnInit {
       this.api.deletestorefrompeopleStore(id).then((data: any) => {
         this.MerchantdataSource = new MatTableDataSource();
       });
-    } else if(i == 2) {
+    } else if (i == 2) {
       this.api.deletestorefromTrendingStore(id).then((data: any) => {
         this.MerchantdataSource1 = new MatTableDataSource();
       });
-    }
-    else {
-      this.api.deleteproductfromhomegrown(id).then((data:any)=>{
+    } else {
+      this.api.deleteproductfromhomegrown(id).then((data: any) => {
         this.MerchantdataSource2 = new MatTableDataSource();
-      })
+      });
     }
   }
 
-  async takePicture(ratio:string,type: string, id?: string) {
+  async takePicture(ratio: string, type: string, id?: string) {
     const image = await Camera.getPhoto({
       quality: 100,
       height: 300,
@@ -225,11 +234,11 @@ export class HgbnodesubcatstoresComponent implements OnInit {
     });
     const imageUrl = image.webPath || '';
     if (imageUrl) {
-      this.startCropper(ratio,imageUrl, type, id);
+      this.startCropper(ratio, imageUrl, type, id);
     }
   }
 
-  startCropper(ratio:string,webPath: string, type: string, id?: string) {
+  startCropper(ratio: string, webPath: string, type: string, id?: string) {
     let isPhone = this.auth.resource.getWidth < 768;
     let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
     const refDialog = this.auth.resource.dialog.open(CropperComponent, {
@@ -237,7 +246,7 @@ export class HgbnodesubcatstoresComponent implements OnInit {
       minWidth: '320px',
       maxWidth: '480px',
       height: '360px',
-      data: { webPath: webPath, type: type,ratio:ratio },
+      data: { webPath: webPath, type: type, ratio: ratio },
       disableClose: true,
       panelClass: 'dialogLayout',
     });
@@ -260,8 +269,7 @@ export class HgbnodesubcatstoresComponent implements OnInit {
                 this.auth.resource.startSnackBar('Banner Update Under Review!');
               }
             });
-        }
-        else if (type == 'trendingstorebanner') {
+        } else if (type == 'trendingstorebanner') {
           this.api
             .updateTrendingstorebanner(
               id == undefined ? '' : id,
@@ -274,11 +282,12 @@ export class HgbnodesubcatstoresComponent implements OnInit {
                 this.auth.resource.startSnackBar('Banner Update Under Review!');
               }
             });
-        }
-        else {
+        } else {
           this.api
-            .updatesubcatproductbanner(id == undefined ? '' : id,
-            result.croppedImage)
+            .updatesubcatproductbanner(
+              id == undefined ? '' : id,
+              result.croppedImage
+            )
             .then((ref) => {
               if (!ref || !ref.success) {
                 this.auth.resource.startSnackBar('Upload Failed!');
@@ -297,7 +306,8 @@ export class HgbnodesubcatstoresComponent implements OnInit {
       let i = data[0].Categories.findIndex(
         (x: any) => x.id == this.actRoute.snapshot.params['catid']
       );
-      this.peoplechoicesubcatpara = data[0].Categories[i].peoplechoiceSubcatpara;
+      this.peoplechoicesubcatpara =
+        data[0].Categories[i].peoplechoiceSubcatpara;
     });
   }
 
@@ -322,7 +332,7 @@ export class HgbnodesubcatstoresComponent implements OnInit {
           .updatepeoplechoicepara(this.HGBdata.id, this.HGBdata.Categories)
           .then((data) => {
             if (data != undefined) {
-            this.editpeoplechoice = !this.editpeoplechoice;
+              this.editpeoplechoice = !this.editpeoplechoice;
             }
           })
           .catch(() => {
@@ -330,6 +340,10 @@ export class HgbnodesubcatstoresComponent implements OnInit {
           });
       }
     }
+  }
+
+  back() {
+    this.Location.back();
   }
 
   // searchdata() {

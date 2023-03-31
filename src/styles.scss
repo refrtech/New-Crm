@@ -952,5 +952,13 @@ body {
 }
 
 .thanksscreen mat-dialog-container {
-  overflow: inherit !important;
+  overflow-x: scroll !important;
+}
+
+.object_fit_cover {
+  object-fit: cover;
+}
+
+.object_fit_contain {
+  object-fit: contain;
 }
