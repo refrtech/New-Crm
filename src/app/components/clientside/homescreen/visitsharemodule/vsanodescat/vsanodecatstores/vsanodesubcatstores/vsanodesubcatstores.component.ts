@@ -23,20 +23,14 @@ export class VSAnodesubcatstoresComponent implements OnInit {
   CatBanner: string = '';
   SelectedSubCat: string = '';
   SelectedCat: string = '';
-
   subcatlist: Array<any> = [];
-
   parameters: string = 'phone';
   parameters1: string = 'phone';
-
   operators: string = '==';
-
   searchvalue: string = '9876543210';
   searchvalue1: string = '9876543210';
-
   isstorealreadyadded: boolean = false;
   isstorealreadyadded1: boolean = false;
-
   MerchantdataSource!: MatTableDataSource<any>;
   MerchantdataSource1!: MatTableDataSource<any>;
   peoplechoicecatpara: string = '';
@@ -108,6 +102,7 @@ export class VSAnodesubcatstoresComponent implements OnInit {
     this.api
       .getVSAPeoplechoicesubCatstores(
         this.actRoute.snapshot.params['nodeid'],
+        this.actRoute.snapshot.params['catid'],
         this.SelectedSubCat
       )
       .pipe(take(1))
@@ -126,23 +121,27 @@ export class VSAnodesubcatstoresComponent implements OnInit {
             let catindex = this.catarray.findIndex(
               (x: any) => x.Catid == this.actRoute.snapshot.params['catid']
             );
-
-            let subcatindex = this.catarray[catindex].subcatbanners.findIndex(
+            let subcatindex = -1;
+            subcatindex = this.catarray[catindex]?.subcatbanners?.findIndex(
               (x: any) => x.Subcatid == this.SelectedSubCat
             );
+            if (subcatindex != -1 && subcatindex != undefined) {
+              this.peoplechoicecatpara =
+                this.catarray[catindex]?.subcatbanners[
+                  subcatindex
+                ]?.peoplechoicecatpara;
+            }
 
-            this.peoplechoicecatpara =
-              this.catarray[catindex].subcatbanners[
-                subcatindex
-              ].peoplechoicecatpara;
             let i = this.catarray.findIndex(
               (x: any) => x.Catid == this.actRoute.snapshot.params['catid']
             );
+
             if (i != -1) {
-              let j = this.catarray[i].subcatbanners.findIndex(
+              let j = -1;
+              j = this.catarray[i]?.subcatbanners?.findIndex(
                 (x: any) => x.Subcatid == this.SelectedSubCat
               );
-              if (j != -1) {
+              if (j != -1 && j != undefined) {
                 this.subCatBanner =
                   this.catarray[i].subcatbanners[j].Subcatbanner;
               } else {
@@ -155,6 +154,7 @@ export class VSAnodesubcatstoresComponent implements OnInit {
     this.api
       .getVSAtrendingsubCatstores(
         this.actRoute.snapshot.params['nodeid'],
+        this.actRoute.snapshot.params['catid'],
         this.SelectedSubCat
       )
       .subscribe((data: any) => {
@@ -244,7 +244,10 @@ export class VSAnodesubcatstoresComponent implements OnInit {
   action(i: number, Data: any) {
     if (i == 1) {
       Data.Nodeid = this.actRoute.snapshot.params['nodeid'];
-      Data.catId = this.actRoute.snapshot.params['catid'];
+      Data.catId =
+        this.actRoute.snapshot.params['catid'] != 'in_the_mix'
+          ? this.actRoute.snapshot.params['catid']
+          : this.SelectedCat;
       Data.iscat_subCatstore =
         this.actRoute.snapshot.params['catid'] != 'in_the_mix'
           ? 'SubCat'
@@ -259,7 +262,10 @@ export class VSAnodesubcatstoresComponent implements OnInit {
       });
     } else {
       Data.Nodeid = this.actRoute.snapshot.params['nodeid'];
-      Data.catId = this.actRoute.snapshot.params['catid'];
+      Data.catId =
+        this.actRoute.snapshot.params['catid'] != 'in_the_mix'
+          ? this.actRoute.snapshot.params['catid']
+          : this.SelectedCat;
       Data.iscat_subCatstore =
         this.actRoute.snapshot.params['catid'] != 'in_the_mix'
           ? 'SubCat'
@@ -305,7 +311,7 @@ export class VSAnodesubcatstoresComponent implements OnInit {
     }
   }
 
-  async takePicture(ratio:string,type: string, id?: string) {
+  async takePicture(ratio: string, type: string, id?: string) {
     const image = await Camera.getPhoto({
       quality: 100,
       height: 300,
@@ -315,11 +321,11 @@ export class VSAnodesubcatstoresComponent implements OnInit {
     });
     const imageUrl = image.webPath || '';
     if (imageUrl) {
-      this.startCropper(ratio,imageUrl, type, id);
+      this.startCropper(ratio, imageUrl, type, id);
     }
   }
 
-  startCropper(ratio:string,webPath: string, type: string, id?: string) {
+  startCropper(ratio: string, webPath: string, type: string, id?: string) {
     let isPhone = this.auth.resource.getWidth < 768;
     let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
     const refDialog = this.auth.resource.dialog.open(CropperComponent, {
@@ -327,7 +333,7 @@ export class VSAnodesubcatstoresComponent implements OnInit {
       minWidth: '320px',
       maxWidth: '480px',
       height: '360px',
-      data: { webPath: webPath, type: type,ratio:ratio },
+      data: { webPath: webPath, type: type, ratio: ratio },
       disableClose: true,
       panelClass: 'dialogLayout',
     });
@@ -400,7 +406,7 @@ export class VSAnodesubcatstoresComponent implements OnInit {
         (x: any) => x.Catid == this.actRoute.snapshot.params['catid']
       );
 
-      subcatindex = this.catarray[catindex].subcatbanners.findIndex(
+      subcatindex = this.catarray[catindex].subcatbanners?.findIndex(
         (x: any) => x.Subcatid == this.SelectedSubCat
       );
     } else {
@@ -414,65 +420,80 @@ export class VSAnodesubcatstoresComponent implements OnInit {
     } else if (
       (this.actRoute.snapshot.params['catid'] == 'in_the_mix' &&
         catindex != -1 &&
+        catindex != undefined &&
         this.peoplechoicecatpara ==
           this.catarray[catindex].peoplechoicecatpara) ||
       (this.actRoute.snapshot.params['catid'] != 'in_the_mix' &&
         catindex != -1 &&
+        catindex != undefined &&
         subcatindex != -1 &&
+        subcatindex != undefined &&
         this.peoplechoicecatpara ==
           this.catarray[catindex].subcatbanners[subcatindex]
-            .peoplechoicecatpara)
+            ?.peoplechoicecatpara)
     ) {
       this.editpeoplechoice = !this.editpeoplechoice;
     } else {
       if (this.peoplechoicecatpara == '') {
         alert('please enter the People choice.');
       } else {
-        if (
-          catindex != -1 &&
-          this.actRoute.snapshot.params['catid'] == 'in_the_mix'
-        ) {
-          this.catarray[catindex].peoplechoicecatpara =
-            this.peoplechoicecatpara;
-        } else {
-          this.catarray.push({
-            Catbanner: '',
-            Catid: this.SelectedCat,
-            peoplechoicecatpara: this.peoplechoicecatpara,
-          });
-        }
 
-        if (
-          catindex == -1 &&
-          this.actRoute.snapshot.params['catid'] != 'in_the_mix'
-        ) {
-          this.catarray.push({
-            Catbanner: '',
-            Catid: this.actRoute.snapshot.params['catid'],
-            subcatbanners: [
-              {
-                Subcatid: this.SelectedSubCat,
-                peoplechoicecatpara: this.peoplechoicecatpara,
-              },
-            ],
-          });
-        } else if (
-          catindex != -1 &&
-          subcatindex == -1 &&
-          this.actRoute.snapshot.params['catid'] != 'in_the_mix'
-        ) {
-          this.catarray[catindex].subcatbanners.push({
-            Subcatid: this.SelectedSubCat,
-            peoplechoicecatpara: this.peoplechoicecatpara,
-          });
-        } else if (
-          catindex != -1 &&
-          subcatindex != -1 &&
-          this.actRoute.snapshot.params['catid'] != 'in_the_mix'
-        ) {
-          this.catarray[catindex].subcatbanners[
-            subcatindex
-          ].peoplechoicecatpara = this.peoplechoicecatpara;
+        if (this.actRoute.snapshot.params['catid'] == 'in_the_mix') {
+          if (catindex != -1) {
+            this.catarray[catindex].peoplechoicecatpara =
+              this.peoplechoicecatpara;
+          } else {
+            this.catarray.push({
+              Catbanner: '',
+              Catid: this.SelectedCat,
+              peoplechoicecatpara: this.peoplechoicecatpara,
+            });
+          }
+        }
+        if (this.actRoute.snapshot.params['catid'] != 'in_the_mix') {
+          // if cat not exit in this.catarray then push that cat in this.catarray
+          if (catindex == -1 || catindex == undefined) {
+            this.catarray.push({
+              Catbanner: '',
+              Catid: this.actRoute.snapshot.params['catid'],
+              subcatbanners: [
+                {
+                  Subcatid: this.SelectedSubCat,
+                  peoplechoicecatpara: this.peoplechoicecatpara,
+                },
+              ],
+            });
+          }
+          // if cat exit in this.catarray but sub-cat not exit in this.catarry[index].subcatbanners then push sub cat in it
+          else if (
+            catindex != -1 &&
+            catindex != undefined &&
+            (subcatindex == -1 || subcatindex == undefined)
+          ) {
+            if(this.catarray[catindex].subcatbanners != undefined){
+            this.catarray[catindex].subcatbanners.push({
+              Subcatid: this.SelectedSubCat,
+              peoplechoicecatpara: this.peoplechoicecatpara,
+            });
+          }
+          else {
+            this.catarray[catindex].subcatbanners = [{
+              Subcatid: this.SelectedSubCat,
+              peoplechoicecatpara: this.peoplechoicecatpara,
+            }]
+          }
+          }
+          // if cat exit in this.catarray and sub-cat also exit in this.catarry[index].subcatbanners then only the para value
+          else if (
+            catindex != -1 &&
+            catindex != undefined &&
+            subcatindex != -1 &&
+            subcatindex != undefined
+          ) {
+            this.catarray[catindex].subcatbanners[
+              subcatindex
+            ].peoplechoicecatpara = this.peoplechoicecatpara;
+          }
         }
         this.api
           .updatePeoplechoicepara(this.DocId, this.catarray)

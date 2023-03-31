@@ -1013,7 +1013,7 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-  getVSAPeoplechoicesubCatstores(nodeid: string, subcatId: string) {
+  getVSAPeoplechoicesubCatstores(nodeid: string,catid:string, subcatId: string) {
     const VSA_section: CollectionReference = collection(
       this.firestore,
       `${'people_choice_store'}`
@@ -1021,6 +1021,7 @@ export class ApiserviceService {
     const qu = query(
       VSA_section,
       where('Nodeid', '==', nodeid),
+      where('catId','==',catid),
       where('SubcatId', '==', subcatId),
       where('iscat_subCatstore', '==', 'SubCat'),
       where('sectionName', '==', 'VSAsection')
@@ -1056,7 +1057,7 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-  getVSAtrendingsubCatstores(nodeid: string, subcatId: string) {
+  getVSAtrendingsubCatstores(nodeid: string,catId:string, subcatId: string) {
     const VSA_section: CollectionReference = collection(
       this.firestore,
       `${'trending_store'}`
@@ -1064,6 +1065,7 @@ export class ApiserviceService {
     const qu = query(
       VSA_section,
       where('Nodeid', '==', nodeid),
+      where('catId', '==', catId),
       where('SubcatId', '==', subcatId),
       where('iscat_subCatstore', '==', 'SubCat'),
       where('sectionName', '==', 'VSAsection')
