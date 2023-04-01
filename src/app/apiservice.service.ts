@@ -571,10 +571,80 @@ export class ApiserviceService {
     return updateDoc(cityrefr, { third_Stores: arrayRemove(stores) });
   }
 
+
+  async updatehomegrownFirststorelogo(
+    croppedImage: any,
+    HGdata: any,
+    index: number
+  ) {
+    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${HGdata[index].id}`);
+    const cloudUpload = await this.cloudUpload(HGdata[index].id, croppedImage);
+    if (!cloudUpload.success) {
+      return cloudUpload;
+    } else {
+      HGdata[index].crmlogo = cloudUpload.url;
+      return updateDoc(cityrefr, { First_Stores: HGdata })
+        .then(() => {
+          return cloudUpload;
+        })
+        .catch((err) => {
+          return false;
+        });
+    }
+  }
+
+  async updatehomegrownSecondstorelogo(
+    croppedImage: any,
+    HGdata: any,
+    index: number
+  ) {
+    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${HGdata[index].id}`);
+    const cloudUpload = await this.cloudUpload(HGdata[index].id, croppedImage);
+
+    if (!cloudUpload.success) {
+      return cloudUpload;
+    } else {
+      HGdata[index].crmlogo = cloudUpload.url;
+      return updateDoc(cityrefr, { Second_Stores: HGdata })
+        .then(() => {
+          return cloudUpload;
+        })
+        .catch((err) => {
+          return false;
+        });
+    }
+  }
+
+  async updatehomegrownThirdstorelogo(
+    croppedImage: any,
+    HGdata: any,
+    index: number
+  ) {
+    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${HGdata[index].id}`);
+    const cloudUpload = await this.cloudUpload(HGdata[index].id, croppedImage);
+    if (!cloudUpload.success) {
+      return cloudUpload;
+    } else {
+      HGdata[index].crmlogo = cloudUpload.url;
+
+      return updateDoc(cityrefr, { third_Stores: HGdata })
+        .then(() => {
+          return cloudUpload;
+        })
+        .catch((err) => {
+          return false;
+        });
+    }
+  }
+
+
+
+
   updatepeoplechoicepara(id: string, data: any) {
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
     return updateDoc(cityrefr, { Categories: data });
   }
+
 
   updateHGtitle(Title: string, id: any) {
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);

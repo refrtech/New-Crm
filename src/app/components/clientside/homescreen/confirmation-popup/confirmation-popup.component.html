@@ -1,0 +1,22 @@
+<div class="A20padding">
+  <div class="purple_txt l_size boldtext">
+    Confirmation Pop-up
+  </div>
+  <div class="t20padding">
+    Are You Sure you want to delete this {{data}}?
+  </div>
+  <div class="dflex t15padding">
+    <div class="M55width"></div>
+    <div class="M20width">
+      <button (click)="close(false)" mat-button class="viewbtn t5padding b5padding l30padding r30padding cancelbtn">
+        No
+      </button>
+    </div>
+    <div class="M5width"></div>
+    <div class="M20width">
+      <button (click)="close(true)" mat-button class="viewbtn t5padding b5padding l30padding r30padding">
+        Yes
+      </button>
+    </div>
+  </div>
+</div>

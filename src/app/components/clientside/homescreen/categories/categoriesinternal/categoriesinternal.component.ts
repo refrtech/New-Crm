@@ -7,7 +7,6 @@ import { Camera } from '@capacitor/camera';
 import { CameraResultType } from '@capacitor/camera/dist/esm/definitions';
 import { AuthService } from 'src/app/auth.service';
 import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-categoriesinternal',
@@ -91,7 +90,6 @@ export class CategoriesinternalComponent implements OnInit {
     private api: ApiserviceService,
     private actRoute: ActivatedRoute,
     public auth: AuthService,
-    private https: HttpClient
   ) {}
 
   ngOnInit(): void {
