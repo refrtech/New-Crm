@@ -57,7 +57,6 @@ export class AddinfoslideComponent implements OnInit {
         this.url = (<FileReader>event.target).result;
       };
     }
-    // -------
     const readerer = new FileReader();
     readerer.onloadend = async () => {
       const content = reader.result?.toString();
@@ -82,7 +81,6 @@ export class AddinfoslideComponent implements OnInit {
     };
     this.auth.addInfoVideo(datas).then((d) => {
     });
-    // this.dialogRef.close({ data: datas });
     this.dialogRef.close();
   }
 

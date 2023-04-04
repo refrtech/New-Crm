@@ -8,7 +8,6 @@ import { Camera } from '@capacitor/camera';
 import { CameraResultType } from '@capacitor/camera/dist/esm/definitions';
 import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component';
 import { AuthService } from 'src/app/auth.service';
-import { log } from 'console';
 
 @Component({
   selector: 'app-visitallstoredetails',
@@ -50,8 +49,6 @@ export class VisitallstoredetailsComponent implements OnInit {
     public dialogRef: MatDialogRef<VisitallstoredetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    // this.storelist =
-    //   this.data.selectednode != undefined ? this.data.selectednode.stores : [];
   }
 
   ngOnInit(): void {
@@ -96,38 +93,6 @@ export class VisitallstoredetailsComponent implements OnInit {
   close() {
     this.dialogRef.close();
   }
-
-  // updatestore() {
-  //   if (this.data.selectednode == undefined) {
-  //     let data = {
-  //       Nareas: this.data.node.Nareas,
-  //       city: this.data.node.city,
-  //       city_id: this.data.node.city_id,
-  //       created_at: this.data.node.created_at,
-  //       id: this.data.node.id,
-  //       name: this.data.node.name,
-  //       stores: this.storelist,
-  //       updated_at: this.data.node.updated_at,
-  //     };
-  //     this.api.addVSAstores(data, this.data.id).then((data: any) => {
-  //       if (!data) {
-  //         this.dialogRef.close();
-  //       }
-  //     });
-  //   } else {
-  //     let index = this.data.creatednodes.findIndex(
-  //       (x: any) => x.id == this.data.selectednode.id
-  //     );
-  //     this.data.creatednodes[index].stores = this.storelist;
-  //     this.api
-  //       .editVSAstores(this.data.creatednodes, this.data.id)
-  //       .then((data: any) => {
-  //         if (!data) {
-  //           this.dialogRef.close();
-  //         }
-  //       });
-  //   }
-  // }
 
   async takePicture(ratio: string, type: string, id: string, item: any) {
     const image = await Camera.getPhoto({

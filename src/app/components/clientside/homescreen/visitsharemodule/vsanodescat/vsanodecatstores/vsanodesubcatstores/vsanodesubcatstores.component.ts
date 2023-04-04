@@ -12,7 +12,6 @@ import { take } from 'rxjs';
 import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component';
 import { Camera } from '@capacitor/camera';
 import { CameraResultType } from '@capacitor/camera/dist/esm/definitions';
-
 import { Location } from '@angular/common';
 
 @Component({

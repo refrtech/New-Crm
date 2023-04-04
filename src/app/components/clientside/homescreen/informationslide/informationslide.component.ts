@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AddinfoslideComponent } from './addinfoslide/addinfoslide.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ApiserviceService } from 'src/app/apiservice.service';
 import { AuthService } from 'src/app/auth.service';
-import { take } from 'rxjs';
 
 @Component({
   selector: 'app-informationslide',

@@ -59,7 +59,6 @@ export class AddnodeComponent implements OnInit {
               id: this.data.nodedata.Nareas[i].id,
             });
           }
-          // this.dropdownList.push(this.data.nodedata.Nareas[i]);
         }
       }
     }

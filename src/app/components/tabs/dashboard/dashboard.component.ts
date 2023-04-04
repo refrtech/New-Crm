@@ -109,18 +109,15 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.auth.user$.pipe(take(1)).subscribe((user) => {
       const data = {
-        //false, user.username,
         name: user.name || '',
         soIG: user.soIG,
         soYT: user.soYT,
         soTW: user.soTW,
         soWA: user.soWA,
-        //user.info, user.url, user.typ, user.sex, user.stat, user.check,
         uid: user.uid,
         iso: user.iso || '',
         phoneNumFull: user.phone.split('+91')[1] || '',
       };
-      // this.changeAbout(data)
     });
   }
 

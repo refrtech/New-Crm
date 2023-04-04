@@ -31,7 +31,6 @@
             Media ratio - 16 : 9
         </div>
     </div>
-
     <div class="dflex AIcenter Aborder A5padding t20margin A5radius" *ngIf="fileName >= '0'">
         <div class="feedmoduleImg">
             <img #imagePreview [src]="url" *ngIf="format==='image' && url">
@@ -42,21 +41,6 @@
         </div>
         <span class="divide"></span>
     </div>
-
-
-    <!-- <div>
-        <div class="t20margin b15margin">
-            <div class="s_size semiboldtext crminput r15padding AScenter">URL path <span>(optional)</span>
-            </div>
-        </div>
-        <div>
-            <mat-form-field class="crminput l5margin r5margin M50width" appearance="outline">
-                <input type="number" matInput placeholder="Enter the URL path">
-            </mat-form-field>
-        </div>
-    </div> -->
-
-
     <div>
         <button (click)="addVideo()" mat-button
             class="s_size normallineheight purple_background White_txt browse t50margin">Save</button>

@@ -17,6 +17,6 @@ export class ConfirmationPopupComponent implements OnInit {
 
 
   close(values:boolean) {
-    this.dialogRef.close({ success: false });
+    this.dialogRef.close({ success: values });
   }
 }

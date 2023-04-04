@@ -29,9 +29,7 @@ export class TopfeedmoduleComponent implements OnInit {
   constructor(
     private dailog: MatDialog,
     public api: ApiserviceService,
-    private http: HttpClient,
     public auth: AuthService,
-    private sanitizer: DomSanitizer
   ) {
     this.getVideo(this.id);
   }

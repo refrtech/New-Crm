@@ -34,13 +34,10 @@ export class HomegrownbrandsComponent implements OnInit {
       if (file) {
         this.preview = '';
         this.currentFile = file;
-
         const reader = new FileReader();
-
         reader.onload = (e: any) => {
           this.preview = e.target.result;
         };
-
         reader.readAsDataURL(this.currentFile);
       }
     }
@@ -48,13 +45,10 @@ export class HomegrownbrandsComponent implements OnInit {
 
   upload(): void {
     this.progress = 0;
-
     if (this.selectedFiles) {
       const file: File | null = this.selectedFiles.item(0);
-
       if (file) {
         this.currentFile = file;
-
         this.uploadService.upload(this.currentFile).subscribe({
           next: (event: any) => {
             if (event.type === HttpEventType.UploadProgress) {
@@ -72,12 +66,10 @@ export class HomegrownbrandsComponent implements OnInit {
             } else {
               this.message = 'Could not upload the image!';
             }
-
             this.currentFile = undefined;
           },
         });
       }
-
       this.selectedFiles = undefined;
     }
   }

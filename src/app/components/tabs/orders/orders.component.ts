@@ -5,7 +5,6 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { take } from 'rxjs';
 import { ApiserviceService } from 'src/app/apiservice.service';
-import { AuthService } from 'src/app/auth.service';
 import { ExcelexportService } from 'src/app/excelexport.service';
 import { TransactionDetailsComponent } from '../transaction-details/transaction-details.component';
 

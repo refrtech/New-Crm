@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatTabChangeEvent } from '@angular/material/tabs';
@@ -31,7 +31,6 @@ export class WebsiteformComponent implements OnInit {
 
   constructor(
     private apiservice: ApiserviceService,
-    private injector: Injector
   ) {}
 
   ngOnInit(): void {}

@@ -6,11 +6,9 @@
                 <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round" />
             </svg>
-
         </a>
         <span class="xxl_size boldtext lr15padding AScenter">Visit share earn</span>
     </div>
-
     <div class="t50margin">
         <div class="l_size boldtext b20margin">
             City banners
@@ -28,17 +26,12 @@
                         stroke-linejoin="round" />
                 </svg>
             </div>
-            <!-- <div class="m_size regulartext c_align tb10padding gray_txt">
-                        Drop your image here, or <span><a type="submit"
-                                class="text_decoration_none purple_txt semiboldtext cursor_pointer">browse</a></span>
-                    </div> -->
             <div class="dflex JCcenter tb10padding">
                 <div class="col-8">
                     <label class="btn btn-default p-0">
                         <input class="A5padding" type="file" accept="image/*" (change)="selectFile($event)" />
                     </label>
                 </div>
-
                 <div class="col-4">
                     <button class="A5padding" [disabled]="!selectedFiles" (click)="upload()">
                         Upload
@@ -68,7 +61,6 @@
             <div class="m_size boldtext" *ngIf="preview < '0'">
                 <img src="https://img.icons8.com/arcade/64/null/no-image.png" />
             </div>
-
             <div class="t10margin b10margin">
                 <img width="200" [src]="preview" class="preview" />
             </div>
@@ -80,7 +72,6 @@
 
         <div class="dflex">
             <section *ngFor="let x of [0,1,2]">
-
                 <main class="section">
                     <div class="w200 h200 Aborder dflex flex_col JCcenter AIcenter pos_relative">
                         <div *ngIf="x == 0" class="c_align boldtext m_size b15margin">
@@ -92,7 +83,6 @@
                         <div *ngIf="x == 2" class="c_align boldtext m_size b15margin">
                             Category 3
                         </div>
-                        <!-- <div class="c_align">cafe</div> -->
                         <div
                             class="c_align pos_absolute M100width tb10padding cursor_pointer purple_txt regulartext s_size">
                             <svg class="r5margin cursor_pointer" style="margin-bottom: -3px;" width="17" height="15"
@@ -170,10 +160,6 @@
                 </svg>
             </div>
         </div>
-        <!-- <button mat-button routerLink="/categorysec"
-            class="s_size semiboldtext purple_background normallineheight tb5padding l15padding r15padding White_txt">
-            Next
-        </button> -->
         <button mat-button routerLink="/categorysec"
                 class="crud_ctas s_size semiboldtext purple_background normallineheight White_txt r10margin">Next</button>
     </div>

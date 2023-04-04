@@ -11,24 +11,20 @@ import { StoresinhoodComponent } from './storesinhood/storesinhood.component';
 })
 export class NewstoreinhoodComponent implements OnInit {
   nodeColumns: string[] = ['node', 'no_stores', 'storename', 'date', 'action'];
-  NSIYHTitle: string = "";
-  NSIYHSTitle: string = "";
+  NSIYHTitle: string = '';
+  NSIYHSTitle: string = '';
   editSubt: boolean = false;
   editTitle: boolean = false;
-  Selectedcity: string = "";
+  Selectedcity: string = '';
   cityList$: Observable<any[]> = of();
   nodes$: Observable<any[]> = of();
   alreadyCnodes$: Observable<any[]> = of();
-
-  Selectednode: string = "";
+  Selectednode: string = '';
   creatednodes$: Array<any> = [];
   selectednodedata: any;
-  NSIYHmoduledata:any = [];
+  NSIYHmoduledata: any = [];
 
-  constructor(
-    public dialog: MatDialog,
-    public api: ApiserviceService,
-  ) {}
+  constructor(public dialog: MatDialog, public api: ApiserviceService) {}
 
   ngOnInit(): void {
     this.getNSIYHdata();
@@ -36,20 +32,22 @@ export class NewstoreinhoodComponent implements OnInit {
   }
 
   allstores(creatednode?: any) {
-    if (this.Selectedcity == "") {
-      alert("please select city.");
-    }
-    else if (creatednode == undefined && this.Selectednode == "") {
-      alert("please select node.")
-    }
-    else {
+    if (this.Selectedcity == '') {
+      alert('please select city.');
+    } else if (creatednode == undefined && this.Selectednode == '') {
+      alert('please select node.');
+    } else {
       this.dialog.open(StoresinhoodComponent, {
-        width: "90%",
-        data: { node: this.selectednodedata, id: this.NSIYHmoduledata.id, selectednode: creatednode,
-          cityid: this.Selectedcity },
+        width: '90%',
+        data: {
+          node: this.selectednodedata,
+          id: this.NSIYHmoduledata.id,
+          selectednode: creatednode,
+          cityid: this.Selectedcity,
+        },
         hasBackdrop: true,
         disableClose: true,
-        panelClass: 'thanksscreen'
+        panelClass: 'thanksscreen',
       });
     }
   }
@@ -59,33 +57,35 @@ export class NewstoreinhoodComponent implements OnInit {
   }
 
   getNSIYHdata() {
-    this.api.getNSIYHData().pipe(take(1)).subscribe((NSIYNdata: any) => {
-      this.NSIYHmoduledata = NSIYNdata[0];
-      this.NSIYHTitle = NSIYNdata[0].NSIYH_Title;
-      this.NSIYHSTitle = NSIYNdata[0].NSIYH_STitle;
-      // this.creatednodes = NSIYNdata[0].Nodes;
-    });
+    this.api
+      .getNSIYHData()
+      .pipe(take(1))
+      .subscribe((NSIYNdata: any) => {
+        this.NSIYHmoduledata = NSIYNdata[0];
+        this.NSIYHTitle = NSIYNdata[0].NSIYH_Title;
+        this.NSIYHSTitle = NSIYNdata[0].NSIYH_STitle;
+      });
   }
 
   updateNSIYHTitle() {
     if (!this.editTitle) {
       this.editTitle = !this.editTitle;
-    }
-    else if (this.NSIYHTitle == this.NSIYHmoduledata.NSIYH_Title) {
+    } else if (this.NSIYHTitle == this.NSIYHmoduledata.NSIYH_Title) {
       this.editTitle = !this.editTitle;
-    }
-    else {
+    } else {
       if (!this.NSIYHTitle) {
-        alert("please enter the Title.");
-      }
-      else {
-        this.api.updateNSIYHtitle(this.NSIYHTitle, this.NSIYHmoduledata.id).then((data) => {
-          if (data != undefined) {
-            this.editTitle = !this.editTitle;
-          }
-        }).catch(() => {
-          return false;
-        });
+        alert('please enter the Title.');
+      } else {
+        this.api
+          .updateNSIYHtitle(this.NSIYHTitle, this.NSIYHmoduledata.id)
+          .then((data) => {
+            if (data != undefined) {
+              this.editTitle = !this.editTitle;
+            }
+          })
+          .catch(() => {
+            return false;
+          });
       }
     }
   }
@@ -93,25 +93,24 @@ export class NewstoreinhoodComponent implements OnInit {
   updateNSIYHTSTitle() {
     if (!this.editSubt) {
       this.editSubt = !this.editSubt;
-    }
-    else if (this.NSIYHSTitle == this.NSIYHmoduledata.NSIYH_STitle) {
+    } else if (this.NSIYHSTitle == this.NSIYHmoduledata.NSIYH_STitle) {
       this.editSubt = !this.editSubt;
-    }
-    else {
+    } else {
       if (!this.NSIYHSTitle) {
-        alert("please enter the sub Title.");
-      }
-      else {
-        this.api.updateNSIYHStitle(this.NSIYHSTitle, this.NSIYHmoduledata.id).then((data) => {
-          if (data != undefined) {
-          }
-        }).catch(() => {
-          return false;
-        });
+        alert('please enter the sub Title.');
+      } else {
+        this.api
+          .updateNSIYHStitle(this.NSIYHSTitle, this.NSIYHmoduledata.id)
+          .then((data) => {
+            if (data != undefined) {
+            }
+          })
+          .catch(() => {
+            return false;
+          });
       }
     }
   }
-
 
   citychange() {
     let alreadyCnode: Array<any> = [];
@@ -136,5 +135,4 @@ export class NewstoreinhoodComponent implements OnInit {
         this.nodes$ = of(newnodes);
       });
   }
-
 }

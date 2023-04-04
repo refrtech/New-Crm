@@ -10,10 +10,8 @@ import { Index } from 'firebase/firestore';
 import { take } from 'rxjs';
 import { ApiserviceService } from 'src/app/apiservice.service';
 import { AuthService } from 'src/app/auth.service';
-
 import * as XLSX from 'xlsx';
 import { TransactionDetailsComponent } from '../../transaction-details/transaction-details.component';
-// type AOA = any[][];
 @Component({
   selector: 'app-merchants-profile',
   templateUrl: './merchants-profile.component.html',
@@ -108,7 +106,7 @@ export class MerchantsProfileComponent implements OnInit {
   storeDetails: any;
   storeinfoDetails: any;
   productList: Array<any> = [];
-  // catindex:number;
+
   constructor(
     private actRoute: ActivatedRoute,
     public apiservice: ApiserviceService,
@@ -133,6 +131,7 @@ export class MerchantsProfileComponent implements OnInit {
       this.apiservice.getStoreByID(this.storeID).then((storeRef) => {
         const store: any = storeRef.exists() ? storeRef.data() : null;
         this.storeDetails = store;
+
         this.listLoc = store.loc;
         this.Selcategory = store.cat;
         this.catindex = this.auth.resource.categoryList.findIndex(
@@ -147,6 +146,7 @@ export class MerchantsProfileComponent implements OnInit {
           ].id;
         this.apiservice.getUserByUID(store.by).then((storeuser) => {
           const storeuserD: any = storeuser.exists() ? storeuser.data() : null;
+          console.log("store1",storeuserD);
           this.storeuid = storeuserD.uid;
           this.storeinfoDetails = storeuserD;
         });

@@ -1,7 +1,5 @@
 import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
-
 import QRCodeStyling, { Extension } from 'qr-code-styling-new';
-// import QRCodeStyling from 'qr-code-styling';
 
 @Component({
   selector: 'app-qr-viewer',
@@ -21,7 +19,7 @@ export class QrViewerComponent implements OnInit {
 
   @Input()
   name!: string;
-  
+
   @ViewChild('canvasX', { static: false })
   canvasX!: ElementRef;
 
@@ -44,7 +42,6 @@ export class QrViewerComponent implements OnInit {
         type: "canvas",
         data: x,
         image:"assets/locate.svg",
-        //image: 'https://firebasestorage.googleapis.com/v0/b/refr/o/locate.svg?alt=media&token=e23de5bd-4a26-4a9e-bb63-bc9e3a87b29c',
         margin: 0,
         qrOptions: {
           typeNumber: 0,

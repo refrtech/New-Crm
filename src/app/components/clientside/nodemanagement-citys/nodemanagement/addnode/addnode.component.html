@@ -36,13 +36,6 @@
       (onSelect)="addarea($event)" (onDeSelect)="removearea($event)" [data]="dropdownList" [(ngModel)]="selectedareas"
       name="Area_N" ngModel required>
     </ng-multiselect-dropdown>
-    <!-- <mat-form-field appearance="fill">
-      <mat-label>Toppings</mat-label>
-      <mat-select multiple>
-        <mat-option *ngFor="let topping of dropdownList" [value]="topping.id">{{topping.Area_N}}</mat-option>
-      </mat-select>
-    </mat-form-field> -->
-
   </div>
   <div class="t30margin b15margin">
     <button mat-button *ngIf="data.id == 1"

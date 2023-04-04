@@ -24,11 +24,6 @@
     </div>
 </div>
 
-
-
-
-
-
 <div class="trancontainer" *ngIf="Transactiondata.to == 'Δ'">
     <div *ngIf="(Transactiondata.status == undefined || (Transactiondata.status <= 0 && Transactiondata.status !=-10))"
         class="failed_tran">
@@ -67,30 +62,6 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="trancontainer" *ngIf="Transactiondata.to != 'Δ' && Transactiondata.by != 'Δ'">
     <div class="alldetailcont">
         <div class="stepcotainer">
@@ -98,7 +69,6 @@
                 Order Status
             </div>
             <div>
-                <!-- completed -->
                 <div class="step completed">
                     <div class="v-stepper">
                         <div class="circle"></div>
@@ -132,7 +102,6 @@
                         <div>Cancelled</div>
                         <div class="steperaction">
                             <div class="stepactiontitle">Order has been Cancelled</div>
-                            <!-- <div class="stepactionsubtitle">Mon, 6th Aug ‘22 - 11:37am</div> -->
                         </div>
                     </div>
                 </div>
@@ -158,7 +127,6 @@
                     <div class="stepercontent">
                         <div>Refunded</div>
                         <div class="steperaction">
-                            <!-- <div class="stepactiontitle">Your Amount is Ref</div> / -->
                             <div class="stepactionsubtitle"
                                 *ngIf="Transactiondata.status == -10 && Transactiondata.logistics.status == -1000">
                                 <!-- {{p.com.toDate() | date}}  -->
@@ -182,32 +150,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="step">
-                    <div class="v-stepper">
-                        <div class="circle"></div>
-                        <div class="line"></div>
-                    </div>
-                    <div class="stepercontent">
-                        <div>Order Returned</div>
-                    </div>
-                </div> -->
             </div>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         <div class="detailCOnt">
             <div class="detailtitle">
                 User Details
@@ -250,27 +194,6 @@
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <div class="detailtitle t15padding">
                 Merchant Details
             </div>
@@ -320,25 +243,6 @@
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <div class="detailtitle t15padding">
                 Order Information
             </div>
@@ -434,42 +338,7 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="DFlex">
-                <div class="title" (click)="order_summaryexpanded = !order_summaryexpanded">
-                    Details
-                </div>
-                <div class="icon_cont" (click)="order_summaryexpanded = !order_summaryexpanded">
-                    <mat-icon>
-                        {{order_summaryexpanded == true ? 'expand_less' : 'expand_more'}}
-                    </mat-icon>
-                </div>
-            </div> -->
             <div class="t15padding">
-                <!-- <div class="DFlex t5padding">
-                    <div class="userDetails">
-                        <div>
-                            User Name : {{Transactiondata.userName}}
-                        </div>
-                        <div>
-                            Contact No : <span *ngIf="typeid == 1 && Transactiondata.logistics !=undefined">
-                                {{Transactiondata.logistics.phone}}
-                            </span>
-                        </div>
-                        <div class="b5padding" *ngIf="false">E-Mail ID : </div>
-                    </div>
-                    <div class="userDetails">
-                        <div>
-                            Store Name : {{Transactiondata.storeName}}
-                        </div>
-                        <div>
-                            Store Address :
-                        </div>
-                        <div class="gray_txt">
-                            leena residency, 7, Gulmohar Rd, Junaid Nagar, Yadav Nagar, Juhu, Mumbai,
-                            Maharashtra 400056
-                        </div>
-                    </div>
-                </div> -->
                 <div *ngIf="Transactiondata.cart.length > 0">
                     <div class="ordertable">
                         <div class="DFlex ordersummary_table orderSum_THead">

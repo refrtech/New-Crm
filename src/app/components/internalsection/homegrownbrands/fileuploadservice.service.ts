@@ -19,7 +19,6 @@ export class FileuploadserviceService {
       reportProgress: true,
       responseType: 'json',
     });
-
     return this.http.request(req);
   }
 

@@ -103,8 +103,6 @@ export class NodemanagementComponent implements OnInit {
         this.getallnode();
         }
       })
-
-
     }
   }
 }

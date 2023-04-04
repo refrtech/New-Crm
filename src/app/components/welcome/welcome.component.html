@@ -1,38 +1,13 @@
 <!--p>internetConnected {{auth.resource.internetConnected()}}</p-->
-<div class="preloader" 
-[class.b_black]="themeService.colorScheme == 'dark'" 
-[class.b_white]="themeService.colorScheme == 'light'" 
+<div class="preloader"
+[class.b_black]="themeService.colorScheme == 'dark'"
+[class.b_white]="themeService.colorScheme == 'light'"
 *ngIf="!showWeb">
-<!--p>
-    wt1:{{wt1}} &nbsp;
-    wt2:{{wt2}} &nbsp;
-    wt3:{{wt3}} &nbsp;
-    wt4:{{wt4}} &nbsp;
-    <br>
-    <ng-container *ngIf="auth.user$ | async as mine">mine: {{mine}}</ng-container>
-</p-->
-<!--p>internetConnected {{ auth.resource.currentNet }}</p>
-<p><ng-container *ngIf="auth.user$ | async as mine">{{mine}}</ng-container>
-    &nbsp;&nbsp;
-    net1{{net1}}&nbsp;
-    net2{{net2}}&nbsp;
-    net3{{net3}}&nbsp;
-    net4{{net4}}&nbsp;
-    net5{{net5}}&nbsp;
-    net6{{net6}}&nbsp;
-    net7{{net7}}&nbsp;
-    net8{{net8}}&nbsp;
-    net9{{net9}}&nbsp;
-    net10{{net10}}&nbsp;
-    <br>
-    {{errX}}
-</p-->
     <img *ngIf=" themeService.colorScheme == 'dark' " [src]=" auth.resource.env.splash " />
     <img *ngIf=" themeService.colorScheme == 'light' " [src]=" auth.resource.env.splashDark " />
-
 </div>
 
-<div class="slides textC" 
+<div class="slides textC"
 [class.c_white]="slideNow == 1 || slideNow == 3"
 [class.c_black]="slideNow == 2"
 
@@ -41,16 +16,10 @@
 [class.b_primary]="slideNow == 3"
 
 *ngIf="showWeb && auth.resource.appMode">
-    <!--div class="slide_header">
-        <h2>Slide{{slideNow}} here</h2>
-        <p>App Mode Slides</p>
-    </div-->
-
     <div class="textCon" *ngIf="slideNow == 1">
         <div>
             <svg version="1.1"
             viewBox="0 0 2598.5 1841.833">
-
             <g id="g10" transform="matrix(1.3333333,0,0,-1.3333333,0,2666.6667)" inkscape:label="ink_ext_XXXXXX" inkscape:groupmode="layer">
                 <g id="g12" transform="scale(0.1)">
                     <path id="path616" fill="#92B5F9" d="M14896.4,8214.004c-270.498,226.289-409.196,435.601-434.297,475.298l951.401,600.996
@@ -368,7 +337,7 @@
                 c-4.333-4.329-13.23-11.758-12.664-15.694c1.327-9.383,28.689-2.087,38.993-5.063c3.617-1.07,7.923-4.753,8.623-9.636
                 c3.36-24.192-39.639-9.79-54.204-15.198c-1.583-4.519-1.725-15.26,0-19.744C1133.542,524.961,1169.66,525.975,1200.915,526.474z"/>
             </svg>
-            
+
         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quibusdam illum sunt officia illo reiciendis laboriosam delectus deserunt tempora reprehenderit voluptatibus ipsam soluta nisi, nobis corporis molestias facere expedita neque quia!</p>
         </div>
     </div>
@@ -1432,7 +1401,7 @@
                          d="m 22703.1,9961 c -88.1,0 -170.1,46.8 -215.7,123.6 l -764.9,1289.6 c -71.6,120.7 -33,277.3 86.1,349.8 119.1,72.5 273.8,33.5 345.4,-87.2 l 531,-895.2 702,1396.4 c 63,125.5 214.6,175.4 338.5,111.5 123.8,-63.8 173.2,-217.3 110.1,-342.8 l -908.1,-1806.4 c -41.5,-82.6 -124.1,-135.9 -215.5,-139.1 -3,-0.1 -5.9,-0.2 -8.9,-0.2"
                          style="fill:url(#linearGradient708);fill-opacity:1;fill-rule:nonzero;stroke:none"
                          id="path710" /></g></g></g></g></svg>
-            
+
         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem porro sunt at eius hic neque eaque ea a nihil beatae voluptas optio, perspiciatis est? Incidunt maxime cupiditate asperiores molestiae id?</p>
         </div>
     </div>
@@ -1670,7 +1639,7 @@
                 <path fill="#FFD13A" d="M89.829,180.901v8.904c0,1.392-1.129,2.521-2.521,2.521H73.869c-1.397,0-2.521-1.129-2.521-2.521v-8.904
                     c0-1.391,1.123-2.52,2.521-2.52h13.439C88.7,178.382,89.829,179.511,89.829,180.901"/>
                 <rect x="85.481" y="187.541" fill="#FCE4A2" width="4.348" height="0.558"/>
-                <polygon fill="#FCE4A2" points="79.548,178.382 79.548,192.326 78.983,192.326 78.983,188.099 71.35,188.099 71.35,187.534 
+                <polygon fill="#FCE4A2" points="79.548,178.382 79.548,192.326 78.983,192.326 78.983,188.099 71.35,188.099 71.35,187.534
                     78.983,187.534 78.983,183.167 71.35,183.167 71.35,182.609 78.983,182.609 78.983,178.382 	"/>
                 <rect x="130.504" y="174.518" fill="#FFFFFF" width="10.416" height="10.416"/>
                 <rect x="142.567" y="174.518" fill="#FFFFFF" width="23.687" height="10.416"/>
@@ -3533,25 +3502,10 @@
                 c-0.479-0.478-1.461-1.297-1.398-1.732c0.146-1.036,3.168-0.23,4.305-0.56c0.399-0.118,0.875-0.525,0.952-1.064
                 c0.371-2.671-4.376-1.081-5.985-1.679c-0.175-0.498-0.19-1.684,0-2.18C235.156,197.66,239.145,197.771,242.595,197.826z"/>
             </svg>
-            
+
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum nemo maiores sit aliquam mollitia qui similique quam ducimus quia iure cupiditate id architecto consequatur nulla laboriosam et, deserunt harum. Veniam.</p>
         </div>
     </div>
-    
-    <!--div class="textCon">
-        <h2 class="margin-0 relative font-weight-700"> Recommend your favourite stores, restaurants or services </h2>
-        <p class="font-weight-200 color-white letter-spacing-05 line-height-1-75 margin-0"> Connect with your community & support your local stores</p>
-    </div>
-    <div class="textCon">
-        <h2 style="font-size: 18px;" class="font-weight-700  margin-0"> 
-            Everytime your friend uses your recommendation, you both get rewarded 
-        </h2>
-    </div>
-    <div class="textCon">
-        <h2 class="margin-0 relative font-weight-700"> Spend it across listed stores or withdraw it & turn it into cash </h2>
-        <p style="visibility: hidden;" class="font-weight-200 color-white letter-spacing-05 line-height-1-75 margin-0"> Connect with your community & support your local stores
-        </p>
-    </div-->
     <div class="slide_footer">
         <button mat-icon-button (click)="slideNow = 1"><mat-icon>{{slideNow !== 1 ? 'radio_button_unchecked':'radio_button_checked'}}</mat-icon></button>
         <button mat-icon-button (click)="slideNow = 2"><mat-icon>{{slideNow !== 2 ? 'radio_button_unchecked':'radio_button_checked'}}</mat-icon></button>
@@ -3566,19 +3520,10 @@
             <button mat-stroked-button routerLink="/dash" *ngIf="slideNow == 3">{{mine.name}}</button>
         </ng-container>
 
-        <!--button mat-button (click)="auth.startX()">xxx</button-->
     </div>
 </div>
 
 <div class="container signiture" *ngIf="showWeb && !auth.resource.appMode">
     <div class="row textC">
-<!--p>Web mode page {{auth.allowLog }}</p>
-
-        <ng-container *ngIf=" auth.allowLog " >
-            <button mat-stroked-button (click)="openSignDialog()" *ngIf=" !(auth.user$ | async) ">Sign</button>
-        </ng-container>
-            <button mat-stroked-button routerLink="/dash" *ngIf="auth.user$ | async as mine">{{mine.uid}}</button>
---> 
-
     </div>
 </div>

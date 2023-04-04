@@ -345,24 +345,4 @@ export class HgbnodesubcatstoresComponent implements OnInit {
   back() {
     this.Location.back();
   }
-
-  // searchdata() {
-  //   const httpOptions = {
-  //     headers: new HttpHeaders({
-  //       'Content-Type': 'application/json',
-  //       Authorization: 'Basic ' + btoa('elastic:bcFhFOqTCpvVJua+tnc-'),
-  //     }),
-  //   };
-  //   let url =
-  //     'https://app.refr.club/api/search/sendSearch/IN/things?q=' +
-  //     this.Searchtxt +
-  //     '';
-  //   this.https.get(url, httpOptions).subscribe((data: any) => {
-  //     let products: any = [];
-  //     for (let i = 0; i < data.hits.hits.length; i++) {
-  //       products.push(data.hits.hits[i]._source);
-  //     }
-  //     this.MerchantdataSource2 = new MatTableDataSource(products);
-  //   });
-  // }
 }

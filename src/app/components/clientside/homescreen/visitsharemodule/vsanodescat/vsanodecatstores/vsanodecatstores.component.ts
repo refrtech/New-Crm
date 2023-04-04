@@ -268,7 +268,6 @@ export class VSAnodecatstoresComponent implements OnInit {
               if (!ref || !ref.success) {
                 this.auth.resource.startSnackBar('Upload Failed!');
               } else {
-                // this.storeBanner = ref.url;
                 this.auth.resource.startSnackBar('Banner Update Under Review!');
               }
             });

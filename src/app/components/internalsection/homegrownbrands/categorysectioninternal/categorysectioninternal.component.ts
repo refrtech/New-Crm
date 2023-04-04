@@ -30,17 +30,13 @@ export class CategorysectioninternalComponent implements OnInit {
 
     if (this.selectedFiles) {
       const file: File | null = this.selectedFiles.item(0);
-
       if (file) {
         this.preview = '';
         this.currentFile = file;
-
         const reader = new FileReader();
-
         reader.onload = (e: any) => {
           this.preview = e.target.result;
         };
-
         reader.readAsDataURL(this.currentFile);
       }
     }
@@ -51,10 +47,8 @@ export class CategorysectioninternalComponent implements OnInit {
 
     if (this.selectedFiles) {
       const file: File | null = this.selectedFiles.item(0);
-
       if (file) {
         this.currentFile = file;
-
         this.uploadService.upload(this.currentFile).subscribe({
           next: (event: any) => {
             if (event.type === HttpEventType.UploadProgress) {
@@ -66,18 +60,15 @@ export class CategorysectioninternalComponent implements OnInit {
           },
           error: (err: any) => {
             this.progress = 0;
-
             if (err.error && err.error.message) {
               this.message = err.error.message;
             } else {
               this.message = 'Could not upload the image!';
             }
-
             this.currentFile = undefined;
           },
         });
       }
-
       this.selectedFiles = undefined;
     }
   }

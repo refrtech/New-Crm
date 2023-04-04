@@ -16,8 +16,6 @@ export class BrandSpotlightComponent implements OnInit {
   storeID = '';
   makingChanges = true;
   storeBanner = '';
-
-  //
   editSubt: boolean = false;
   editTitle: boolean = false;
   parameters: string = 'phone';

@@ -6,11 +6,9 @@
                 <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round" />
             </svg>
-
         </a>
         <span class="xxl_size boldtext lr15padding AScenter">Homegrown brand</span>
     </div>
-
     <div class="t50margin lr55padding">
         <div>
             <div class="t20margin b15margin">
@@ -38,17 +36,12 @@
                             stroke-linejoin="round" />
                     </svg>
                 </div>
-                <!-- <div class="m_size regulartext c_align tb10padding gray_txt">
-                                Drop your image here, or <span><a type="submit"
-                                        class="text_decoration_none purple_txt semiboldtext cursor_pointer">browse</a></span>
-                            </div> -->
                 <div class="dflex JCcenter tb10padding">
                     <div class="col-8">
                         <label class="btn btn-default p-0">
                             <input class="A5padding" type="file" accept="image/*" (change)="selectFile($event)" />
                         </label>
                     </div>
-
                     <div class="col-4">
                         <button class="A5padding" [disabled]="!selectedFiles" (click)="upload()">
                             Upload
@@ -62,30 +55,24 @@
                     Maximum upload size : <span class="semiboldtext">10mb</span>
                 </div>
             </div>
-
             <div *ngIf="currentFile && progress">
                 <div role="progressbar" attr.aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100"
                     [ngStyle]="{ width: progress + '%' }">
                     {{ progress }}%
                 </div>
             </div>
-
             <div class="t10margin b10margin" *ngIf="message" role="alert">
                 {{ message }}
             </div>
-
-
             <div class="t10margin b30margin">
                 <div class="m_size boldtext">List of Images</div>
                 <div class="m_size boldtext" *ngIf="preview < '0'">
                     <img src="https://img.icons8.com/arcade/64/null/no-image.png" />
                 </div>
-
                 <div class="t10margin b10margin">
                     <img width="200" [src]="preview" class="preview" />
                 </div>
             </div>
-
             <div class="t20margin b15margin">
                 <div class="m_size crminput r15padding AScenter">Category url</div>
             </div>
@@ -94,15 +81,10 @@
                     <input type="text" matInput placeholder="Categories">
                 </mat-form-field>
             </div>
-
-
             <button mat-button routerLink="/categorysec"
                 class="s_size semiboldtext purple_background normallineheight t30margin tb5padding l15padding r15padding White_txt">
                 Next
             </button>
         </div>
-
-
     </div>
-
 </div>

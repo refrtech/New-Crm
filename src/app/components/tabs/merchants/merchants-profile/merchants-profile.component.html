@@ -151,7 +151,6 @@
                                 </mat-form-field>
                             </div>
                         </div>
-
                         <div class="dflex t5padding M100width">
                             <div class="normaltext M_size M50width">
                                 Mail Id
@@ -160,7 +159,6 @@
                                 Category
                             </div>
                         </div>
-
                         <div class="dflex M100width t5padding">
                             <div class="normaltext M_size M50width">
                                 <mat-form-field appearance="outline" class="crminput crmsearch">
@@ -187,7 +185,6 @@
                                 Sub Category
                             </div>
                         </div>
-
                         <div class="dflex M100width t5padding">
                             <div class="normaltext M_size M50width">
                                 <mat-form-field appearance="outline" class="crminput crmsearch">
@@ -206,7 +203,6 @@
                                 </mat-form-field>
                             </div>
                         </div>
-
                         <div class="dflex t5padding M100width">
                             <div class="normaltext M_size M50width">
                                 Burn
@@ -215,7 +211,6 @@
                                 Burn Commission (%)
                             </div>
                         </div>
-
                         <div class="dflex M100width t5padding">
                             <div class="normaltext M_size M50width">
                                 <mat-form-field class="crminput crmsearch M30width" appearance="outline">
@@ -232,7 +227,6 @@
                                 </mat-form-field>
                             </div>
                         </div>
-
                         <div class="dflex t5padding M100width">
                             <div class="normaltext M_size M50width">
                                 GST No
@@ -241,7 +235,6 @@
                                 Store ID
                             </div>
                         </div>
-
                         <div class="dflex M100width t5padding">
                             <div class="normaltext M_size M50width">
                                 <mat-form-field appearance="outline" class="crminput crmsearch">
@@ -260,8 +253,6 @@
                                 </mat-form-field>
                             </div>
                         </div>
-
-
                         <div class="t20padding b10padding m_size boldtext">
                             Store Address
                         </div>
@@ -299,14 +290,12 @@
                                         <mat-slide-toggle [(ngModel)]="storeDetails.typeORDER.return">
                                         </mat-slide-toggle>
                                     </div>
-
                                     <div class="dflex">
                                         <div>Exchange</div>
                                         <span class="divide"></span>
                                         <mat-slide-toggle [(ngModel)]="storeDetails.typeORDER.exchange">
                                         </mat-slide-toggle>
                                     </div>
-
                                     <div class="dflex">
                                         <div>Refund</div>
                                         <span class="divide"></span>
@@ -337,7 +326,6 @@
                                             <input matInput [(ngModel)]="storeDetails.typeORDER.cityCharge">
                                         </mat-form-field>
                                     </div>
-
                                     <div class="t5padding M100width normaltext M_size">
                                         Nationwide charges
                                     </div>
@@ -346,7 +334,6 @@
                                             <input matInput [(ngModel)]="storeDetails.typeORDER.nationCharge">
                                         </mat-form-field>
                                     </div>
-
                                     <div class="t5padding M100width normaltext M_size">
                                         Free Delivery above order value (Optional)
                                     </div>
@@ -375,7 +362,6 @@
                                             <input matInput type="time" [(ngModel)]="storeDetails.schedule.opensDailyE">
                                         </div>
                                     </div>
-
                                     <div class="dflex t2padding">
                                         <div>
                                             <mat-slide-toggle [(ngModel)]="storeDetails.schedule.openSun">Sun
@@ -389,7 +375,6 @@
                                             <input matInput type="time" [(ngModel)]="storeDetails.schedule.openSunE">
                                         </div>
                                     </div>
-
                                     <div class="dflex t2padding">
                                         <div>
                                             <mat-slide-toggle [(ngModel)]="storeDetails.schedule.openMon">Mon
@@ -455,7 +440,6 @@
                                             <input matInput type="time" [(ngModel)]="storeDetails.schedule.openFriE">
                                         </div>
                                     </div>
-
                                     <div class="dflex t2padding">
                                         <div>
                                             <mat-slide-toggle [(ngModel)]="storeDetails.schedule.openSat">Sat
@@ -474,264 +458,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="A15padding">
-                    <div class="m_size boldtext b15padding">
-                        Campaign Details
-                    </div>
-                    <div class="dflex">
-                        <mat-form-field class="crminput M30width r10margin" appearance="outline">
-                            <mat-select placeholder="Category" class="">
-                                <mat-option [value]="1">
-                                    item
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <mat-form-field class="crminput M30width" appearance="outline">
-                            <mat-select placeholder="Category" class="">
-                                <mat-option [value]="1">
-                                    item
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                    <table class="crmtable t10margin" mat-table [dataSource]="CampdataSource" matSort>
-                        <ng-container matColumnDef="CampaignName">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                                Campaign Name
-                            </th>
-                            <td mat-cell *matCellDef="let row">
-                                {{row.Camp_name}}
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="Total_Earned">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                                Total Earned
-                            </th>
-                            <td mat-cell *matCellDef="let row"> {{row.T_earned}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="Total_Spend">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                                Total Spend
-                            </th>
-                            <td mat-cell *matCellDef="let row">
-                                {{row.T_spend}}
-                            </td>
-                        </ng-container>
-
-
-                        <ng-container matColumnDef="Refr_Count">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                                Refr Count
-                            </th>
-                            <td mat-cell *matCellDef="let row">
-                                {{row.RefrC}}
-                            </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="Cashback_Type">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                                Cashback Type
-                            </th>
-                            <td mat-cell *matCellDef="let row">
-                                {{row.Cashback_Type}}
-                            </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="Status">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                                Status
-                            </th>
-                            <td mat-cell *matCellDef="let row"> {{row.Status}} </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="Created_Date">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                                Created Date
-                            </th>
-                            <td mat-cell *matCellDef="let row"> {{row.Created_Date}} </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="Valid_Till">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                                Valid Till
-                            </th>
-                            <td mat-cell *matCellDef="let row"> {{row.Valid_Till}} </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="action">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Action
-                            </th>
-                            <td mat-cell *matCellDef="let row">
-                                <div>
-                                    <a>
-                                        <svg width="25" height="25" viewBox="0 0 25 25" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <rect x="0.125" y="0.125" width="24.75" height="24.75" fill="#DCCE8D" />
-                                            <g clip-path="url(#clip0_1979_8859)">
-                                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                                    d="M13.0083 18.378C8.7875 18.378 5.02 15.1388 3 11.898C5.015 8.74185 8.78583 6.07031 13.0083 6.07031C17.2875 6.07031 21.0375 8.72647 23.0075 11.8888C21.14 15.2965 17.4025 18.378 13.0083 18.378ZM3.97333 11.9042C4.67583 12.928 8.155 17.6088 13.0083 17.6088C18.2625 17.6088 21.435 12.9142 22.0508 11.9126C21.4075 10.9911 18.2125 6.83954 13.0083 6.83954C7.91167 6.83954 4.65417 10.9588 3.97333 11.9042ZM13 8.378C15.3 8.378 17.1667 10.1011 17.1667 12.2242C17.1667 14.3472 15.3 16.0703 13 16.0703C10.7 16.0703 8.83333 14.3472 8.83333 12.2242C8.83333 10.1011 10.7 8.378 13 8.378ZM13 9.14724C14.84 9.14724 16.3333 10.5257 16.3333 12.2242C16.3333 13.9226 14.84 15.3011 13 15.3011C11.16 15.3011 9.66667 13.9226 9.66667 12.2242C9.66667 10.5257 11.16 9.14724 13 9.14724Z"
-                                                    fill="black" />
-                                            </g>
-                                            <rect x="0.125" y="0.125" width="24.75" height="24.75" stroke="black"
-                                                stroke-width="0.25" />
-                                            <defs>
-                                                <clipPath id="clip0_1979_8859">
-                                                    <rect width="20" height="18.4615" fill="white"
-                                                        transform="translate(3 3)" />
-                                                </clipPath>
-                                            </defs>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </td>
-                        </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="CampColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: CampColumns;"></tr>
-                        <tr class="mat-row" *matNoDataRow>
-                        </tr>
-                    </table>
-                    <div class="m_size boldtext t30padding b15padding">
-                        Subscription Details
-                    </div>
-                    <div class="dflex">
-                        <mat-form-field class="crminput M30width" appearance="outline">
-                            <mat-select placeholder="Category" class="">
-                                <mat-option [value]="1">
-                                    item
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                    <table class="crmtable t10margin" mat-table [dataSource]="SubdataSource" matSort>
-                        <ng-container matColumnDef="Sub_plan">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                                Subscription plan
-                            </th>
-                            <td mat-cell *matCellDef="let row">
-                                {{row.Sub_plan}}
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="Sub_amt">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                                Subscription amount
-                            </th>
-                            <td mat-cell *matCellDef="let row"> {{row.Sub_amt}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="Refr_Count">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                                Refr Count
-                            </th>
-                            <td mat-cell *matCellDef="let row">
-                                {{row.RefrC}}
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="Status">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                                Status
-                            </th>
-                            <td mat-cell *matCellDef="let row"> {{row.Status}} </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="Created_Date">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                                Created Date
-                            </th>
-                            <td mat-cell *matCellDef="let row"> {{row.Created_Date}} </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="Valid_Till">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                                Valid Till
-                            </th>
-                            <td mat-cell *matCellDef="let row"> {{row.Valid_Till}} </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="action">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Action
-                            </th>
-                            <td mat-cell *matCellDef="let row">
-                                <div>
-                                    <a>
-                                        <svg width="25" height="25" viewBox="0 0 25 25" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <rect x="0.125" y="0.125" width="24.75" height="24.75" fill="#DCCE8D" />
-                                            <g clip-path="url(#clip0_1979_8859)">
-                                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                                    d="M13.0083 18.378C8.7875 18.378 5.02 15.1388 3 11.898C5.015 8.74185 8.78583 6.07031 13.0083 6.07031C17.2875 6.07031 21.0375 8.72647 23.0075 11.8888C21.14 15.2965 17.4025 18.378 13.0083 18.378ZM3.97333 11.9042C4.67583 12.928 8.155 17.6088 13.0083 17.6088C18.2625 17.6088 21.435 12.9142 22.0508 11.9126C21.4075 10.9911 18.2125 6.83954 13.0083 6.83954C7.91167 6.83954 4.65417 10.9588 3.97333 11.9042ZM13 8.378C15.3 8.378 17.1667 10.1011 17.1667 12.2242C17.1667 14.3472 15.3 16.0703 13 16.0703C10.7 16.0703 8.83333 14.3472 8.83333 12.2242C8.83333 10.1011 10.7 8.378 13 8.378ZM13 9.14724C14.84 9.14724 16.3333 10.5257 16.3333 12.2242C16.3333 13.9226 14.84 15.3011 13 15.3011C11.16 15.3011 9.66667 13.9226 9.66667 12.2242C9.66667 10.5257 11.16 9.14724 13 9.14724Z"
-                                                    fill="black" />
-                                            </g>
-                                            <rect x="0.125" y="0.125" width="24.75" height="24.75" stroke="black"
-                                                stroke-width="0.25" />
-                                            <defs>
-                                                <clipPath id="clip0_1979_8859">
-                                                    <rect width="20" height="18.4615" fill="white"
-                                                        transform="translate(3 3)" />
-                                                </clipPath>
-                                            </defs>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </td>
-                        </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="SubColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: SubColumns;"></tr>
-                        <tr class="mat-row" *matNoDataRow>
-                        </tr>
-                    </table>
-                    <div class="m_size boldtext t30padding b15padding">
-                        Documentation
-                    </div>
-                    <div class="dflex">
-                        <div class="M30width r15margin">Address Proof</div>
-                        <div class="M30width r15margin">E - Pan</div>
-                        <div class="M30width r15margin">GST No.</div>
-                    </div>
-
-                    <div class="dflex t5padding">
-                        <div class="M30width r15margin">
-                            <mat-form-field appearance="outline" class="crminput M100width">
-                                <input matInput>
-                            </mat-form-field>
-                        </div>
-                        <div class="M30width r15margin">
-                            <mat-form-field appearance="outline" class="crminput M100width">
-                                <input matInput>
-                            </mat-form-field>
-                        </div>
-                        <div class="M30width r15margin">
-                            <mat-form-field appearance="outline" class="crminput M100width">
-                                <input matInput>
-                            </mat-form-field>
-                        </div>
-                    </div>
-
-                    <div class="dflex">
-                        <div class="M30width r15margin">FSSAI No.</div>
-                        <div class="M30width r15margin">Aadhar No.</div>
-                        <div class="M30width r15margin">CIN (Company incorporation)</div>
-                    </div>
-
-                    <div class="dflex t5padding">
-                        <div class="M30width r15margin">
-                            <mat-form-field appearance="outline" class="crminput M100width">
-                                <input matInput>
-                            </mat-form-field>
-                        </div>
-                        <div class="M30width r15margin">
-                            <mat-form-field appearance="outline" class="crminput M100width">
-                                <input matInput>
-                            </mat-form-field>
-                        </div>
-                        <div class="M30width r15margin">
-                            <mat-form-field appearance="outline" class="crminput M100width">
-                                <input matInput>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                </div> -->
             </mat-tab>
-
-
             <mat-tab label="Banking Details">
                 <div class="A15padding">
                     <div class="dflex">
@@ -768,12 +495,6 @@
                     </div>
                 </div>
             </mat-tab>
-
-
-
-
-
-
             <mat-tab label="Campaign">
                 <div class="A15padding">
                     <div>
@@ -878,13 +599,6 @@
                     </div>
                 </div>
             </mat-tab>
-
-
-
-
-
-
-
             <mat-tab label="Inventory Management">
                 <div class="A15padding">
                     <div class="dflex">
@@ -937,10 +651,8 @@
                         </ng-container>
                         <ng-container matColumnDef="Qty">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                                <!-- Quantity -->
                             </th>
                             <td mat-cell class="A10padding" *matCellDef="let row">
-                                <!-- {{row.ProdQty}} -->
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="action">
@@ -1742,7 +1454,6 @@
                 </div>
             </mat-tab>
             <mat-tab label="To be credited order">
-
             </mat-tab>
         </mat-tab-group>
     </div>

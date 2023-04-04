@@ -49,8 +49,6 @@ export class BrandsstoreComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public auth: AuthService
   ) {
-    // this.storelist =
-    //   this.data.selectednode != undefined ? this.data.selectednode.stores : [];
   }
 
   ngOnInit(): void {
@@ -64,14 +62,6 @@ export class BrandsstoreComponent implements OnInit {
   }
 
   action(data: any) {
-    // let i = this.storelist.findIndex((x) => x.id == data.id);
-    // if (i < 0) {
-    //   this.storelist.push(data);
-    //   this.isstorealreadyadded = true;
-    // } else {
-    //   this.storelist.splice(i, i + 1);
-    //   this.isstorealreadyadded = false;
-    // }
     data.city_id = this.data.cityid;
     data.nodeid = this.data.selectednode == undefined ? this.data.node.id : this.data.selectednode.id;
     data.sectionname = 'BIYNsection';
@@ -98,44 +88,8 @@ export class BrandsstoreComponent implements OnInit {
       .pipe(take(1))
       .subscribe((recentStore: any) => {
         this.MerchantdataSource = new MatTableDataSource(recentStore);
-        // this.isstorealreadyadded =
-        //   this.storelist.findIndex((x) => x.id == recentStore[0].id) < 0
-        //     ? false
-        //     : true;
       });
   }
-
-  // updatestore() {
-  //   if (this.data.selectednode == undefined) {
-  //     let data = {
-  //       Nareas: this.data.node.Nareas,
-  //       city: this.data.node.city,
-  //       city_id: this.data.node.city_id,
-  //       created_at: this.data.node.created_at,
-  //       id: this.data.node.id,
-  //       name: this.data.node.name,
-  //       stores: this.storelist,
-  //       updated_at: this.data.node.updated_at,
-  //     };
-  //     this.api.addBIYNstores(data, this.data.id).then((data: any) => {
-  //       if (!data) {
-  //         this.dialogRef.close();
-  //       }
-  //     });
-  //   } else {
-  //     let index = this.data.creatednodes.findIndex(
-  //       (x: any) => x.id == this.data.selectednode.id
-  //     );
-  //     this.data.creatednodes[index].stores = this.storelist;
-  //     this.api
-  //       .editBIYNstores(this.data.creatednodes, this.data.id)
-  //       .then((data: any) => {
-  //         if (!data) {
-  //           this.dialogRef.close();
-  //         }
-  //       });
-  //   }
-  // }
 
   async takePicture(ratio:string,type: string, id: string, item: any) {
     const image = await Camera.getPhoto({
@@ -176,22 +130,6 @@ export class BrandsstoreComponent implements OnInit {
               alert('banner uploaded');
             });
         }
-        // if (type == 'banner') {
-
-        //   let index = this.data.creatednodes.findIndex(
-        //     (x: any) => x.id == this.data.selectednode.id
-        //   );
-
-        //   const cloudUpload = await this.api
-        //     .cloudUpload(
-        //       this.data.creatednodes[index].stores[sindex].id,
-        //       result.croppedImage
-        //     )
-        //     .then((data) => {
-        //       this.data.creatednodes[index].stores[sindex].homeBanners =
-        //         data.url;
-        //     });
-        // }
       }
     });
   }

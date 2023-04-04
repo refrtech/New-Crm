@@ -16,7 +16,7 @@ import { AuthService } from 'src/app/auth.service';
 export class DaildropsbrandsComponent implements OnInit {
   parameters: string = 'phone';
   operators: string = '==';
-  searchvalue: string = "9876543210"; //9876543210
+  searchvalue: string = "9876543210";
   isstorealreadyadded: boolean = false;
 
   ParaArr: Array<any> = [
@@ -47,8 +47,6 @@ export class DaildropsbrandsComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public auth: AuthService
   ) {
-    // this.storelist =
-    //   this.data.selectednode != undefined ? this.data.selectednode.stores : [];
   }
 
   ngOnInit(): void {
@@ -88,44 +86,8 @@ export class DaildropsbrandsComponent implements OnInit {
       .pipe(take(1))
       .subscribe((recentStore: any) => {
         this.MerchantdataSource = new MatTableDataSource(recentStore);
-        // this.isstorealreadyadded =
-        //   this.storelist.findIndex((x) => x.id == recentStore[0].id) < 0
-        //     ? false
-        //     : true;
       });
   }
-
-  // updatestore() {
-  //   if (this.data.selectednode == undefined) {
-  //     let data = {
-  //       Nareas: this.data.node.Nareas,
-  //       city: this.data.node.city,
-  //       city_id: this.data.node.city_id,
-  //       created_at: this.data.node.created_at,
-  //       id: this.data.node.id,
-  //       name: this.data.node.name,
-  //       stores: this.storelist,
-  //       updated_at: this.data.node.updated_at,
-  //     };
-  //     this.api.addDailydropstores(data, this.data.id).then((data: any) => {
-  //       if (!data) {
-  //         this.dialogRef.close();
-  //       }
-  //     });
-  //   } else {
-  //     let index = this.data.creatednodes.findIndex(
-  //       (x: any) => x.id == this.data.selectednode.id
-  //     );
-  //     this.data.creatednodes[index].stores = this.storelist;
-  //     this.api
-  //       .editDailydropstores(this.data.creatednodes, this.data.id)
-  //       .then((data: any) => {
-  //         if (!data) {
-  //           this.dialogRef.close();
-  //         }
-  //       });
-  //   }
-  // }
 
   async takePicture(ratio:string,type: string, id: string, item: any) {
     const image = await Camera.getPhoto({
