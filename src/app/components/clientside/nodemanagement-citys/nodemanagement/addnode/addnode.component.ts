@@ -181,7 +181,11 @@ export class AddnodeComponent implements OnInit {
   }
 
   Deletenode() {
-    this.api.deletenode(this.data.Nodeid).then((data: any) => {
+    this.api.deletenode(this.data.Nodedata.id).then((data: any) => {
+      console.log(this.data.Nodedata.Nareas);
+      for(let i = 0 ; i < this.data.Nodedata.Nareas.length; i++ ){
+        this.api.isareaAlreadyAdded(this.data.Nodedata.Nareas[i].id,false);
+      }
       this.dialogRef.close({ success: true });
     });
   }

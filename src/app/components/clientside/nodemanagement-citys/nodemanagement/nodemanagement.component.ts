@@ -85,8 +85,8 @@ export class NodemanagementComponent implements OnInit {
     });
   }
 
-  deletenode(id: any) {
-    if (id == undefined) {
+  deletenode(data: any) {
+    if (data == undefined) {
       alert('invalid data');
     } else {
 
@@ -94,7 +94,7 @@ export class NodemanagementComponent implements OnInit {
         width: '30%',
         data: {
           id: 3,
-          Nodeid: id
+          Nodedata: data
         }
       })
       dialogRef.afterClosed().subscribe((result) => {
