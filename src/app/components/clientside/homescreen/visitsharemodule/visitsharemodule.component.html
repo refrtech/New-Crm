@@ -93,9 +93,10 @@
   </div>
   <div class="t50margin boxshw lr55margin">
     <div class="dflex M100width tb15padding s_size">
-      <div class="regulartext M20width l10padding">Node name</div>
+      <div class="regulartext M40width">
+        <span class="l10padding">Node name</span></div>
       <div class="regulartext M10width c_align">No of stores</div>
-      <div class="regulartext M50width c_align"></div>
+      <div class="regulartext M30width c_align"></div>
       <div class="regulartext M20width c_align">Action</div>
     </div>
     <div>
@@ -104,13 +105,13 @@
           <ng-container *ngFor="let item of nodes">
             <ng-container *ngIf="item.city_id == Selectedcity">
               <div class="dflex tborder s_size tb15padding">
-                <div class="regulartext M20width l10padding">
-                  {{item.name}}
+                <div class="regulartext M40width">
+                  <span class="l10padding">{{item.name}}</span>
                 </div>
                 <div class="regulartext M10width c_align">
                   {{item.storecount}}
                 </div>
-                <div class="M50width c_align">
+                <div class="M30width c_align">
                   <button mat-button class="viewbtn t5padding b5padding l30padding r30padding"
                     (click)="navigatetointernal(item)">
                     Go to internal

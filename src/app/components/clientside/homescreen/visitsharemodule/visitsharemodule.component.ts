@@ -122,19 +122,22 @@ export class VisitsharemoduleComponent implements OnInit {
   }
 
   updateVSASTitle() {
+    console.log(0);
     if (!this.editSubt) {
+      console.log(1);
       this.editSubt = !this.editSubt;
-    } else if (this.VSATitle == this.VSAmoduledata.VSA_STitle) {
+    } else if (this.VSASTitle == this.VSAmoduledata.VSA_STitle) {
+      console.log(2);
       this.editSubt = !this.editSubt;
     } else {
-      if (!this.VSATitle) {
+      console.log(3);
+      if (!this.VSASTitle) {
         alert('please enter the sub Title.');
       } else {
         this.api
-          .updateVSAStitle(this.VSATitle, this.VSAmoduledata.id)
+          .updateVSAStitle(this.VSASTitle, this.VSAmoduledata.id)
           .then((data) => {
-            if (data != undefined) {
-            }
+            this.editSubt = !this.editSubt;
           })
           .catch(() => {
             return false;

@@ -25,6 +25,7 @@ import {
   getCountFromServer,
   WhereFilterOp,
 } from 'firebase/firestore';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +36,8 @@ export class ApiserviceService {
   constructor(
     private firestore: Firestore,
     private fireStorage: Storage,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public http: HttpClient
   ) {}
 
   get getServerTimestamp() {
@@ -131,7 +133,7 @@ export class ApiserviceService {
   }
 
   getRecentAddedOrder(
-    c: number,
+    datalimit: number,
     getall: boolean,
     Para?: any,
     operator?: any,
@@ -140,6 +142,9 @@ export class ApiserviceService {
     operator1?: any,
     value1?: any
   ) {
+    console.log(datalimit);
+    console.log(getall);
+
     const catData: CollectionReference = collection(
       this.firestore,
       `${'walt'}`
@@ -193,14 +198,14 @@ export class ApiserviceService {
           where('type', 'array-contains', 'storeORDER'),
           orderBy(orderbyvalue, 'desc'),
           // startAfter()
-          limit(c)
+          limit(datalimit)
         );
       } else {
         qu = query(
           catData,
           where('type', 'array-contains', 'storeORDER'),
           orderBy(orderbyvalue, 'desc'),
-          limit(c)
+          limit(datalimit)
         );
       }
     }
@@ -571,13 +576,16 @@ export class ApiserviceService {
     return updateDoc(cityrefr, { third_Stores: arrayRemove(stores) });
   }
 
-
   async updatehomegrownFirststorelogo(
     croppedImage: any,
     HGdata: any,
     index: number
   ) {
-    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${HGdata[index].id}`);
+    const cityrefr = doc(
+      this.firestore,
+      `${'Home_Grown'}`,
+      `${HGdata[index].id}`
+    );
     const cloudUpload = await this.cloudUpload(HGdata[index].id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
@@ -598,7 +606,11 @@ export class ApiserviceService {
     HGdata: any,
     index: number
   ) {
-    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${HGdata[index].id}`);
+    const cityrefr = doc(
+      this.firestore,
+      `${'Home_Grown'}`,
+      `${HGdata[index].id}`
+    );
     const cloudUpload = await this.cloudUpload(HGdata[index].id, croppedImage);
 
     if (!cloudUpload.success) {
@@ -620,7 +632,11 @@ export class ApiserviceService {
     HGdata: any,
     index: number
   ) {
-    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${HGdata[index].id}`);
+    const cityrefr = doc(
+      this.firestore,
+      `${'Home_Grown'}`,
+      `${HGdata[index].id}`
+    );
     const cloudUpload = await this.cloudUpload(HGdata[index].id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
@@ -637,14 +653,10 @@ export class ApiserviceService {
     }
   }
 
-
-
-
   updatepeoplechoicepara(id: string, data: any) {
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
     return updateDoc(cityrefr, { Categories: data });
   }
-
 
   updateHGtitle(Title: string, id: any) {
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
@@ -1080,7 +1092,11 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-  getVSAPeoplechoicesubCatstores(nodeid: string,catid:string, subcatId: string) {
+  getVSAPeoplechoicesubCatstores(
+    nodeid: string,
+    catid: string,
+    subcatId: string
+  ) {
     const VSA_section: CollectionReference = collection(
       this.firestore,
       `${'people_choice_store'}`
@@ -1088,7 +1104,7 @@ export class ApiserviceService {
     const qu = query(
       VSA_section,
       where('Nodeid', '==', nodeid),
-      where('catId','==',catid),
+      where('catId', '==', catid),
       where('SubcatId', '==', subcatId),
       where('iscat_subCatstore', '==', 'SubCat'),
       where('sectionName', '==', 'VSAsection')
@@ -1124,7 +1140,7 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-  getVSAtrendingsubCatstores(nodeid: string,catId:string, subcatId: string) {
+  getVSAtrendingsubCatstores(nodeid: string, catId: string, subcatId: string) {
     const VSA_section: CollectionReference = collection(
       this.firestore,
       `${'trending_store'}`
@@ -1603,6 +1619,8 @@ export class ApiserviceService {
         return { success: false, url: '' };
       });
   }
+
+
 
   isareaAlreadyAdded(id: string, isallreadyadded: boolean) {
     const area = doc(this.firestore, 'Areas', `${id}`);

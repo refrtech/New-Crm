@@ -1,4 +1,15 @@
 <div class="A20padding">
+  <div>
+
+
+    <input class="b10margin d_none" #hiddenfileinput type="file" (change)="cloudupload2($event)">
+    <button mat-button (click)="hiddenfileinput.click()"
+        class="file-upload Apurpleborder s_size normallineheight purple_txt browse b10margin cursor_pointer d_inline">
+        {{"Browse"}}
+    </button>
+
+
+  </div>
     <div class="dflex">
         <span class="xxl_size boldtext r15padding AScenter">Node management module</span>
     </div>

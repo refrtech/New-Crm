@@ -93,32 +93,36 @@
                     <div class="regulartext M20width ">Store name</div>
                     <div class="regulartext M20width c_align">Category</div>
                     <div class="M20width"></div>
-                    <div class="regulartext M20width c_align">Action</div>
+                    <div class="regulartext M10width c_align">Action</div>
+                    <div class="M10width"></div>
                 </div>
                 <div cdkDropListGroup>
                     <div class="example-container M100width" *ngIf="storelist$ | async as storelist">
                         <div cdkDropList class="example-list">
                             <ng-container *ngFor="let item of storelist,let i= index">
                                 <div class="example-box tborder dflex s_size White_bg">
-                                    <div class="M20width l_align ">
+                                    <div class="M20width l_align">
                                         <div class="store_logo">
                                             <img class="M100width h200 object_fit_cover"
                                                 [src]=" item.CRMbanner != undefined ? item.CRMbanner : item.banner "
                                                 alt="banner" />
                                         </div>
                                     </div>
-                                    <div class="M20width l_align ">
+                                    <div class="M20width l_align">
                                         {{item.name}}
                                     </div>
                                     <div class="M20width c_align">
                                         {{item.cat}}
                                     </div>
                                     <div class="M20width"></div>
-                                    <div class="M20width c_align">
+                                    <div class="M5width c_align">
                                         <mat-icon class="black_text" (click)="deletestore(item.Docid)">delete</mat-icon>
-                                        <mat-icon class="black_text"
-                                            (click)="takePicture('16:9','banner',item.Docid,item)">image</mat-icon>
                                     </div>
+                                    <div class="M5width c_align">
+                                      <mat-icon class="black_text"
+                                          (click)="takePicture('16:9','banner',item.Docid,item)">image</mat-icon>
+                                  </div>
+                                    <div class="M10width"></div>
                                 </div>
                             </ng-container>
                         </div>

@@ -93,8 +93,8 @@
   <div *ngIf="HGdata.products != undefined && HGdata.products.length > 0" class="t15margin boxshw">
     <div class="dflex JCevenly M100width tb15padding s_size">
       <div class="M10width c_align">Rank</div>
-      <div class="regulartext M40width">Store Name</div>
-      <div class="regulartext M25width">Category</div>
+      <div class="regulartext M40width">Product Name</div>
+      <div class="M25width"></div>
       <div class="regulartext M25width c_align">Action</div>
     </div>
     <div cdkDropListGroup>
@@ -108,7 +108,7 @@
             <div class="M40width l_align">
               {{item.title}}
             </div>
-            <div class="M25width l_align">
+            <div class="M25width">
             </div>
             <div class="M25width c_align dflex JCcenter">
               <a (click)="action(item)" class="r20margin">

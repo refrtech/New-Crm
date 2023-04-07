@@ -7,7 +7,6 @@ import { AuthService } from 'src/app/auth.service';
 import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component';
 import { Camera } from '@capacitor/camera';
 import { CameraResultType } from '@capacitor/camera/dist/esm/definitions';
-import { confirmPasswordReset } from '@angular/fire/auth';
 import { ConfirmationPopupComponent } from '../confirmation-popup/confirmation-popup.component';
 
 @Component({
@@ -159,8 +158,7 @@ export class HomegrowbrandsComponent implements OnInit {
         this.api
           .updateHGStitle(this.homegrownST, this.HGmoduledata.id)
           .then((data) => {
-            if (data != undefined) {
-            }
+            this.editSubt = !this.editSubt;
           })
           .catch(() => {
             return false;
@@ -171,10 +169,9 @@ export class HomegrowbrandsComponent implements OnInit {
 
   action(data: any, rowno?: string) {
     if (this.isstorealreadyadded == true || rowno != undefined) {
-
-      if ( rowno == '1') {
+      if (rowno == '1') {
         this.api.removeHGFRstores(data, this.HGmoduledata.id);
-      } else if ( rowno == '2') {
+      } else if (rowno == '2') {
         this.api.removeHGSRstores(data, this.HGmoduledata.id);
       } else if (rowno == '3') {
         this.api.removeHGTRstores(data, this.HGmoduledata.id);

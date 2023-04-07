@@ -89,7 +89,6 @@ export class VSAnodecatstoresComponent implements OnInit {
         this.DocId = data[0].id;
         this.catarray =
           data[0].CategoryBanners != undefined ? data[0].CategoryBanners : [];
-          console.log(this.catarray);
         let i = this.catarray.findIndex(
           (x: any) => x.Catid == this.actRoute.snapshot.params['catid']
         );
@@ -242,7 +241,7 @@ export class VSAnodecatstoresComponent implements OnInit {
           this.auth.resource.startSnackBar(result.info);
         }
       } else {
-        if (type == 'homeBanner') {
+        if (type == 'logo') {
           this.api
             .updateNodecatinternalBanner(
               this.actRoute.snapshot.params['internalid'],
@@ -313,7 +312,6 @@ export class VSAnodecatstoresComponent implements OnInit {
             peoplechoicecatpara: this.peoplechoicecatpara,
           });
         }
-        console.log(this.catarray);
         this.api
           .updatePeoplechoicepara(this.DocId, this.catarray)
           .then((data) => {
