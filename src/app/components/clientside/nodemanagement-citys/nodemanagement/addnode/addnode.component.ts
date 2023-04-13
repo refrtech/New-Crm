@@ -72,7 +72,6 @@ export class AddnodeComponent implements OnInit {
         }
       }
     }
-    console.log(this.data.Areas);
   }
 
   ngOnInit(): void {
