@@ -265,17 +265,20 @@ export class HomegrowbrandsComponent implements OnInit {
               .updatehomegrownFirststorelogo(
                 result.croppedImage,
                 this.HGmoduledata.First_Stores,
-                index
+                index,
+                this.HGmoduledata.id
               )
               .then((ref: any) => {
                 this.auth.resource.startSnackBar('Banner Update Under Review!');
               });
           } else if (rowno == 2) {
+            console.log(123123);
             this.api
               .updatehomegrownSecondstorelogo(
                 result.croppedImage,
                 this.HGmoduledata.Second_Stores,
-                index
+                index,
+                this.HGmoduledata.id
               )
               .then((ref: any) => {
                 this.auth.resource.startSnackBar('Banner Update Under Review!');
@@ -285,7 +288,8 @@ export class HomegrowbrandsComponent implements OnInit {
               .updatehomegrownThirdstorelogo(
                 result.croppedImage,
                 this.HGmoduledata.third_Stores,
-                index
+                index,
+                this.HGmoduledata.id
               )
               .then((ref: any) => {
                 this.auth.resource.startSnackBar('Banner Update Under Review!');

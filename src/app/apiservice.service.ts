@@ -579,12 +579,14 @@ export class ApiserviceService {
   async updatehomegrownFirststorelogo(
     croppedImage: any,
     HGdata: any,
-    index: number
+    index: number,
+    homegrownid:string
+
   ) {
     const cityrefr = doc(
       this.firestore,
       `${'Home_Grown'}`,
-      `${HGdata[index].id}`
+      `${homegrownid}`
     );
     const cloudUpload = await this.cloudUpload(HGdata[index].id, croppedImage);
     if (!cloudUpload.success) {
@@ -604,12 +606,14 @@ export class ApiserviceService {
   async updatehomegrownSecondstorelogo(
     croppedImage: any,
     HGdata: any,
-    index: number
+    index: number,
+    homegrownid:string
   ) {
+    console.log("HGdata",HGdata);
     const cityrefr = doc(
       this.firestore,
       `${'Home_Grown'}`,
-      `${HGdata[index].id}`
+      `${homegrownid}`
     );
     const cloudUpload = await this.cloudUpload(HGdata[index].id, croppedImage);
 
@@ -617,6 +621,7 @@ export class ApiserviceService {
       return cloudUpload;
     } else {
       HGdata[index].crmlogo = cloudUpload.url;
+      console.log(HGdata[index]);
       return updateDoc(cityrefr, { Second_Stores: HGdata })
         .then(() => {
           return cloudUpload;
@@ -630,12 +635,14 @@ export class ApiserviceService {
   async updatehomegrownThirdstorelogo(
     croppedImage: any,
     HGdata: any,
-    index: number
+    index: number,
+    homegrownid:string
+
   ) {
     const cityrefr = doc(
       this.firestore,
       `${'Home_Grown'}`,
-      `${HGdata[index].id}`
+      `${homegrownid}`
     );
     const cloudUpload = await this.cloudUpload(HGdata[index].id, croppedImage);
     if (!cloudUpload.success) {
@@ -1023,42 +1030,39 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-  getPeoplechoiceCatstores(nodeid: string, catId: string) {
+  getPeoplechoiceCatstores( catId: string) {
     const VSA_section: CollectionReference = collection(
       this.firestore,
       `${'people_choice_store'}`
     );
     const qu = query(
       VSA_section,
-      where('Nodeid', '==', nodeid),
       where('catId', '==', catId),
       where('sectionName', '==', 'Categorysection')
     );
     return collectionData(qu);
   }
 
-  gettrendingCatstores(nodeid: string, catId: string) {
+  gettrendingCatstores( catId: string) {
     const VSA_section: CollectionReference = collection(
       this.firestore,
       `${'trending_store'}`
     );
     const qu = query(
       VSA_section,
-      where('Nodeid', '==', nodeid),
       where('catId', '==', catId),
       where('sectionName', '==', 'Categorysection')
     );
     return collectionData(qu);
   }
 
-  getcuratedtrendingCatstores(nodeid: string, catId: string) {
+  getcuratedtrendingCatstores(catId: string) {
     const VSA_section: CollectionReference = collection(
       this.firestore,
       `${'trending_store'}`
     );
     const qu = query(
       VSA_section,
-      where('Nodeid', '==', nodeid),
       where('catId', '==', catId),
       where('sectionName', '==', 'Categorysection-CuratedStores')
     );

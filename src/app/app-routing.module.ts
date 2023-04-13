@@ -197,7 +197,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: 'Category/:nodeid/:cat',
+        path: 'Category/:cat',
         component: CategoriesinternalComponent,
         canActivate: [AuthGuard],
       },

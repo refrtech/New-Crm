@@ -98,7 +98,6 @@ export class CategoriesinternalComponent implements OnInit {
     );
     this.api
       .getPeoplechoiceCatstores(
-        this.actRoute.snapshot.params['nodeid'],
         this.actRoute.snapshot.params['cat']
       )
       .subscribe((data: any) => {
@@ -107,7 +106,6 @@ export class CategoriesinternalComponent implements OnInit {
 
     this.api
       .gettrendingCatstores(
-        this.actRoute.snapshot.params['nodeid'],
         this.actRoute.snapshot.params['cat']
       )
       .subscribe((data: any) => {
@@ -116,7 +114,6 @@ export class CategoriesinternalComponent implements OnInit {
 
     this.api
       .getcuratedtrendingCatstores(
-        this.actRoute.snapshot.params['nodeid'],
         this.actRoute.snapshot.params['cat']
       )
       .subscribe((data: any) => {
@@ -189,7 +186,7 @@ export class CategoriesinternalComponent implements OnInit {
 
   action(i: number, Data: any) {
     Data.catId = this.actRoute.snapshot.params['cat'];
-    Data.Nodeid = this.actRoute.snapshot.params['nodeid'];
+    // Data.Nodeid = this.actRoute.snapshot.params['nodeid'];
     Data.sectionName = 'Categorysection';
     if (i == 1) {
       this.api.addstoretoPeoplechoice(Data).then((data: any) => {
