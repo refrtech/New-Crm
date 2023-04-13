@@ -5,6 +5,15 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { take } from 'rxjs';
 
+export interface dropdwontype {
+  Area_N: String;
+  Area_Pin: number;
+  CDateTime: any;
+  City_id: string;
+  id: string;
+  isaddedinNode: boolean;
+}
+
 @Component({
   selector: 'app-addnode',
   templateUrl: './addnode.component.html',
@@ -13,13 +22,13 @@ import { take } from 'rxjs';
 export class AddnodeComponent implements OnInit {
   selectedareas: Array<any> = [];
   selectedareas2: Array<any> = [];
-  Areaspincodes:Array<any> = []
+  Areaspincodes: Array<string> = [];
   dropdownSettings!: IDropdownSettings;
   searchvalue: any;
   valuetype: number = 2;
   Valuearr: Array<any> = [];
   cityarr: Array<any> = [];
-  dropdownList: Array<any> = [];
+  dropdownList: Array<dropdwontype> = [];
   cityindex?: number;
   Nodename: string = '';
   @ViewChild('nodeForm') nodeForm?: NgForm;
@@ -52,8 +61,9 @@ export class AddnodeComponent implements OnInit {
         this.Nodename = a.substring(7, a.length);
         if (this.data.nodedata.Nareas != undefined) {
           for (let i = 0; i < this.data.nodedata.Nareas.length; i++) {
+            let pincode : number = this.data.nodedata.Nareas[i].Area_Pin;
             this.selectedareas2.push(this.data.nodedata.Nareas[i]);
-            this.Areaspincodes.push(this.data.nodedata.Nareas[i].Area_Pin);
+            this.Areaspincodes.push(pincode.toString());
             this.selectedareas.push({
               Area_N: this.data.nodedata.Nareas[i].Area_N,
               id: this.data.nodedata.Nareas[i].id,
@@ -62,6 +72,7 @@ export class AddnodeComponent implements OnInit {
         }
       }
     }
+    console.log(this.data.Areas);
   }
 
   ngOnInit(): void {
@@ -84,7 +95,7 @@ export class AddnodeComponent implements OnInit {
   addarea(event: any) {
     let index = this.dropdownList.findIndex((x: any) => x.id == event.id);
     this.selectedareas2.push(this.dropdownList[index]);
-    this.Areaspincodes.push(this.dropdownList[index].Area_Pin);
+    this.Areaspincodes.push(this.dropdownList[index].Area_Pin.toString());
   }
 
   removearea(event: any) {
@@ -182,8 +193,8 @@ export class AddnodeComponent implements OnInit {
 
   Deletenode() {
     this.api.deletenode(this.data.Nodedata.id).then((data: any) => {
-      for(let i = 0 ; i < this.data.Nodedata.Nareas.length; i++ ){
-        this.api.isareaAlreadyAdded(this.data.Nodedata.Nareas[i].id,false);
+      for (let i = 0; i < this.data.Nodedata.Nareas.length; i++) {
+        this.api.isareaAlreadyAdded(this.data.Nodedata.Nareas[i].id, false);
       }
       this.dialogRef.close({ success: true });
     });
