@@ -904,6 +904,7 @@ export class ApiserviceService {
       name: nodeData.name,
       updated_at: nodeData.updated_at,
       Nareas: nodeData.Nareas,
+      Areaspincodes:nodeData.Areaspincodes
     });
   }
 
