@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { ApiserviceService } from 'src/app/apiservice.service';
+//import {ImagekitService  } from 'imagekitio-angular';
+
 
 @Component({
   selector: 'app-nodemanagement-citys',
@@ -12,7 +14,9 @@ export class NodemanagementCitysComponent implements OnInit {
   cityList$: Observable<any[]> = of();
   fileName: string = '';
 
-  constructor(public api: ApiserviceService, public http: HttpClient) {}
+
+  constructor(public api: ApiserviceService, public http: HttpClient) {
+  }
 
   ngOnInit(): void {
     this.getallcity();
@@ -23,6 +27,7 @@ export class NodemanagementCitysComponent implements OnInit {
   }
 
   cloudupload2(event: any) {
+    console.log('Inside upload...')
     const file = event.target.files && event.target.files[0];
     if (file) {
       var reader = new FileReader();
@@ -31,13 +36,24 @@ export class NodemanagementCitysComponent implements OnInit {
 
       const formData = new FormData();
       formData.append('file', file, file.name);
-
+      // const options = {
+      //   headers: {
+      //     Authorization: 'u8LLcJelqtJeixtvSTyJ9VYH82Q='
+      //   }
+      // };
+      // this.http.post('https://ik.imagekit.io/refrclub01/', formData, options).subscribe(res=>{
+      //     console.log('After file upload :'+res)
+      // },error=>{
+      //   console.log('Error :'+error.message)
+      // });
+    
       const headers = new HttpHeaders();
       headers.append('Content-Type:multipart/form-data; boundary=------------------------1234567890', 'multipart/form-data');
 
       const url =
-        'https://us-central1-refr-india.cloudfunctions.net/ind_serve/api/imagekit/upload';
-      this.http.post(url, formData, {headers}).subscribe(
+        'http://localhost:5001/api/imagekit/upload';
+      const proxy_url = 'http://34.100.197.18:5001/upload-image'
+      this.http.post(proxy_url, formData, {headers:headers}).subscribe(
         (res) => {
           console.log('success');
           console.log(res);
