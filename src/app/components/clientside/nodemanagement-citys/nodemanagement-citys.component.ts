@@ -52,8 +52,9 @@ export class NodemanagementCitysComponent implements OnInit {
 
       const url =
         'http://localhost:5001/api/imagekit/upload';
+      const prod_url = "https://app.refr.club/api/imagekit/upload"
       const proxy_url = 'http://34.100.197.18:5001/upload-image'
-      this.http.post(proxy_url, formData, {headers:headers}).subscribe(
+      this.http.post(prod_url, formData, {headers:headers}).subscribe(
         (res) => {
           console.log('success');
           console.log(res);
