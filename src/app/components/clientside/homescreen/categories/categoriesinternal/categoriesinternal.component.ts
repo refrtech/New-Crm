@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { take } from 'rxjs';
+import { buffer, take } from 'rxjs';
 import { ApiserviceService } from 'src/app/apiservice.service';
 import { Camera } from '@capacitor/camera';
 import { CameraResultType } from '@capacitor/camera/dist/esm/definitions';
 import { AuthService } from 'src/app/auth.service';
 import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component';
+import { Buffer } from 'buffer';
 
 @Component({
   selector: 'app-categoriesinternal',
@@ -246,6 +247,11 @@ export class CategoriesinternalComponent implements OnInit {
           this.auth.resource.startSnackBar(result.info);
         }
       } else {
+        let a = Buffer.from(result.croppedImage);
+        // console.log(a.toJSON);
+        // console.log(a.toString);
+
+        // console.log("croppedImage img data =",result.croppedImage)
         if (type == 'homeBanner' || type == 'logo') {
           this.api
             .updatecatBannerORthumbnail(
@@ -253,7 +259,7 @@ export class CategoriesinternalComponent implements OnInit {
               result.croppedImage,
               type
             )
-            .then((ref) => {
+            .then((ref:any) => {
               if (!ref || !ref.success) {
                 this.auth.resource.startSnackBar('Upload Failed!');
               } else {
@@ -327,4 +333,20 @@ export class CategoriesinternalComponent implements OnInit {
       });
     }
   }
+
+  dataURLtoFile(dataurl:any, filename:string) {
+
+    var arr = dataurl.split(','),
+        mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]),
+        n = bstr.length,
+        u8arr = new Uint8Array(n);
+
+    while(n--){
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], filename, {type:mime});
+}
+
 }

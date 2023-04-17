@@ -59,7 +59,7 @@ import { Storage, ref, uploadString } from '@angular/fire/storage';
 
 //import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { getDownloadURL } from '@firebase/storage';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { WindowService } from './window.service';
 import { deleteDoc } from 'firebase/firestore';
 
@@ -69,7 +69,7 @@ import { deleteDoc } from 'firebase/firestore';
 export class AuthService {
   user$: Observable<any> = this.getLogUSER();
   allowLog = false;
-
+  fileName: string = '';
   lock = true;
   step = 0;
   stepDisable = false;
@@ -1760,4 +1760,29 @@ export class AuthService {
       upd: newTimestamp,
     });
   }
+
+  cloudupload2(event: any) {
+    console.log('Inside upload...')
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      this.fileName = file.name;
+      const formData = new FormData();
+      formData.append('file', file, file.name);
+      const headers = new HttpHeaders();
+      headers.append('Content-Type:multipart/form-data; boundary=------------------------1234567890', 'multipart/form-data');
+      const proxy_url = 'http://34.100.197.18:5001/upload-image'
+      this.http.post(proxy_url, formData, {headers:headers}).subscribe(
+        (res) => {
+          console.log('success');
+          console.log(res);
+        },
+        (err) => {
+          console.error(err);
+        }
+      );
+    }
+  }
+
 }

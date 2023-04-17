@@ -25,13 +25,14 @@ import {
   getCountFromServer,
   WhereFilterOp,
 } from 'firebase/firestore';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiserviceService {
   newTimestamp = this.getServerTimestamp();
+  fileName: string = '';
 
   constructor(
     private firestore: Firestore,
@@ -526,7 +527,7 @@ export class ApiserviceService {
   ) {
     const newTimestamp = this.getServerTimestamp();
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
-    const cloudUpload = await this.cloudUpload(id, croppedImage);
+    const cloudUpload :any= await this.cloudupload2(id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -580,15 +581,10 @@ export class ApiserviceService {
     croppedImage: any,
     HGdata: any,
     index: number,
-    homegrownid:string
-
+    homegrownid: string
   ) {
-    const cityrefr = doc(
-      this.firestore,
-      `${'Home_Grown'}`,
-      `${homegrownid}`
-    );
-    const cloudUpload = await this.cloudUpload(HGdata[index].id, croppedImage);
+    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${homegrownid}`);
+    const cloudUpload :any= await this.cloudupload2(HGdata[index].id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -607,15 +603,11 @@ export class ApiserviceService {
     croppedImage: any,
     HGdata: any,
     index: number,
-    homegrownid:string
+    homegrownid: string
   ) {
-    console.log("HGdata",HGdata);
-    const cityrefr = doc(
-      this.firestore,
-      `${'Home_Grown'}`,
-      `${homegrownid}`
-    );
-    const cloudUpload = await this.cloudUpload(HGdata[index].id, croppedImage);
+    console.log('HGdata', HGdata);
+    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${homegrownid}`);
+    const cloudUpload :any= await this.cloudupload2(HGdata[index].id, croppedImage);
 
     if (!cloudUpload.success) {
       return cloudUpload;
@@ -636,15 +628,10 @@ export class ApiserviceService {
     croppedImage: any,
     HGdata: any,
     index: number,
-    homegrownid:string
-
+    homegrownid: string
   ) {
-    const cityrefr = doc(
-      this.firestore,
-      `${'Home_Grown'}`,
-      `${homegrownid}`
-    );
-    const cloudUpload = await this.cloudUpload(HGdata[index].id, croppedImage);
+    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${homegrownid}`);
+    const cloudUpload :any= await this.cloudupload2(HGdata[index].id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -715,7 +702,7 @@ export class ApiserviceService {
     index: number
   ) {
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${HGdata.id}`);
-    const cloudUpload = await this.cloudUpload(HGdata.id, croppedImage);
+    const cloudUpload:any = await this.cloudupload2(HGdata.id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -732,7 +719,7 @@ export class ApiserviceService {
 
   async updatehomegrownbanner(id: string, croppedImage: any) {
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
-    const cloudUpload = await this.cloudUpload(id, croppedImage);
+    const cloudUpload :any= await this.cloudupload2(id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -753,7 +740,7 @@ export class ApiserviceService {
     subcatindex: number
   ) {
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${HGdata.id}`);
-    const cloudUpload = await this.cloudUpload(HGdata.id, croppedImage);
+    const cloudUpload :any= await this.cloudupload2(HGdata.id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -911,7 +898,7 @@ export class ApiserviceService {
       name: nodeData.name,
       updated_at: nodeData.updated_at,
       Nareas: nodeData.Nareas,
-      Areaspincodes:nodeData.Areaspincodes
+      Areaspincodes: nodeData.Areaspincodes,
     });
   }
 
@@ -1030,7 +1017,7 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-  getPeoplechoiceCatstores( catId: string) {
+  getPeoplechoiceCatstores(catId: string) {
     const VSA_section: CollectionReference = collection(
       this.firestore,
       `${'people_choice_store'}`
@@ -1043,7 +1030,7 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-  gettrendingCatstores( catId: string) {
+  gettrendingCatstores(catId: string) {
     const VSA_section: CollectionReference = collection(
       this.firestore,
       `${'trending_store'}`
@@ -1164,7 +1151,7 @@ export class ApiserviceService {
   async updatesubcatproductbanner(id: string, croppedImage: string) {
     const newTimestamp = this.getServerTimestamp();
     const cityrefr = doc(this.firestore, `${'ProductsYouHave'}`, `${id}`);
-    const cloudUpload = await this.cloudUpload(id, croppedImage);
+    const cloudUpload:any = await this.cloudupload2(id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -1210,7 +1197,7 @@ export class ApiserviceService {
   async updateTrendingstorebanner(id: string, croppedImage: string) {
     const newTimestamp = this.getServerTimestamp();
     const cityrefr = doc(this.firestore, `${'trending_store'}`, `${id}`);
-    const cloudUpload = await this.cloudUpload(id, croppedImage);
+    const cloudUpload :any= await this.cloudupload2(id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -1226,7 +1213,7 @@ export class ApiserviceService {
   async updatePchoicestorebanner(id: string, croppedImage: string) {
     const newTimestamp = this.getServerTimestamp();
     const cityrefr = doc(this.firestore, `${'people_choice_store'}`, `${id}`);
-    const cloudUpload = await this.cloudUpload(id, croppedImage);
+    const cloudUpload :any= await this.cloudupload2(id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -1246,7 +1233,10 @@ export class ApiserviceService {
   ) {
     const newTimestamp = this.getServerTimestamp();
     const categoryrefr = doc(this.firestore, `${'cats'}`, `${catid}`);
-    const cloudUpload = await this.cloudUpload(catid, croppedImage);
+    const cloudUpload: any = await this.cloudupload2(catid, croppedImage);
+
+    console.log('cloudUpload', cloudUpload);
+
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -1300,7 +1290,7 @@ export class ApiserviceService {
   ) {
     const newTimestamp = this.getServerTimestamp();
     const cityrefr = doc(this.firestore, `${'vsa_internal'}`, `${id}`);
-    const cloudUpload = await this.cloudUpload(id, croppedImage);
+    const cloudUpload :any= await this.cloudupload2(id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -1326,7 +1316,7 @@ export class ApiserviceService {
   async updateNodeinternalBanner(id: string, croppedImage: string) {
     const newTimestamp = this.getServerTimestamp();
     const cityrefr = doc(this.firestore, `${'vsa_internal'}`, `${id}`);
-    const cloudUpload = await this.cloudUpload(id, croppedImage);
+    const cloudUpload:any = await this.cloudupload2(id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -1349,7 +1339,7 @@ export class ApiserviceService {
   ) {
     const newTimestamp = this.getServerTimestamp();
     const cityrefr = doc(this.firestore, `${'vsa_internal'}`, `${id}`);
-    const cloudUpload = await this.cloudUpload(id, croppedImage);
+    const cloudUpload :any= await this.cloudupload2(id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -1611,21 +1601,54 @@ export class ApiserviceService {
     );
   }
 
-  cloudUpload(idX: string, base64String: string) {
-    const imgID = idX + Date.now();
-    const bannerRef = ref(this.fireStorage, 'store/' + imgID);
-    return uploadString(bannerRef, base64String.split(',')[1], 'base64')
-      .then((snapshot) => {
-        return getDownloadURL(bannerRef).then((dlURL) => {
-          return { success: true, url: dlURL };
-        });
-      })
-      .catch((err) => {
-        return { success: false, url: '' };
-      });
+  // cloudUpload(idX: string, base64String: string) {
+  //   const imgID = idX + Date.now();
+  //   const bannerRef = ref(this.fireStorage, 'store/' + imgID);
+  //   return uploadString(bannerRef, base64String.split(',')[1], 'base64')
+  //     .then((snapshot) => {
+  //       return getDownloadURL(bannerRef).then((dlURL) => {
+  //         return { success: true, url: dlURL };
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       return { success: false, url: '' };
+  //     });
+  // }
+
+  cloudupload2(id: string, croppedImage: any) {
+    return new Promise((resolve, reject) => {
+      let file = this.dataURLtoFile(croppedImage, id);
+
+      //
+      if (file) {
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        this.fileName = file.name;
+        const formData = new FormData();
+        formData.append('file', file, file.name);
+        const headers = new HttpHeaders();
+        headers.append(
+          'Content-Type:multipart/form-data; boundary=------------------------1234567890',
+          'multipart/form-data'
+        );
+        this.http
+          .post('http://34.100.197.18:5001/upload-image', formData, {
+            headers: headers,
+          })
+          .subscribe(
+            (res: any) => {
+              console.log('success');
+              console.log(res);
+              resolve({ success: true, url: res.url });
+            },
+            (err) => {
+              console.error(err);
+              reject({ success: true, url: '' });
+            }
+          );
+      }
+    });
   }
-
-
 
   isareaAlreadyAdded(id: string, isallreadyadded: boolean) {
     const area = doc(this.firestore, 'Areas', `${id}`);
@@ -1636,7 +1659,7 @@ export class ApiserviceService {
 
   async updatebsbanner(id: any, croppedImage: any, stores: any, index: number) {
     const cityrefr = doc(this.firestore, `${'brandspotlight'}`, `${id}`);
-    const cloudUpload = await this.cloudUpload(id, croppedImage);
+    const cloudUpload :any= await this.cloudupload2(id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -1693,7 +1716,7 @@ export class ApiserviceService {
 
   async updatestorewithnodebanner(id: string, croppedImage: any) {
     const cityrefr = doc(this.firestore, `${'Storewithnodes'}`, `${id}`);
-    const cloudUpload = await this.cloudUpload(id, croppedImage);
+    const cloudUpload:any = await this.cloudupload2(id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -1721,5 +1744,18 @@ export class ApiserviceService {
     );
     const snapshot = await getCountFromServer(q);
     return snapshot.data().count;
+  }
+
+  dataURLtoFile(dataurl: any, filename: string) {
+    var arr = dataurl.split(','),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
   }
 }
