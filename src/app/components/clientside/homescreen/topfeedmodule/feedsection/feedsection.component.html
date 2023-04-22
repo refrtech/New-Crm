@@ -43,4 +43,5 @@
             <input class="b10margin d_none" #hiddenfileinput type="file" (change)="onSelectFile($event)">
         </div>
     </div>
+    <mat-progress-bar mode="indeterminate" *ngIf="isInProcess"></mat-progress-bar>
 </div>

@@ -93,7 +93,7 @@ import { HgbnodesubcatstoresComponent } from './components/clientside/homescreen
 import { CategoriesComponent } from './components/clientside/homescreen/categories/categories.component';
 import { CategoriesinternalComponent } from './components/clientside/homescreen/categories/categoriesinternal/categoriesinternal.component';
 import { ConfirmationPopupComponent } from './components/clientside/homescreen/confirmation-popup/confirmation-popup.component';
-
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -155,6 +155,7 @@ import { ConfirmationPopupComponent } from './components/clientside/homescreen/c
     MatDialogModule,
     HttpClientModule,
     BrowserModule,
+    MatProgressBarModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatmodulesModule,

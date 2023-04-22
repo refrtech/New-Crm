@@ -32,6 +32,9 @@ export class FeedsectionComponent implements OnInit {
   fileName = '';
   url: any;
   format: any;
+  isInProcess: boolean = false;
+  size = 1024 * 1024;
+  size_limit: boolean = false;
 
   onFileSelected($event: Event) {
     throw new Error('Method not implemented.');
@@ -53,17 +56,22 @@ export class FeedsectionComponent implements OnInit {
 
   async onSelectFile(event: any) {
     const file = (await event.target.files) && event.target.files[0];
-    if (file) {
-      console.log('filenaee', file);
+    console.log('size = ', file.size);
+    console.log('size in MB', file.size / (1024 * 1024) + 'MB');
 
+    if (file && file.size / (1024 * 1024) < 250) {
+      this.isInProcess = true;
+      console.log('filenaee', file);
       var reader = new FileReader();
       reader.readAsDataURL(file);
       this.fileName = file.name;
       const formData = new FormData();
       formData.append('file', file, this.fileName);
+
       const uploadUrl = 'http://34.100.197.18:5001/upload';
       this.http.post(uploadUrl, formData).subscribe(
         (response: any) => {
+          this.isInProcess = false;
           console.log(response.url_link[0]);
           let data = {
             url: response.url_link[0],
@@ -73,16 +81,20 @@ export class FeedsectionComponent implements OnInit {
               ? 'video'
               : 'image',
           };
-          console.log('dataaaaaa', data);
 
+          console.log('dataaaaaa', data);
           this.auth.addVideo(data).then((d) => {
             this.dialogRef.close();
           });
         },
         (error) => {
+          this.isInProcess = false;
           console.error('Error uploading video:', error);
         }
       );
+    } else {
+      alert('Please upload the size of file below 250mb');
+      this.dialogRef.close();
     }
   }
 
