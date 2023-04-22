@@ -3,6 +3,7 @@ import { FeedsectionComponent } from './feedsection/feedsection.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiserviceService } from 'src/app/apiservice.service';
 import { AuthService } from 'src/app/auth.service';
+import { ConfirmationPopupComponent } from '../confirmation-popup/confirmation-popup.component';
 
 @Component({
   selector: 'app-topfeedmodule',
@@ -21,7 +22,7 @@ export class TopfeedmoduleComponent implements OnInit {
   constructor(
     private dailog: MatDialog,
     public api: ApiserviceService,
-    public auth: AuthService,
+    public auth: AuthService
   ) {
     this.getVideo(this.id);
   }
@@ -42,8 +43,28 @@ export class TopfeedmoduleComponent implements OnInit {
     if (id == undefined) {
       alert('invalid data');
     } else {
-      this.auth.deleteVideo(id).then((data: any) => {
-        alert('deleted');
+      let isPhone = this.auth.resource.getWidth < 768;
+      let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
+      const refDialog = this.auth.resource.dialog.open(
+        ConfirmationPopupComponent,
+        {
+          width: w,
+          minWidth: '320px',
+          maxWidth: '480px',
+          height: '200px',
+          data: 'Video',
+          disableClose: true,
+          panelClass: 'dialogLayout',
+        }
+      );
+      refDialog.afterClosed().subscribe((result) => {
+        if (!result.success) {
+          if (result.info) {
+            this.auth.resource.startSnackBar(result.info);
+          }
+        } else {
+          this.auth.deleteVideo(id).then((data: any) => {});
+        }
       });
     }
   }
