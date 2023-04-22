@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Storage, ref, uploadString } from '@angular/fire/storage';
-import { getDownloadURL } from '@firebase/storage';
+import { Storage, ref } from '@angular/fire/storage';
 
 import {
   Firestore,
