@@ -25,6 +25,8 @@ import {
   WhereFilterOp,
 } from 'firebase/firestore';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ResourceService } from './resource.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -35,9 +37,10 @@ export class ApiserviceService {
 
   constructor(
     private firestore: Firestore,
-    private fireStorage: Storage,
+    private resource:ResourceService,
     private snackBar: MatSnackBar,
-    public http: HttpClient
+    public http: HttpClient,
+    private auth:AuthService
   ) {}
 
   get getServerTimestamp() {
@@ -220,7 +223,7 @@ export class ApiserviceService {
     operator?: any,
     value?: any
   ) {
-    const catData: CollectionReference = collection(this.firestore, 'shops');
+    const catData: CollectionReference = collection(this.firestore,`${this.resource.env.db.shops}`);
     let Parametere: WhereFilterOp = Para;
     let conditions: WhereFilterOp = operator;
     let qu;
@@ -380,7 +383,7 @@ export class ApiserviceService {
   }
 
   getStoreByID(storeID: string) {
-    const shopRef = doc(this.firestore, `${'shops'}`, `${storeID}`);
+    const shopRef = doc(this.firestore, `${this.resource.env.db.shops}`, `${storeID}`);
     return getDoc(shopRef);
   }
 
@@ -496,15 +499,15 @@ export class ApiserviceService {
       });
   }
 
-  addBSstores(stores: any, id: any) {
-    const cityrefr = doc(this.firestore, `${'brandspotlight'}`, `${id}`);
-    return updateDoc(cityrefr, { Stores: arrayUnion(stores) });
-  }
+  // addBSstores(stores: any, id: any) {
+  //   const cityrefr = doc(this.firestore, `${'brandspotlight'}`, `${id}`);
+  //   return updateDoc(cityrefr, { Stores: arrayUnion(stores) });
+  // }
 
-  removeBSstores(stores: any, id: any) {
-    const cityrefr = doc(this.firestore, `${'brandspotlight'}`, `${id}`);
-    return updateDoc(cityrefr, { Stores: arrayRemove(stores) });
-  }
+  // removeBSstores(stores: any, id: any) {
+  //   const cityrefr = doc(this.firestore, `${'brandspotlight'}`, `${id}`);
+  //   return updateDoc(cityrefr, { Stores: arrayRemove(stores) });
+  // }
 
   async addstore_homegrown(data: any) {
     await addDoc(collection(this.firestore, `${'Home_Grown'}`), data).then(
@@ -526,7 +529,7 @@ export class ApiserviceService {
   ) {
     const newTimestamp = this.getServerTimestamp();
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
-    const cloudUpload :any= await this.cloudupload2(id, croppedImage);
+    const cloudUpload: any = await this.cloudupload2(id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -583,7 +586,10 @@ export class ApiserviceService {
     homegrownid: string
   ) {
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${homegrownid}`);
-    const cloudUpload :any= await this.cloudupload2(HGdata[index].id, croppedImage);
+    const cloudUpload: any = await this.cloudupload2(
+      HGdata[index].id,
+      croppedImage
+    );
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -606,7 +612,10 @@ export class ApiserviceService {
   ) {
     console.log('HGdata', HGdata);
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${homegrownid}`);
-    const cloudUpload :any= await this.cloudupload2(HGdata[index].id, croppedImage);
+    const cloudUpload: any = await this.cloudupload2(
+      HGdata[index].id,
+      croppedImage
+    );
 
     if (!cloudUpload.success) {
       return cloudUpload;
@@ -630,7 +639,10 @@ export class ApiserviceService {
     homegrownid: string
   ) {
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${homegrownid}`);
-    const cloudUpload :any= await this.cloudupload2(HGdata[index].id, croppedImage);
+    const cloudUpload: any = await this.cloudupload2(
+      HGdata[index].id,
+      croppedImage
+    );
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -701,7 +713,7 @@ export class ApiserviceService {
     index: number
   ) {
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${HGdata.id}`);
-    const cloudUpload:any = await this.cloudupload2(HGdata.id, croppedImage);
+    const cloudUpload: any = await this.cloudupload2(HGdata.id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -718,7 +730,7 @@ export class ApiserviceService {
 
   async updatehomegrownbanner(id: string, croppedImage: any) {
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
-    const cloudUpload :any= await this.cloudupload2(id, croppedImage);
+    const cloudUpload: any = await this.cloudupload2(id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -739,7 +751,7 @@ export class ApiserviceService {
     subcatindex: number
   ) {
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${HGdata.id}`);
-    const cloudUpload :any= await this.cloudupload2(HGdata.id, croppedImage);
+    const cloudUpload: any = await this.cloudupload2(HGdata.id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -1150,7 +1162,7 @@ export class ApiserviceService {
   async updatesubcatproductbanner(id: string, croppedImage: string) {
     const newTimestamp = this.getServerTimestamp();
     const cityrefr = doc(this.firestore, `${'ProductsYouHave'}`, `${id}`);
-    const cloudUpload:any = await this.cloudupload2(id, croppedImage);
+    const cloudUpload: any = await this.cloudupload2(id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -1196,7 +1208,7 @@ export class ApiserviceService {
   async updateTrendingstorebanner(id: string, croppedImage: string) {
     const newTimestamp = this.getServerTimestamp();
     const cityrefr = doc(this.firestore, `${'trending_store'}`, `${id}`);
-    const cloudUpload :any= await this.cloudupload2(id, croppedImage);
+    const cloudUpload: any = await this.cloudupload2(id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -1212,7 +1224,7 @@ export class ApiserviceService {
   async updatePchoicestorebanner(id: string, croppedImage: string) {
     const newTimestamp = this.getServerTimestamp();
     const cityrefr = doc(this.firestore, `${'people_choice_store'}`, `${id}`);
-    const cloudUpload :any= await this.cloudupload2(id, croppedImage);
+    const cloudUpload: any = await this.cloudupload2(id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -1289,7 +1301,7 @@ export class ApiserviceService {
   ) {
     const newTimestamp = this.getServerTimestamp();
     const cityrefr = doc(this.firestore, `${'vsa_internal'}`, `${id}`);
-    const cloudUpload :any= await this.cloudupload2(id, croppedImage);
+    const cloudUpload: any = await this.cloudupload2(id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -1315,7 +1327,7 @@ export class ApiserviceService {
   async updateNodeinternalBanner(id: string, croppedImage: string) {
     const newTimestamp = this.getServerTimestamp();
     const cityrefr = doc(this.firestore, `${'vsa_internal'}`, `${id}`);
-    const cloudUpload:any = await this.cloudupload2(id, croppedImage);
+    const cloudUpload: any = await this.cloudupload2(id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -1338,7 +1350,7 @@ export class ApiserviceService {
   ) {
     const newTimestamp = this.getServerTimestamp();
     const cityrefr = doc(this.firestore, `${'vsa_internal'}`, `${id}`);
-    const cloudUpload :any= await this.cloudupload2(id, croppedImage);
+    const cloudUpload: any = await this.cloudupload2(id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -1656,26 +1668,7 @@ export class ApiserviceService {
     });
   }
 
-  async updatebsbanner(id: any, croppedImage: any, stores: any, index: number) {
-    const cityrefr = doc(this.firestore, `${'brandspotlight'}`, `${id}`);
-    const cloudUpload :any= await this.cloudupload2(id, croppedImage);
-    if (!cloudUpload.success) {
-      return cloudUpload;
-    } else {
-      stores[index].brandspotlightbanner = cloudUpload.url;
-      return updateDoc(cityrefr, { Stores: stores })
-        .then((datas: any) => {
-          if (datas) {
-            return 'issue in update Sub-title.';
-          } else {
-            return 'Sub-title updated.';
-          }
-        })
-        .catch((err) => {
-          return false;
-        });
-    }
-  }
+
 
   async addstorewithnodeid(data: any) {
     const addedcity = await addDoc(
@@ -1689,18 +1682,7 @@ export class ApiserviceService {
     });
   }
 
-  getstoreaspernode(sectionname: string, nodeid: string) {
-    const Hgrown: CollectionReference = collection(
-      this.firestore,
-      `${'Storewithnodes'}`
-    );
-    const qu = query(
-      Hgrown,
-      where('sectionname', '==', sectionname),
-      where('nodeid', '==', nodeid)
-    );
-    return collectionData(qu);
-  }
+
 
   deletestorefromnodes(id: string) {
     const arearefr = doc(this.firestore, `Storewithnodes`, `${id}`);
@@ -1715,7 +1697,7 @@ export class ApiserviceService {
 
   async updatestorewithnodebanner(id: string, croppedImage: any) {
     const cityrefr = doc(this.firestore, `${'Storewithnodes'}`, `${id}`);
-    const cloudUpload:any = await this.cloudupload2(id, croppedImage);
+    const cloudUpload: any = await this.cloudupload2(id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -1733,17 +1715,7 @@ export class ApiserviceService {
     }
   }
 
-  async getstorecount(sectionname: string, cityid: string, nodeid: string) {
-    const coll = collection(this.firestore, 'Storewithnodes');
-    const q = query(
-      coll,
-      where('sectionname', '==', sectionname),
-      where('city_id', '==', cityid),
-      where('nodeid', '==', nodeid)
-    );
-    const snapshot = await getCountFromServer(q);
-    return snapshot.data().count;
-  }
+
 
   dataURLtoFile(dataurl: any, filename: string) {
     var arr = dataurl.split(','),
@@ -1757,4 +1729,160 @@ export class ApiserviceService {
     }
     return new File([u8arr], filename, { type: mime });
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ////////////////////////////////
+
+  async adddatatosectionstore(data:any){
+    const addedcity = await addDoc(
+      collection(this.firestore, 'Section_stores'),
+      data
+    ).then((ref) => {
+      const areeas = doc(this.firestore, 'Section_stores', `${ref.id}`);
+      return updateDoc(areeas, { id: ref.id }).then(() => {
+        return ref;
+      });
+    });
+  }
+
+  getCat(cat: string) {
+    if (this.auth.resource.categoryList.length == 0) {
+      return cat;
+    } else {
+      const c = this.auth.resource.categoryList.findIndex(
+        (x: any) => x.id == cat
+      );
+      return this.auth.resource.categoryList[c].title || '';
+    }
+  }
+
+
+
+  async updateSectionStorebanner(id: any, croppedImage: any,section:string) {
+    const Shoprefr = doc(this.firestore, `${this.resource.env.db.shops}`, `${id}`);
+    const cloudUpload: any = await this.cloudupload2(id, croppedImage);
+    if (!cloudUpload.success) {
+      return cloudUpload;
+    } else {
+      if(section == "BrandSpotlight"){
+      // stores[index].brandspotlightbanner = cloudUpload.url;
+      return updateDoc(Shoprefr, { Brandspotlightbanner: cloudUpload.url })
+        .then((datas: any) => {
+            return 'Banner Uploaded';
+        })
+        .catch((err) => {
+          return false;
+        });
+      }
+
+      else if(section == "BIYN") {
+        return updateDoc(Shoprefr, { BIYNbanner: cloudUpload.url })
+        .then((datas: any) => {
+            return 'Banner Uploaded';
+        })
+        .catch((err) => {
+          return false;
+        });
+      }
+    }
+  }
+
+
+
+  getStoresbyIds(StoreIds:any){
+    const Hgrown: CollectionReference = collection(
+      this.firestore,
+      `${this.resource.env.db.shops}`
+    );
+    const qu = query(
+      Hgrown,
+      where('id', 'in', StoreIds),
+    );
+    return collectionData(qu);
+  }
+
+
+  getbrandspotlightStores(){
+    const Hgrown: CollectionReference = collection(
+      this.firestore,
+      `${'Section_stores'}`
+    );
+    const qu = query(
+      Hgrown,
+      where('SectionName', '==', "BrandspotLightSection"),
+    );
+    return collectionData(qu);
+  }
+
+  async AddORRemoveSectionStores(index:number,storeid:any,DocId:string) {
+    const addedcity = await doc(
+      collection(this.firestore, 'Section_stores'),
+      DocId)
+      if(index == 1){
+      return updateDoc(addedcity, { Stores: arrayUnion(storeid),M_Date:this.newTimestamp })
+    }
+    else {
+      return updateDoc(addedcity, { Stores: arrayRemove(storeid),M_Date:this.newTimestamp })
+    }
+  }
+
+  deletestoresectiondata(id:any){
+    const arearefr = doc(this.firestore, `Section_stores`, `${id}`);
+    return deleteDoc(arearefr)
+      .then((data) => {
+        return { success: true };
+      })
+      .catch((err) => {
+        return { success: false };
+      });
+  }
+
+  //// brands in your neighbourhood//////
+  getstoreaspernode(sectionname: string, nodeid: string) {
+    const Hgrown: CollectionReference = collection(
+      this.firestore,
+      `${'Section_stores'}`
+    );
+    const qu = query(
+      Hgrown,
+      where('SectionName', '==', sectionname),
+      where('NodeId', '==', nodeid)
+    );
+    return collectionData(qu);
+  }
+
+
+  async getstorecount(sectionname: string, cityid: string, nodeid: string) {
+    const coll = collection(this.firestore, 'Section_stores');
+    const q = query(
+      coll,
+      where('SectionName', '==', sectionname),
+      where('CityId', '==', cityid),
+      where('NodeId', '==', nodeid)
+    );
+    const snapshot = await getCountFromServer(q);
+    return snapshot.data().count;
+  }
+
+
+
+
 }

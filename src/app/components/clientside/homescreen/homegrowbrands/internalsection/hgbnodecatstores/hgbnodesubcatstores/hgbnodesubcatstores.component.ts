@@ -91,7 +91,6 @@ export class HgbnodesubcatstoresComponent implements OnInit {
     private api: ApiserviceService,
     private actRoute: ActivatedRoute,
     private auth: AuthService,
-    private https: HttpClient,
     public Location: Location
   ) {}
 

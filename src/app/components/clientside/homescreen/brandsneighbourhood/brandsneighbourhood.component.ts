@@ -23,10 +23,8 @@ export class BrandsneighbourhoodComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   nodeColumns: string[] = ['node', 'no_stores', 'storename', 'date', 'action'];
   Selectedcity: string = "";
-  // creatednodes: Array<any> = [];
   nodes$: Observable<any[]> = of();
   alreadyCnodes$: Observable<any[]> = of();
-
   Selectednode: string = "";
   selectednodedata: any;
   BIYNmoduledata: any = [];
@@ -108,8 +106,7 @@ export class BrandsneighbourhoodComponent implements OnInit {
       }
       else {
         this.api.updateBIYNStitle(this.BIYNSTitle, this.BIYNmoduledata.id).then((data) => {
-          if (data != undefined) {
-          }
+
         }).catch(() => {
           return false;
         });
@@ -126,10 +123,10 @@ export class BrandsneighbourhoodComponent implements OnInit {
       .subscribe((data: any) => {
         for (let i = 0; i < data.length; i++) {
           this.api
-            .getstorecount('BIYNsection', this.Selectedcity, data[i].id)
-            .then((datas: any) => {
-              if (datas > 0) {
-                data[i].storecount = datas;
+            .getstoreaspernode('BIYNSection', data[i].id).pipe(take(1))
+            .subscribe((datas: any) => {
+              if (datas.length > 0) {
+                data[i].storecount = datas[0]?.Stores.length;
                 alreadyCnode.push(data[i]);
               } else {
                 newnodes.push(data[i]);
