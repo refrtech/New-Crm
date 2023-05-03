@@ -71,8 +71,7 @@
     <div class="b20padding">
       <span class="s_size boldtext">Select Sub-category</span>
     </div>
-    <div
-      *ngIf="actRoute.snapshot.params['catid'] == 'food_and_beverages' || actRoute.snapshot.params['catid'] == 'fashion_brand' || actRoute.snapshot.params['catid'] == 'beauty' || actRoute.snapshot.params['catid'] == 'electronics'">
+    <!-- <div>
       <div class="t15margin boxshw">
         <div class="dflex JCevenly M100width tb15padding s_size purple_background White_txt">
           <div class="regulartext M65width">Sub-Category name</div>
@@ -94,8 +93,37 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
+<div class="dWrap dflex">
+    <section *ngFor="let x of auth.resource.categoryList[catindex].items;let i = index">
+      <main class="section">
+          <div class="w200 h200 Aborder pos_relative">
+              <div class="img">
+                  <img class="M100width h200 object_fit_cover"
+                      [src]=" x.HomeGrownSubcatbanner"
+                      alt="banner" />
+              </div>
+          </div>
+          <div class="w200 Aborder t10margin b10margin tb10padding regulartext s_size">
+              <div class="c_align boldtext m_size">
+                  {{x.name}}
+              </div>
+          </div>
+          <div (click)="takePicture('3:4','homeBanner',x.id)"
+              class="w200 Aborder dflex JCcenter AIcenter t10margin b10margin tb10padding regulartext s_size">
+              <mat-icon>photo_camera</mat-icon>
+              Camera
+          </div>
+      </main>
+  </section>
+</div>
   </div>
+
+
+
+
+
+
   <div class="t40margin b20margin">
     <div class="b20padding">
       <span class="s_size boldtext">People’s Choice </span> <span class="xs_size gray_txt">(Maximum 250 words)</span>
@@ -186,7 +214,7 @@
     </tr>
   </table>
   <div *ngIf="PChoiceStores.length > 0" class="t15margin boxshw">
-    <div class="dflex JCevenly M100width tb15padding s_size">
+    <div class="dflex JCevenly M100width tb15padding s_size purple_background White_txt">
       <div class="M10width c_align">Rank</div>
       <div class="regulartext M40width">Store Name</div>
       <div class="regulartext M25width">Category</div>
@@ -203,7 +231,7 @@
               {{item.name}}
             </div>
             <div class="M25width l_align">
-              {{item.cat}}
+              {{api.getCat(item.cat)}}
             </div>
             <div class="M25width c_align dflex JCcenter">
               <a (click)="deletestore(1,item.sectionid)" class="r20margin">
@@ -219,6 +247,12 @@
     </div>
   </div>
 
+
+
+
+
+
+<!--
   <div class="boldtext m_size t40margin b20margin">
     Trending stores
   </div>
@@ -327,5 +361,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>

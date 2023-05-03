@@ -87,9 +87,19 @@
     <div class="dflex">
       <div class="boxshw M100width">
         <div class="dflex JCevenly M100width tb15padding s_size">
-          <div class="regulartext M30width l15padding">Store name</div>
-          <div class="regulartext M20width c_align">Category</div>
-          <div class="M25width"></div>
+          <div class="regulartext M20width">
+            <span class="l15padding">
+              Store Banner
+            </span>
+            </div>
+            <div class="M5width"></div>
+
+          <div class="regulartext M30width">
+            <span class="l15padding">
+              Store Name
+            </span>
+            </div>
+          <div class="M20width c_align">Category</div>
           <div class="regulartext M25width c_align">Action</div>
         </div>
         <div cdkDropListGroup>
@@ -105,8 +115,10 @@
                       </div>
                     </div>
                     <div class="M5width"></div>
-                    <div class="M30width l_align l15padding">
+                    <div class="M30width l_align">
+                      <span class="l15padding">
                       {{item.name}}
+                    </span>
                     </div>
                     <div class="M20width c_align">
                       {{api.getCat(item.cat)}}

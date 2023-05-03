@@ -9,7 +9,7 @@
         </a>
         <span class="xxl_size boldtext lr15padding AScenter">Brands In your neighbourhood</span>
     </div>
-    <div class="t50margin lr55padding">
+    <div class="t50margin">
         <div>
             <div class="boldtext l_size t30margin b20margin">Module details</div>
             <div class="Aborder A5radius A20padding b20margin dflex">
@@ -19,10 +19,10 @@
                     </div>
                     <div>
                         <mat-form-field class="crminput l5margin r5margin M80width Editableinput" appearance="outline">
-                            <input type="text" [(ngModel)]="BIYNTitle" matInput placeholder="Enter the module name"
+                            <input type="text" [(ngModel)]="SectionTitle" matInput placeholder="Enter the module name"
                                 [disabled]="!editTitle">
                             <button matSuffix mat-icon-button aria-label="Clear" class="purple_background"
-                                (click)="updateBNTitle()">
+                                (click)="updateSectionDetails(1)">
                                 <mat-icon>
                                     {{editTitle ? 'check': 'edit'}}
                                 </mat-icon>
@@ -36,10 +36,10 @@
                     </div>
                     <div>
                         <mat-form-field class="crminput l5margin r5margin M80width Editableinput" appearance="outline">
-                            <input type="text" [(ngModel)]="BIYNSTitle" matInput placeholder="Enter the subtext name"
+                            <input type="text" [(ngModel)]="SectionSTitle" matInput placeholder="Enter the subtext name"
                                 [disabled]="!editSubt">
                             <button matSuffix mat-icon-button aria-label="Clear" class="purple_background"
-                                (click)="updateBNTSTitle()">
+                                (click)="updateSectionDetails(2)">
                                 <mat-icon>
                                     {{editSubt ? 'check': 'edit'}}
                                 </mat-icon>
@@ -50,7 +50,7 @@
             </div>
         </div>
     </div>
-    <div class="t50margin lr55padding">
+    <div class="t50margin">
         <div class="boldtext l_size b20margin">Node details</div>
         <div class="Aborder A5radius A20padding">
             <div class="dflex JCspace">
@@ -94,12 +94,14 @@
             </div>
         </div>
     </div>
-    <div class="t50margin boxshw lr55margin">
-        <div class="dflex M100width tb15padding s_size">
-            <div class="regulartext M20width l10padding">Node name</div>
-            <div class="regulartext M10width c_align">No of stores</div>
-            <div class="regulartext M50width c_align"></div>
-            <div class="regulartext M20width c_align">Action</div>
+    <div class="t50margin boxshw">
+        <div class="dflex M100width tb15padding s_size purple_background White_txt regulartext">
+            <div class="M20width">
+              <span class="l10padding">Node name</span>
+            </div>
+            <div class="M10width c_align">No of stores</div>
+            <div class="M50width c_align"></div>
+            <div class="M20width c_align">Action</div>
         </div>
         <div>
             <div class="example-container M100width">

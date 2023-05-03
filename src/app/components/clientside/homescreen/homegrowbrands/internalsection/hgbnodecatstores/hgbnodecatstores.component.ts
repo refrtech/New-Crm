@@ -68,11 +68,11 @@ export class HgbnodecatstoresComponent implements OnInit {
     'action',
   ];
   PChoiceStores: Array<any> = [];
-  trendingStores: Array<any> = [];
+  // trendingStores: Array<any> = [];
   constructor(
-    private api: ApiserviceService,
+    public api: ApiserviceService,
     public actRoute: ActivatedRoute,
-    private auth: AuthService,
+    public auth: AuthService,
     private router: Router,
     public Location: Location
   ) {}
@@ -85,11 +85,11 @@ export class HgbnodecatstoresComponent implements OnInit {
         this.PChoiceStores = data;
       });
 
-    this.api
-      .getHgrowntrendingCatstores(this.actRoute.snapshot.params['catid'])
-      .subscribe((data: any) => {
-        this.trendingStores = data;
-      });
+    // this.api
+    //   .getHgrowntrendingCatstores(this.actRoute.snapshot.params['catid'])
+    //   .subscribe((data: any) => {
+    //     this.trendingStores = data;
+    //   });
   }
 
   navigatecat() {
@@ -128,18 +128,24 @@ export class HgbnodecatstoresComponent implements OnInit {
       )
       .pipe(take(1))
       .subscribe((recentStore: any) => {
-        if (i == 1) {
-          this.MerchantdataSource = new MatTableDataSource(recentStore);
-          this.isstorealreadyadded =
-            this.PChoiceStores.findIndex((x) => x.id == recentStore[0].id) < 0
-              ? false
-              : true;
+        if (recentStore.length == 0) {
+          this.auth.resource.startSnackBar('No store found.');
         } else {
-          this.MerchantdataSource1 = new MatTableDataSource(recentStore);
-          this.isstorealreadyadded =
-            this.trendingStores.findIndex((x) => x.id == recentStore[0].id) < 0
-              ? false
-              : true;
+          if (i == 1) {
+            this.MerchantdataSource = new MatTableDataSource(recentStore);
+            this.isstorealreadyadded =
+              this.PChoiceStores.findIndex((x) => x.id == recentStore[0].id) < 0
+                ? false
+                : true;
+          }
+          // else {
+          //   this.MerchantdataSource1 = new MatTableDataSource(recentStore);
+          //   this.isstorealreadyadded =
+          //     this.trendingStores.findIndex((x) => x.id == recentStore[0].id) <
+          //     0
+          //       ? false
+          //       : true;
+          // }
         }
       });
   }
@@ -153,15 +159,16 @@ export class HgbnodecatstoresComponent implements OnInit {
         this.isstorealreadyadded = true;
         this.PChoiceStores.push(Data);
       });
-    } else {
-      Data.catId = this.actRoute.snapshot.params['catid'];
-      Data.iscat_subCatstore = 'Cat';
-      Data.sectionName = 'HomegrownSection';
-      this.api.addstoretoTrendingStore(Data).then((data: any) => {
-        this.isstorealreadyadded1 = true;
-        this.trendingStores.push(Data);
-      });
     }
+    // else {
+    //   Data.catId = this.actRoute.snapshot.params['catid'];
+    //   Data.iscat_subCatstore = 'Cat';
+    //   Data.sectionName = 'HomegrownSection';
+    //   this.api.addstoretoTrendingStore(Data).then((data: any) => {
+    //     this.isstorealreadyadded1 = true;
+    //     this.trendingStores.push(Data);
+    //   });
+    // }
   }
 
   deletestore(i: number, id: string) {
@@ -177,17 +184,17 @@ export class HgbnodecatstoresComponent implements OnInit {
   }
 
   gethomegrowndata() {
-    this.api.gethomegrowndata().subscribe((data: any) => {
-      this.HGBdata = data[0];
-      let i = data[0].Categories.findIndex(
-        (x: any) => x.id == this.actRoute.snapshot.params['catid']
-      );
-      this.catindex = i;
-      this.selectedcat = this.auth.resource.categoryList[i].title;
-      this.Catthumbnail = data[0].Categories[i].Thumbnail;
-      this.Catbanner = data[0].Categories[i].catbanner;
-      this.peoplechoicecatpara = data[0].Categories[i].peoplechoicecatpara;
-    });
+    // this.api.gethomegrowndata().subscribe((data: any) => {
+    // this.HGBdata = data[0];
+    let i = this.auth.resource.categoryList.findIndex(
+      (x: any) => x.id == this.actRoute.snapshot.params['catid']
+    );
+    this.catindex = i;
+    this.selectedcat = this.auth.resource.categoryList[i].title;
+    this.Catthumbnail = this.auth.resource.categoryList[i].HGThumbnail;
+    this.Catbanner = this.auth.resource.categoryList[i].HGCatbanner;
+    // this.peoplechoicecatpara = data[0].Categories[i].peoplechoicecatpara;
+    // });
   }
 
   async takePicture(ratio: string, type: string, id?: string, i?: number) {
@@ -228,41 +235,51 @@ export class HgbnodecatstoresComponent implements OnInit {
           this.auth.resource.startSnackBar(result.info);
         }
       } else {
-        if (type == 'Thumbnail') {
+        if (type == 'Thumbnail' || type == 'homeBanner') {
           this.api
             .updatehomegrownbanners(
-              this.HGBdata.id,
-              result.croppedImage,
-              this.HGBdata.Categories,
-              this.selectedcat,
-              1
+              this.actRoute.snapshot.params['catid'],
+              type == 'Thumbnail' ? 1 : 2,
+              result.croppedImage
             )
             .then((ref) => {
               if (!ref || !ref.success) {
                 this.auth.resource.startSnackBar('Upload Failed!');
               } else {
-                this.Catthumbnail = ref.url;
-                this.auth.resource.startSnackBar('Banner Update Under Review!');
+                let i = this.auth.resource.categoryList.findIndex(
+                  (x: any) => x.id == this.actRoute.snapshot.params['catid']
+                );
+
+                if (type == 'Thumbnail') {
+                  this.Catthumbnail = ref.url;
+                  this.auth.resource.categoryList[i].HGThumbnail = ref.url;
+                } else if (type == 'homeBanner') {
+                  this.Catbanner = ref.url;
+                  this.auth.resource.categoryList[i].HGCatbanner = ref.url;
+                }
+                this.auth.resource.startSnackBar('Banner Update.');
               }
             });
-        } else if (type == 'homeBanner') {
-          this.api
-            .updatehomegrownbanners(
-              this.HGBdata.id,
-              result.croppedImage,
-              this.HGBdata.Categories,
-              this.selectedcat,
-              2
-            )
-            .then((ref) => {
-              if (!ref || !ref.success) {
-                this.auth.resource.startSnackBar('Upload Failed!');
-              } else {
-                this.Catbanner = ref.url;
-                this.auth.resource.startSnackBar('Banner Update Under Review!');
-              }
-            });
-        } else if (type == 'trendingstorebanner') {
+        }
+        //  else if (type == 'homeBanner') {
+        //   this.api
+        //     .updatehomegrownbanners(
+        //       this.HGBdata.id,
+        //       result.croppedImage,
+        //       this.HGBdata.Categories,
+        //       this.selectedcat,
+        //       2
+        //     )
+        //     .then((ref) => {
+        //       if (!ref || !ref.success) {
+        //         this.auth.resource.startSnackBar('Upload Failed!');
+        //       } else {
+        //         this.Catbanner = ref.url;
+        //         this.auth.resource.startSnackBar('Banner Update Under Review!');
+        //       }
+        //     });
+        // }
+        else if (type == 'trendingstorebanner') {
           this.api
             .updateTrendingstorebanner(
               id == undefined ? '' : id,

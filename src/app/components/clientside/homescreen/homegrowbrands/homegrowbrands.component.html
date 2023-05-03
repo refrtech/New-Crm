@@ -13,7 +13,7 @@
       Go to internal
     </button>
   </div>
-  <div class="t50margin lr55padding">
+  <div class="t50margin">
     <div>
       <div class="boldtext l_size t30margin b20margin">Module details</div>
       <div class="Aborder A5radius A20padding b20margin dflex">
@@ -23,9 +23,9 @@
           </div>
           <div>
             <mat-form-field class="crminput l5margin r5margin M80width Editableinput" appearance="outline">
-              <input type="text" [(ngModel)]="homegrownT" matInput placeholder="Enter the module name"
+              <input type="text" [(ngModel)]="SectionTitle" matInput placeholder="Enter the module name"
                 [disabled]="!editTitle">
-              <button matSuffix mat-icon-button aria-label="Clear" class="purple_background" (click)="updateHGTitle();">
+              <button matSuffix mat-icon-button aria-label="Clear" class="purple_background" (click)="updateSectionDetails(1);">
                 <mat-icon>
                   {{editTitle ? 'check': 'edit'}}
                 </mat-icon>
@@ -39,9 +39,9 @@
           </div>
           <div>
             <mat-form-field class="crminput l5margin r5margin M80width Editableinput" appearance="outline">
-              <input type="text" [(ngModel)]="homegrownST" matInput placeholder="Enter the subtext name"
+              <input type="text" [(ngModel)]="SectionSTitle" matInput placeholder="Enter the subtext name"
                 [disabled]="!editSubt">
-              <button matSuffix mat-icon-button aria-label="Clear" class="purple_background" (click)="updateHGSTitle()">
+              <button matSuffix mat-icon-button aria-label="Clear" class="purple_background" (click)="updateSectionDetails(2)">
                 <mat-icon>
                   {{editSubt ? 'check': 'edit'}}
                 </mat-icon>
@@ -52,7 +52,7 @@
       </div>
     </div>
   </div>
-  <div class="t50margin lr55padding">
+  <div class="t50margin">
     <div class="Aborder A5radius A20padding b20margin">
       <div class="boldtext l_size t30margin b20margin">Apply Filter to search store</div>
       <div class="dflex">
@@ -129,11 +129,11 @@
       </table>
     </div>
   </div>
-  <div class="lr55padding">
+  <div>
     <div class="boldtext l_size b20margin">First Row stores</div>
     <div class="dflex M100width">
       <div class="boxshw M100width">
-        <div class="dflex M100width tb15padding s_size">
+        <div class="dflex M100width tb15padding s_size purple_background White_txt">
           <div class="regulartext M25width">
             <span class="l10padding">
               Store name
@@ -146,7 +146,7 @@
         <div>
           <div class="example-container M100width">
             <div class="example-list">
-              <ng-container *ngFor="let item of HGmoduledata.First_Stores;let i = index">
+              <ng-container *ngFor="let item of First_Stores;let i = index">
                 <ng-container>
                   <div class="dflex tborder s_size tb15padding">
                     <div class="regulartext M25width">
@@ -155,15 +155,15 @@
                       </span>
                     </div>
                     <div class="regulartext M25width c_align">
-                      {{item.cat}}
+                      {{api.getCat(item.cat)}}
                     </div>
                     <div class="M35width"></div>
-                    <div class="regulartext M5width c_align">
-                      <mat-icon (click)="takePicture('1:1','logo',i,1)">
+                    <!-- <div class="regulartext M5width c_align">
+                      <mat-icon (click)="takePicture('1:1','logo',item.id)">
                         photo_camera
                       </mat-icon>
-                    </div>
-                    <div class="regulartext M5width c_align">
+                    </div> -->
+                    <div class="regulartext M10width c_align">
                       <mat-icon (click)="opnconfirmationpopup(item,'1')">
                         delete
                       </mat-icon>
@@ -178,11 +178,11 @@
       </div>
     </div>
   </div>
-  <div class="lr55padding">
+  <div>
     <div class="boldtext l_size b20margin t20margin">Second Row stores</div>
     <div class="dflex M100width">
       <div class="boxshw M100width">
-        <div class="dflex M100width tb15padding s_size">
+        <div class="dflex M100width tb15padding s_size purple_background White_txt">
           <div class="regulartext M25width">
             <span class="l10padding">
               Store name
@@ -195,22 +195,22 @@
         <div>
           <div class="example-container M100width">
             <div class="example-list">
-              <ng-container *ngFor="let item of HGmoduledata.Second_Stores;let i = index">
+              <ng-container *ngFor="let item of Second_Stores;let i = index">
                 <ng-container>
                   <div class="dflex tborder s_size tb15padding">
                     <div class="regulartext M25width">
                       <span class="l10padding">{{item.name}}</span>
                     </div>
                     <div class="regulartext M25width c_align">
-                      {{item.cat}}
+                      {{api.getCat(item.cat)}}
                     </div>
                     <div class="M35width"></div>
-                    <div class="regulartext M5width c_align">
-                      <mat-icon (click)="takePicture('1:1','logo',i,2)">
+                    <!-- <div class="regulartext M5width c_align">
+                      <mat-icon (click)="takePicture('1:1','logo',item.id)">
                         photo_camera
                       </mat-icon>
-                    </div>
-                    <div class="regulartext M5width c_align">
+                    </div> -->
+                    <div class="regulartext M10width c_align">
                       <mat-icon (click)="opnconfirmationpopup(item,'2')">
                         delete
                       </mat-icon>
@@ -225,11 +225,11 @@
       </div>
     </div>
   </div>
-  <div class="lr55padding">
+  <div>
     <div class="boldtext l_size b20margin t20margin">Third Row stores</div>
     <div class="dflex M100width">
       <div class="boxshw M100width">
-        <div class="dflex M100width tb15padding s_size">
+        <div class="dflex M100width tb15padding s_size purple_background White_txt">
           <div class="regulartext M25width">
             <span class="l10padding">
             Store name
@@ -242,22 +242,22 @@
         <div>
           <div class="example-container M100width">
             <div class="example-list">
-              <ng-container *ngFor="let item of HGmoduledata.third_Stores;let i = index">
+              <ng-container *ngFor="let item of third_Stores;let i = index">
                 <ng-container>
                   <div class="dflex tborder s_size tb15padding">
                     <div class="regulartext M25width">
                       <span class="l10padding">{{item.name}}</span>
                     </div>
                     <div class="regulartext M25width c_align">
-                      {{item.cat}}
+                      {{api.getCat(item.cat)}}
                     </div>
                     <div class="M35width"></div>
-                    <div class="regulartext M5width c_align">
-                      <mat-icon (click)="takePicture('1:1','logo',i,3)">
+                    <!-- <div class="regulartext M5width c_align">
+                      <mat-icon (click)="takePicture('1:1','logo',item.id)">
                         photo_camera
                       </mat-icon>
-                    </div>
-                    <div class="regulartext M5width c_align">
+                    </div> -->
+                    <div class="regulartext M10width c_align">
                       <mat-icon (click)="opnconfirmationpopup(item,'3')">
                         delete
                       </mat-icon>

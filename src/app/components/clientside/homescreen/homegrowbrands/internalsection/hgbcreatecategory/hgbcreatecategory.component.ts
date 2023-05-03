@@ -43,6 +43,7 @@ export class HgbcreatecategoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(this.auth.resource.categoryList);
     this.api
       .gethomegrowndata()
       .pipe(take(1))
@@ -109,7 +110,7 @@ export class HgbcreatecategoryComponent implements OnInit {
       } else {
         if (type == 'logo') {
           this.api
-            .updatehomegrownbanner(this.HGdata.id, result.croppedImage)
+            .updatehomegrownbanner(this.HGdata.SectionID, result.croppedImage)
             .then((data: any) => {
               this.storeBanner = data.url;
               alert('banner uploaded');
@@ -164,7 +165,7 @@ export class HgbcreatecategoryComponent implements OnInit {
     } else {
       this.HGdata.products.splice(index, 1);
     }
-    this.api.updateHomegrownproducts(this.HGdata.id, this.HGdata.products);
+    this.api.updateHomegrownproducts(this.HGdata.SectionID, this.HGdata.products);
   }
 
   back() {

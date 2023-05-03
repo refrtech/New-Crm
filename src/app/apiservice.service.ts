@@ -37,10 +37,10 @@ export class ApiserviceService {
 
   constructor(
     private firestore: Firestore,
-    private resource:ResourceService,
+    private resource: ResourceService,
     private snackBar: MatSnackBar,
     public http: HttpClient,
-    private auth:AuthService
+    private auth: AuthService
   ) {}
 
   get getServerTimestamp() {
@@ -223,7 +223,10 @@ export class ApiserviceService {
     operator?: any,
     value?: any
   ) {
-    const catData: CollectionReference = collection(this.firestore,`${this.resource.env.db.shops}`);
+    const catData: CollectionReference = collection(
+      this.firestore,
+      `${this.resource.env.db.shops}`
+    );
     let Parametere: WhereFilterOp = Para;
     let conditions: WhereFilterOp = operator;
     let qu;
@@ -383,7 +386,11 @@ export class ApiserviceService {
   }
 
   getStoreByID(storeID: string) {
-    const shopRef = doc(this.firestore, `${this.resource.env.db.shops}`, `${storeID}`);
+    const shopRef = doc(
+      this.firestore,
+      `${this.resource.env.db.shops}`,
+      `${storeID}`
+    );
     return getDoc(shopRef);
   }
 
@@ -460,44 +467,44 @@ export class ApiserviceService {
     );
   }
 
-  getspotlightdata() {
-    const manageNode: CollectionReference = collection(
-      this.firestore,
-      `${'brandspotlight'}`
-    );
-    const qu = query(manageNode);
-    return collectionData(qu);
-  }
+  // getspotlightdata() {
+  //   const manageNode: CollectionReference = collection(
+  //     this.firestore,
+  //     `${'brandspotlight'}`
+  //   );
+  //   const qu = query(manageNode);
+  //   return collectionData(qu);
+  // }
 
-  updateBStitle(Title: string, id: any) {
-    const cityrefr = doc(this.firestore, `${'brandspotlight'}`, `${id}`);
-    return updateDoc(cityrefr, { BS_Title: Title })
-      .then((datas: any) => {
-        if (datas) {
-          return 'issue in update title.';
-        } else {
-          return 'title updated.';
-        }
-      })
-      .catch((err) => {
-        return false;
-      });
-  }
+  // updateBStitle(Title: string, id: any) {
+  //   const cityrefr = doc(this.firestore, `${'brandspotlight'}`, `${id}`);
+  //   return updateDoc(cityrefr, { BS_Title: Title })
+  //     .then((datas: any) => {
+  //       if (datas) {
+  //         return 'issue in update title.';
+  //       } else {
+  //         return 'title updated.';
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       return false;
+  //     });
+  // }
 
-  updateBSStitle(STitle: string, id: any) {
-    const cityrefr = doc(this.firestore, `${'brandspotlight'}`, `${id}`);
-    return updateDoc(cityrefr, { BS_STitle: STitle })
-      .then((datas: any) => {
-        if (datas) {
-          return 'issue in update Sub-title.';
-        } else {
-          return 'Sub-title updated.';
-        }
-      })
-      .catch((err) => {
-        return false;
-      });
-  }
+  // updateBSStitle(STitle: string, id: any) {
+  //   const cityrefr = doc(this.firestore, `${'brandspotlight'}`, `${id}`);
+  //   return updateDoc(cityrefr, { BS_STitle: STitle })
+  //     .then((datas: any) => {
+  //       if (datas) {
+  //         return 'issue in update Sub-title.';
+  //       } else {
+  //         return 'Sub-title updated.';
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       return false;
+  //     });
+  // }
 
   // addBSstores(stores: any, id: any) {
   //   const cityrefr = doc(this.firestore, `${'brandspotlight'}`, `${id}`);
@@ -520,178 +527,178 @@ export class ApiserviceService {
     );
   }
 
-  async updatehomegrownbanners(
-    id: string,
-    croppedImage: string,
-    catarray: any,
-    catname: any,
-    index: number
-  ) {
-    const newTimestamp = this.getServerTimestamp();
-    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
-    const cloudUpload: any = await this.cloudupload2(id, croppedImage);
-    if (!cloudUpload.success) {
-      return cloudUpload;
-    } else {
-      let i = catarray.findIndex((x: any) => x.title == catname);
-      if (index == 1) {
-        catarray[i].Thumbnail = cloudUpload.url;
-      } else {
-        catarray[i].catbanner = cloudUpload.url;
-      }
+  // async updatehomegrownbanners(
+  //   id: string,
+  //   croppedImage: string,
+  //   catarray: any,
+  //   catname: any,
+  //   index: number
+  // ) {
+  //   const newTimestamp = this.getServerTimestamp();
+  //   const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
+  //   const cloudUpload: any = await this.cloudupload2(id, croppedImage);
+  //   if (!cloudUpload.success) {
+  //     return cloudUpload;
+  //   } else {
+  //     let i = catarray.findIndex((x: any) => x.title == catname);
+  //     if (index == 1) {
+  //       catarray[i].Thumbnail = cloudUpload.url;
+  //     } else {
+  //       catarray[i].catbanner = cloudUpload.url;
+  //     }
 
-      return updateDoc(cityrefr, {
-        Categories: catarray,
-        upd: newTimestamp,
-      }).then(() => {
-        return cloudUpload;
-      });
-    }
-  }
+  //     return updateDoc(cityrefr, {
+  //       Categories: catarray,
+  //       upd: newTimestamp,
+  //     }).then(() => {
+  //       return cloudUpload;
+  //     });
+  //   }
+  // }
 
-  addHGFRstores(stores: any, id: any) {
-    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
-    return updateDoc(cityrefr, { First_Stores: arrayUnion(stores) });
-  }
+  // addHGFRstores(stores: any, id: any) {
+  //   const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
+  //   return updateDoc(cityrefr, { First_Stores: arrayUnion(stores) });
+  // }
 
-  addHGSRstores(stores: any, id: any) {
-    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
-    return updateDoc(cityrefr, { Second_Stores: arrayUnion(stores) });
-  }
+  // addHGSRstores(stores: any, id: any) {
+  //   const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
+  //   return updateDoc(cityrefr, { Second_Stores: arrayUnion(stores) });
+  // }
 
-  addHGTRstores(stores: any, id: any) {
-    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
-    return updateDoc(cityrefr, { third_Stores: arrayUnion(stores) });
-  }
+  // addHGTRstores(stores: any, id: any) {
+  //   const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
+  //   return updateDoc(cityrefr, { third_Stores: arrayUnion(stores) });
+  // }
 
-  removeHGFRstores(stores: any, id: any) {
-    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
-    return updateDoc(cityrefr, { First_Stores: arrayRemove(stores) });
-  }
+  // removeHGFRstores(stores: any, id: any) {
+  //   const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
+  //   return updateDoc(cityrefr, { First_Stores: arrayRemove(stores) });
+  // }
 
-  removeHGSRstores(stores: any, id: any) {
-    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
-    return updateDoc(cityrefr, { Second_Stores: arrayRemove(stores) });
-  }
+  // removeHGSRstores(stores: any, id: any) {
+  //   const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
+  //   return updateDoc(cityrefr, { Second_Stores: arrayRemove(stores) });
+  // }
 
-  removeHGTRstores(stores: any, id: any) {
-    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
-    return updateDoc(cityrefr, { third_Stores: arrayRemove(stores) });
-  }
+  // removeHGTRstores(stores: any, id: any) {
+  //   const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
+  //   return updateDoc(cityrefr, { third_Stores: arrayRemove(stores) });
+  // }
 
-  async updatehomegrownFirststorelogo(
-    croppedImage: any,
-    HGdata: any,
-    index: number,
-    homegrownid: string
-  ) {
-    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${homegrownid}`);
-    const cloudUpload: any = await this.cloudupload2(
-      HGdata[index].id,
-      croppedImage
-    );
-    if (!cloudUpload.success) {
-      return cloudUpload;
-    } else {
-      HGdata[index].crmlogo = cloudUpload.url;
-      return updateDoc(cityrefr, { First_Stores: HGdata })
-        .then(() => {
-          return cloudUpload;
-        })
-        .catch((err) => {
-          return false;
-        });
-    }
-  }
+  // async updatehomegrownFirststorelogo(
+  //   croppedImage: any,
+  //   HGdata: any,
+  //   index: number,
+  //   homegrownid: string
+  // ) {
+  //   const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${homegrownid}`);
+  //   const cloudUpload: any = await this.cloudupload2(
+  //     HGdata[index].id,
+  //     croppedImage
+  //   );
+  //   if (!cloudUpload.success) {
+  //     return cloudUpload;
+  //   } else {
+  //     HGdata[index].crmlogo = cloudUpload.url;
+  //     return updateDoc(cityrefr, { First_Stores: HGdata })
+  //       .then(() => {
+  //         return cloudUpload;
+  //       })
+  //       .catch((err) => {
+  //         return false;
+  //       });
+  //   }
+  // }
 
-  async updatehomegrownSecondstorelogo(
-    croppedImage: any,
-    HGdata: any,
-    index: number,
-    homegrownid: string
-  ) {
-    console.log('HGdata', HGdata);
-    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${homegrownid}`);
-    const cloudUpload: any = await this.cloudupload2(
-      HGdata[index].id,
-      croppedImage
-    );
+  // async updatehomegrownSecondstorelogo(
+  //   croppedImage: any,
+  //   HGdata: any,
+  //   index: number,
+  //   homegrownid: string
+  // ) {
+  //   console.log('HGdata', HGdata);
+  //   const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${homegrownid}`);
+  //   const cloudUpload: any = await this.cloudupload2(
+  //     HGdata[index].id,
+  //     croppedImage
+  //   );
 
-    if (!cloudUpload.success) {
-      return cloudUpload;
-    } else {
-      HGdata[index].crmlogo = cloudUpload.url;
-      console.log(HGdata[index]);
-      return updateDoc(cityrefr, { Second_Stores: HGdata })
-        .then(() => {
-          return cloudUpload;
-        })
-        .catch((err) => {
-          return false;
-        });
-    }
-  }
+  //   if (!cloudUpload.success) {
+  //     return cloudUpload;
+  //   } else {
+  //     HGdata[index].crmlogo = cloudUpload.url;
+  //     console.log(HGdata[index]);
+  //     return updateDoc(cityrefr, { Second_Stores: HGdata })
+  //       .then(() => {
+  //         return cloudUpload;
+  //       })
+  //       .catch((err) => {
+  //         return false;
+  //       });
+  //   }
+  // }
 
-  async updatehomegrownThirdstorelogo(
-    croppedImage: any,
-    HGdata: any,
-    index: number,
-    homegrownid: string
-  ) {
-    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${homegrownid}`);
-    const cloudUpload: any = await this.cloudupload2(
-      HGdata[index].id,
-      croppedImage
-    );
-    if (!cloudUpload.success) {
-      return cloudUpload;
-    } else {
-      HGdata[index].crmlogo = cloudUpload.url;
+  // async updatehomegrownThirdstorelogo(
+  //   croppedImage: any,
+  //   HGdata: any,
+  //   index: number,
+  //   homegrownid: string
+  // ) {
+  //   const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${homegrownid}`);
+  //   const cloudUpload: any = await this.cloudupload2(
+  //     HGdata[index].id,
+  //     croppedImage
+  //   );
+  //   if (!cloudUpload.success) {
+  //     return cloudUpload;
+  //   } else {
+  //     HGdata[index].crmlogo = cloudUpload.url;
 
-      return updateDoc(cityrefr, { third_Stores: HGdata })
-        .then(() => {
-          return cloudUpload;
-        })
-        .catch((err) => {
-          return false;
-        });
-    }
-  }
+  //     return updateDoc(cityrefr, { third_Stores: HGdata })
+  //       .then(() => {
+  //         return cloudUpload;
+  //       })
+  //       .catch((err) => {
+  //         return false;
+  //       });
+  //   }
+  // }
 
   updatepeoplechoicepara(id: string, data: any) {
     const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
     return updateDoc(cityrefr, { Categories: data });
   }
 
-  updateHGtitle(Title: string, id: any) {
-    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
-    return updateDoc(cityrefr, { HG_Title: Title })
-      .then((datas: any) => {
-        if (datas) {
-          return 'issue in update title.';
-        } else {
-          return 'title updated.';
-        }
-      })
-      .catch((err) => {
-        return false;
-      });
-  }
+  // updateHGtitle(Title: string, id: any) {
+  //   const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
+  //   return updateDoc(cityrefr, { HG_Title: Title })
+  //     .then((datas: any) => {
+  //       if (datas) {
+  //         return 'issue in update title.';
+  //       } else {
+  //         return 'title updated.';
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       return false;
+  //     });
+  // }
 
-  updateHGStitle(STitle: string, id: any) {
-    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
-    return updateDoc(cityrefr, { HG_STitle: STitle })
-      .then((datas: any) => {
-        if (datas) {
-          return 'issue in update Sub-title.';
-        } else {
-          return 'Sub-title updated.';
-        }
-      })
-      .catch((err) => {
-        return false;
-      });
-  }
+  // updateHGStitle(STitle: string, id: any) {
+  //   const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
+  //   return updateDoc(cityrefr, { HG_STitle: STitle })
+  //     .then((datas: any) => {
+  //       if (datas) {
+  //         return 'issue in update Sub-title.';
+  //       } else {
+  //         return 'Sub-title updated.';
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       return false;
+  //     });
+  // }
 
   gethomegrowndata() {
     const manageNode: CollectionReference = collection(
@@ -702,10 +709,7 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-  async updateHomegrownproducts(id: string, products: any) {
-    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
-    return updateDoc(cityrefr, { products: products });
-  }
+
 
   async updatehomegrownproductbanner(
     HGdata: any,
@@ -728,21 +732,7 @@ export class ApiserviceService {
     }
   }
 
-  async updatehomegrownbanner(id: string, croppedImage: any) {
-    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
-    const cloudUpload: any = await this.cloudupload2(id, croppedImage);
-    if (!cloudUpload.success) {
-      return cloudUpload;
-    } else {
-      return updateDoc(cityrefr, { HGbanner: cloudUpload.url })
-        .then(() => {
-          return cloudUpload;
-        })
-        .catch((err) => {
-          return false;
-        });
-    }
-  }
+
 
   async updateHGsubcatbanner(
     HGdata: any,
@@ -1430,44 +1420,44 @@ export class ApiserviceService {
   // VSA section end
 
   //BIYN section start
-  getBIYNData() {
-    const VSA_section: CollectionReference = collection(
-      this.firestore,
-      `${'BIYN_section'}`
-    );
-    const qu = query(VSA_section);
-    return collectionData(qu);
-  }
+  // getBIYNData() {
+  //   const VSA_section: CollectionReference = collection(
+  //     this.firestore,
+  //     `${'BIYN_section'}`
+  //   );
+  //   const qu = query(VSA_section);
+  //   return collectionData(qu);
+  // }
 
-  updateBIYNtitle(Title: string, id: any) {
-    const cityrefr = doc(this.firestore, `${'BIYN_section'}`, `${id}`);
-    return updateDoc(cityrefr, { BN_Title: Title })
-      .then((datas: any) => {
-        if (datas) {
-          return 'issue in update title.';
-        } else {
-          return 'title updated.';
-        }
-      })
-      .catch((err) => {
-        return false;
-      });
-  }
+  // updateBIYNtitle(Title: string, id: any) {
+  //   const cityrefr = doc(this.firestore, `${'BIYN_section'}`, `${id}`);
+  //   return updateDoc(cityrefr, { BN_Title: Title })
+  //     .then((datas: any) => {
+  //       if (datas) {
+  //         return 'issue in update title.';
+  //       } else {
+  //         return 'title updated.';
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       return false;
+  //     });
+  // }
 
-  updateBIYNStitle(STitle: string, id: any) {
-    const cityrefr = doc(this.firestore, `${'BIYN_section'}`, `${id}`);
-    return updateDoc(cityrefr, { BN_STitle: STitle })
-      .then((datas: any) => {
-        if (datas) {
-          return 'issue in update Sub-title.';
-        } else {
-          return 'Sub-title updated.';
-        }
-      })
-      .catch((err) => {
-        return false;
-      });
-  }
+  // updateBIYNStitle(STitle: string, id: any) {
+  //   const cityrefr = doc(this.firestore, `${'BIYN_section'}`, `${id}`);
+  //   return updateDoc(cityrefr, { BN_STitle: STitle })
+  //     .then((datas: any) => {
+  //       if (datas) {
+  //         return 'issue in update Sub-title.';
+  //       } else {
+  //         return 'Sub-title updated.';
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       return false;
+  //     });
+  // }
 
   addBIYNstores(nodes: any, id: any) {
     const cityrefr = doc(this.firestore, `${'BIYN_section'}`, `${id}`);
@@ -1668,8 +1658,6 @@ export class ApiserviceService {
     });
   }
 
-
-
   async addstorewithnodeid(data: any) {
     const addedcity = await addDoc(
       collection(this.firestore, 'Storewithnodes'),
@@ -1681,8 +1669,6 @@ export class ApiserviceService {
       });
     });
   }
-
-
 
   deletestorefromnodes(id: string) {
     const arearefr = doc(this.firestore, `Storewithnodes`, `${id}`);
@@ -1715,8 +1701,6 @@ export class ApiserviceService {
     }
   }
 
-
-
   dataURLtoFile(dataurl: any, filename: string) {
     var arr = dataurl.split(','),
       mime = arr[0].match(/:(.*?);/)[1],
@@ -1730,28 +1714,9 @@ export class ApiserviceService {
     return new File([u8arr], filename, { type: mime });
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   ////////////////////////////////
 
-  async adddatatosectionstore(data:any){
+  async adddatatosectionstore(data: any) {
     const addedcity = await addDoc(
       collection(this.firestore, 'Section_stores'),
       data
@@ -1774,77 +1739,77 @@ export class ApiserviceService {
     }
   }
 
-
-
-  async updateSectionStorebanner(id: any, croppedImage: any,section:string) {
-    const Shoprefr = doc(this.firestore, `${this.resource.env.db.shops}`, `${id}`);
+  async updateSectionStorebanner(id: any, croppedImage: any, section: string) {
+    const Shoprefr = doc(
+      this.firestore,
+      `${this.resource.env.db.shops}`,
+      `${id}`
+    );
     const cloudUpload: any = await this.cloudupload2(id, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
-      if(section == "BrandSpotlight"){
-      // stores[index].brandspotlightbanner = cloudUpload.url;
-      return updateDoc(Shoprefr, { Brandspotlightbanner: cloudUpload.url })
-        .then((datas: any) => {
+      if (section == 'BrandSpotlight') {
+        // stores[index].brandspotlightbanner = cloudUpload.url;
+        return updateDoc(Shoprefr, { Brandspotlightbanner: cloudUpload.url })
+          .then((datas: any) => {
             return 'Banner Uploaded';
-        })
-        .catch((err) => {
-          return false;
-        });
-      }
-
-      else if(section == "BIYN") {
+          })
+          .catch((err) => {
+            return false;
+          });
+      } else if (section == 'BIYN') {
         return updateDoc(Shoprefr, { BIYNbanner: cloudUpload.url })
-        .then((datas: any) => {
+          .then((datas: any) => {
             return 'Banner Uploaded';
-        })
-        .catch((err) => {
-          return false;
-        });
+          })
+          .catch((err) => {
+            return false;
+          });
       }
     }
   }
 
-
-
-  getStoresbyIds(StoreIds:any){
+  getStoresbyIds(StoreIds: any) {
     const Hgrown: CollectionReference = collection(
       this.firestore,
       `${this.resource.env.db.shops}`
     );
-    const qu = query(
-      Hgrown,
-      where('id', 'in', StoreIds),
-    );
+    const qu = query(Hgrown, where('id', 'in', StoreIds));
     return collectionData(qu);
   }
 
-
-  getbrandspotlightStores(){
+  getbrandspotlightStores() {
     const Hgrown: CollectionReference = collection(
       this.firestore,
       `${'Section_stores'}`
     );
     const qu = query(
       Hgrown,
-      where('SectionName', '==', "BrandspotLightSection"),
+      where('SectionName', '==', 'BrandspotLightSection')
     );
     return collectionData(qu);
   }
 
-  async AddORRemoveSectionStores(index:number,storeid:any,DocId:string) {
+  async AddORRemoveSectionStores(index: number, storeid: any, DocId: string) {
     const addedcity = await doc(
       collection(this.firestore, 'Section_stores'),
-      DocId)
-      if(index == 1){
-      return updateDoc(addedcity, { Stores: arrayUnion(storeid),M_Date:this.newTimestamp })
-    }
-    else {
-      return updateDoc(addedcity, { Stores: arrayRemove(storeid),M_Date:this.newTimestamp })
+      DocId
+    );
+    if (index == 1) {
+      return updateDoc(addedcity, {
+        Stores: arrayUnion(storeid),
+        M_Date: this.newTimestamp,
+      });
+    } else {
+      return updateDoc(addedcity, {
+        Stores: arrayRemove(storeid),
+        M_Date: this.newTimestamp,
+      });
     }
   }
 
-  deletestoresectiondata(id:any){
+  deletestoresectiondata(id: any) {
     const arearefr = doc(this.firestore, `Section_stores`, `${id}`);
     return deleteDoc(arearefr)
       .then((data) => {
@@ -1869,7 +1834,6 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-
   async getstorecount(sectionname: string, cityid: string, nodeid: string) {
     const coll = collection(this.firestore, 'Section_stores');
     const q = query(
@@ -1882,7 +1846,185 @@ export class ApiserviceService {
     return snapshot.data().count;
   }
 
+  getSectionData(id: string) {
+    const Sectiondata: CollectionReference = collection(
+      this.firestore,
+      `${'Section_Details'}`
+    );
+    const qu = query(Sectiondata, where('SectionID', '==', id));
+    return collectionData(qu);
+  }
+
+  async updateSectionData(index: number, id: string, data: string) {
+    const addedcity = await doc(
+      collection(this.firestore, 'Section_Details'),
+      id
+    );
+    if (index == 1) {
+      return updateDoc(addedcity, {
+        Section_title: data,
+        MDate: this.newTimestamp,
+      })
+        .then((datas: any) => {
+          if (datas) {
+            return 'issue in update title.';
+          } else {
+            return 'title updated.';
+          }
+        })
+        .catch((err) => {
+          return false;
+        });
+    } else {
+      return updateDoc(addedcity, {
+        Section_Stitle: data,
+        MDate: this.newTimestamp,
+      })
+        .then((datas: any) => {
+          if (datas) {
+            return 'issue in update Sub-Title.';
+          } else {
+            return 'title updated.';
+          }
+        })
+        .catch((err) => {
+          return false;
+        });
+    }
+  }
+
+  async updateHomeGrwonStoreData(
+    isadded: boolean,
+    index: string,
+    id: string,
+    Storeid: string
+  ) {
+    console.log(index);
+    const homegrown = await doc(
+      collection(this.firestore, 'Section_Details'),
+      id
+    );
+    if (isadded == true) {
+      if (index == '1') {
+        return updateDoc(homegrown, { First_Stores: arrayUnion(Storeid) }).then((datas: any) => {
+          if (datas) {
+            return 'issue in adding Store.';
+          } else {
+            return 'Store Added.';
+          }
+        })
+        .catch((err) => {
+          return false;
+        });
+      } else if (index == '2') {
+        return updateDoc(homegrown, { Second_Stores: arrayUnion(Storeid) }).then((datas: any) => {
+          if (datas) {
+            return 'issue in adding Store.';
+          } else {
+            return 'Store Added.';
+          }
+        })
+        .catch((err) => {
+          return false;
+        });
+      } else {
+        return updateDoc(homegrown, { third_Stores: arrayUnion(Storeid) }).then((datas: any) => {
+          if (datas) {
+            return 'issue in adding Store.';
+          } else {
+            return 'Store Added.';
+          }
+        })
+        .catch((err) => {
+          return false;
+        });
+      }
+    } else {
+      if (index == '1') {
+        return updateDoc(homegrown, { First_Stores: arrayRemove(Storeid) }).then((datas: any) => {
+          if (datas) {
+            return 'issue in removing Store.';
+          } else {
+            return 'Store removed.';
+          }
+        })
+        .catch((err) => {
+          return false;
+        });
+      } else if (index == '2') {
+        return updateDoc(homegrown, { Second_Stores: arrayRemove(Storeid) }).then((datas: any) => {
+          if (datas) {
+            return 'issue in removing Store.';
+          } else {
+            return 'Store removed.';
+          }
+        })
+        .catch((err) => {
+          return false;
+        });
+      } else {
+        return updateDoc(homegrown, { third_Stores: arrayRemove(Storeid) }).then((datas: any) => {
+          if (datas) {
+            return 'issue in removing Store.';
+          } else {
+            return 'Store removed.';
+          }
+        })
+        .catch((err) => {
+          return false;
+        });
+      }
+    }
+  }
 
 
 
+  async updatehomegrownbanner(id: string, croppedImage: any) {
+    const homegrown = doc(this.firestore, `${'Section_Details'}`, `${id}`);
+    const cloudUpload: any = await this.cloudupload2(id, croppedImage);
+    if (!cloudUpload.success) {
+      return cloudUpload;
+    } else {
+      return updateDoc(homegrown, { HGbanner: cloudUpload.url })
+        .then(() => {
+          return cloudUpload;
+        })
+        .catch((err) => {
+          return false;
+        });
+    }
+  }
+
+  async updateHomegrownproducts(id: string, products: any) {
+    const cityrefr = doc(this.firestore, `${'Section_Details'}`, `${id}`);
+    return updateDoc(cityrefr, { products: products });
+  }
+
+
+  async updatehomegrownbanners(Catid:string,index:number,croppedImage:any){
+    const Category = doc(this.firestore, `${'cats'}`, `${Catid}`);
+    const cloudUpload: any = await this.cloudupload2(Catid, croppedImage);
+    if (!cloudUpload.success) {
+      return cloudUpload;
+    } else {
+      if(index== 1){
+      return updateDoc(Category, { HGThumbnail: cloudUpload.url })
+        .then(() => {
+          return cloudUpload;
+        })
+        .catch((err) => {
+          return false;
+        });
+      }
+      else {
+        return updateDoc(Category, { HGCatbanner: cloudUpload.url })
+        .then(() => {
+          return cloudUpload;
+        })
+        .catch((err) => {
+          return false;
+        });
+      }
+    }
+  }
 }

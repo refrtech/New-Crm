@@ -21,13 +21,13 @@ export class BrandSpotlightComponent implements OnInit {
   parameters: string = 'phone';
   operators: string = '==';
   searchvalue: string = '';
-  brandspotT: string = '';
-  brandspotST: string = '';
+  SectionTitle: string = '';
+  SectionSTitle: string = '';
   selectedstores: Array<any> = [];
   BSmoduledata: any = [];
   BSmoduleStoredata: any = [];
   isstorealreadyadded: boolean = false;
-  nodestoresid:string="";
+  nodestoresid: string = '';
   ParaArr: Array<any> = [
     {
       Title: 'Store Phone Number',
@@ -65,24 +65,29 @@ export class BrandSpotlightComponent implements OnInit {
       )
       .pipe(take(1))
       .subscribe((recentStore: any) => {
-        this.MerchantdataSource = new MatTableDataSource(recentStore);
-        let index = this.BSmoduleStoredata.findIndex(
-          (x: any) => x.id == recentStore[0].id
-        );
-        if (index == 0) {
-          this.isstorealreadyadded = true;
+        if (recentStore.length == 0) {
+          this.auth.resource.startSnackBar('No Store found.');
+        } else {
+          console.log(recentStore);
+          this.MerchantdataSource = new MatTableDataSource(recentStore);
+          let index = this.BSmoduleStoredata.findIndex(
+            (x: any) => x.id == recentStore[0].id
+          );
+          if (index == 0) {
+            this.isstorealreadyadded = true;
+          }
         }
       });
   }
 
   getspotlightdata() {
     this.api
-      .getspotlightdata()
+      .getSectionData('BrandSpotLight')
       .pipe(take(1))
       .subscribe((data: any) => {
         this.BSmoduledata = data[0];
-        this.brandspotT = this.BSmoduledata.BS_Title;
-        this.brandspotST = this.BSmoduledata.BS_STitle;
+        this.SectionTitle = this.BSmoduledata.BS_Title;
+        this.SectionSTitle = this.BSmoduledata.BS_STitle;
       });
 
     this.api
@@ -90,7 +95,7 @@ export class BrandSpotlightComponent implements OnInit {
       .pipe(take(1))
       .subscribe((data: any) => {
         console.log('stores ids', data[0].Stores);
-        this.nodestoresid=data[0].id;
+        this.nodestoresid = data[0].id;
         this.api
           .getStoresbyIds(data[0].Stores)
           .pipe(take(1))
@@ -101,19 +106,40 @@ export class BrandSpotlightComponent implements OnInit {
       });
   }
 
-  updateBSTitle() {
-    if (!this.editTitle) {
+  updateSectionDetails(i: number) {
+    if (i == 1 && !this.editTitle) {
       this.editTitle = !this.editTitle;
-    } else if (this.brandspotT == this.BSmoduledata.BS_Title) {
+    } else if (i == 2 && !this.editSubt) {
+      this.editSubt = !this.editSubt;
+    } else if (
+      i == 1 &&
+      this.SectionTitle == this.BSmoduledata.Section_title
+    ) {
       this.editTitle = !this.editTitle;
+    } else if (
+      i == 2 &&
+      this.SectionSTitle == this.BSmoduledata.Section_Stitle
+    ) {
+      this.editSubt = !this.editSubt;
     } else {
-      if (!this.brandspotT) {
-        alert('please enter the Title.');
+      if (i == 1 && !this.SectionTitle) {
+        this.auth.resource.startSnackBar('please enter the Title.');
+      } else if (i == 2 && !this.SectionSTitle) {
+        this.auth.resource.startSnackBar('please enter the sub Title.');
       } else {
         this.api
-          .updateBStitle(this.brandspotT, this.BSmoduledata.id)
+          .updateSectionData(
+            i,
+            this.BSmoduledata.SectionID,
+            i == 1 ? this.SectionTitle : this.SectionSTitle
+          )
           .then((data) => {
             if (data != undefined) {
+              if (i == 1) {
+                this.editTitle = !this.editTitle;
+              } else {
+                this.editSubt = !this.editSubt;
+              }
             }
           })
           .catch(() => {
@@ -123,35 +149,58 @@ export class BrandSpotlightComponent implements OnInit {
     }
   }
 
-  updateBSSTitle() {
-    if (!this.editSubt) {
-      this.editSubt = !this.editSubt;
-    } else if (this.brandspotST == this.BSmoduledata.BS_STitle) {
-      this.editSubt = !this.editSubt;
-    } else {
-      if (!this.brandspotST) {
-        alert('please enter the sub Title.');
-      } else {
-        this.api
-          .updateBSStitle(this.brandspotST, this.BSmoduledata.id)
-          .then((data) => {
-            if (data != undefined) {
-            }
-          })
-          .catch(() => {
-            return false;
-          });
-      }
-    }
-  }
+
+  // updateBSTitle() {
+  //   if (!this.editTitle) {
+  //     this.editTitle = !this.editTitle;
+  //   } else if (this.SectionTitle == this.BSmoduledata.BS_Title) {
+  //     this.editTitle = !this.editTitle;
+  //   } else {
+  //     if (!this.SectionTitle) {
+  //       alert('please enter the Title.');
+  //     } else {
+  //       this.api
+  //         .updateBStitle(this.SectionTitle, this.BSmoduledata.id)
+  //         .then((data) => {
+  //           if (data != undefined) {
+  //           }
+  //         })
+  //         .catch(() => {
+  //           return false;
+  //         });
+  //     }
+  //   }
+  // }
+
+  // updateBSSTitle() {
+  //   if (!this.editSubt) {
+  //     this.editSubt = !this.editSubt;
+  //   } else if (this.brandspotST == this.BSmoduledata.BS_STitle) {
+  //     this.editSubt = !this.editSubt;
+  //   } else {
+  //     if (!this.brandspotST) {
+  //       alert('please enter the sub Title.');
+  //     } else {
+  //       this.api
+  //         .updateBSStitle(this.brandspotST, this.BSmoduledata.id)
+  //         .then((data) => {
+  //           if (data != undefined) {
+  //           }
+  //         })
+  //         .catch(() => {
+  //           return false;
+  //         });
+  //     }
+  //   }
+  // }
 
   action(data: any) {
     console.log('Data', data);
     if (this.isstorealreadyadded == true) {
-      this.api.AddORRemoveSectionStores(2,data.id, this.nodestoresid);
+      this.api.AddORRemoveSectionStores(2, data.id, this.nodestoresid);
       this.isstorealreadyadded = false;
     } else {
-      this.api.AddORRemoveSectionStores(1,data.id, this.nodestoresid);
+      this.api.AddORRemoveSectionStores(1, data.id, this.nodestoresid);
       this.isstorealreadyadded = true;
     }
   }
@@ -174,7 +223,7 @@ export class BrandSpotlightComponent implements OnInit {
     ratio: string,
     webPath: string,
     type: string,
-    Storeid: string,
+    Storeid: string
   ) {
     let isPhone = this.auth.resource.getWidth < 768;
     let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
@@ -198,10 +247,10 @@ export class BrandSpotlightComponent implements OnInit {
             .updateSectionStorebanner(
               Storeid,
               result.croppedImage,
-              "BrandSpotlight"
+              'BrandSpotlight'
             )
             .then((data) => {
-              alert('banner updated');
+              this.auth.resource.startSnackBar('banner updated');
             });
         }
       }

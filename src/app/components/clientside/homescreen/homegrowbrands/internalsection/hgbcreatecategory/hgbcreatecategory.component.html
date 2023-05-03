@@ -90,7 +90,7 @@
     <tr class="mat-row" *matNoDataRow>
     </tr>
   </table>
-  <div *ngIf="HGdata.products != undefined && HGdata.products.length > 0" class="t15margin boxshw">
+  <div *ngIf="HGdata?.products != undefined && HGdata?.products?.length > 0" class="t15margin boxshw">
     <div class="dflex JCevenly M100width tb15padding s_size">
       <div class="M10width c_align">Rank</div>
       <div class="regulartext M40width">Product Name</div>
@@ -99,8 +99,8 @@
     </div>
     <div cdkDropListGroup>
       <div class="example-container M100width">
-        <div cdkDropList [cdkDropListData]="HGdata.products" class="example-list" (cdkDropListDropped)="drop($event)">
-          <div class="example-box tborder s_size dflex tb10padding" *ngFor="let item of HGdata.products;let i = index"
+        <div cdkDropList [cdkDropListData]="HGdata?.products" class="example-list" (cdkDropListDropped)="drop($event)">
+          <div class="example-box tborder s_size dflex tb10padding" *ngFor="let item of HGdata?.products;let i = index"
             cdkDrag>
             <div class="M10width dflex JCcenter">
               <mat-icon>menu</mat-icon>
@@ -136,7 +136,9 @@
       <div class="example-container M100width">
         <div cdkDropList [cdkDropListData]="auth.resource.categoryList" class="example-list"
           (cdkDropListDropped)="drop($event)">
-          <div class="example-box tborder s_size dflex tb10padding" *ngFor="let item of auth.resource.categoryList"
+          <ng-container *ngFor="let item of auth.resource.categoryList">
+            <ng-container *ngIf="item.id == 'beauty' || item.id == 'fashion_brand' || item.id == 'electronics' || item.id == 'food_and_beverages'">
+          <div class="example-box tborder s_size dflex tb10padding"
             cdkDrag>
             <div class="M10width dflex JCcenter">
               <mat-icon>menu</mat-icon>
@@ -150,6 +152,9 @@
               </a>
             </div>
           </div>
+        </ng-container>
+
+        </ng-container>
         </div>
       </div>
     </div>

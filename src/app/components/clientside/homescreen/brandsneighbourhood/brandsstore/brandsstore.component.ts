@@ -4,7 +4,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { Observable, of, take } from 'rxjs';
+import { take } from 'rxjs';
 import { ApiserviceService } from 'src/app/apiservice.service';
 import { AuthService } from 'src/app/auth.service';
 import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component';
@@ -53,7 +53,8 @@ export class BrandsstoreComponent implements OnInit {
   ngOnInit(): void {
     if (this.data.selectednode != undefined) {
       this.api
-        .getstoreaspernode('BIYNSection', this.data.selectednode?.id).pipe(take(1))
+        .getstoreaspernode('BIYNSection', this.data.selectednode?.id)
+        .pipe(take(1))
         .subscribe((data: any) => {
           this.BIYNDataId = data[0]?.id;
           this.api
@@ -71,8 +72,7 @@ export class BrandsstoreComponent implements OnInit {
       if (this.storelist.length == 1) {
         this.api.deletestoresectiondata(this.BIYNDataId).then(() => {
           this.storelist = [];
-        this.close();
-
+          this.close();
         });
       } else {
         this.api
@@ -127,18 +127,21 @@ export class BrandsstoreComponent implements OnInit {
       )
       .pipe(take(1))
       .subscribe((recentStore: any) => {
-        this.MerchantdataSource = new MatTableDataSource(recentStore);
-
-        let index = this.storelist.findIndex(
-          (x: any) => x.id == recentStore[0].id
-        );
-        if (index == 0) {
-          this.isstorealreadyadded = true;
+        if (recentStore.length == 0) {
+          this.auth.resource.startSnackBar('No Store found.');
+        } else {
+          this.MerchantdataSource = new MatTableDataSource(recentStore);
+          let index = this.storelist.findIndex(
+            (x: any) => x.id == recentStore[0].id
+          );
+          if (index == 0) {
+            this.isstorealreadyadded = true;
+          }
         }
       });
   }
 
-  async takePicture(ratio: string, type: string, Storeid: string,) {
+  async takePicture(ratio: string, type: string, Storeid: string) {
     const image = await Camera.getPhoto({
       quality: 100,
       height: 300,
@@ -156,7 +159,7 @@ export class BrandsstoreComponent implements OnInit {
     ratio: string,
     webPath: string,
     type: string,
-    Storeid: string,
+    Storeid: string
   ) {
     let isPhone = this.auth.resource.getWidth < 768;
     let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
@@ -177,9 +180,9 @@ export class BrandsstoreComponent implements OnInit {
       } else {
         if (type == 'banner') {
           this.api
-            .updatestorewithnodebanner(Storeid, result.croppedImage)
+            .updateSectionStorebanner('BIYN',Storeid, result.croppedImage)
             .then((data: any) => {
-              alert('banner uploaded');
+              this.auth.resource.startSnackBar('banner uploaded');
             });
         }
       }
@@ -187,9 +190,6 @@ export class BrandsstoreComponent implements OnInit {
   }
 
   deletestore(id: string) {
-    // this.api.deletestorefromnodes(id).then((data: any) => {
-    //   alert('store deleted');
-    // });
     if (this.storelist.length == 1) {
       this.api.deletestoresectiondata(this.BIYNDataId).then(() => {
         this.storelist = [];

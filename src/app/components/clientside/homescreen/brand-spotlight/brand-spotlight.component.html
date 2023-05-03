@@ -19,10 +19,10 @@
                     </div>
                     <div>
                         <mat-form-field class="crminput l5margin r5margin M80width Editableinput" appearance="outline">
-                            <input type="text" [(ngModel)]="brandspotT" matInput placeholder="Enter the module name"
+                            <input type="text" [(ngModel)]="SectionTitle" matInput placeholder="Enter the module name"
                                 [disabled]="!editTitle">
                             <button matSuffix mat-icon-button aria-label="Clear" class="purple_background"
-                                (click)="updateBSTitle()">
+                                (click)="updateSectionDetails(1)">
                                 <mat-icon>
                                     {{editTitle ? 'check': 'edit'}}
                                 </mat-icon>
@@ -36,10 +36,10 @@
                     </div>
                     <div>
                         <mat-form-field class="crminput l5margin r5margin M80width Editableinput" appearance="outline">
-                            <input type="text" [(ngModel)]="brandspotST" matInput placeholder="Enter the subtext name"
+                            <input type="text" [(ngModel)]="SectionSTitle" matInput placeholder="Enter the subtext name"
                                 [disabled]="!editSubt">
                             <button matSuffix mat-icon-button aria-label="Clear" class="purple_background"
-                                (click)="updateBSSTitle()">
+                                (click)="updateSectionDetails(2)">
                                 <mat-icon>
                                     {{editSubt ? 'check': 'edit'}}
                                 </mat-icon>
