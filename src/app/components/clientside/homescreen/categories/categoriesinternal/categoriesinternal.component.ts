@@ -88,7 +88,7 @@ export class CategoriesinternalComponent implements OnInit {
   homegrownproducts: Array<any> = [];
   catindex: number = -1;
   constructor(
-    private api: ApiserviceService,
+    public api: ApiserviceService,
     private actRoute: ActivatedRoute,
     public auth: AuthService,
   ) {}

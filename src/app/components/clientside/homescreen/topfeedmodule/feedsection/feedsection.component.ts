@@ -75,17 +75,24 @@ export class FeedsectionComponent implements OnInit {
           console.log(response.url_link[0]);
           let data = {
             url: response.url_link[0],
-            c_Date: this.api.newTimestamp,
+            // c_Date: this.api.newTimestamp,
             fileName: this.fileName,
             fileType: file.type.toString().includes('video')
               ? 'video'
               : 'image',
           };
 
-          console.log('dataaaaaa', data);
-          this.auth.addVideo(data).then((d) => {
-            this.dialogRef.close();
-          });
+          console.log('dataaaaaa', this.data);
+          if (this.data.FeedVideos == undefined) {
+            this.data.FeedVideos = [data];
+          } else {
+            this.data.FeedVideos.push(data);
+          }
+          this.api
+            .UpdateVideo(this.data.id, this.data.FeedVideos)
+            .then(() => {
+              this.dialogRef.close();
+            });
         },
         (error) => {
           this.isInProcess = false;

@@ -61,7 +61,7 @@
             <div *ngIf="row.type == 'Both' ">Hybrid</div>
             <div *ngIf="row.type == 'Onli' ">Online</div>
             <div *ngIf="row.type == 'Offl' ">Offline</div>
-            <div class="gray_txt xxs_size">{{row.cat}}</div>
+            <div class="gray_txt xxs_size">{{api.getCat(row.cat)}}</div>
           </td>
         </ng-container>
         <ng-container matColumnDef="city">
@@ -86,19 +86,18 @@
   <div class="t50margin">
     <div class="dflex">
       <div class="boxshw M100width">
-        <div class="dflex JCevenly M100width tb15padding s_size">
+        <div class="dflex JCevenly M100width tb15padding s_size purple_background c_white">
           <div class="regulartext M20width">
             <span class="l15padding">
               Store Banner
             </span>
-            </div>
-            <div class="M5width"></div>
-
+          </div>
+          <div class="M5width"></div>
           <div class="regulartext M30width">
             <span class="l15padding">
               Store Name
             </span>
-            </div>
+          </div>
           <div class="M20width c_align">Category</div>
           <div class="regulartext M25width c_align">Action</div>
         </div>
@@ -117,16 +116,15 @@
                     <div class="M5width"></div>
                     <div class="M30width l_align">
                       <span class="l15padding">
-                      {{item.name}}
-                    </span>
+                        {{item.name}}
+                      </span>
                     </div>
                     <div class="M20width c_align">
                       {{api.getCat(item.cat)}}
                     </div>
                     <div class="M25width c_align">
                       <mat-icon class="black_text" (click)="deletestore(item.id) ">delete</mat-icon>
-                      <mat-icon class="black_text"
-                        (click)="takePicture('3:4','banner',item.id)">image</mat-icon>
+                      <mat-icon class="black_text" (click)="takePicture('3:4','banner',item.id)">image</mat-icon>
                     </div>
                   </div>
                 </ng-container>

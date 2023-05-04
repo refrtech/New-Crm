@@ -57,10 +57,11 @@ export class BrandsstoreComponent implements OnInit {
         .pipe(take(1))
         .subscribe((data: any) => {
           this.BIYNDataId = data[0]?.id;
+
           this.api
             .getStoresbyIds(data[0]?.Stores)
-            .pipe(take(1))
             .subscribe((data: any) => {
+              console.log(data);
               this.storelist = data;
             });
         });

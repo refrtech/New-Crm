@@ -1515,32 +1515,7 @@ export class AuthService {
   //   }
   // }
 
-  // top feed video start
 
-  async addVideo(data: any) {
-    await addDoc(collection(this.firestore, `${'feedVideos'}`), data).then(
-      (ref) => {
-        const vid = doc(this.firestore, `${'feedVideos'}`, `${ref.id}`);
-        return updateDoc(vid, { id: ref.id }).then(() => {
-          return ref;
-        });
-      }
-    );
-  }
-
-  async getFeedVideos() {
-    const vid: CollectionReference = collection(this.firestore, 'feedVideos');
-
-    const qu = query(vid);
-    return collectionData(qu);
-  }
-
-  async deleteVideo(id: any) {
-    const vidRef = await doc(this.firestore, 'feedVideos', `${id}`);
-    return deleteDoc(vidRef);
-  }
-
-  // -----------feed end---------------------------
 
   // ---------info start---------------
 
@@ -1784,5 +1759,6 @@ export class AuthService {
       );
     }
   }
+
 
 }

@@ -85,7 +85,7 @@ export class MerchantsComponent implements OnInit {
   constructor(
     private apiservice: ApiserviceService,
     private excelservice: ExcelexportService,
-    private https: HttpClient
+    public api: ApiserviceService
   ) {}
   ngOnInit(): void {}
 

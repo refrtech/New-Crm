@@ -9,7 +9,7 @@
     <span class="xxl_size boldtext lr15padding AScenter">{{selectedcat}} internal</span>
   </div>
   <div class="t40margin b20margin">
-    <div>
+    <div class="b20padding">
       <span class="s_size boldtext">People’s Choice </span> <span class="xs_size gray_txt">(Maximum 250 words)</span>
     </div>
     <div>
@@ -78,7 +78,7 @@
         <div *ngIf="row.type == 'Both' ">Hybrid</div>
         <div *ngIf="row.type == 'Onli' ">Online</div>
         <div *ngIf="row.type == 'Offl' ">Offline</div>
-        <div class="gray_txt xxs_size">{{row.cat}}</div>
+        <div class="gray_txt xxs_size">{{api.getCat(row.cat)}}</div>
       </td>
     </ng-container>
     <ng-container matColumnDef="city">
@@ -99,7 +99,7 @@
     </tr>
   </table>
   <div *ngIf="PChoiceStores.length > 0" class="t15margin boxshw">
-    <div class="dflex JCevenly M100width tb15padding s_size">
+    <div class="dflex JCevenly M100width tb15padding s_size purple_background c_white">
       <div class="M10width c_align">Rank</div>
       <div class="regulartext M40width">Store Name</div>
       <div class="regulartext M25width">Category</div>
@@ -116,10 +116,10 @@
               {{item.name}}
             </div>
             <div class="M25width l_align">
-              {{item.cat}}
+              {{api.getCat(item.cat)}}
             </div>
             <div class="M25width c_align dflex JCcenter">
-              <a (click)="deletestore(1,item.sectionid)" class="r20margin">
+              <a (click)="deletestore(1,item.id)" class="r20margin">
                 <mat-icon class="black_text">delete</mat-icon>
               </a>
               <a (click)="takePicture('16:9','peopleCstorebanner',item.sectionid)">
@@ -194,7 +194,7 @@
         <div *ngIf="row.type == 'Both' ">Hybrid</div>
         <div *ngIf="row.type == 'Onli' ">Online</div>
         <div *ngIf="row.type == 'Offl' ">Offline</div>
-        <div class="gray_txt xxs_size">{{row.cat}}</div>
+        <div class="gray_txt xxs_size">{{api.getCat(row.cat)}}</div>
       </td>
     </ng-container>
     <ng-container matColumnDef="city">
@@ -218,8 +218,8 @@
 
 
 
-  <div *ngIf="trendingStores.length > 0" class="t15margin boxshw">
-    <div class="dflex JCevenly M100width tb15padding s_size">
+  <div *ngIf="BrandYouloveStores.length > 0" class="t15margin boxshw">
+    <div class="dflex JCevenly M100width tb15padding s_size purple_background c_white">
       <div class="M10width c_align">Rank</div>
       <div class="regulartext M40width">Store Name</div>
       <div class="regulartext M25width">Category</div>
@@ -227,8 +227,8 @@
     </div>
     <div cdkDropListGroup>
       <div class="example-container M100width">
-        <div cdkDropList [cdkDropListData]="trendingStores" class="example-list" (cdkDropListDropped)="drop($event)">
-          <div class="example-box tborder s_size dflex tb10padding" *ngFor="let item of trendingStores" cdkDrag>
+        <div cdkDropList [cdkDropListData]="BrandYouloveStores" class="example-list" (cdkDropListDropped)="drop($event)">
+          <div class="example-box tborder s_size dflex tb10padding" *ngFor="let item of BrandYouloveStores" cdkDrag>
             <div class="M10width dflex JCcenter">
               <mat-icon>menu</mat-icon>
             </div>
@@ -236,22 +236,29 @@
               {{item.name}}
             </div>
             <div class="M25width l_align">
-              {{item.cat}}
+              {{api.getCat(item.cat)}}
             </div>
             <div class="M25width c_align dflex JCcenter">
-              <a (click)="deletestore(2,item.sectionid)" class="r20margin">
+              <a (click)="deletestore(2,item.id)">
                 <mat-icon class="black_text">delete</mat-icon>
               </a>
-              <a (click)="takePicture('1:1','trendingstorebanner',item.sectionid)">
+              <!-- <a (click)="takePicture('1:1','trendingstorebanner',item.sectionid)">
                 <mat-icon class="black_text">photo_camera</mat-icon>
-              </a>
+              </a> -->
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="boldtext m_size t40margin b20margin">
+
+
+
+
+
+
+
+  <!-- <div class="boldtext m_size t40margin b20margin">
     Products you love
   </div>
   <div class="Aborder A5radius A20padding b20margin">
@@ -305,7 +312,7 @@
         <div *ngIf="row.type == 'Both' ">Hybrid</div>
         <div *ngIf="row.type == 'Onli' ">Online</div>
         <div *ngIf="row.type == 'Offl' ">Offline</div>
-        <div class="gray_txt xxs_size">{{row.cat}}</div>
+        <div class="gray_txt xxs_size">{{api.getCat(row.cat)}}</div>
       </td>
     </ng-container>
     <ng-container matColumnDef="city">
@@ -332,7 +339,7 @@
 
 
   <div *ngIf="homegrownproducts.length > 0" class="t15margin boxshw">
-    <div class="dflex JCevenly M100width tb15padding s_size">
+    <div class="dflex JCevenly M100width tb15padding s_size purple_background c_white">
       <div class="M10width c_align">Rank</div>
       <div class="regulartext M40width">Store Name</div>
       <div class="regulartext M25width">Category</div>
@@ -349,10 +356,10 @@
               {{item.name}}
             </div>
             <div class="M25width l_align">
-              {{item.cat}}
+              {{api.getCat(item.cat)}}
             </div>
             <div class="M25width c_align dflex JCcenter">
-              <a (click)="deletestore(3,item.Docid)" class="r20margin">
+              <a (click)="deletestore(3,item.id)" class="r20margin">
                 <mat-icon class="black_text">delete</mat-icon>
               </a>
               <a (click)="takePicture('1:1','productsbanner',item.Docid)">
@@ -363,5 +370,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>

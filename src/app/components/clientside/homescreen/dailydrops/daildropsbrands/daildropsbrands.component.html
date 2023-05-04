@@ -61,7 +61,7 @@
             <div *ngIf="row.type == 'Both' ">Hybrid</div>
             <div *ngIf="row.type == 'Onli' ">Online</div>
             <div *ngIf="row.type == 'Offl' ">Offline</div>
-            <div class="gray_txt xxs_size">{{row.cat}}</div>
+            <div class="gray_txt xxs_size">{{api.getCat(row.cat)}}</div>
           </td>
         </ng-container>
         <ng-container matColumnDef="city">

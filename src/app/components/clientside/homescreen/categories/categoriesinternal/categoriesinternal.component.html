@@ -118,7 +118,7 @@
           <div *ngIf="row.type == 'Both' ">Hybrid</div>
           <div *ngIf="row.type == 'Onli' ">Online</div>
           <div *ngIf="row.type == 'Offl' ">Offline</div>
-          <div class="gray_txt xxs_size">{{row.cat}}</div>
+          <div class="gray_txt xxs_size">{{api.getCat(row.cat)}}</div>
         </td>
       </ng-container>
       <ng-container matColumnDef="city">
@@ -140,7 +140,7 @@
     </table>
   </div>
   <div *ngIf="PChoiceStores.length > 0" class="t15margin boxshw">
-    <div class="dflex JCevenly M100width tb15padding s_size">
+    <div class="dflex JCevenly M100width tb15padding s_size purple_background c_white">
       <div class="M10width c_align">Rank</div>
       <div class="regulartext M40width">Store Name</div>
       <div class="regulartext M25width">Category</div>
@@ -225,7 +225,7 @@
           <div *ngIf="row.type == 'Both' ">Hybrid</div>
           <div *ngIf="row.type == 'Onli' ">Online</div>
           <div *ngIf="row.type == 'Offl' ">Offline</div>
-          <div class="gray_txt xxs_size">{{row.cat}}</div>
+          <div class="gray_txt xxs_size">{{api.getCat(row.cat)}}</div>
         </td>
       </ng-container>
       <ng-container matColumnDef="city">
@@ -247,7 +247,7 @@
     </table>
   </div>
   <div *ngIf="trendingStores.length > 0" class="t15margin boxshw">
-    <div class="dflex JCevenly M100width tb15padding s_size">
+    <div class="dflex JCevenly M100width tb15padding s_size purple_background c_white">
       <div class="M10width c_align">Rank</div>
       <div class="regulartext M40width">Store Name</div>
       <div class="regulartext M25width">Category</div>
@@ -354,7 +354,7 @@
     </table>
   </div>
   <div *ngIf="curatedstores.length > 0" class="t15margin boxshw">
-    <div class="dflex JCevenly M100width tb15padding s_size">
+    <div class="dflex JCevenly M100width tb15padding s_size purple_background c_white">
       <div class="M10width c_align">Rank</div>
       <div class="regulartext M40width">Store Name</div>
       <div class="regulartext M25width">Category</div>
@@ -440,7 +440,7 @@
         <div *ngIf="row.type == 'Both' ">Hybrid</div>
         <div *ngIf="row.type == 'Onli' ">Online</div>
         <div *ngIf="row.type == 'Offl' ">Offline</div>
-        <div class="gray_txt xxs_size">{{row.cat}}</div>
+        <div class="gray_txt xxs_size">{{api.getCat(row.cat)}}</div>
       </td>
     </ng-container>
     <ng-container matColumnDef="city">
@@ -461,7 +461,7 @@
     </tr>
   </table>
   <div *ngIf="homegrownproducts.length > 0" class="t15margin boxshw">
-    <div class="dflex JCevenly M100width tb15padding s_size">
+    <div class="dflex JCevenly M100width tb15padding s_size purple_background c_white">
       <div class="M10width c_align">Rank</div>
       <div class="regulartext M40width">Store Name</div>
       <div class="regulartext M25width">Category</div>

@@ -665,11 +665,6 @@ export class ApiserviceService {
   //   }
   // }
 
-  updatepeoplechoicepara(id: string, data: any) {
-    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
-    return updateDoc(cityrefr, { Categories: data });
-  }
-
   // updateHGtitle(Title: string, id: any) {
   //   const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${id}`);
   //   return updateDoc(cityrefr, { HG_Title: Title })
@@ -709,8 +704,6 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-
-
   async updatehomegrownproductbanner(
     HGdata: any,
     croppedImage: any,
@@ -732,30 +725,28 @@ export class ApiserviceService {
     }
   }
 
-
-
-  async updateHGsubcatbanner(
-    HGdata: any,
-    croppedImage: any,
-    catindex: number,
-    subcatindex: number
-  ) {
-    const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${HGdata.id}`);
-    const cloudUpload: any = await this.cloudupload2(HGdata.id, croppedImage);
-    if (!cloudUpload.success) {
-      return cloudUpload;
-    } else {
-      HGdata.Categories[catindex].items[subcatindex].crmbanner =
-        cloudUpload.url;
-      return updateDoc(cityrefr, { Categories: HGdata.Categories })
-        .then(() => {
-          return cloudUpload;
-        })
-        .catch((err) => {
-          return false;
-        });
-    }
-  }
+  // async updateHGsubcatbanner(
+  //   HGdata: any,
+  //   croppedImage: any,
+  //   catindex: number,
+  //   subcatindex: number
+  // ) {
+  //   const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${HGdata.id}`);
+  //   const cloudUpload: any = await this.cloudupload2(HGdata.id, croppedImage);
+  //   if (!cloudUpload.success) {
+  //     return cloudUpload;
+  //   } else {
+  //     HGdata.Categories[catindex].items[subcatindex].crmbanner =
+  //       cloudUpload.url;
+  //     return updateDoc(cityrefr, { Categories: HGdata.Categories })
+  //       .then(() => {
+  //         return cloudUpload;
+  //       })
+  //       .catch((err) => {
+  //         return false;
+  //       });
+  //   }
+  // }
 
   viewVideo(data: any) {}
 
@@ -1057,19 +1048,19 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-  getHgrownPeoplechoiceCatstores(catId: string) {
-    const VSA_section: CollectionReference = collection(
-      this.firestore,
-      `${'people_choice_store'}`
-    );
-    const qu = query(
-      VSA_section,
-      where('catId', '==', catId),
-      where('iscat_subCatstore', '==', 'Cat'),
-      where('sectionName', '==', 'HomegrownSection')
-    );
-    return collectionData(qu);
-  }
+  // getHgrownPeoplechoiceCatstores(catId: string) {
+  //   const VSA_section: CollectionReference = collection(
+  //     this.firestore,
+  //     `${'people_choice_store'}`
+  //   );
+  //   const qu = query(
+  //     VSA_section,
+  //     where('catId', '==', catId),
+  //     where('iscat_subCatstore', '==', 'Cat'),
+  //     where('sectionName', '==', 'HomegrownSection')
+  //   );
+  //   return collectionData(qu);
+  // }
 
   getHgrowntrendingCatstores(catId: string) {
     const VSA_section: CollectionReference = collection(
@@ -1105,33 +1096,33 @@ export class ApiserviceService {
     return collectionData(qu);
   }
 
-  gethomegrowPeoplechoicesubCatstores(catId: string) {
-    const VSA_section: CollectionReference = collection(
-      this.firestore,
-      `${'people_choice_store'}`
-    );
-    const qu = query(
-      VSA_section,
-      where('catId', '==', catId),
-      where('iscat_subCatstore', '==', 'SubCat'),
-      where('sectionName', '==', 'HomegrownSection')
-    );
-    return collectionData(qu);
-  }
+  // gethomegrowPeoplechoicesubCatstores(catId: string) {
+  //   const VSA_section: CollectionReference = collection(
+  //     this.firestore,
+  //     `${'people_choice_store'}`
+  //   );
+  //   const qu = query(
+  //     VSA_section,
+  //     where('catId', '==', catId),
+  //     where('iscat_subCatstore', '==', 'SubCat'),
+  //     where('sectionName', '==', 'HomegrownSection')
+  //   );
+  //   return collectionData(qu);
+  // }
 
-  gethomegrowbrandsUlovesubCatstores(catId: string) {
-    const VSA_section: CollectionReference = collection(
-      this.firestore,
-      `${'trending_store'}`
-    );
-    const qu = query(
-      VSA_section,
-      where('catId', '==', catId),
-      where('iscat_subCatstore', '==', 'SubCat'),
-      where('sectionName', '==', 'HomegrownSection')
-    );
-    return collectionData(qu);
-  }
+  // gethomegrowbrandsUlovesubCatstores(catId: string) {
+  //   const VSA_section: CollectionReference = collection(
+  //     this.firestore,
+  //     `${'trending_store'}`
+  //   );
+  //   const qu = query(
+  //     VSA_section,
+  //     where('catId', '==', catId),
+  //     where('iscat_subCatstore', '==', 'SubCat'),
+  //     where('sectionName', '==', 'HomegrownSection')
+  //   );
+  //   return collectionData(qu);
+  // }
 
   getVSAtrendingsubCatstores(nodeid: string, catId: string, subcatId: string) {
     const VSA_section: CollectionReference = collection(
@@ -1740,6 +1731,7 @@ export class ApiserviceService {
   }
 
   async updateSectionStorebanner(id: any, croppedImage: any, section: string) {
+    console.log(id);
     const Shoprefr = doc(
       this.firestore,
       `${this.resource.env.db.shops}`,
@@ -1760,6 +1752,14 @@ export class ApiserviceService {
           });
       } else if (section == 'BIYN') {
         return updateDoc(Shoprefr, { BIYNbanner: cloudUpload.url })
+          .then((datas: any) => {
+            return 'Banner Uploaded';
+          })
+          .catch((err) => {
+            return false;
+          });
+      } else if (section == 'homegrown') {
+        return updateDoc(Shoprefr, { HGBanner: cloudUpload.url })
           .then((datas: any) => {
             return 'Banner Uploaded';
           })
@@ -1792,17 +1792,17 @@ export class ApiserviceService {
   }
 
   async AddORRemoveSectionStores(index: number, storeid: any, DocId: string) {
-    const addedcity = await doc(
+    const sectiondata = await doc(
       collection(this.firestore, 'Section_stores'),
       DocId
     );
     if (index == 1) {
-      return updateDoc(addedcity, {
+      return updateDoc(sectiondata, {
         Stores: arrayUnion(storeid),
         M_Date: this.newTimestamp,
       });
     } else {
-      return updateDoc(addedcity, {
+      return updateDoc(sectiondata, {
         Stores: arrayRemove(storeid),
         M_Date: this.newTimestamp,
       });
@@ -1906,78 +1906,82 @@ export class ApiserviceService {
     );
     if (isadded == true) {
       if (index == '1') {
-        return updateDoc(homegrown, { First_Stores: arrayUnion(Storeid) }).then((datas: any) => {
-          if (datas) {
-            return 'issue in adding Store.';
-          } else {
-            return 'Store Added.';
-          }
-        })
-        .catch((err) => {
-          return false;
-        });
+        return updateDoc(homegrown, { First_Stores: arrayUnion(Storeid) })
+          .then((datas: any) => {
+            if (datas) {
+              return 'issue in adding Store.';
+            } else {
+              return 'Store Added.';
+            }
+          })
+          .catch((err) => {
+            return false;
+          });
       } else if (index == '2') {
-        return updateDoc(homegrown, { Second_Stores: arrayUnion(Storeid) }).then((datas: any) => {
-          if (datas) {
-            return 'issue in adding Store.';
-          } else {
-            return 'Store Added.';
-          }
-        })
-        .catch((err) => {
-          return false;
-        });
+        return updateDoc(homegrown, { Second_Stores: arrayUnion(Storeid) })
+          .then((datas: any) => {
+            if (datas) {
+              return 'issue in adding Store.';
+            } else {
+              return 'Store Added.';
+            }
+          })
+          .catch((err) => {
+            return false;
+          });
       } else {
-        return updateDoc(homegrown, { third_Stores: arrayUnion(Storeid) }).then((datas: any) => {
-          if (datas) {
-            return 'issue in adding Store.';
-          } else {
-            return 'Store Added.';
-          }
-        })
-        .catch((err) => {
-          return false;
-        });
+        return updateDoc(homegrown, { third_Stores: arrayUnion(Storeid) })
+          .then((datas: any) => {
+            if (datas) {
+              return 'issue in adding Store.';
+            } else {
+              return 'Store Added.';
+            }
+          })
+          .catch((err) => {
+            return false;
+          });
       }
     } else {
       if (index == '1') {
-        return updateDoc(homegrown, { First_Stores: arrayRemove(Storeid) }).then((datas: any) => {
-          if (datas) {
-            return 'issue in removing Store.';
-          } else {
-            return 'Store removed.';
-          }
-        })
-        .catch((err) => {
-          return false;
-        });
+        return updateDoc(homegrown, { First_Stores: arrayRemove(Storeid) })
+          .then((datas: any) => {
+            if (datas) {
+              return 'issue in removing Store.';
+            } else {
+              return 'Store removed.';
+            }
+          })
+          .catch((err) => {
+            return false;
+          });
       } else if (index == '2') {
-        return updateDoc(homegrown, { Second_Stores: arrayRemove(Storeid) }).then((datas: any) => {
-          if (datas) {
-            return 'issue in removing Store.';
-          } else {
-            return 'Store removed.';
-          }
-        })
-        .catch((err) => {
-          return false;
-        });
+        return updateDoc(homegrown, { Second_Stores: arrayRemove(Storeid) })
+          .then((datas: any) => {
+            if (datas) {
+              return 'issue in removing Store.';
+            } else {
+              return 'Store removed.';
+            }
+          })
+          .catch((err) => {
+            return false;
+          });
       } else {
-        return updateDoc(homegrown, { third_Stores: arrayRemove(Storeid) }).then((datas: any) => {
-          if (datas) {
-            return 'issue in removing Store.';
-          } else {
-            return 'Store removed.';
-          }
-        })
-        .catch((err) => {
-          return false;
-        });
+        return updateDoc(homegrown, { third_Stores: arrayRemove(Storeid) })
+          .then((datas: any) => {
+            if (datas) {
+              return 'issue in removing Store.';
+            } else {
+              return 'Store removed.';
+            }
+          })
+          .catch((err) => {
+            return false;
+          });
       }
     }
   }
-
-
 
   async updatehomegrownbanner(id: string, croppedImage: any) {
     const homegrown = doc(this.firestore, `${'Section_Details'}`, `${id}`);
@@ -2000,31 +2004,109 @@ export class ApiserviceService {
     return updateDoc(cityrefr, { products: products });
   }
 
-
-  async updatehomegrownbanners(Catid:string,index:number,croppedImage:any){
+  async updatehomegrownbanners(
+    Catid: string,
+    index: number,
+    croppedImage: any,
+    Catindex?: number,
+    Sub_catIndex?: number
+  ) {
     const Category = doc(this.firestore, `${'cats'}`, `${Catid}`);
     const cloudUpload: any = await this.cloudupload2(Catid, croppedImage);
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
-      if(index== 1){
-      return updateDoc(Category, { HGThumbnail: cloudUpload.url })
-        .then(() => {
-          return cloudUpload;
-        })
-        .catch((err) => {
-          return false;
-        });
-      }
-      else {
+      if (index == 1) {
+        return updateDoc(Category, { HGThumbnail: cloudUpload.url })
+          .then(() => {
+            return cloudUpload;
+          })
+          .catch((err) => {
+            return false;
+          });
+      } else if (index == 2) {
         return updateDoc(Category, { HGCatbanner: cloudUpload.url })
-        .then(() => {
-          return cloudUpload;
+          .then(() => {
+            return cloudUpload;
+          })
+          .catch((err) => {
+            return false;
+          });
+      } else if (index == 3) {
+        this.auth.resource.categoryList[Catindex || 0].items[
+          Sub_catIndex || 0
+        ].HGsubCatbanner = cloudUpload.url;
+        return updateDoc(Category, {
+          items: this.auth.resource.categoryList[Catindex || 0].items,
         })
-        .catch((err) => {
-          return false;
-        });
+          .then(() => {
+            return cloudUpload;
+          })
+          .catch((err) => {
+            return false;
+          });
       }
     }
   }
+
+  gethomegrownCat_Subcatdata(
+    sectionname: string,
+    Catid: string,
+    ContainerType: string
+  ) {
+    console.log(Catid);
+    const coll = collection(this.firestore, 'Section_stores');
+    const q = query(
+      coll,
+      where('SectionName', '==', sectionname),
+      where('Catid', '==', Catid),
+      where('ContainerType', '==', ContainerType)
+    );
+    return collectionData(q);
+  }
+
+  updatepeoplechoicepara(id: string, data: any) {
+    const cityrefr = doc(this.firestore, `${'Section_stores'}`, `${id}`);
+    return updateDoc(cityrefr, { Peoplechoicepara: data });
+  }
+
+  // top feed video start
+
+  async UpdateVideo(id: string, data: any) {
+    const cityrefr = doc(this.firestore, `${'Section_stores'}`, `${id}`);
+    // if (index == 1) {
+      console.log("datasadasdas",data);
+      return updateDoc(cityrefr, {
+        Videos: data,
+        M_Date: this.newTimestamp,
+      });
+    // } else {
+    //   return updateDoc(cityrefr, {
+    //     FeedVideos: arrayRemove(data),
+    //     M_Date: this.newTimestamp,
+    //   });
+    // }
+
+    // await addDoc(collection(this.firestore, `${'feedVideos'}`), data).then(
+    //   (ref) => {
+    //     const vid = doc(this.firestore, `${'feedVideos'}`, `${ref.id}`);
+    //     return updateDoc(vid, { id: ref.id }).then(() => {
+    //       return ref;
+    //     });
+    //   }
+    // );
+  }
+
+  getVideosdata(sectionName:string) {
+    const vid: CollectionReference = collection(this.firestore, 'Section_stores');
+    const qu = query(vid,where('SectionName','==',sectionName));
+    return collectionData(qu);
+  }
+
+  // async deleteVideo(id: any) {
+  //   const vidRef = await doc(this.firestore, 'feedVideos', `${id}`);
+  //   return deleteDoc(vidRef);
+  // }
+
+  // -----------feed end---------------------------
 }

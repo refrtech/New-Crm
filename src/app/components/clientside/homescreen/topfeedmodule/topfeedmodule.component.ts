@@ -24,15 +24,15 @@ export class TopfeedmoduleComponent implements OnInit {
     public api: ApiserviceService,
     public auth: AuthService
   ) {
-    this.getVideo(this.id);
+    this.getVideo();
   }
 
   ngOnInit(): void {}
 
-  addSlide(id: number, data?: any) {
+  addSlide() {
     const dialogRef = this.dailog.open(FeedsectionComponent, {
       width: '50%',
-      data: { id: id, videoData: data },
+      data: { id: this.getVideoData.id,FeedVideos:this.getVideoData.FeedVideos },
       hasBackdrop: true,
       disableClose: true,
       panelClass: 'thanksscreen',
@@ -63,21 +63,26 @@ export class TopfeedmoduleComponent implements OnInit {
             this.auth.resource.startSnackBar(result.info);
           }
         } else {
-          this.auth.deleteVideo(id).then((data: any) => {});
+          let i = this.getVideoData.FeedVideos.findIndex((x:any)=>{
+            x.fileName == id
+          });
+          this.getVideoData.FeedVideos.splice(i,1);
+          this.api.UpdateVideo(this.getVideoData.id,this.getVideoData.FeedVideos).then((data: any) => {});
         }
       });
     }
   }
 
-  async getVideo(id: any) {
-    (await this.auth.getFeedVideos()).subscribe((d) => {
-      this.getVideoData = d;
+  async getVideo() {
+    await this.api.getVideosdata('TopFeedVideos').subscribe((data) => {
+      console.log("data",data[0]);
+      this.getVideoData = data[0];
     });
   }
 
-  openUrl(id: any) {
-    this.auth.addVideo(this.url).then((ref) => {
-      this.url = id;
-    });
-  }
+  // openUrl(id: any) {
+  //   this.auth.addVideo(this.url).then((ref) => {
+  //     this.url = id;
+  //   });
+  // }
 }

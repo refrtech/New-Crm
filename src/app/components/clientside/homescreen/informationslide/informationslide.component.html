@@ -21,28 +21,31 @@
     <!-- slides -->
 
     <div class="t50margin boxshw" (click)="slide = false">
-        <div class="dflex JCevenly M100width tb15padding s_size">
+        <div class="dflex JCevenly M100width tb15padding s_size purple_background c_white">
             <div class="M5width"></div>
-            <div class="regulartext M25width gray_txt">Date Added</div>
-            <div class="regulartext M25width c_align gray_txt">Slides</div>
-            <div class="regulartext M45width c_align gray_txt">Action</div>
+            <div class="regulartext M25width">
+              <!-- Date Added -->
+              Slides
+            </div>
+            <div class="regulartext M25width c_align"></div>
+            <div class="regulartext M45width c_align">Action</div>
         </div>
         <div cdkDropListGroup>
             <div class="example-container M100width">
                 <div cdkDropList class="example-list">
-                    <div class="example-box tborder s_size" *ngFor="let item of getVideoData;let i = index" cdkDrag>
+                    <div class="example-box tborder s_size" *ngFor="let item of getVideoData?.Videos;let i = index" cdkDrag>
                         <div class="M5width dflex JCcenter">
                             <mat-icon>menu</mat-icon>
                         </div>
                         <div class="M25width l_align gray_txt">
-                            {{item?.created_at.toDate() | date:'MMM dd, yyyy'}}
+                            <!-- {{item?.created_at.toDate() | date:'MMM dd, yyyy'}} -->
+                            {{item.fileName}}
                         </div>
                         <div class="M25width c_align semiboldtext cursor_pointer">
-                            {{item.name}}
                         </div>
                         <div class="M45width c_align">
                             <a>
-                                <mat-icon (click)="deleteVid(item.id)"
+                                <mat-icon (click)="deleteVid(item.fileName)"
                                     class="black_text cursor_pointer">delete</mat-icon>
                             </a>
                         </div>

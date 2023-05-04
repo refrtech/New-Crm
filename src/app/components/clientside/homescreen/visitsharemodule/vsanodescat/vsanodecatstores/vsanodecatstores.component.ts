@@ -76,7 +76,7 @@ export class VSAnodecatstoresComponent implements OnInit {
   constructor(
     public auth: AuthService,
     private router: Router,
-    private api: ApiserviceService,
+    public api: ApiserviceService,
     public actRoute: ActivatedRoute,
     public Location: Location
   ) {}
