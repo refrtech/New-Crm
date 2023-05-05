@@ -7,6 +7,7 @@ import { take } from 'rxjs';
 import { ApiserviceService } from 'src/app/apiservice.service';
 import { ExcelexportService } from 'src/app/excelexport.service';
 import { TransactionDetailsComponent } from '../transaction-details/transaction-details.component';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-orders',
@@ -97,7 +98,8 @@ export class OrdersComponent implements OnInit {
   constructor(
     private apiservice: ApiserviceService,
     private excelservice: ExcelexportService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private auth:AuthService,
   ) {}
 
   ngOnInit(): void {}
@@ -129,7 +131,7 @@ export class OrdersComponent implements OnInit {
         this.searchvalue = "CASH";
       }
       else {
-        alert("please select the option.");
+        this.auth.resource.startSnackBar("please select the option.");
         return;
       }
     }
@@ -172,7 +174,7 @@ export class OrdersComponent implements OnInit {
         this.searchvalue = "CASH";
       }
       else {
-        alert("please select the option.");
+        this.auth.resource.startSnackBar("please select the option.");
         return;
       }
     }

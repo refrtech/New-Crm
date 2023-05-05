@@ -157,7 +157,7 @@ export class BrandSpotlightComponent implements OnInit {
   //     this.editTitle = !this.editTitle;
   //   } else {
   //     if (!this.SectionTitle) {
-  //       alert('please enter the Title.');
+  //       this.auth.resource.startSnackBar('please enter the Title.');
   //     } else {
   //       this.api
   //         .updateBStitle(this.SectionTitle, this.BSmoduledata.id)
@@ -179,7 +179,7 @@ export class BrandSpotlightComponent implements OnInit {
   //     this.editSubt = !this.editSubt;
   //   } else {
   //     if (!this.brandspotST) {
-  //       alert('please enter the sub Title.');
+  //       this.auth.resource.startSnackBar('please enter the sub Title.');
   //     } else {
   //       this.api
   //         .updateBSStitle(this.brandspotST, this.BSmoduledata.id)

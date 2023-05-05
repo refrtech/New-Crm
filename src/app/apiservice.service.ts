@@ -1450,15 +1450,15 @@ export class ApiserviceService {
   //     });
   // }
 
-  addBIYNstores(nodes: any, id: any) {
-    const cityrefr = doc(this.firestore, `${'BIYN_section'}`, `${id}`);
-    return updateDoc(cityrefr, { Nodes: arrayUnion(nodes) });
-  }
+  // addBIYNstores(nodes: any, id: any) {
+  //   const cityrefr = doc(this.firestore, `${'BIYN_section'}`, `${id}`);
+  //   return updateDoc(cityrefr, { Nodes: arrayUnion(nodes) });
+  // }
 
-  editBIYNstores(nodes: any, id: any) {
-    const cityrefr = doc(this.firestore, `${'BIYN_section'}`, `${id}`);
-    return updateDoc(cityrefr, { Nodes: nodes });
-  }
+  // editBIYNstores(nodes: any, id: any) {
+  //   const cityrefr = doc(this.firestore, `${'BIYN_section'}`, `${id}`);
+  //   return updateDoc(cityrefr, { Nodes: nodes });
+  // }
 
   // async addBIYN(data: any) {
   //   const addedcity = await addDoc(collection(this.firestore, "BIYN_section"), data).then(ref => {
@@ -1471,44 +1471,44 @@ export class ApiserviceService {
 
   // NSIYH section start
 
-  getNSIYHData() {
-    const VSA_section: CollectionReference = collection(
-      this.firestore,
-      `${'NSIYH_section'}`
-    );
-    const qu = query(VSA_section);
-    return collectionData(qu);
-  }
+  // getNSIYHData() {
+  //   const VSA_section: CollectionReference = collection(
+  //     this.firestore,
+  //     `${'NSIYH_section'}`
+  //   );
+  //   const qu = query(VSA_section);
+  //   return collectionData(qu);
+  // }
 
-  updateNSIYHtitle(Title: string, id: any) {
-    const cityrefr = doc(this.firestore, `${'NSIYH_section'}`, `${id}`);
-    return updateDoc(cityrefr, { NSIYH_Title: Title })
-      .then((datas: any) => {
-        if (datas) {
-          return 'issue in update title.';
-        } else {
-          return 'title updated.';
-        }
-      })
-      .catch((err) => {
-        return false;
-      });
-  }
+  // updateNSIYHtitle(Title: string, id: any) {
+  //   const cityrefr = doc(this.firestore, `${'NSIYH_section'}`, `${id}`);
+  //   return updateDoc(cityrefr, { NSIYH_Title: Title })
+  //     .then((datas: any) => {
+  //       if (datas) {
+  //         return 'issue in update title.';
+  //       } else {
+  //         return 'title updated.';
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       return false;
+  //     });
+  // }
 
-  updateNSIYHStitle(STitle: string, id: any) {
-    const cityrefr = doc(this.firestore, `${'NSIYH_section'}`, `${id}`);
-    return updateDoc(cityrefr, { NSIYH_STitle: STitle })
-      .then((datas: any) => {
-        if (datas) {
-          return 'issue in update Sub-title.';
-        } else {
-          return 'Sub-title updated.';
-        }
-      })
-      .catch((err) => {
-        return false;
-      });
-  }
+  // updateNSIYHStitle(STitle: string, id: any) {
+  //   const cityrefr = doc(this.firestore, `${'NSIYH_section'}`, `${id}`);
+  //   return updateDoc(cityrefr, { NSIYH_STitle: STitle })
+  //     .then((datas: any) => {
+  //       if (datas) {
+  //         return 'issue in update Sub-title.';
+  //       } else {
+  //         return 'Sub-title updated.';
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       return false;
+  //     });
+  // }
 
   addNSIYHstores(nodes: any, id: any) {
     const cityrefr = doc(this.firestore, `${'NSIYH_section'}`, `${id}`);
@@ -1531,54 +1531,54 @@ export class ApiserviceService {
 
   // Daily drop start
 
-  getDailydropdata() {
-    const VSA_section: CollectionReference = collection(
-      this.firestore,
-      `${'dailyDrop_section'}`
-    );
-    const qu = query(VSA_section);
-    return collectionData(qu);
-  }
+  // getDailydropdata() {
+  //   const VSA_section: CollectionReference = collection(
+  //     this.firestore,
+  //     `${'dailyDrop_section'}`
+  //   );
+  //   const qu = query(VSA_section);
+  //   return collectionData(qu);
+  // }
 
-  updateDailydroptitle(Title: string, id: any) {
-    const cityrefr = doc(this.firestore, `${'dailyDrop_section'}`, `${id}`);
-    return updateDoc(cityrefr, { DDrop_Title: Title })
-      .then((datas: any) => {
-        if (datas) {
-          return 'issue in update title.';
-        } else {
-          return 'title updated.';
-        }
-      })
-      .catch((err) => {
-        return false;
-      });
-  }
+  // updateDailydroptitle(Title: string, id: any) {
+  //   const cityrefr = doc(this.firestore, `${'dailyDrop_section'}`, `${id}`);
+  //   return updateDoc(cityrefr, { DDrop_Title: Title })
+  //     .then((datas: any) => {
+  //       if (datas) {
+  //         return 'issue in update title.';
+  //       } else {
+  //         return 'title updated.';
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       return false;
+  //     });
+  // }
 
-  updateDailydropStitle(STitle: string, id: any) {
-    const cityrefr = doc(this.firestore, `${'dailyDrop_section'}`, `${id}`);
-    return updateDoc(cityrefr, { DDrop_STitle: STitle })
-      .then((datas: any) => {
-        if (datas) {
-          return 'issue in update Sub-title.';
-        } else {
-          return 'Sub-title updated.';
-        }
-      })
-      .catch((err) => {
-        return false;
-      });
-  }
+  // updateDailydropStitle(STitle: string, id: any) {
+  //   const cityrefr = doc(this.firestore, `${'dailyDrop_section'}`, `${id}`);
+  //   return updateDoc(cityrefr, { DDrop_STitle: STitle })
+  //     .then((datas: any) => {
+  //       if (datas) {
+  //         return 'issue in update Sub-title.';
+  //       } else {
+  //         return 'Sub-title updated.';
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       return false;
+  //     });
+  // }
 
-  addDailydropstores(nodes: any, id: any) {
-    const cityrefr = doc(this.firestore, `${'dailyDrop_section'}`, `${id}`);
-    return updateDoc(cityrefr, { Nodes: arrayUnion(nodes) });
-  }
+  // addDailydropstores(nodes: any, id: any) {
+  //   const cityrefr = doc(this.firestore, `${'dailyDrop_section'}`, `${id}`);
+  //   return updateDoc(cityrefr, { Nodes: arrayUnion(nodes) });
+  // }
 
-  editDailydropstores(nodes: any, id: any) {
-    const cityrefr = doc(this.firestore, `${'dailyDrop_section'}`, `${id}`);
-    return updateDoc(cityrefr, { Nodes: nodes });
-  }
+  // editDailydropstores(nodes: any, id: any) {
+  //   const cityrefr = doc(this.firestore, `${'dailyDrop_section'}`, `${id}`);
+  //   return updateDoc(cityrefr, { Nodes: nodes });
+  // }
 
   // info slide start
 
@@ -1760,6 +1760,33 @@ export class ApiserviceService {
           });
       } else if (section == 'homegrown') {
         return updateDoc(Shoprefr, { HGBanner: cloudUpload.url })
+          .then((datas: any) => {
+            return 'Banner Uploaded';
+          })
+          .catch((err) => {
+            return false;
+          });
+      }
+      else if(section == 'DailyDrop'){
+        return updateDoc(Shoprefr, { DailyDropBanner: cloudUpload.url })
+          .then((datas: any) => {
+            return 'Banner Uploaded';
+          })
+          .catch((err) => {
+            return false;
+          });
+      }
+      else if(section == 'NSIYH'){
+        return updateDoc(Shoprefr, { NSIYHBanner: cloudUpload.url })
+          .then((datas: any) => {
+            return 'Banner Uploaded';
+          })
+          .catch((err) => {
+            return false;
+          });
+      }
+      else if(section == 'Categores'){
+        return updateDoc(Shoprefr, { CategoresBanner: cloudUpload.url })
           .then((datas: any) => {
             return 'Banner Uploaded';
           })
@@ -2049,7 +2076,7 @@ export class ApiserviceService {
     }
   }
 
-  gethomegrownCat_Subcatdata(
+  getDataCat_Subcatdata(
     sectionname: string,
     Catid: string,
     ContainerType: string

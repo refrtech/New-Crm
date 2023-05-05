@@ -157,13 +157,13 @@
               {{item.name}}
             </div>
             <div class="M25width l_align">
-              {{item.cat}}
+              {{api.getCat(item.cat)}}
             </div>
             <div class="M25width c_align dflex JCcenter">
               <a (click)="deletestore(1,item.sectionid)" class="r20margin">
                 <mat-icon class="black_text">delete</mat-icon>
               </a>
-              <a (click)="takePicture('3:4','peopleCstorebanner',item.sectionid)">
+              <a (click)="takePicture('3:4','peopleCstorebanner',item.id)">
                 <mat-icon class="black_text">photo_camera</mat-icon>
               </a>
             </div>
@@ -264,13 +264,13 @@
               {{item.name}}
             </div>
             <div class="M25width l_align">
-              {{item.cat}}
+              {{api.getCat(item.cat)}}
             </div>
             <div class="M25width c_align dflex JCcenter">
               <a (click)="deletestore(2,item.sectionid)" class="r20margin">
                 <mat-icon class="black_text">delete</mat-icon>
               </a>
-              <a (click)="takePicture('16:9','trendingstorebanner',item.sectionid)">
+              <a (click)="takePicture('16:9','trendingstorebanner',item.id)">
                 <mat-icon class="black_text">photo_camera</mat-icon>
               </a>
             </div>
@@ -332,7 +332,7 @@
           <div *ngIf="row.type == 'Both' ">Hybrid</div>
           <div *ngIf="row.type == 'Onli' ">Online</div>
           <div *ngIf="row.type == 'Offl' ">Offline</div>
-          <div class="gray_txt xxs_size">{{row.cat}}</div>
+          <div class="gray_txt xxs_size">{{api.getCat(row.cat)}}</div>
         </td>
       </ng-container>
       <ng-container matColumnDef="city">
@@ -371,13 +371,13 @@
               {{item.name}}
             </div>
             <div class="M25width l_align">
-              {{item.cat}}
+              {{api.getCat(item.cat)}}
             </div>
             <div class="M25width c_align dflex JCcenter">
               <a (click)="deletestore(2,item.sectionid)" class="r20margin">
                 <mat-icon class="black_text">delete</mat-icon>
               </a>
-              <a (click)="takePicture('1:1','trendingstorebanner',item.sectionid)">
+              <a (click)="takePicture('1:1','trendingstorebanner',item.id)">
                 <mat-icon class="black_text">photo_camera</mat-icon>
               </a>
             </div>
@@ -460,7 +460,7 @@
     <tr class="mat-row" *matNoDataRow>
     </tr>
   </table>
-  <div *ngIf="homegrownproducts.length > 0" class="t15margin boxshw">
+  <div *ngIf="products.length > 0" class="t15margin boxshw">
     <div class="dflex JCevenly M100width tb15padding s_size purple_background c_white">
       <div class="M10width c_align">Rank</div>
       <div class="regulartext M40width">Store Name</div>
@@ -470,7 +470,7 @@
     <div>
       <div class="example-container M100width">
         <div class="example-list">
-          <div class="example-box tborder s_size dflex tb10padding" *ngFor="let item of homegrownproducts">
+          <div class="example-box tborder s_size dflex tb10padding" *ngFor="let item of products">
             <div class="M10width dflex JCcenter">
               <mat-icon>menu</mat-icon>
             </div>
@@ -478,13 +478,13 @@
               {{item.name}}
             </div>
             <div class="M25width l_align">
-              {{item.cat}}
+              {{api.getCat(item.cat)}}
             </div>
             <div class="M25width c_align dflex JCcenter">
               <a (click)="deletestore(3,item.Docid)" class="r20margin">
                 <mat-icon class="black_text">delete</mat-icon>
               </a>
-              <a (click)="takePicture('1:1','productsbanner',item.Docid)">
+              <a (click)="takePicture('1:1','productsbanner',item.id)">
                 <mat-icon class="black_text">photo_camera</mat-icon>
               </a>
             </div>

@@ -57,7 +57,6 @@ export class BrandsstoreComponent implements OnInit {
         .pipe(take(1))
         .subscribe((data: any) => {
           this.BIYNDataId = data[0]?.id;
-
           this.api
             .getStoresbyIds(data[0]?.Stores)
             .subscribe((data: any) => {

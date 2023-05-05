@@ -91,27 +91,28 @@
     <div class="t50margin">
         <div class="dflex">
             <div class="boxshw M100width">
-                <div class="dflex JCevenly M100width tb15padding s_size">
-                    <div class="regulartext M30width l15padding">Store name</div>
+                <div class="dflex JCevenly M100width tb15padding s_size purple_background c_white">
+                    <div class="regulartext M30width">
+                      <span class="l15padding">Store name</span></div>
                     <div class="regulartext M20width c_align">Category</div>
                     <div class="M25width"></div>
                     <div class="regulartext M25width c_align">Action</div>
                 </div>
                 <div cdkDropListGroup>
-                  <div class="example-container M100width" *ngIf="storelist$ | async as storelist">
+                  <div class="example-container M100width" *ngIf="storelist.length > 0">
                     <div cdkDropList class="example-list">
                         <ng-container *ngFor="let item of storelist,let i= index">
                             <div class="example-box tborder dflex s_size White_bg">
-                                <div class="M30width l_align l15padding">
-                                    {{item.name}}
+                                <div class="M30width l_align">
+                                  <span class="l15padding">{{item.name}}</span>
                                 </div>
                                 <div class="M20width c_align">
-                                    {{item.cat}}
+                                    {{api.getCat(item.cat)}}
                                 </div>
                                 <div class="M25width"></div>
                                 <div class="M25width c_align">
-                                  <mat-icon class="black_text" (click)="deletestore(item.Docid)">delete</mat-icon>
-                                  <mat-icon class="black_text" (click)="takePicture('16:9','banner',item.Docid,item)">image</mat-icon>
+                                  <mat-icon class="black_text" (click)="deletestore(item.id)">delete</mat-icon>
+                                  <mat-icon class="black_text" (click)="takePicture('16:9','banner',item.id)">image</mat-icon>
                                 </div>
                             </div>
                         </ng-container>

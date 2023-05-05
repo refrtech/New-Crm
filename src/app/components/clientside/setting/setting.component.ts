@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiserviceService } from 'src/app/apiservice.service';
 import { AddcityAndAreaComponent } from './addcity-and-area/addcity-and-area.component';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-setting',
@@ -13,7 +14,7 @@ export class SettingComponent implements OnInit {
   areaarr: Array<any> = [];
 
   constructor(public api: ApiserviceService,
-    private dialog: MatDialog,
+    private dialog: MatDialog,private auth:AuthService
   ) { }
 
   ngOnInit(): void {
@@ -22,7 +23,7 @@ export class SettingComponent implements OnInit {
 
   deletecity(id: any) {
     if (id == undefined) {
-      alert("invalid data");
+      this.auth.resource.startSnackBar("invalid data");
     }
     else {
     }
@@ -30,11 +31,11 @@ export class SettingComponent implements OnInit {
 
   deletearea(id: any) {
     if (id == undefined) {
-      alert("invalid data");
+      this.auth.resource.startSnackBar("invalid data");
     }
     else {
       this.api.deletearea(id).then((data: any) => {
-        alert("area deleted");
+        this.auth.resource.startSnackBar("Area deleted");
       });
     }
   }

@@ -20,10 +20,10 @@
                     </div>
                     <div>
                         <mat-form-field class="crminput l5margin r5margin M80width Editableinput" appearance="outline">
-                            <input type="text" [(ngModel)]="NSIYHTitle" matInput placeholder="Enter the module name"
+                            <input type="text" [(ngModel)]="SectionTitle" matInput placeholder="Enter the module name"
                                 [disabled]="!editTitle">
                             <button matSuffix mat-icon-button aria-label="Clear" class="purple_background"
-                                (click)="updateNSIYHTitle()">
+                                (click)="updateSectionDetails(1)">
                                 <mat-icon>
                                     {{editTitle ? 'check': 'edit'}}
                                 </mat-icon>
@@ -37,10 +37,10 @@
                     </div>
                     <div>
                         <mat-form-field class="crminput l5margin r5margin M80width Editableinput" appearance="outline">
-                            <input type="text" [(ngModel)]="NSIYHSTitle" matInput placeholder="Enter the subtext name"
+                            <input type="text" [(ngModel)]="SectionSTitle" matInput placeholder="Enter the subtext name"
                                 [disabled]="!editSubt">
                             <button matSuffix mat-icon-button aria-label="Clear" class="purple_background"
-                                (click)="updateNSIYHTSTitle()">
+                                (click)="updateSectionDetails(2)">
                                 <mat-icon>
                                     {{editSubt ? 'check': 'edit'}}
                                 </mat-icon>
@@ -96,8 +96,12 @@
         </div>
     </div>
     <div class="t50margin boxshw">
-        <div class="dflex M100width tb15padding s_size">
-            <div class="regulartext M20width l10padding">Node name</div>
+        <div class="dflex M100width tb15padding s_size purple_background c_white">
+            <div class="regulartext M20width">
+              <span class="l10padding">
+                Node name
+              </span>
+            </div>
             <div class="regulartext M10width c_align">No of stores</div>
             <div class="regulartext M50width c_align"></div>
             <div class="regulartext M20width c_align">Action</div>
@@ -108,8 +112,10 @@
                 <ng-container *ngFor="let item of nodes">
                   <ng-container *ngIf="item.city_id == Selectedcity">
                     <div class="dflex tborder s_size tb15padding">
-                      <div class="regulartext M20width l10padding">
+                      <div class="regulartext M20width">
+                        <span class="l10padding">
                         {{item.name}}
+                      </span>
                       </div>
                       <div class="regulartext M10width c_align">
                         {{item.storecount}}

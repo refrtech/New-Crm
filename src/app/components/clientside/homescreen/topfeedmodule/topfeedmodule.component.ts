@@ -41,7 +41,7 @@ export class TopfeedmoduleComponent implements OnInit {
 
   deleteVid(id: any) {
     if (id == undefined) {
-      alert('invalid data');
+      this.auth.resource.startSnackBar('invalid data');
     } else {
       let isPhone = this.auth.resource.getWidth < 768;
       let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';

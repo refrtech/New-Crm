@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, of, take } from 'rxjs';
 import { ApiserviceService } from 'src/app/apiservice.service';
 import { DaildropsbrandsComponent } from './daildropsbrands/daildropsbrands.component';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-dailydrops',
@@ -10,8 +11,8 @@ import { DaildropsbrandsComponent } from './daildropsbrands/daildropsbrands.comp
   styleUrls: ['./dailydrops.component.scss'],
 })
 export class DailydropsComponent implements OnInit {
-  DailydropTitle: string = '';
-  DailydropSTitle: string = '';
+  SectionTitle: string = '';
+  SectionSTitle: string = '';
   editSubt: boolean = false;
   editTitle: boolean = false;
   Selectedcity: string = '';
@@ -22,7 +23,7 @@ export class DailydropsComponent implements OnInit {
   dailydropmoduledata: any = [];
   alreadyCnodes$: Observable<any[]> = of();
 
-  constructor(public dialog: MatDialog, public api: ApiserviceService) {}
+  constructor(public dialog: MatDialog, public api: ApiserviceService, private auth:AuthService) {}
 
   ngOnInit(): void {
     this.getDailydropdata();
@@ -31,9 +32,9 @@ export class DailydropsComponent implements OnInit {
 
   allstores(creatednode?: any) {
     if (this.Selectedcity == '') {
-      alert('please select city.');
+      this.auth.resource.startSnackBar('please select city.');
     } else if (creatednode == undefined && this.Selectednode == '') {
-      alert('please select node.');
+      this.auth.resource.startSnackBar('please select node.');
     } else {
       const dialogRef = this.dialog.open(DaildropsbrandsComponent, {
         width: '90%',
@@ -56,32 +57,49 @@ export class DailydropsComponent implements OnInit {
 
   getDailydropdata() {
     this.api
-      .getDailydropdata()
+      .getSectionData('DailyDrop')
       .pipe(take(1))
       .subscribe((daildropsdata: any) => {
         this.dailydropmoduledata = daildropsdata[0];
-        this.DailydropTitle = daildropsdata[0].DDrop_Title;
-        this.DailydropSTitle = daildropsdata[0].DDrop_STitle;
+        this.SectionTitle = daildropsdata[0]?.Section_title;
+        this.SectionSTitle = daildropsdata[0]?.Section_Stitle;
       });
   }
 
-  updateNSIYHTitle() {
-    if (!this.editTitle) {
+  updateSectionDetails(i: number) {
+    if (i == 1 && !this.editTitle) {
       this.editTitle = !this.editTitle;
-    } else if (this.DailydropTitle == this.dailydropmoduledata.DDrop_Title) {
+    } else if (i == 2 && !this.editSubt) {
+      this.editSubt = !this.editSubt;
+    } else if (
+      i == 1 &&
+      this.SectionTitle == this.dailydropmoduledata.Section_title
+    ) {
       this.editTitle = !this.editTitle;
+    } else if (
+      i == 2 &&
+      this.SectionSTitle == this.dailydropmoduledata.Section_Stitle
+    ) {
+      this.editSubt = !this.editSubt;
     } else {
-      if (!this.DailydropTitle) {
-        alert('please enter the Title.');
+      if (i == 1 && !this.SectionTitle) {
+        this.auth.resource.startSnackBar('Please enter the Title.');
+      } else if (i == 2 && !this.SectionSTitle) {
+        this.auth.resource.startSnackBar('Please enter the sub Title.');
       } else {
         this.api
-          .updateDailydroptitle(
-            this.DailydropTitle,
-            this.dailydropmoduledata.id
+          .updateSectionData(
+            i,
+            this.dailydropmoduledata.SectionID,
+            i == 1 ? this.SectionTitle : this.SectionSTitle
           )
           .then((data) => {
             if (data != undefined) {
-              this.editTitle = !this.editTitle;
+              if (i == 1) {
+                this.editTitle = !this.editTitle;
+              } else {
+                this.editSubt = !this.editSubt;
+              }
             }
           })
           .catch(() => {
@@ -91,30 +109,56 @@ export class DailydropsComponent implements OnInit {
     }
   }
 
-  updateNSIYHTSTitle() {
-    if (!this.editSubt) {
-      this.editSubt = !this.editSubt;
-    } else if (this.DailydropSTitle == this.dailydropmoduledata.DDrop_STitle) {
-      this.editSubt = !this.editSubt;
-    } else {
-      if (!this.DailydropSTitle) {
-        alert('please enter the sub Title.');
-      } else {
-        this.api
-          .updateDailydropStitle(
-            this.DailydropSTitle,
-            this.dailydropmoduledata.id
-          )
-          .then((data) => {
-            if (data != undefined) {
-            }
-          })
-          .catch(() => {
-            return false;
-          });
-      }
-    }
-  }
+  // updateNSIYHTitle() {
+  //   if (!this.editTitle) {
+  //     this.editTitle = !this.editTitle;
+  //   } else if (this.DailydropTitle == this.dailydropmoduledata.DDrop_Title) {
+  //     this.editTitle = !this.editTitle;
+  //   } else {
+  //     if (!this.DailydropTitle) {
+  //       this.auth.resource.startSnackBar('please enter the Title.');
+  //     } else {
+  //       this.api
+  //         .updateDailydroptitle(
+  //           this.DailydropTitle,
+  //           this.dailydropmoduledata.id
+  //         )
+  //         .then((data) => {
+  //           if (data != undefined) {
+  //             this.editTitle = !this.editTitle;
+  //           }
+  //         })
+  //         .catch(() => {
+  //           return false;
+  //         });
+  //     }
+  //   }
+  // }
+
+  // updateNSIYHTSTitle() {
+  //   if (!this.editSubt) {
+  //     this.editSubt = !this.editSubt;
+  //   } else if (this.DailydropSTitle == this.dailydropmoduledata.DDrop_STitle) {
+  //     this.editSubt = !this.editSubt;
+  //   } else {
+  //     if (!this.DailydropSTitle) {
+  //       this.auth.resource.startSnackBar('please enter the sub Title.');
+  //     } else {
+  //       this.api
+  //         .updateDailydropStitle(
+  //           this.DailydropSTitle,
+  //           this.dailydropmoduledata.id
+  //         )
+  //         .then((data) => {
+  //           if (data != undefined) {
+  //           }
+  //         })
+  //         .catch(() => {
+  //           return false;
+  //         });
+  //     }
+  //   }
+  // }
 
   citychange() {
     let alreadyCnode: Array<any> = [];
@@ -125,10 +169,11 @@ export class DailydropsComponent implements OnInit {
       .subscribe((data: any) => {
         for (let i = 0; i < data.length; i++) {
           this.api
-            .getstorecount('dailydropsection', this.Selectedcity, data[i].id)
-            .then((datas: any) => {
-              if (datas > 0) {
-                data[i].storecount = datas;
+            .getstoreaspernode('DailydropSection', data[i].id)
+            .pipe(take(1))
+            .subscribe((datas: any) => {
+              if (datas.length > 0) {
+                data[i].storecount = datas[0]?.Stores.length;
                 alreadyCnode.push(data[i]);
               } else {
                 newnodes.push(data[i]);

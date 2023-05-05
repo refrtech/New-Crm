@@ -38,9 +38,11 @@ export class DaildropsbrandsComponent implements OnInit {
     'city',
     'action',
   ];
-  storelist$: Observable<any[]> = of();
+  storelist: Array<any> = [];
+
 
   MerchantdataSource!: MatTableDataSource<any>;
+  daildropDataId:string="";
   constructor(
     public api: ApiserviceService,
     public dialogRef: MatDialogRef<DaildropsbrandsComponent>,
@@ -51,22 +53,77 @@ export class DaildropsbrandsComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.data.selectednode != undefined) {
-      this.api
-        .getstoreaspernode('dailydropsection', this.data.selectednode.id)
+      // this.api
+      //   .getstoreaspernode('dailydropsection', this.data.selectednode.id)
+      //   .subscribe((data: any) => {
+      //     this.storelist$ = of(data);
+      //   });
+
+        this.api
+        .getstoreaspernode('DailydropSection', this.data.selectednode?.id)
+        .pipe(take(1))
         .subscribe((data: any) => {
-          this.storelist$ = of(data);
+          this.daildropDataId = data[0]?.id;
+          this.api
+            .getStoresbyIds(data[0]?.Stores)
+            .subscribe((data: any) => {
+              console.log(data);
+              this.storelist = data;
+            });
         });
+
     }
   }
 
   action(data: any) {
-    data.city_id = this.data.cityid;
-    data.nodeid = this.data.selectednode == undefined ? this.data.node.id : this.data.selectednode.id;
-    data.sectionname = 'dailydropsection';
-    this.api.addstorewithnodeid(data).then((data:any)=>{
+    // data.city_id = this.data.cityid;
+    // data.nodeid = this.data.selectednode == undefined ? this.data.node.id : this.data.selectednode.id;
+    // data.sectionname = 'dailydropsection';
+    // this.api.addstorewithnodeid(data).then((data:any)=>{
+    //   this.isstorealreadyadded = true;
+    //   this.auth.resource.startSnackBar("store added");
+    // });
+    if (this.isstorealreadyadded == true) {
+      if (this.storelist.length == 1) {
+        this.api.deletestoresectiondata(this.daildropDataId).then(() => {
+          this.storelist = [];
+          this.close();
+        });
+      } else {
+        this.api
+          .AddORRemoveSectionStores(2, data.id, this.daildropDataId)
+          .then(() => {
+            let i = this.storelist.findIndex((x: any) => x.id == data.id);
+            this.storelist.splice(i, 1);
+          });
+      }
+      this.isstorealreadyadded = false;
+    } else {
+      if (this.data.selectednode != undefined) {
+        this.api
+          .AddORRemoveSectionStores(1, data.id, this.daildropDataId)
+          .then(() => {
+            this.storelist.push(data);
+          });
+      } else {
+        let datas = {
+          Stores: [data.id],
+          C_Date: this.api.newTimestamp,
+          M_Date: this.api.newTimestamp,
+          SectionName: 'DailydropSection',
+          CityId: this.data.cityid,
+          NodeId:
+            this.data.selectednode == undefined
+              ? this.data.node.id
+              : this.data.selectednode.id,
+        };
+        this.api.adddatatosectionstore(datas).then(() => {
+          this.storelist.push(data);
+          this.api.startSnackBar('Store Added');
+        });
+      }
       this.isstorealreadyadded = true;
-      alert("store added");
-    });
+    }
   }
 
   close() {
@@ -85,11 +142,16 @@ export class DaildropsbrandsComponent implements OnInit {
       )
       .pipe(take(1))
       .subscribe((recentStore: any) => {
+        if(recentStore.length == 0 ){
+          this.auth.resource.startSnackBar('No Store found.');
+        }
+        else {
         this.MerchantdataSource = new MatTableDataSource(recentStore);
+      }
       });
   }
 
-  async takePicture(ratio:string,type: string, id: string, item: any) {
+  async takePicture(ratio:string,type: string, Storeid: string) {
     const image = await Camera.getPhoto({
       quality: 100,
       height: 300,
@@ -99,11 +161,11 @@ export class DaildropsbrandsComponent implements OnInit {
     });
     const imageUrl = image.webPath || '';
     if (imageUrl) {
-      this.startCropper(ratio,imageUrl, type, id, item);
+      this.startCropper(ratio,imageUrl, type, Storeid);
     }
   }
 
-  async startCropper(ratio:string,webPath: string, type: string, id: string, item: any) {
+  async startCropper(ratio:string,webPath: string, type: string, Storeid: string) {
     let isPhone = this.auth.resource.getWidth < 768;
     let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
     const refDialog = this.auth.resource.dialog.open(CropperComponent, {
@@ -122,19 +184,35 @@ export class DaildropsbrandsComponent implements OnInit {
         }
       } else {
         if (type == 'banner') {
+          // this.api
+          //   .updatestorewithnodebanner(id, result.croppedImage)
+          //   .then((data: any) => {
+          //     this.auth.resource.startSnackBar('banner uploaded');
+          //   });
           this.api
-            .updatestorewithnodebanner(id, result.croppedImage)
-            .then((data: any) => {
-              alert('banner uploaded');
-            });
+          .updateSectionStorebanner('DailyDrop',Storeid, result.croppedImage)
+          .then((data: any) => {
+            this.auth.resource.startSnackBar('banner uploaded');
+          });
         }
       }
     });
   }
 
   deletestore(id: string) {
-    this.api.deletestorefromnodes(id).then((data: any) => {
-      alert('store deleted');
-    });
+    // this.api.deletestorefromnodes(id).then((data: any) => {
+    //   this.auth.resource.startSnackBar('store deleted');
+    // });
+    if (this.storelist.length == 1) {
+      this.api.deletestoresectiondata(this.daildropDataId).then(() => {
+        this.storelist = [];
+        this.close();
+      });
+    } else {
+      this.api.AddORRemoveSectionStores(2, id, this.daildropDataId).then(() => {
+        let i = this.storelist.findIndex((x: any) => x.id == id);
+        this.storelist.splice(i, 1);
+      });
+    }
   }
 }

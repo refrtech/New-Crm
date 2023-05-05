@@ -62,9 +62,9 @@ export class HomegrowbrandsComponent implements OnInit {
 
   // addhomegrownbrand() {
   //   if (!this.homegrownT) {
-  //     alert('please enter the Title.');
+  //     this.auth.resource.startSnackBar('please enter the Title.');
   //   } else if (!this.homegrownST) {
-  //     alert('please enter the Sub-Title.');
+  //     this.auth.resource.startSnackBar('please enter the Sub-Title.');
   //   } else {
   //     let datas = {
   //       HG_Title: this.homegrownT,
@@ -77,7 +77,7 @@ export class HomegrowbrandsComponent implements OnInit {
   //       .addstore_homegrown(datas)
   //       .then((data) => {
   //         if (data != undefined) {
-  //           alert('city added');
+  //           this.auth.resource.startSnackBar('city added');
   //         }
   //       })
   //       .catch(() => {
@@ -180,7 +180,7 @@ export class HomegrowbrandsComponent implements OnInit {
   //     this.editTitle = !this.editTitle;
   //   } else {
   //     if (!this.homegrownT) {
-  //       alert('please enter the Title.');
+  //       this.auth.resource.startSnackBar('please enter the Title.');
   //     } else {
   //       this.api
   //         .updateHGtitle(this.homegrownT, this.HGmoduledata.id)
@@ -202,7 +202,7 @@ export class HomegrowbrandsComponent implements OnInit {
   //     this.editSubt = !this.editSubt;
   //   } else {
   //     if (!this.homegrownST) {
-  //       alert('please enter the sub Title.');
+  //       this.auth.resource.startSnackBar('please enter the sub Title.');
   //     } else {
   //       this.api
   //         .updateHGStitle(this.homegrownST, this.HGmoduledata.id)

@@ -86,7 +86,7 @@ export class VisitallstoredetailsComponent implements OnInit {
     data.sectionname = 'VSAsection';
     this.api.addstorewithnodeid(data).then((data: any) => {
       this.isstorealreadyadded = true;
-      alert('store added');
+      this.auth.resource.startSnackBar('Store added');
     });
   }
 
@@ -136,7 +136,7 @@ export class VisitallstoredetailsComponent implements OnInit {
           this.api
             .updatestorewithnodebanner(id, result.croppedImage)
             .then((data: any) => {
-              alert('banner uploaded');
+              this.auth.resource.startSnackBar('Banner uploaded');
             });
         }
       }
@@ -145,7 +145,7 @@ export class VisitallstoredetailsComponent implements OnInit {
 
   deletestore(id: string) {
     this.api.deletestorefromnodes(id).then((data: any) => {
-      alert('store deleted');
+      this.auth.resource.startSnackBar('store deleted');
     });
   }
 }

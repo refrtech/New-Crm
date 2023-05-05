@@ -438,7 +438,7 @@ export class VSAnodesubcatstoresComponent implements OnInit {
       this.editpeoplechoice = !this.editpeoplechoice;
     } else {
       if (this.peoplechoicecatpara == '') {
-        alert('please enter the People choice.');
+        this.auth.resource.startSnackBar('please enter the People choice.');
       } else {
 
         if (this.actRoute.snapshot.params['catid'] == 'in_the_mix') {

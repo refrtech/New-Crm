@@ -43,9 +43,9 @@ export class BrandsneighbourhoodComponent implements OnInit {
 
   allstores(creatednode?: any) {
     if (this.Selectedcity == '') {
-      alert('please select city.');
+      this.auth.resource.startSnackBar('please select city.');
     } else if (creatednode == undefined && this.Selectednode == '') {
-      alert('please select node.');
+      this.auth.resource.startSnackBar('please select node.');
     } else {
       const dialogRef = this.dialog.open(BrandsstoreComponent, {
         width: '90%',
@@ -71,7 +71,6 @@ export class BrandsneighbourhoodComponent implements OnInit {
       .getSectionData('BIYNDetails')
       .pipe(take(1))
       .subscribe((BNdata: any) => {
-        console.log('BNdata', BNdata);
         this.BIYNmoduledata = BNdata[0];
         this.SectionTitle = this.BIYNmoduledata.Section_title;
         this.SectionSTitle = this.BIYNmoduledata.Section_Stitle;
@@ -95,9 +94,9 @@ export class BrandsneighbourhoodComponent implements OnInit {
       this.editSubt = !this.editSubt;
     } else {
       if (i == 1 && !this.SectionTitle) {
-        this.auth.resource.startSnackBar('please enter the Title.');
+        this.auth.resource.startSnackBar('Please enter the Title.');
       } else if (i == 2 && !this.SectionSTitle) {
-        this.auth.resource.startSnackBar('please enter the sub Title.');
+        this.auth.resource.startSnackBar('Please enter the sub Title.');
       } else {
         this.api
           .updateSectionData(
@@ -130,7 +129,7 @@ export class BrandsneighbourhoodComponent implements OnInit {
   //   }
   //   else {
   //     if (!this.BIYNSTitle) {
-  //       alert("please enter the sub Title.");
+  //       this.auth.resource.startSnackBar("please enter the sub Title.");
   //     }
   //     else {
   //       this.api.updateBIYNStitle(this.BIYNSTitle, this.BIYNmoduledata.id).then((data) => {

@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { take } from 'rxjs';
+import { AuthService } from 'src/app/auth.service';
 
 export interface dropdwontype {
   Area_N: String;
@@ -39,7 +40,8 @@ export class AddnodeComponent implements OnInit {
   constructor(
     public api: ApiserviceService,
     public dialogRef: MatDialogRef<AddnodeComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private auth:AuthService
   ) {
     if (this.data.id == 2) {
       this.dropdownList = this.data.Areas;
@@ -108,11 +110,11 @@ export class AddnodeComponent implements OnInit {
       (x: any) => x.name == 'Node - ' + this.Nodename.toUpperCase()
     );
     if (index >= 0) {
-      alert('Node name already exist.');
+      this.auth.resource.startSnackBar('Node name already exist.');
     } else if (this.Nodename == undefined || this.Nodename == '') {
-      alert('Please enter the node name.');
+      this.auth.resource.startSnackBar('Please enter the node name.');
     } else if (this.cityindex == undefined || this.cityindex == -1) {
-      alert('please select the city');
+      this.auth.resource.startSnackBar('please select the city');
     } else {
       let datas = {
         city: this.cityarr[this.cityindex].CityN,
@@ -129,11 +131,11 @@ export class AddnodeComponent implements OnInit {
 
   async updatenode() {
     if (this.Nodename == undefined) {
-      alert('Please enter the node name.');
+      this.auth.resource.startSnackBar('Please enter the node name.');
     } else if (this.cityindex == undefined) {
-      alert('please select the city');
+      this.auth.resource.startSnackBar('please select the city');
     } else if (this.selectedareas.length == 0) {
-      alert('please select the areas.');
+      this.auth.resource.startSnackBar('please select the areas.');
     } else {
       await this.updateareastatus();
       let datas = {
@@ -148,7 +150,7 @@ export class AddnodeComponent implements OnInit {
         .then((data) => {
           if (data == undefined) {
             this.dialogRef.close();
-            alert('Node updated');
+            this.auth.resource.startSnackBar('Node updated');
           }
         })
         .catch(() => {

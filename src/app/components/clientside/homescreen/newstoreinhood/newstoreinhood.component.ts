@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, of, take } from 'rxjs';
 import { ApiserviceService } from 'src/app/apiservice.service';
 import { StoresinhoodComponent } from './storesinhood/storesinhood.component';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-newstoreinhood',
@@ -11,8 +12,8 @@ import { StoresinhoodComponent } from './storesinhood/storesinhood.component';
 })
 export class NewstoreinhoodComponent implements OnInit {
   nodeColumns: string[] = ['node', 'no_stores', 'storename', 'date', 'action'];
-  NSIYHTitle: string = '';
-  NSIYHSTitle: string = '';
+  SectionTitle: string = '';
+  SectionSTitle: string = '';
   editSubt: boolean = false;
   editTitle: boolean = false;
   Selectedcity: string = '';
@@ -24,7 +25,7 @@ export class NewstoreinhoodComponent implements OnInit {
   selectednodedata: any;
   NSIYHmoduledata: any = [];
 
-  constructor(public dialog: MatDialog, public api: ApiserviceService) {}
+  constructor(public dialog: MatDialog, public api: ApiserviceService,private auth:AuthService) {}
 
   ngOnInit(): void {
     this.getNSIYHdata();
@@ -33,9 +34,9 @@ export class NewstoreinhoodComponent implements OnInit {
 
   allstores(creatednode?: any) {
     if (this.Selectedcity == '') {
-      alert('please select city.');
+      this.auth.resource.startSnackBar('please select city.');
     } else if (creatednode == undefined && this.Selectednode == '') {
-      alert('please select node.');
+      this.auth.resource.startSnackBar('please select node.');
     } else {
       this.dialog.open(StoresinhoodComponent, {
         width: '90%',
@@ -58,29 +59,49 @@ export class NewstoreinhoodComponent implements OnInit {
 
   getNSIYHdata() {
     this.api
-      .getNSIYHData()
+      .getSectionData('NSIYH')
       .pipe(take(1))
       .subscribe((NSIYNdata: any) => {
         this.NSIYHmoduledata = NSIYNdata[0];
-        this.NSIYHTitle = NSIYNdata[0].NSIYH_Title;
-        this.NSIYHSTitle = NSIYNdata[0].NSIYH_STitle;
+        this.SectionTitle = NSIYNdata[0].Section_title;
+        this.SectionSTitle = NSIYNdata[0].Section_Stitle;
       });
   }
 
-  updateNSIYHTitle() {
-    if (!this.editTitle) {
+  updateSectionDetails(i: number) {
+    if (i == 1 && !this.editTitle) {
       this.editTitle = !this.editTitle;
-    } else if (this.NSIYHTitle == this.NSIYHmoduledata.NSIYH_Title) {
+    } else if (i == 2 && !this.editSubt) {
+      this.editSubt = !this.editSubt;
+    } else if (
+      i == 1 &&
+      this.SectionTitle == this.NSIYHmoduledata.Section_title
+    ) {
       this.editTitle = !this.editTitle;
+    } else if (
+      i == 2 &&
+      this.SectionSTitle == this.NSIYHmoduledata.Section_Stitle
+    ) {
+      this.editSubt = !this.editSubt;
     } else {
-      if (!this.NSIYHTitle) {
-        alert('please enter the Title.');
+      if (i == 1 && !this.SectionTitle) {
+        this.auth.resource.startSnackBar('Please enter the Title.');
+      } else if (i == 2 && !this.SectionSTitle) {
+        this.auth.resource.startSnackBar('Please enter the sub Title.');
       } else {
         this.api
-          .updateNSIYHtitle(this.NSIYHTitle, this.NSIYHmoduledata.id)
+          .updateSectionData(
+            i,
+            this.NSIYHmoduledata.SectionID,
+            i == 1 ? this.SectionTitle : this.SectionSTitle
+          )
           .then((data) => {
             if (data != undefined) {
-              this.editTitle = !this.editTitle;
+              if (i == 1) {
+                this.editTitle = !this.editTitle;
+              } else {
+                this.editSubt = !this.editSubt;
+              }
             }
           })
           .catch(() => {
@@ -90,27 +111,50 @@ export class NewstoreinhoodComponent implements OnInit {
     }
   }
 
-  updateNSIYHTSTitle() {
-    if (!this.editSubt) {
-      this.editSubt = !this.editSubt;
-    } else if (this.NSIYHSTitle == this.NSIYHmoduledata.NSIYH_STitle) {
-      this.editSubt = !this.editSubt;
-    } else {
-      if (!this.NSIYHSTitle) {
-        alert('please enter the sub Title.');
-      } else {
-        this.api
-          .updateNSIYHStitle(this.NSIYHSTitle, this.NSIYHmoduledata.id)
-          .then((data) => {
-            if (data != undefined) {
-            }
-          })
-          .catch(() => {
-            return false;
-          });
-      }
-    }
-  }
+  // updateNSIYHTitle() {
+  //   if (!this.editTitle) {
+  //     this.editTitle = !this.editTitle;
+  //   } else if (this.NSIYHTitle == this.NSIYHmoduledata.NSIYH_Title) {
+  //     this.editTitle = !this.editTitle;
+  //   } else {
+  //     if (!this.NSIYHTitle) {
+  //       this.auth.resource.startSnackBar('please enter the Title.');
+  //     } else {
+  //       this.api
+  //         .updateNSIYHtitle(this.NSIYHTitle, this.NSIYHmoduledata.id)
+  //         .then((data) => {
+  //           if (data != undefined) {
+  //             this.editTitle = !this.editTitle;
+  //           }
+  //         })
+  //         .catch(() => {
+  //           return false;
+  //         });
+  //     }
+  //   }
+  // }
+
+  // updateNSIYHTSTitle() {
+  //   if (!this.editSubt) {
+  //     this.editSubt = !this.editSubt;
+  //   } else if (this.NSIYHSTitle == this.NSIYHmoduledata.NSIYH_STitle) {
+  //     this.editSubt = !this.editSubt;
+  //   } else {
+  //     if (!this.NSIYHSTitle) {
+  //       this.auth.resource.startSnackBar('please enter the sub Title.');
+  //     } else {
+  //       this.api
+  //         .updateNSIYHStitle(this.NSIYHSTitle, this.NSIYHmoduledata.id)
+  //         .then((data) => {
+  //           if (data != undefined) {
+  //           }
+  //         })
+  //         .catch(() => {
+  //           return false;
+  //         });
+  //     }
+  //   }
+  // }
 
   citychange() {
     let alreadyCnode: Array<any> = [];
@@ -121,10 +165,11 @@ export class NewstoreinhoodComponent implements OnInit {
       .subscribe((data: any) => {
         for (let i = 0; i < data.length; i++) {
           this.api
-            .getstorecount('NSIYHsection', this.Selectedcity, data[i].id)
-            .then((datas: any) => {
-              if (datas > 0) {
-                data[i].storecount = datas;
+            .getstoreaspernode('NSIYHsection', data[i].id)
+            .pipe(take(1))
+            .subscribe((datas: any) => {
+              if (datas.length > 0) {
+                data[i].storecount = datas[0]?.Stores.length;
                 alreadyCnode.push(data[i]);
               } else {
                 newnodes.push(data[i]);

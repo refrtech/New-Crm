@@ -301,7 +301,7 @@ export class VSAnodecatstoresComponent implements OnInit {
       this.editpeoplechoice = !this.editpeoplechoice;
     } else {
       if (this.peoplechoicecatpara == '') {
-        alert('please enter the People choice.');
+        this.auth.resource.startSnackBar('please enter the People choice.');
       } else {
         if (index != -1) {
           this.catarray[index].peoplechoicecatpara = this.peoplechoicecatpara;

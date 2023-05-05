@@ -100,7 +100,7 @@ export class FeedsectionComponent implements OnInit {
         }
       );
     } else {
-      alert('Please upload the size of file below 250mb');
+      this.auth.resource.startSnackBar('Please upload the size of file below 250mb');
       this.dialogRef.close();
     }
   }

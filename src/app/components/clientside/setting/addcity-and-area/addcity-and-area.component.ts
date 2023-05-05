@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ApiserviceService } from 'src/app/apiservice.service';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-addcity-and-area',
@@ -24,6 +25,7 @@ export class AddcityAndAreaComponent implements OnInit {
   constructor(
     private httpClient: HttpClient,
     public api: ApiserviceService,
+    private auth:AuthService,
     public dialogRef: MatDialogRef<AddcityAndAreaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
@@ -57,7 +59,7 @@ export class AddcityAndAreaComponent implements OnInit {
               return false;
             });
         } else {
-          alert('No pin record found.');
+          this.auth.resource.startSnackBar('No pin record found.');
         }
       });
   }

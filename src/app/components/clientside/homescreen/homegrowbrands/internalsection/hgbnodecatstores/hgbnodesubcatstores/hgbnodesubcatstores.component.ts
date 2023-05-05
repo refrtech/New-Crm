@@ -99,7 +99,7 @@ export class HgbnodesubcatstoresComponent implements OnInit {
     // this.gethomegrowndata();
     this.selectedcat = this.actRoute.snapshot.params['catid'];
     this.api
-      .gethomegrownCat_Subcatdata(
+      .getDataCat_Subcatdata(
         'HomegrownInternalSubCatSection',
         this.actRoute.snapshot.params['catid'],
         'PeopleChoice'
@@ -115,7 +115,7 @@ export class HgbnodesubcatstoresComponent implements OnInit {
         }
       });
     this.api
-      .gethomegrownCat_Subcatdata(
+      .getDataCat_Subcatdata(
         'HomegrownInternalSubCatSection',
         this.actRoute.snapshot.params['catid'],
         'Storesyoulove'

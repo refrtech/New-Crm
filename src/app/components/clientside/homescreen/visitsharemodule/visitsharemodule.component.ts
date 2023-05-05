@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Observable, of, take } from 'rxjs';
 import { ApiserviceService } from 'src/app/apiservice.service';
 import { VisitallstoredetailsComponent } from './visitallstoredetails/visitallstoredetails.component';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-visitsharemodule',
@@ -28,7 +29,8 @@ export class VisitsharemoduleComponent implements OnInit {
   constructor(
     public router: Router,
     public api: ApiserviceService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private auth:AuthService
   ) {}
 
   ngOnInit(): void {
@@ -53,9 +55,9 @@ export class VisitsharemoduleComponent implements OnInit {
 
   allstores(creatednode?: any) {
     if (this.Selectedcity == '') {
-      alert('please select city.');
+      this.auth.resource.startSnackBar('please select city.');
     } else if (creatednode == undefined && this.Selectednode == '') {
-      alert('please select node.');
+      this.auth.resource.startSnackBar('please select node.');
     } else {
       const dialogRef = this.dialog.open(VisitallstoredetailsComponent, {
         width: '90%',
@@ -105,7 +107,7 @@ export class VisitsharemoduleComponent implements OnInit {
       this.editTitle = !this.editTitle;
     } else {
       if (!this.VSATitle) {
-        alert('please enter the Title.');
+        this.auth.resource.startSnackBar('please enter the Title.');
       } else {
         this.api
           .updateVSAtitle(this.VSATitle, this.VSAmoduledata.id)
@@ -132,7 +134,7 @@ export class VisitsharemoduleComponent implements OnInit {
     } else {
       console.log(3);
       if (!this.VSASTitle) {
-        alert('please enter the sub Title.');
+        this.auth.resource.startSnackBar('please enter the sub Title.');
       } else {
         this.api
           .updateVSAStitle(this.VSASTitle, this.VSAmoduledata.id)

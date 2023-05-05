@@ -81,11 +81,16 @@ export class CategoriesinternalComponent implements OnInit {
     'city',
     'action',
   ];
+  PChoicedata: any;
+  trendingdata: any;
+  CURATEDdata: any;
+  productYWLData: any;
+
 
   PChoiceStores: Array<any> = [];
   trendingStores: Array<any> = [];
   curatedstores: Array<any> = [];
-  homegrownproducts: Array<any> = [];
+  products: Array<any> = [];
   catindex: number = -1;
   constructor(
     public api: ApiserviceService,
@@ -97,35 +102,100 @@ export class CategoriesinternalComponent implements OnInit {
     this.catindex = this.auth.resource.categoryList.findIndex(
       (x: any) => x.id == this.actRoute.snapshot.params['cat']
     );
-    this.api
-      .getPeoplechoiceCatstores(
-        this.actRoute.snapshot.params['cat']
-      )
-      .subscribe((data: any) => {
-        this.PChoiceStores = data;
-      });
 
     this.api
-      .gettrendingCatstores(
-        this.actRoute.snapshot.params['cat']
+      .getDataCat_Subcatdata(
+        'CategorySection',
+        this.actRoute.snapshot.params['catid'],
+        'PeopleChoice'
       )
       .subscribe((data: any) => {
-        this.trendingStores = data;
+        this.PChoicedata = data[0];
+        if (this.PChoicedata != undefined) {
+          this.api.getStoresbyIds(data[0]?.Stores).subscribe((data: any) => {
+            console.log(data);
+            this.PChoiceStores = data;
+          });
+        }
       });
 
-    this.api
-      .getcuratedtrendingCatstores(
-        this.actRoute.snapshot.params['cat']
+      this.api
+      .getDataCat_Subcatdata(
+        'CategorySection',
+        this.actRoute.snapshot.params['catid'],
+        'Trending'
       )
       .subscribe((data: any) => {
-        this.curatedstores = data;
+        this.trendingdata = data[0];
+        if (this.trendingdata != undefined) {
+          this.api.getStoresbyIds(data[0]?.Stores).subscribe((data: any) => {
+            console.log(data);
+            this.trendingStores = data;
+          });
+        }
       });
 
-    this.api
-      .gethomegrowproductssubCatstores('Categorysection',this.actRoute.snapshot.params['cat'])
+      this.api
+      .getDataCat_Subcatdata(
+        'CategorySection',
+        this.actRoute.snapshot.params['catid'],
+        'Curated'
+      )
       .subscribe((data: any) => {
-        this.homegrownproducts = data;
+        this.CURATEDdata = data[0];
+        if (this.CURATEDdata != undefined) {
+          this.api.getStoresbyIds(data[0]?.Stores).subscribe((data: any) => {
+            console.log(data);
+            this.curatedstores = data;
+          });
+        }
       });
+
+      this.api
+      .getDataCat_Subcatdata(
+        'CategorySection',
+        this.actRoute.snapshot.params['catid'],
+        'ProductsYWL'
+      )
+      .subscribe((data: any) => {
+        this.productYWLData = data[0];
+        if (this.productYWLData != undefined) {
+          this.api.getStoresbyIds(data[0]?.Stores).subscribe((data: any) => {
+            console.log(data);
+            this.products = data;
+          });
+        }
+      });
+
+    // this.api
+    //   .getPeoplechoiceCatstores(
+    //     this.actRoute.snapshot.params['cat']
+    //   )
+    //   .subscribe((data: any) => {
+    //     this.PChoiceStores = data;
+    //   });
+
+    // this.api
+    //   .gettrendingCatstores(
+    //     this.actRoute.snapshot.params['cat']
+    //   )
+    //   .subscribe((data: any) => {
+    //     this.trendingStores = data;
+    //   });
+
+    // this.api
+    //   .getcuratedtrendingCatstores(
+    //     this.actRoute.snapshot.params['cat']
+    //   )
+    //   .subscribe((data: any) => {
+    //     this.curatedstores = data;
+    //   });
+
+    // this.api
+    //   .gethomegrowproductssubCatstores('Categorysection',this.actRoute.snapshot.params['cat'])
+    //   .subscribe((data: any) => {
+    //     this.products = data;
+    //   });
   }
 
   ApplyFilter(i: number) {
@@ -177,7 +247,7 @@ export class CategoriesinternalComponent implements OnInit {
         } else {
           this.MerchantdataSource2 = new MatTableDataSource(recentStore);
           this.isstorealreadyadded2 =
-            this.homegrownproducts.findIndex((x) => x.id == recentStore[0].id) <
+            this.products.findIndex((x) => x.id == recentStore[0].id) <
             0
               ? false
               : true;
@@ -186,34 +256,138 @@ export class CategoriesinternalComponent implements OnInit {
   }
 
   action(i: number, Data: any) {
-    Data.catId = this.actRoute.snapshot.params['cat'];
-    // Data.Nodeid = this.actRoute.snapshot.params['nodeid'];
-    Data.sectionName = 'Categorysection';
-    if (i == 1) {
-      this.api.addstoretoPeoplechoice(Data).then((data: any) => {
-        this.isstorealreadyadded = true;
-        this.PChoiceStores.push(Data);
-      });
-    } else if (i == 2 || i == 4) {
-      if (i == 4) {
-        Data.sectionName = 'Categorysection-CuratedStores';
+    // Data.catId = this.actRoute.snapshot.params['cat'];
+    // Data.sectionName = 'Categorysection';
+    // if (i == 1) {
+    //   this.api.addstoretoPeoplechoice(Data).then((data: any) => {
+    //     this.isstorealreadyadded = true;
+    //     this.PChoiceStores.push(Data);
+    //   });
+    // } else if (i == 2 || i == 4) {
+    //   if (i == 4) {
+    //     Data.sectionName = 'Categorysection-CuratedStores';
+    //   }
+    //   this.api.addstoretoTrendingStore(Data).then((data: any) => {
+    //     if (i == 4) {
+    //       this.isstorealreadyadded3 = true;
+    //       this.curatedstores.push(Data);
+    //     } else {
+    //       this.isstorealreadyadded1 = true;
+    //       this.trendingStores.push(Data);
+    //     }
+    //   });
+    // } else {
+    //   this.api.addProductTohomegrown(Data).then((data: any) => {
+    //     this.isstorealreadyadded2 = true;
+    //     this.homegrownproducts.push(Data);
+    //   });
+    // }
+    if(i == 1){
+      if(this.PChoicedata == undefined){
+        this.addsectionstoredata(i,Data);
       }
-      this.api.addstoretoTrendingStore(Data).then((data: any) => {
-        if (i == 4) {
-          this.isstorealreadyadded3 = true;
-          this.curatedstores.push(Data);
-        } else {
-          this.isstorealreadyadded1 = true;
+      else {
+        this.api
+        .AddORRemoveSectionStores(1, Data.id, this.PChoicedata.id)
+        .then(() => {
+          this.PChoiceStores.push(Data);
+        });
+      }
+    }
+
+    else if(i == 2){
+      if(this.trendingdata == undefined){
+        this.addsectionstoredata(i,Data);
+      }
+      else {
+        this.api
+        .AddORRemoveSectionStores(2, Data.id, this.trendingdata.id)
+        .then(() => {
           this.trendingStores.push(Data);
-        }
-      });
-    } else {
-      this.api.addProductTohomegrown(Data).then((data: any) => {
-        this.isstorealreadyadded2 = true;
-        this.homegrownproducts.push(Data);
-      });
+        });
+      }
+    }
+    else if(i == 3){
+      if(this.productYWLData == undefined){
+        this.addsectionstoredata(i,Data);
+      }
+      else {
+        this.api
+        .AddORRemoveSectionStores(1, Data.id, this.productYWLData.id)
+        .then(() => {
+          this.products.push(Data);
+        });
+      }
+    }
+    else if(i == 4){
+      if(this.CURATEDdata == undefined){
+        this.addsectionstoredata(i,Data);
+      }
+      else {
+        this.api
+        .AddORRemoveSectionStores(1, Data.id, this.CURATEDdata.id)
+        .then(() => {
+          this.curatedstores.push(Data);
+        });
+      }
     }
   }
+
+
+
+  addsectionstoredata(i: number, data: any) {
+    let datas:any;
+    if (i == 1) {
+      datas = {
+        Stores: [data.id],
+        C_Date: this.api.newTimestamp,
+        M_Date: this.api.newTimestamp,
+        SectionName: 'CategorySection',
+        Catid: this.actRoute.snapshot.params['catid'],
+        ContainerType: 'PeopleChoice',
+      };
+    }
+    else if (i == 2){
+      datas = {
+        Stores: [data.id],
+        C_Date: this.api.newTimestamp,
+        M_Date: this.api.newTimestamp,
+        SectionName: 'CategorySection',
+        Catid: this.actRoute.snapshot.params['catid'],
+        ContainerType: 'Trending',
+      };
+    }
+    else if (i == 3){
+      datas = {
+        Stores: [data.id],
+        C_Date: this.api.newTimestamp,
+        M_Date: this.api.newTimestamp,
+        SectionName: 'CategorySection',
+        Catid: this.actRoute.snapshot.params['catid'],
+        ContainerType: 'ProductsYWL',
+      };
+    }
+    else if (i == 4){
+      datas = {
+        Stores: [data.id],
+        C_Date: this.api.newTimestamp,
+        M_Date: this.api.newTimestamp,
+        SectionName: 'CategorySection',
+        Catid: this.actRoute.snapshot.params['catid'],
+        ContainerType: 'Curated',
+      };
+    }
+    this.api.adddatatosectionstore(datas).then(() => {
+
+      if (i == 1) {
+      this.api.startSnackBar('Store Added');
+      }
+      else {
+      this.api.startSnackBar('People Choice Added.');
+      }
+    });
+  }
+
 
   async takePicture(ratio:string,type: string, id?: string) {
     const image = await Camera.getPhoto({
@@ -229,7 +403,7 @@ export class CategoriesinternalComponent implements OnInit {
     }
   }
 
-  startCropper(ratio:string,webPath: string, type: string, id?: string) {
+  startCropper(ratio:string,webPath: string, type: string, Storeid?: string) {
     let isPhone = this.auth.resource.getWidth < 768;
     let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
     const refDialog = this.auth.resource.dialog.open(CropperComponent, {
@@ -274,46 +448,54 @@ export class CategoriesinternalComponent implements OnInit {
                 this.auth.resource.startSnackBar('Banner Update Under Review!');
               }
             });
-        } else if (type == 'trendingstorebanner') {
-          this.api
-            .updateTrendingstorebanner(
-              id == undefined ? '' : id,
-              result.croppedImage
-            )
-            .then((ref) => {
-              if (!ref || !ref.success) {
-                this.auth.resource.startSnackBar('Upload Failed!');
-              } else {
-                this.auth.resource.startSnackBar('Banner Update Under Review!');
-              }
-            });
-        } else if (type == 'peopleCstorebanner') {
-          this.api
-            .updatePchoicestorebanner(
-              id == undefined ? '' : id,
-              result.croppedImage
-            )
-            .then((ref) => {
-              if (!ref || !ref.success) {
-                this.auth.resource.startSnackBar('Upload Failed!');
-              } else {
-                this.auth.resource.startSnackBar('Banner Update Under Review!');
-              }
-            });
-        } else {
-          this.api
-            .updatesubcatproductbanner(
-              id == undefined ? '' : id,
-              result.croppedImage
-            )
-            .then((ref) => {
-              if (!ref || !ref.success) {
-                this.auth.resource.startSnackBar('Upload Failed!');
-              } else {
-                this.auth.resource.startSnackBar('Banner Update Under Review!');
-              }
-            });
         }
+        else {
+          this.api
+          .updateSectionStorebanner('Categores',Storeid, result.croppedImage)
+          .then((data: any) => {
+            this.auth.resource.startSnackBar('banner uploaded');
+          });
+        }
+        // else if (type == 'trendingstorebanner') {
+        //   this.api
+        //     .updateTrendingstorebanner(
+        //       id == undefined ? '' : id,
+        //       result.croppedImage
+        //     )
+        //     .then((ref) => {
+        //       if (!ref || !ref.success) {
+        //         this.auth.resource.startSnackBar('Upload Failed!');
+        //       } else {
+        //         this.auth.resource.startSnackBar('Banner Update Under Review!');
+        //       }
+        //     });
+        // } else if (type == 'peopleCstorebanner') {
+        //   this.api
+        //     .updatePchoicestorebanner(
+        //       id == undefined ? '' : id,
+        //       result.croppedImage
+        //     )
+        //     .then((ref) => {
+        //       if (!ref || !ref.success) {
+        //         this.auth.resource.startSnackBar('Upload Failed!');
+        //       } else {
+        //         this.auth.resource.startSnackBar('Banner Update Under Review!');
+        //       }
+        //     });
+        // } else {
+        //   this.api
+        //     .updatesubcatproductbanner(
+        //       id == undefined ? '' : id,
+        //       result.croppedImage
+        //     )
+        //     .then((ref) => {
+        //       if (!ref || !ref.success) {
+        //         this.auth.resource.startSnackBar('Upload Failed!');
+        //       } else {
+        //         this.auth.resource.startSnackBar('Banner Update Under Review!');
+        //       }
+        //     });
+        // }
       }
     });
   }
@@ -334,19 +516,19 @@ export class CategoriesinternalComponent implements OnInit {
     }
   }
 
-  dataURLtoFile(dataurl:any, filename:string) {
+//   dataURLtoFile(dataurl:any, filename:string) {
 
-    var arr = dataurl.split(','),
-        mime = arr[0].match(/:(.*?);/)[1],
-        bstr = atob(arr[1]),
-        n = bstr.length,
-        u8arr = new Uint8Array(n);
+//     var arr = dataurl.split(','),
+//         mime = arr[0].match(/:(.*?);/)[1],
+//         bstr = atob(arr[1]),
+//         n = bstr.length,
+//         u8arr = new Uint8Array(n);
 
-    while(n--){
-        u8arr[n] = bstr.charCodeAt(n);
-    }
+//     while(n--){
+//         u8arr[n] = bstr.charCodeAt(n);
+//     }
 
-    return new File([u8arr], filename, {type:mime});
-}
+//     return new File([u8arr], filename, {type:mime});
+// }
 
 }

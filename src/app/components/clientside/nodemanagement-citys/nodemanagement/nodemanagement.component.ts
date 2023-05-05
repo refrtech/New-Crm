@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs';
 import { ApiserviceService } from 'src/app/apiservice.service';
 import { AddnodeComponent } from './addnode/addnode.component';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-nodemanagement',
@@ -29,7 +30,8 @@ export class NodemanagementComponent implements OnInit {
     public api: ApiserviceService,
     public rs: Router,
     private dialog: MatDialog,
-    private actRoute: ActivatedRoute
+    private actRoute: ActivatedRoute,
+    private auth:AuthService
   ) {
     this.cityID = this.actRoute.snapshot.params['id'];
   }
@@ -87,7 +89,7 @@ export class NodemanagementComponent implements OnInit {
 
   deletenode(data: any) {
     if (data == undefined) {
-      alert('invalid data');
+      this.auth.resource.startSnackBar('invalid data');
     } else {
 
       const dialogRef = this.dialog.open(AddnodeComponent, {

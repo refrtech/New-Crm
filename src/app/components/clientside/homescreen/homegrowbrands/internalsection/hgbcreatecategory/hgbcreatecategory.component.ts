@@ -113,7 +113,7 @@ export class HgbcreatecategoryComponent implements OnInit {
             .updatehomegrownbanner(this.HGdata.SectionID, result.croppedImage)
             .then((data: any) => {
               this.storeBanner = data.url;
-              alert('banner uploaded');
+              this.auth.resource.startSnackBar('banner uploaded');
             });
         } else {
           this.api
@@ -124,7 +124,7 @@ export class HgbcreatecategoryComponent implements OnInit {
             )
             .then((data: any) => {
               this.storeBanner = data.url;
-              alert('banner uploaded');
+              this.auth.resource.startSnackBar('banner uploaded');
             });
         }
       }

@@ -81,7 +81,7 @@ export class HgbnodecatstoresComponent implements OnInit {
     console.log(this.auth.resource.categoryList);
     this.gethomegrowndata();
     this.api
-      .gethomegrownCat_Subcatdata('HomegrownInternalCatSection',this.actRoute.snapshot.params['catid'],'PeopleChoice')
+      .getDataCat_Subcatdata('HomegrownInternalCatSection',this.actRoute.snapshot.params['catid'],'PeopleChoice')
       .subscribe((data: any) => {
         console.log('data = ', data);
         this.HGBdata = data[0];
