@@ -42,12 +42,9 @@ export class AddinfoslideComponent implements OnInit {
 
   async onSelectFile(event: any) {
     const file = (await event.target.files) && event.target.files[0];
-    console.log('size = ', file.size);
-    console.log('size in MB', file.size / (1024 * 1024) + 'MB');
 
     if (file && file.size / (1024 * 1024) < 250) {
       this.isInProcess = true;
-      console.log('filenaee', file);
       var reader = new FileReader();
       reader.readAsDataURL(file);
       this.fileName = file.name;
@@ -58,7 +55,6 @@ export class AddinfoslideComponent implements OnInit {
       this.http.post(uploadUrl, formData).subscribe(
         (response: any) => {
           this.isInProcess = false;
-          console.log(response.url_link[0]);
           let data = {
             url: response.url_link[0],
             // c_Date: this.api.newTimestamp,
@@ -67,8 +63,6 @@ export class AddinfoslideComponent implements OnInit {
               ? 'video'
               : 'image',
           };
-
-          console.log('dataaaaaa', this.data);
           if (this.data.infoVideos == undefined) {
             this.data.infoVideos = [data];
           } else {

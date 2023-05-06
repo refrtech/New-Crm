@@ -142,7 +142,6 @@ export class HomegrowbrandsComponent implements OnInit {
             .getStoresbyIds(data[0].First_Stores)
             .pipe(take(1))
             .subscribe((data: any) => {
-              console.log('F stores', data);
               this.First_Stores = data;
             });
         }
@@ -154,7 +153,6 @@ export class HomegrowbrandsComponent implements OnInit {
             .getStoresbyIds(data[0].Second_Stores)
             .pipe(take(1))
             .subscribe((data: any) => {
-              console.log('S stores', data);
               this.Second_Stores = data;
             });
         }
@@ -166,7 +164,6 @@ export class HomegrowbrandsComponent implements OnInit {
             .getStoresbyIds(data[0].third_Stores)
             .pipe(take(1))
             .subscribe((data: any) => {
-              console.log('T stores', data);
               this.third_Stores = data;
             });
         }
@@ -299,7 +296,6 @@ export class HomegrowbrandsComponent implements OnInit {
           datas.id
         )
         .then((data: any) => {
-          console.log(data);
           if (data != undefined) {
             if (this.rowno == '1') {
               this.First_Stores.push(datas);
@@ -406,7 +402,6 @@ export class HomegrowbrandsComponent implements OnInit {
   //         //       this.auth.resource.startSnackBar('Banner Update Under Review!');
   //         //     });
   //         // } else if (rowno == 2) {
-  //         //   console.log(123123);
   //         //   this.api
   //         //     .updatehomegrownSecondstorelogo(
   //         //       result.croppedImage,

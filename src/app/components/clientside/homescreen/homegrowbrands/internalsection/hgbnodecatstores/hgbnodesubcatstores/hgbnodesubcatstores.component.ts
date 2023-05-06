@@ -109,7 +109,6 @@ export class HgbnodesubcatstoresComponent implements OnInit {
         if (this.HGpeoplechoicedata != undefined) {
           this.peoplechoicesubcatpara = data[0].Peoplechoicepara;
           this.api.getStoresbyIds(data[0]?.Stores).subscribe((data: any) => {
-            console.log(data);
             this.PChoiceStores = data;
           });
         }
@@ -124,7 +123,6 @@ export class HgbnodesubcatstoresComponent implements OnInit {
         this.HGBrandYoulovedata = data[0];
         if (this.HGBrandYoulovedata != undefined) {
           this.api.getStoresbyIds(data[0]?.Stores).subscribe((data: any) => {
-            console.log(data);
             this.BrandYouloveStores = data;
           });
         }

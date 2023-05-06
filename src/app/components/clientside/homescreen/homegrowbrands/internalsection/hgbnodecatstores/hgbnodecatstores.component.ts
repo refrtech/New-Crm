@@ -78,20 +78,16 @@ export class HgbnodecatstoresComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.auth.resource.categoryList);
     this.gethomegrowndata();
     this.api
       .getDataCat_Subcatdata('HomegrownInternalCatSection',this.actRoute.snapshot.params['catid'],'PeopleChoice')
       .subscribe((data: any) => {
-        console.log('data = ', data);
         this.HGBdata = data[0];
-        console.log('homegrowndata', this.HGBdata);
         if(this.HGBdata != undefined){
           this.peoplechoicecatpara = data[0].Peoplechoicepara;
           this.api
             .getStoresbyIds(data[0]?.Stores)
             .subscribe((data: any) => {
-              console.log(data);
               this.PChoiceStores = data;
             });
         }
@@ -298,7 +294,6 @@ export class HgbnodecatstoresComponent implements OnInit {
           this.auth.resource.startSnackBar(result.info);
         }
       } else {
-        console.log();
         if (type == 'Thumbnail' || type == 'homeBanner') {
           this.api
             .updatehomegrownbanners(

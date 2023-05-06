@@ -43,7 +43,6 @@ export class HgbcreatecategoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.auth.resource.categoryList);
     this.api
       .gethomegrowndata()
       .pipe(take(1))

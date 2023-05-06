@@ -1737,7 +1737,6 @@ export class AuthService {
   }
 
   cloudupload2(event: any) {
-    console.log('Inside upload...')
     const file = event.target.files && event.target.files[0];
     if (file) {
       var reader = new FileReader();
@@ -1750,8 +1749,6 @@ export class AuthService {
       const proxy_url = 'http://34.100.197.18:5001/upload-image'
       this.http.post(proxy_url, formData, {headers:headers}).subscribe(
         (res) => {
-          console.log('success');
-          console.log(res);
         },
         (err) => {
           console.error(err);

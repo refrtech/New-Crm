@@ -237,17 +237,17 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: 'VSAcat/:id',
+        path: 'VSAcat/:id/:cityid',
         component: VSAnodescatComponent,
         canActivate: [AuthGuard],
       },
       {
-        path: 'VSAcatstores/:internalid/:nodeid/:catid',
+        path: 'VSAcatstores/:nodeid/:catid',
         component: VSAnodecatstoresComponent,
         canActivate: [AuthGuard],
       },
       {
-        path: 'VSAsubcatstores/:internalid/:nodeid/:catid',
+        path: 'VSAsubcatstores/:nodeid/:catid',
         component: VSAnodesubcatstoresComponent,
         canActivate: [AuthGuard],
       },

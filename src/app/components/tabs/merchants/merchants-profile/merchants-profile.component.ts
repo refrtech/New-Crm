@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -111,8 +110,7 @@ export class MerchantsProfileComponent implements OnInit {
     private actRoute: ActivatedRoute,
     public apiservice: ApiserviceService,
     private dialog: MatDialog,
-    public auth: AuthService,
-    private https: HttpClient
+    public auth: AuthService
   ) {
     this.execute();
   }

@@ -14,7 +14,7 @@
       <div class="M20width">
         <div class="cat_thumbnail">
           <img class="M100width"
-            [src]="auth.resource.categoryList[catindex].thumbnail ? auth.resource.categoryList[catindex].thumbnail : 'assets/brand/opengraph.png' "
+            [src]="auth.resource.categoryList[catindex].Categorythumbnail ? auth.resource.categoryList[catindex].Categorythumbnail : 'assets/brand/opengraph.png' "
             alt="" />
         </div>
       </div>
@@ -160,7 +160,7 @@
               {{api.getCat(item.cat)}}
             </div>
             <div class="M25width c_align dflex JCcenter">
-              <a (click)="deletestore(1,item.sectionid)" class="r20margin">
+              <a (click)="deletestore(1,PChoicedata.id,item.id)" class="r20margin">
                 <mat-icon class="black_text">delete</mat-icon>
               </a>
               <a (click)="takePicture('3:4','peopleCstorebanner',item.id)">
@@ -267,7 +267,7 @@
               {{api.getCat(item.cat)}}
             </div>
             <div class="M25width c_align dflex JCcenter">
-              <a (click)="deletestore(2,item.sectionid)" class="r20margin">
+              <a (click)="deletestore(2,trendingdata.id,item.id)" class="r20margin">
                 <mat-icon class="black_text">delete</mat-icon>
               </a>
               <a (click)="takePicture('16:9','trendingstorebanner',item.id)">
@@ -374,7 +374,7 @@
               {{api.getCat(item.cat)}}
             </div>
             <div class="M25width c_align dflex JCcenter">
-              <a (click)="deletestore(2,item.sectionid)" class="r20margin">
+              <a (click)="deletestore(3,CURATEDdata.id,item.id)" class="r20margin">
                 <mat-icon class="black_text">delete</mat-icon>
               </a>
               <a (click)="takePicture('1:1','trendingstorebanner',item.id)">
@@ -481,7 +481,7 @@
               {{api.getCat(item.cat)}}
             </div>
             <div class="M25width c_align dflex JCcenter">
-              <a (click)="deletestore(3,item.Docid)" class="r20margin">
+              <a (click)="deletestore(4,productYWLData.id,item.id)" class="r20margin">
                 <mat-icon class="black_text">delete</mat-icon>
               </a>
               <a (click)="takePicture('1:1','productsbanner',item.id)">

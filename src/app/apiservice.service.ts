@@ -145,8 +145,6 @@ export class ApiserviceService {
     operator1?: any,
     value1?: any
   ) {
-    console.log(datalimit);
-    console.log(getall);
 
     const catData: CollectionReference = collection(
       this.firestore,
@@ -617,7 +615,6 @@ export class ApiserviceService {
   //   index: number,
   //   homegrownid: string
   // ) {
-  //   console.log('HGdata', HGdata);
   //   const cityrefr = doc(this.firestore, `${'Home_Grown'}`, `${homegrownid}`);
   //   const cloudUpload: any = await this.cloudupload2(
   //     HGdata[index].id,
@@ -628,7 +625,6 @@ export class ApiserviceService {
   //     return cloudUpload;
   //   } else {
   //     HGdata[index].crmlogo = cloudUpload.url;
-  //     console.log(HGdata[index]);
   //     return updateDoc(cityrefr, { Second_Stores: HGdata })
   //       .then(() => {
   //         return cloudUpload;
@@ -896,44 +892,44 @@ export class ApiserviceService {
 
   // VSA section start
 
-  getVSAData() {
-    const VSA_section: CollectionReference = collection(
-      this.firestore,
-      `${'VSA_section'}`
-    );
-    const qu = query(VSA_section);
-    return collectionData(qu);
-  }
+  // getVSAData() {
+  //   const VSA_section: CollectionReference = collection(
+  //     this.firestore,
+  //     `${'VSA_section'}`
+  //   );
+  //   const qu = query(VSA_section);
+  //   return collectionData(qu);
+  // }
 
-  updateVSAtitle(Title: string, id: any) {
-    const cityrefr = doc(this.firestore, `${'VSA_section'}`, `${id}`);
-    return updateDoc(cityrefr, { VSA_Title: Title })
-      .then((datas: any) => {
-        if (datas) {
-          return 'issue in update title.';
-        } else {
-          return 'title updated.';
-        }
-      })
-      .catch((err) => {
-        return false;
-      });
-  }
+  // updateVSAtitle(Title: string, id: any) {
+  //   const cityrefr = doc(this.firestore, `${'VSA_section'}`, `${id}`);
+  //   return updateDoc(cityrefr, { VSA_Title: Title })
+  //     .then((datas: any) => {
+  //       if (datas) {
+  //         return 'issue in update title.';
+  //       } else {
+  //         return 'title updated.';
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       return false;
+  //     });
+  // }
 
-  updateVSAStitle(STitle: string, id: any) {
-    const cityrefr = doc(this.firestore, `${'VSA_section'}`, `${id}`);
-    return updateDoc(cityrefr, { VSA_STitle: STitle })
-      .then((datas: any) => {
-        if (datas) {
-          return 'issue in update Sub-title.';
-        } else {
-          return 'Sub-title updated.';
-        }
-      })
-      .catch((err) => {
-        return false;
-      });
-  }
+  // updateVSAStitle(STitle: string, id: any) {
+  //   const cityrefr = doc(this.firestore, `${'VSA_section'}`, `${id}`);
+  //   return updateDoc(cityrefr, { VSA_STitle: STitle })
+  //     .then((datas: any) => {
+  //       if (datas) {
+  //         return 'issue in update Sub-title.';
+  //       } else {
+  //         return 'Sub-title updated.';
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       return false;
+  //     });
+  // }
 
   addVSAstores(nodes: any, id: any) {
     const cityrefr = doc(this.firestore, `${'VSA_section'}`, `${id}`);
@@ -1227,8 +1223,6 @@ export class ApiserviceService {
     const categoryrefr = doc(this.firestore, `${'cats'}`, `${catid}`);
     const cloudUpload: any = await this.cloudupload2(catid, croppedImage);
 
-    console.log('cloudUpload', cloudUpload);
-
     if (!cloudUpload.success) {
       return cloudUpload;
     } else {
@@ -1239,9 +1233,25 @@ export class ApiserviceService {
         }).then(() => {
           return cloudUpload;
         });
-      } else {
+      } else if(type == 'logo') {
         return updateDoc(categoryrefr, {
-          thumbnail: cloudUpload.url,
+          Categorythumbnail: cloudUpload.url,
+          upd: newTimestamp,
+        }).then(() => {
+          return cloudUpload;
+        });
+      }
+      else if(type == 'VSAthumbnail'){
+        return updateDoc(categoryrefr, {
+          VSAthumbnail: cloudUpload.url,
+          upd: newTimestamp,
+        }).then(() => {
+          return cloudUpload;
+        });
+      }
+      else if(type == 'VSABanner'){
+        return updateDoc(categoryrefr, {
+          VSABanner: cloudUpload.url,
           upd: newTimestamp,
         }).then(() => {
           return cloudUpload;
@@ -1274,52 +1284,38 @@ export class ApiserviceService {
       });
   }
 
-  async updateNodecatinternalBanner(
-    id: string,
-    croppedImage: string,
-    catarray: any,
-    catid: any
-  ) {
-    const newTimestamp = this.getServerTimestamp();
-    const cityrefr = doc(this.firestore, `${'vsa_internal'}`, `${id}`);
-    const cloudUpload: any = await this.cloudupload2(id, croppedImage);
-    if (!cloudUpload.success) {
-      return cloudUpload;
-    } else {
-      let i = catarray.findIndex((x: any) => x.Catid == catid);
-      if (i == -1) {
-        catarray.push({
-          Catid: catid,
-          Catbanner: cloudUpload.url,
-        });
-      } else {
-        catarray[i].Catbanner = cloudUpload.url;
-      }
+  // async updateNodecatinternalBanner(
+  //   id: string,
+  //   croppedImage: string,
+  //   catarray: any,
+  //   catid: any
+  // ) {
+  //   const newTimestamp = this.getServerTimestamp();
+  //   const cityrefr = doc(this.firestore, `${'vsa_internal'}`, `${id}`);
+  //   const cloudUpload: any = await this.cloudupload2(id, croppedImage);
+  //   if (!cloudUpload.success) {
+  //     return cloudUpload;
+  //   } else {
+  //     let i = catarray.findIndex((x: any) => x.Catid == catid);
+  //     if (i == -1) {
+  //       catarray.push({
+  //         Catid: catid,
+  //         Catbanner: cloudUpload.url,
+  //       });
+  //     } else {
+  //       catarray[i].Catbanner = cloudUpload.url;
+  //     }
 
-      return updateDoc(cityrefr, {
-        CategoryBanners: catarray,
-        upd: newTimestamp,
-      }).then(() => {
-        return cloudUpload;
-      });
-    }
-  }
+  //     return updateDoc(cityrefr, {
+  //       CategoryBanners: catarray,
+  //       upd: newTimestamp,
+  //     }).then(() => {
+  //       return cloudUpload;
+  //     });
+  //   }
+  // }
 
-  async updateNodeinternalBanner(id: string, croppedImage: string) {
-    const newTimestamp = this.getServerTimestamp();
-    const cityrefr = doc(this.firestore, `${'vsa_internal'}`, `${id}`);
-    const cloudUpload: any = await this.cloudupload2(id, croppedImage);
-    if (!cloudUpload.success) {
-      return cloudUpload;
-    } else {
-      return updateDoc(cityrefr, {
-        node_banner_url: cloudUpload.url,
-        upd: newTimestamp,
-      }).then(() => {
-        return cloudUpload;
-      });
-    }
-  }
+
 
   async updateNodesubcatinternalBanner(
     id: string,
@@ -1391,17 +1387,17 @@ export class ApiserviceService {
     }
   }
 
-  async addnodeinternal(Data: any) {
-    const nodeinternal = await addDoc(
-      collection(this.firestore, 'vsa_internal'),
-      Data
-    ).then((ref) => {
-      const node = doc(this.firestore, 'vsa_internal', `${ref.id}`);
-      return updateDoc(node, { id: ref.id }).then(() => {
-        return ref;
-      });
-    });
-  }
+  // async addnodeinternal(Data: any) {
+  //   const nodeinternal = await addDoc(
+  //     collection(this.firestore, 'vsa_internal'),
+  //     Data
+  //   ).then((ref) => {
+  //     const node = doc(this.firestore, 'vsa_internal', `${ref.id}`);
+  //     return updateDoc(node, { id: ref.id }).then(() => {
+  //       return ref;
+  //     });
+  //   });
+  // }
 
   // VSAupdatestore(nodes: any, id: any) {
   //   const cityrefr = doc(this.firestore, `${'VSA_section'}`, `${id}`);
@@ -1629,8 +1625,6 @@ export class ApiserviceService {
           })
           .subscribe(
             (res: any) => {
-              console.log('success');
-              console.log(res);
               resolve({ success: true, url: res.url });
             },
             (err) => {
@@ -1708,6 +1702,7 @@ export class ApiserviceService {
   ////////////////////////////////
 
   async adddatatosectionstore(data: any) {
+    console.log("datas",data);
     const addedcity = await addDoc(
       collection(this.firestore, 'Section_stores'),
       data
@@ -1731,7 +1726,6 @@ export class ApiserviceService {
   }
 
   async updateSectionStorebanner(id: any, croppedImage: any, section: string) {
-    console.log(id);
     const Shoprefr = doc(
       this.firestore,
       `${this.resource.env.db.shops}`,
@@ -1787,6 +1781,16 @@ export class ApiserviceService {
       }
       else if(section == 'Categores'){
         return updateDoc(Shoprefr, { CategoresBanner: cloudUpload.url })
+          .then((datas: any) => {
+            return 'Banner Uploaded';
+          })
+          .catch((err) => {
+            return false;
+          });
+      }
+
+      else if(section == 'VSA'){
+        return updateDoc(Shoprefr, { VSABanner: cloudUpload.url })
           .then((datas: any) => {
             return 'Banner Uploaded';
           })
@@ -1926,7 +1930,6 @@ export class ApiserviceService {
     id: string,
     Storeid: string
   ) {
-    console.log(index);
     const homegrown = await doc(
       collection(this.firestore, 'Section_Details'),
       id
@@ -2081,7 +2084,6 @@ export class ApiserviceService {
     Catid: string,
     ContainerType: string
   ) {
-    console.log(Catid);
     const coll = collection(this.firestore, 'Section_stores');
     const q = query(
       coll,
@@ -2102,7 +2104,6 @@ export class ApiserviceService {
   async UpdateVideo(id: string, data: any) {
     const cityrefr = doc(this.firestore, `${'Section_stores'}`, `${id}`);
     // if (index == 1) {
-      console.log("datasadasdas",data);
       return updateDoc(cityrefr, {
         Videos: data,
         M_Date: this.newTimestamp,
@@ -2129,6 +2130,23 @@ export class ApiserviceService {
     const qu = query(vid,where('SectionName','==',sectionName));
     return collectionData(qu);
   }
+
+  async updateVSAcityBanner(id: string, croppedImage: string) {
+    const newTimestamp = this.getServerTimestamp();
+    const cityrefr = doc(this.firestore, `${'cities'}`, `${id}`);
+    const cloudUpload: any = await this.cloudupload2(id, croppedImage);
+    if (!cloudUpload.success) {
+      return cloudUpload;
+    } else {
+      return updateDoc(cityrefr, {
+        VSAcitybanner: cloudUpload.url,
+        MDateTime: newTimestamp,
+      }).then(() => {
+        return cloudUpload;
+      });
+    }
+  }
+
 
   // async deleteVideo(id: any) {
   //   const vidRef = await doc(this.firestore, 'feedVideos', `${id}`);

@@ -68,7 +68,6 @@ export class BrandSpotlightComponent implements OnInit {
         if (recentStore.length == 0) {
           this.auth.resource.startSnackBar('No Store found.');
         } else {
-          console.log(recentStore);
           this.MerchantdataSource = new MatTableDataSource(recentStore);
           let index = this.BSmoduleStoredata.findIndex(
             (x: any) => x.id == recentStore[0].id
@@ -94,13 +93,11 @@ export class BrandSpotlightComponent implements OnInit {
       .getbrandspotlightStores()
       .pipe(take(1))
       .subscribe((data: any) => {
-        console.log('stores ids', data[0].Stores);
         this.nodestoresid = data[0].id;
         this.api
           .getStoresbyIds(data[0].Stores)
           .pipe(take(1))
           .subscribe((data: any) => {
-            console.log('stores', data);
             this.BSmoduleStoredata = data;
           });
       });
@@ -195,7 +192,6 @@ export class BrandSpotlightComponent implements OnInit {
   // }
 
   action(data: any) {
-    console.log('Data', data);
     if (this.isstorealreadyadded == true) {
       this.api.AddORRemoveSectionStores(2, data.id, this.nodestoresid);
       this.isstorealreadyadded = false;

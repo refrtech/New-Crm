@@ -17,7 +17,7 @@ import { CameraResultType } from '@capacitor/camera/dist/esm/definitions';
 export class VSAnodescatComponent implements OnInit {
   storeBanner = '';
   nodeId: string = '';
-  id:any;
+  // id:any;
   constructor(
     public auth: AuthService,
     private api: ApiserviceService,
@@ -27,23 +27,28 @@ export class VSAnodescatComponent implements OnInit {
 
   ngOnInit(): void {
     this.nodeId = this.actRoute.snapshot.params['id'];
-    this.api
-      .getnodeinterdata(this.nodeId)
-      .pipe(take(1))
-      .subscribe((data: any) => {
-        if (data.length == 0) {
-          let Data = {
-            created_at: this.api.newTimestamp,
-            node_banner_url: '',
-            node_id: this.nodeId,
-          };
-          this.api.addnodeinternal(Data);
-        }
-        else {
-          this.id = data[0].id;
-          this.storeBanner = data[0].node_banner_url;
-        }
-      });
+    this.api.getcity().pipe(take(1)).subscribe((data:any)=>{
+      console.log("city",data);
+      let index = data.findIndex((x:any)=>x.id == this.actRoute.snapshot.params['cityid']);
+      this.storeBanner = data[index].VSAcitybanner;
+    })
+    // this.api
+    //   .getnodeinterdata(this.nodeId)
+    //   .pipe(take(1))
+    //   .subscribe((data: any) => {
+    //     if (data.length == 0) {
+    //       let Data = {
+    //         created_at: this.api.newTimestamp,
+    //         node_banner_url: '',
+    //         node_id: this.nodeId,
+    //       };
+    //       this.api.addnodeinternal(Data);
+    //     }
+    //     else {
+    //       this.id = data[0].id;
+    //       this.storeBanner = data[0].node_banner_url;
+    //     }
+    //   });
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -96,14 +101,15 @@ export class VSAnodescatComponent implements OnInit {
         }
       } else {
         if (type == 'homeBanner') {
-          this.api
-            .updateNodeinternalBanner(this.id, result.croppedImage)
+          this.api.updateVSAcityBanner(this.actRoute.snapshot.params['cityid'],result.croppedImage)
+          // this.api
+          //   .updateNodeinternalBanner(this.id, result.croppedImage)
             .then((ref) => {
               if (!ref || !ref.success) {
                 this.auth.resource.startSnackBar('Upload Failed!');
               } else {
                 this.storeBanner = ref.url;
-                this.auth.resource.startSnackBar('Banner Update Under Review!');
+                this.auth.resource.startSnackBar('Banner Update.');
               }
             });
         }

@@ -75,7 +75,6 @@ export class TopfeedmoduleComponent implements OnInit {
 
   async getVideo() {
     await this.api.getVideosdata('TopFeedVideos').subscribe((data) => {
-      console.log("data",data[0]);
       this.getVideoData = data[0];
     });
   }

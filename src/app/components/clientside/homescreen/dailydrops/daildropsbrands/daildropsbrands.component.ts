@@ -67,11 +67,9 @@ export class DaildropsbrandsComponent implements OnInit {
           this.api
             .getStoresbyIds(data[0]?.Stores)
             .subscribe((data: any) => {
-              console.log(data);
               this.storelist = data;
             });
         });
-
     }
   }
 

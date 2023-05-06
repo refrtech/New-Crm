@@ -40,24 +40,35 @@ export class VisitallstoredetailsComponent implements OnInit {
   MerchantdataSource!: MatTableDataSource<any>;
   id: number = 0;
   nodestores$: Observable<any[]> = of();
-  storelist$: Observable<any[]> = of();
-
+  storelist: Array<any> = [];
+  vsaDataid:string ="";
   constructor(
     public router: Router,
     public api: ApiserviceService,
     public auth: AuthService,
     public dialogRef: MatDialogRef<VisitallstoredetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     if (this.data.selectednode != undefined) {
+      // this.api
+      //   .getstoreaspernode('VSAsection', this.data.selectednode.id)
+      //   .subscribe((data: any) => {
+      //     this.storelist$ = of(data);
+      //   });
+
       this.api
-        .getstoreaspernode('VSAsection', this.data.selectednode.id)
-        .subscribe((data: any) => {
-          this.storelist$ = of(data);
-        });
+      .getstoreaspernode('VSAExternalSection', this.data.selectednode?.id)
+      .pipe(take(1))
+      .subscribe((data: any) => {
+        this.vsaDataid = data[0]?.id;
+        this.api
+          .getStoresbyIds(data[0]?.Stores)
+          .subscribe((data: any) => {
+            this.storelist = data;
+          });
+      });
     }
   }
 
@@ -73,28 +84,75 @@ export class VisitallstoredetailsComponent implements OnInit {
       )
       .pipe(take(1))
       .subscribe((recentStore: any) => {
-        this.MerchantdataSource = new MatTableDataSource(recentStore);
+        if (recentStore.length == 0) {
+          this.auth.resource.startSnackBar('No Store Found.');
+        } else {
+          this.MerchantdataSource = new MatTableDataSource(recentStore);
+        }
       });
   }
 
   action(data: any) {
-    data.city_id = this.data.cityid;
-    data.nodeid =
-      this.data.selectednode == undefined
-        ? this.data.node.id
-        : this.data.selectednode.id;
-    data.sectionname = 'VSAsection';
-    this.api.addstorewithnodeid(data).then((data: any) => {
+    // data.city_id = this.data.cityid;
+    // data.nodeid =
+    //   this.data.selectednode == undefined
+    //     ? this.data.node.id
+    //     : this.data.selectednode.id;
+    // data.sectionname = 'VSAsection';
+    // this.api.addstorewithnodeid(data).then((data: any) => {
+    //   this.isstorealreadyadded = true;
+    //   this.auth.resource.startSnackBar('Store added');
+    // });
+
+
+    if (this.isstorealreadyadded == true) {
+      if (this.storelist.length == 1) {
+        this.api.deletestoresectiondata(this.vsaDataid).then(() => {
+          this.storelist = [];
+          this.close();
+        });
+      } else {
+        this.api
+          .AddORRemoveSectionStores(2, data.id, this.vsaDataid)
+          .then(() => {
+            let i = this.storelist.findIndex((x: any) => x.id == data.id);
+            this.storelist.splice(i, 1);
+          });
+      }
+      this.isstorealreadyadded = false;
+    } else {
+      if (this.data.selectednode != undefined) {
+        this.api
+          .AddORRemoveSectionStores(1, data.id, this.vsaDataid)
+          .then(() => {
+            this.storelist.push(data);
+          });
+      } else {
+        let datas = {
+          Stores: [data.id],
+          C_Date: this.api.newTimestamp,
+          M_Date: this.api.newTimestamp,
+          SectionName: 'VSAExternalSection',
+          CityId: this.data.cityid,
+          NodeId:
+            this.data.selectednode == undefined
+              ? this.data.node.id
+              : this.data.selectednode.id,
+        };
+        this.api.adddatatosectionstore(datas).then(() => {
+          this.storelist.push(data);
+          this.api.startSnackBar('Store Added');
+        });
+      }
       this.isstorealreadyadded = true;
-      this.auth.resource.startSnackBar('Store added');
-    });
+    }
   }
 
   close() {
     this.dialogRef.close();
   }
 
-  async takePicture(ratio: string, type: string, id: string, item: any) {
+  async takePicture(ratio: string, type: string, Storeid: string) {
     const image = await Camera.getPhoto({
       quality: 100,
       height: 300,
@@ -104,7 +162,7 @@ export class VisitallstoredetailsComponent implements OnInit {
     });
     const imageUrl = image.webPath || '';
     if (imageUrl) {
-      this.startCropper(ratio, imageUrl, type, id, item);
+      this.startCropper(ratio, imageUrl, type, Storeid);
     }
   }
 
@@ -112,8 +170,7 @@ export class VisitallstoredetailsComponent implements OnInit {
     ratio: string,
     webPath: string,
     type: string,
-    id: string,
-    item: any
+    Storeid: string,
   ) {
     let isPhone = this.auth.resource.getWidth < 768;
     let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
@@ -133,19 +190,37 @@ export class VisitallstoredetailsComponent implements OnInit {
         }
       } else {
         if (type == 'banner') {
+          // this.api
+          //   .updatestorewithnodebanner(id, result.croppedImage)
+          //   .then((data: any) => {
+          //     this.auth.resource.startSnackBar('Banner uploaded');
+          //   });
+
           this.api
-            .updatestorewithnodebanner(id, result.croppedImage)
-            .then((data: any) => {
-              this.auth.resource.startSnackBar('Banner uploaded');
-            });
+          .updateSectionStorebanner('VSA',Storeid, result.croppedImage)
+          .then((data: any) => {
+            this.auth.resource.startSnackBar('banner uploaded');
+          });
         }
       }
     });
   }
 
   deletestore(id: string) {
-    this.api.deletestorefromnodes(id).then((data: any) => {
-      this.auth.resource.startSnackBar('store deleted');
-    });
+    // this.api.deletestorefromnodes(id).then((data: any) => {
+    //   this.auth.resource.startSnackBar('store deleted');
+    // });
+
+    if (this.storelist.length == 1) {
+      this.api.deletestoresectiondata(this.vsaDataid).then(() => {
+        this.storelist = [];
+        this.close();
+      });
+    } else {
+      this.api.AddORRemoveSectionStores(2, id, this.vsaDataid).then(() => {
+        let i = this.storelist.findIndex((x: any) => x.id == id);
+        this.storelist.splice(i, 1);
+      });
+    }
   }
 }

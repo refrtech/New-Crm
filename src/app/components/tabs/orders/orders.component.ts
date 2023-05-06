@@ -99,7 +99,7 @@ export class OrdersComponent implements OnInit {
     private apiservice: ApiserviceService,
     private excelservice: ExcelexportService,
     private dialog: MatDialog,
-    private auth:AuthService,
+    private auth: AuthService
   ) {}
 
   ngOnInit(): void {}
@@ -120,18 +120,15 @@ export class OrdersComponent implements OnInit {
   }
 
   execute() {
-
     if (this.parameters == 'ordrTYPE') {
       if (this.searchvalue == 'online') {
-        this.operators = "in";
-        this.searchvalue = ["RefrCASH","RefrCASH+ONLINE","ONLINE"];
-      }
-      else if (this.searchvalue == 'offline') {
-        this.operators = "==";
-        this.searchvalue = "CASH";
-      }
-      else {
-        this.auth.resource.startSnackBar("please select the option.");
+        this.operators = 'in';
+        this.searchvalue = ['RefrCASH', 'RefrCASH+ONLINE', 'ONLINE'];
+      } else if (this.searchvalue == 'offline') {
+        this.operators = '==';
+        this.searchvalue = 'CASH';
+      } else {
+        this.auth.resource.startSnackBar('please select the option.');
         return;
       }
     }
@@ -166,15 +163,13 @@ export class OrdersComponent implements OnInit {
   exportexcel() {
     if (this.parameters == 'ordrTYPE') {
       if (this.searchvalue == 'online') {
-        this.operators = "in";
-        this.searchvalue = ["RefrCASH","RefrCASH+ONLINE","ONLINE"];
-      }
-      else if (this.searchvalue == 'offline') {
-        this.operators = "==";
-        this.searchvalue = "CASH";
-      }
-      else {
-        this.auth.resource.startSnackBar("please select the option.");
+        this.operators = 'in';
+        this.searchvalue = ['RefrCASH', 'RefrCASH+ONLINE', 'ONLINE'];
+      } else if (this.searchvalue == 'offline') {
+        this.operators = '==';
+        this.searchvalue = 'CASH';
+      } else {
+        this.auth.resource.startSnackBar('please select the option.');
         return;
       }
     }
@@ -276,8 +271,10 @@ export class OrdersComponent implements OnInit {
             Order_status: orderstatus,
             deliveryCharge: this.recentorderss[i].amParcel,
           });
+          if (this.excelarr.length == recentorders.length) {
+            this.excelservice.exportasexcelfile(this.excelarr, 'demo');
+          }
         }
-        this.excelservice.exportasexcelfile(this.excelarr, 'demo');
       });
   }
 }

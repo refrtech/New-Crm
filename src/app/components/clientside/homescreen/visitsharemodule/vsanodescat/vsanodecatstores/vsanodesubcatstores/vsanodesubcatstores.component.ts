@@ -75,7 +75,6 @@ export class VSAnodesubcatstoresComponent implements OnInit {
     public auth: AuthService,
     public actRoute: ActivatedRoute,
     public api: ApiserviceService,
-    private router: Router,
     public Location: Location
   ) {
     if (this.actRoute.snapshot.params['catid'] != 'in_the_mix') {
@@ -228,18 +227,23 @@ export class VSAnodesubcatstoresComponent implements OnInit {
       )
       .pipe(take(1))
       .subscribe((recentStore: any) => {
-        if (i == 1) {
-          this.MerchantdataSource = new MatTableDataSource(recentStore);
-          this.isstorealreadyadded =
-            this.PChoiceStores.findIndex((x) => x.id == recentStore[0].id) < 0
-              ? false
-              : true;
+        if (recentStore.length == 0) {
+          this.auth.resource.startSnackBar('No store found.');
         } else {
-          this.MerchantdataSource1 = new MatTableDataSource(recentStore);
-          this.isstorealreadyadded =
-            this.trendingStores.findIndex((x) => x.id == recentStore[0].id) < 0
-              ? false
-              : true;
+          if (i == 1) {
+            this.MerchantdataSource = new MatTableDataSource(recentStore);
+            this.isstorealreadyadded =
+              this.PChoiceStores.findIndex((x) => x.id == recentStore[0].id) < 0
+                ? false
+                : true;
+          } else {
+            this.MerchantdataSource1 = new MatTableDataSource(recentStore);
+            this.isstorealreadyadded =
+              this.trendingStores.findIndex((x) => x.id == recentStore[0].id) <
+              0
+                ? false
+                : true;
+          }
         }
       });
   }
@@ -440,7 +444,6 @@ export class VSAnodesubcatstoresComponent implements OnInit {
       if (this.peoplechoicecatpara == '') {
         this.auth.resource.startSnackBar('please enter the People choice.');
       } else {
-
         if (this.actRoute.snapshot.params['catid'] == 'in_the_mix') {
           if (catindex != -1) {
             this.catarray[catindex].peoplechoicecatpara =
@@ -473,18 +476,19 @@ export class VSAnodesubcatstoresComponent implements OnInit {
             catindex != undefined &&
             (subcatindex == -1 || subcatindex == undefined)
           ) {
-            if(this.catarray[catindex].subcatbanners != undefined){
-            this.catarray[catindex].subcatbanners.push({
-              Subcatid: this.SelectedSubCat,
-              peoplechoicecatpara: this.peoplechoicecatpara,
-            });
-          }
-          else {
-            this.catarray[catindex].subcatbanners = [{
-              Subcatid: this.SelectedSubCat,
-              peoplechoicecatpara: this.peoplechoicecatpara,
-            }]
-          }
+            if (this.catarray[catindex].subcatbanners != undefined) {
+              this.catarray[catindex].subcatbanners.push({
+                Subcatid: this.SelectedSubCat,
+                peoplechoicecatpara: this.peoplechoicecatpara,
+              });
+            } else {
+              this.catarray[catindex].subcatbanners = [
+                {
+                  Subcatid: this.SelectedSubCat,
+                  peoplechoicecatpara: this.peoplechoicecatpara,
+                },
+              ];
+            }
           }
           // if cat exit in this.catarray and sub-cat also exit in this.catarry[index].subcatbanners then only the para value
           else if (

@@ -21,13 +21,13 @@
     <div class="dflex">
       <div class="M30width">
         <div class="img">
-          <img class="M100width" [src]=" storeBanner ? storeBanner : 'assets/brand/opengraph.png' " alt="banner" />
+          <img class="M100width" [src]=" auth.resource.categoryList[catindex].VSAthumbnail ? auth.resource.categoryList[catindex].VSAthumbnail : 'assets/brand/opengraph.png' " alt="banner" />
         </div>
       </div>
       <div class="dflex flex_col l15margin JEend"
         *ngIf="actRoute.snapshot.params['catid'] == 'food_and_beverages' || actRoute.snapshot.params['catid'] =='salons_and_spa' || actRoute.snapshot.params['catid'] =='healthcare'">
         <button (click)="takePicture('1:1','logo')" mat-button disableRipple
-          class="c_align  M100width tb5padding cursor_pointer purple_txt regulartext s_size normallineheight lr20padding Aborder">
+          class="c_align M100width tb5padding cursor_pointer purple_txt regulartext s_size normallineheight lr20padding Aborder">
           <svg class="r5margin cursor_pointer" width="17" height="15" viewBox="0 0 17 15" fill="none"
             xmlns="http://www.w3.org/2000/svg">
             <path
@@ -42,13 +42,15 @@
       </div>
     </div>
   </main>
-  <div class="boldtext m_size t40margin b20margin">
+
+
+
+
+
+
+  <div class="boldtext xl_size t40margin b10margin">
     People choice stores
   </div>
-
-
-
-
   <div class="t40margin b20margin">
     <div class="b20padding">
       <span class="s_size boldtext">People’s Choice </span> <span class="xs_size gray_txt">(Maximum 250 words)</span>
@@ -158,7 +160,7 @@
               {{item.name}}
             </div>
             <div class="M25width l_align">
-              {{item.cat}}
+              {{api.getCat(item.cat)}}
             </div>
             <div class="M25width c_align dflex JCcenter">
               <a (click)="deletestore(1,item.sectionid)" class="r20margin">
@@ -173,7 +175,18 @@
       </div>
     </div>
   </div>
-  <div class="boldtext m_size t40margin b20margin">
+
+
+
+
+
+
+
+
+
+
+
+  <!-- <div class="boldtext m_size t40margin b20margin">
     Trending stores
   </div>
   <div class="Aborder A5radius A20padding b20margin">
@@ -280,5 +293,9 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
+
+
+
+
 </div>

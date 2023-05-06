@@ -13,8 +13,8 @@ import { AuthService } from 'src/app/auth.service';
   styleUrls: ['./visitsharemodule.component.scss'],
 })
 export class VisitsharemoduleComponent implements OnInit {
-  VSATitle: string = '';
-  VSASTitle: string = '';
+  SectionTitle: string = '';
+  SectionSTitle: string = '';
   editSubt: boolean = false;
   editTitle: boolean = false;
   nodeColumns: string[] = ['node', 'no_stores', 'storename', 'date', 'action'];
@@ -40,12 +40,12 @@ export class VisitsharemoduleComponent implements OnInit {
 
   getvsadata() {
     this.api
-      .getVSAData()
+      .getSectionData('VisitShareEarn')
       .pipe(take(1))
       .subscribe((VSAdata: any) => {
         this.VSAmoduledata = VSAdata[0];
-        this.VSATitle = VSAdata[0].VSA_Title;
-        this.VSASTitle = VSAdata[0].VSA_STitle;
+        this.SectionTitle = VSAdata[0]?.Section_title;
+        this.SectionSTitle = VSAdata[0]?.Section_Stitle;
       });
   }
 
@@ -85,10 +85,11 @@ export class VisitsharemoduleComponent implements OnInit {
       .subscribe((data: any) => {
         for (let i = 0; i < data.length; i++) {
           this.api
-            .getstorecount('VSAsection', this.Selectedcity, data[i].id)
-            .then((datas: any) => {
-              if (datas > 0) {
-                data[i].storecount = datas;
+            .getstoreaspernode('VSAExternalSection', data[i].id)
+            .pipe(take(1))
+            .subscribe((datas: any) => {
+              if (datas.length > 0) {
+                data[i].storecount = datas[0]?.Stores.length;
                 alreadyCnode.push(data[i]);
               } else {
                 newnodes.push(data[i]);
@@ -100,20 +101,90 @@ export class VisitsharemoduleComponent implements OnInit {
       });
   }
 
-  updateVSTitle() {
-    if (!this.editTitle) {
+  // updateVSTitle() {
+  //   if (!this.editTitle) {
+  //     this.editTitle = !this.editTitle;
+  //   } else if (this.VSATitle == this.VSAmoduledata.VSA_Title) {
+  //     this.editTitle = !this.editTitle;
+  //   } else {
+  //     if (!this.VSATitle) {
+  //       this.auth.resource.startSnackBar('please enter the Title.');
+  //     } else {
+  //       this.api
+  //         .updateVSAtitle(this.VSATitle, this.VSAmoduledata.id)
+  //         .then((data) => {
+  //           if (data != undefined) {
+  //             this.editTitle = !this.editTitle;
+  //           }
+  //         })
+  //         .catch(() => {
+  //           return false;
+  //         });
+  //     }
+  //   }
+  // }
+
+  // updateVSASTitle() {
+  //   if (!this.editSubt) {
+  //     this.editSubt = !this.editSubt;
+  //   } else if (this.VSASTitle == this.VSAmoduledata.VSA_STitle) {
+  //     this.editSubt = !this.editSubt;
+  //   } else {
+  //     if (!this.VSASTitle) {
+  //       this.auth.resource.startSnackBar('please enter the sub Title.');
+  //     } else {
+  //       this.api
+  //         .updateVSAStitle(this.VSASTitle, this.VSAmoduledata.id)
+  //         .then((data) => {
+  //           this.editSubt = !this.editSubt;
+  //         })
+  //         .catch(() => {
+  //           return false;
+  //         });
+  //     }
+  //   }
+  // }
+
+
+
+  navigatetointernal(item: any) {
+    this.router.navigateByUrl('/VSAcat/' + item.id + '/' + item.city_id);
+  }
+
+  updateSectionDetails(i: number) {
+    if (i == 1 && !this.editTitle) {
       this.editTitle = !this.editTitle;
-    } else if (this.VSATitle == this.VSAmoduledata.VSA_Title) {
+    } else if (i == 2 && !this.editSubt) {
+      this.editSubt = !this.editSubt;
+    } else if (
+      i == 1 &&
+      this.SectionTitle == this.VSAmoduledata.Section_title
+    ) {
       this.editTitle = !this.editTitle;
+    } else if (
+      i == 2 &&
+      this.SectionSTitle == this.VSAmoduledata.Section_Stitle
+    ) {
+      this.editSubt = !this.editSubt;
     } else {
-      if (!this.VSATitle) {
-        this.auth.resource.startSnackBar('please enter the Title.');
+      if (i == 1 && !this.SectionTitle) {
+        this.auth.resource.startSnackBar('Please enter the Title.');
+      } else if (i == 2 && !this.SectionSTitle) {
+        this.auth.resource.startSnackBar('Please enter the sub Title.');
       } else {
         this.api
-          .updateVSAtitle(this.VSATitle, this.VSAmoduledata.id)
+          .updateSectionData(
+            i,
+            this.VSAmoduledata.SectionID,
+            i == 1 ? this.SectionTitle : this.SectionSTitle
+          )
           .then((data) => {
             if (data != undefined) {
-              this.editTitle = !this.editTitle;
+              if (i == 1) {
+                this.editTitle = !this.editTitle;
+              } else {
+                this.editSubt = !this.editSubt;
+              }
             }
           })
           .catch(() => {
@@ -121,34 +192,5 @@ export class VisitsharemoduleComponent implements OnInit {
           });
       }
     }
-  }
-
-  updateVSASTitle() {
-    console.log(0);
-    if (!this.editSubt) {
-      console.log(1);
-      this.editSubt = !this.editSubt;
-    } else if (this.VSASTitle == this.VSAmoduledata.VSA_STitle) {
-      console.log(2);
-      this.editSubt = !this.editSubt;
-    } else {
-      console.log(3);
-      if (!this.VSASTitle) {
-        this.auth.resource.startSnackBar('please enter the sub Title.');
-      } else {
-        this.api
-          .updateVSAStitle(this.VSASTitle, this.VSAmoduledata.id)
-          .then((data) => {
-            this.editSubt = !this.editSubt;
-          })
-          .catch(() => {
-            return false;
-          });
-      }
-    }
-  }
-
-  navigatetointernal(item: any) {
-    this.router.navigateByUrl('/VSAcat/' + item.id);
   }
 }
