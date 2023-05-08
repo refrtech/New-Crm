@@ -16,7 +16,7 @@ import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component
 export class StoresinhoodComponent implements OnInit {
   parameters: string = 'phone';
   operators: string = '==';
-  searchvalue: string = "9876543210";
+  searchvalue: string = '9876543210';
   isstorealreadyadded: boolean = false;
 
   ParaArr: Array<any> = [
@@ -40,15 +40,14 @@ export class StoresinhoodComponent implements OnInit {
   ];
   MerchantdataSource!: MatTableDataSource<any>;
   storelist: Array<any> = [];
-  NSIYHDataId:string="";
+  NSIYHDataId: string = '';
 
   constructor(
     public auth: AuthService,
     public api: ApiserviceService,
     public dialogRef: MatDialogRef<StoresinhoodComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     if (this.data.selectednode != undefined) {
@@ -59,16 +58,16 @@ export class StoresinhoodComponent implements OnInit {
       //   });
 
       this.api
-      .getstoreaspernode('NSIYHsection', this.data.selectednode?.id)
-      .pipe(take(1))
-      .subscribe((data: any) => {
-        this.NSIYHDataId = data[0]?.id;
-        this.api
-          .getStoresbyIds(data[0]?.Stores)
-          .subscribe((data: any) => {
-            this.storelist = data;
-          });
-      });
+        .getstoreaspernode('NSIYHsection', this.data.selectednode?.id)
+        .pipe(take(1))
+        .subscribe((data: any) => {
+          this.NSIYHDataId = data[0]?.id;
+          if (data[0].Stores.length > 0) {
+            this.api.getStoresbyIds(data[0]?.Stores).subscribe((data: any) => {
+              this.storelist = data;
+            });
+          }
+        });
     }
   }
 
@@ -117,7 +116,7 @@ export class StoresinhoodComponent implements OnInit {
         };
         this.api.adddatatosectionstore(datas).then(() => {
           this.storelist.push(data);
-          this.api.startSnackBar('Store Added');
+          this.auth.resource.startSnackBar('Store Added');
         });
       }
       this.isstorealreadyadded = true;
@@ -140,16 +139,15 @@ export class StoresinhoodComponent implements OnInit {
       )
       .pipe(take(1))
       .subscribe((recentStore: any) => {
-        if(recentStore.length == 0){
-          this.auth.resource.startSnackBar("No Store Found.")
+        if (recentStore.length == 0) {
+          this.auth.resource.startSnackBar('No Store Found.');
+        } else {
+          this.MerchantdataSource = new MatTableDataSource(recentStore);
         }
-        else {
-        this.MerchantdataSource = new MatTableDataSource(recentStore);
-      }
       });
   }
 
-  async takePicture(ratio:string,type: string, Storeid: string) {
+  async takePicture(ratio: string, type: string, Storeid: string) {
     const image = await Camera.getPhoto({
       quality: 100,
       height: 300,
@@ -159,11 +157,16 @@ export class StoresinhoodComponent implements OnInit {
     });
     const imageUrl = image.webPath || '';
     if (imageUrl) {
-      this.startCropper(ratio,imageUrl, type,Storeid);
+      this.startCropper(ratio, imageUrl, type, Storeid);
     }
   }
 
-  async startCropper(ratio:string,webPath: string, type: string, Storeid: string) {
+  async startCropper(
+    ratio: string,
+    webPath: string,
+    type: string,
+    Storeid: string
+  ) {
     let isPhone = this.auth.resource.getWidth < 768;
     let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
     const refDialog = this.auth.resource.dialog.open(CropperComponent, {
@@ -171,7 +174,7 @@ export class StoresinhoodComponent implements OnInit {
       minWidth: '320px',
       maxWidth: '480px',
       height: '360px',
-      data: { webPath: webPath, type: type,ratio:ratio },
+      data: { webPath: webPath, type: type, ratio: ratio },
       disableClose: true,
       panelClass: 'dialogLayout',
     });
@@ -188,10 +191,10 @@ export class StoresinhoodComponent implements OnInit {
           //     this.auth.resource.startSnackBar('banner uploaded');
           //   });
           this.api
-          .updateSectionStorebanner('NSIYH',Storeid, result.croppedImage)
-          .then((data: any) => {
-            this.auth.resource.startSnackBar('banner uploaded');
-          });
+            .updateSectionStorebanner('NSIYH', Storeid, result.croppedImage)
+            .then((data: any) => {
+              this.auth.resource.startSnackBar('banner uploaded');
+            });
         }
       }
     });

@@ -18,7 +18,7 @@
     <div class="dflex">
       <div class="M20width">
         <div class="cat_thumbnail">
-          <img class="M100width" [src]=" Catthumbnail ? Catthumbnail : 'assets/brand/opengraph.png' " alt="" />
+          <img class="M100width" [src]=" this.auth.resource.categoryList[catindex].HGThumbnail ? this.auth.resource.categoryList[catindex].HGThumbnail : 'assets/brand/opengraph.png' " alt="" />
         </div>
       </div>
       <div (click)="takePicture('3:4','Thumbnail')" class="dflex flex_col l15margin JEend">
@@ -45,7 +45,7 @@
     <div class="dflex">
       <div class="M40width">
         <div class="cat_banner">
-          <img class="M100width" [src]=" Catbanner ? Catbanner : 'assets/brand/opengraph.png' " alt="" />
+          <img class="M100width" [src]=" this.auth.resource.categoryList[catindex].HGCatbanner ? this.auth.resource.categoryList[catindex].HGCatbanner : 'assets/brand/opengraph.png' " alt="" />
         </div>
       </div>
       <div class="dflex flex_col l15margin JEend">

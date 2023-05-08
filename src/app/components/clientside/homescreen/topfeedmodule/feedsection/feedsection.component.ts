@@ -46,7 +46,8 @@ export class FeedsectionComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public api: ApiserviceService,
     public auth: AuthService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {}
 

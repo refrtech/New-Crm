@@ -11,7 +11,6 @@ import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component
 import { ApiserviceService } from 'src/app/apiservice.service';
 import { Observable, of, take } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Location } from '@angular/common';
 @Component({
   selector: 'app-hgbcreatecategory',
@@ -20,7 +19,7 @@ import { Location } from '@angular/common';
 })
 export class HgbcreatecategoryComponent implements OnInit {
   storeBanner = '';
-  homeGrownproducts$: Observable<any[]> = of();
+  // homeGrownproducts$: Observable<any[]> = of();
   Searchtxt: string = '';
   isstorealreadyadded: boolean = false;
 
@@ -38,19 +37,20 @@ export class HgbcreatecategoryComponent implements OnInit {
   constructor(
     public auth: AuthService,
     public api: ApiserviceService,
-    private https: HttpClient,
     public Location: Location
   ) {}
 
   ngOnInit(): void {
     this.api
-      .gethomegrowndata()
+      .getSectionData('HomeGrown')
       .pipe(take(1))
       .subscribe((data: any) => {
         this.HGdata = data[0];
         this.storeBanner = data[0].HGbanner;
-        this.homeGrownproducts$ = of(data[0].products);
+        // this.homeGrownproducts$ = of(data[0].products);
       });
+
+
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -115,16 +115,16 @@ export class HgbcreatecategoryComponent implements OnInit {
               this.auth.resource.startSnackBar('banner uploaded');
             });
         } else {
-          this.api
-            .updatehomegrownproductbanner(
-              this.HGdata,
-              result.croppedImage,
-              index || 0
-            )
-            .then((data: any) => {
-              this.storeBanner = data.url;
-              this.auth.resource.startSnackBar('banner uploaded');
-            });
+          // this.api
+          //   .updatehomegrownproductbanner(
+          //     this.HGdata,
+          //     result.croppedImage,
+          //     index || 0
+          //   )
+          //   .then((data: any) => {
+          //     this.storeBanner = data.url;
+          //     this.auth.resource.startSnackBar('banner uploaded');
+          //   });
         }
       }
     });

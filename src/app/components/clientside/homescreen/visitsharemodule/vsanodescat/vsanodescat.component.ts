@@ -28,7 +28,6 @@ export class VSAnodescatComponent implements OnInit {
   ngOnInit(): void {
     this.nodeId = this.actRoute.snapshot.params['id'];
     this.api.getcity().pipe(take(1)).subscribe((data:any)=>{
-      console.log("city",data);
       let index = data.findIndex((x:any)=>x.id == this.actRoute.snapshot.params['cityid']);
       this.storeBanner = data[index].VSAcitybanner;
     })

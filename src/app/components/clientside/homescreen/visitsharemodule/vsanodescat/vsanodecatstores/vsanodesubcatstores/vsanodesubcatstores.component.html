@@ -14,9 +14,14 @@
       <div>
         <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
           <mat-select placeholder="Select Sub-Category" (selectionChange)="subcatchange()" [(ngModel)]="SelectedSubCat">
-            <mat-option *ngFor="let item of subcatlist" [value]="item.id">
-              {{item.name}}
-            </mat-option>
+            <ng-container *ngFor="let item of subcatlist">
+              <ng-container
+                *ngIf="item.id != 'sc-food_and_beverages-instant_food' && item.id != 'sc-food_and_beverages-munchies_food' && item.id != 'sc-food_and_beverages-beverages' && item.id != 'sc-food_and_beverages-healthy_snacks'">
+                <mat-option [value]="item.id">
+                  {{item.name}}
+                </mat-option>
+              </ng-container>
+            </ng-container>
           </mat-select>
         </mat-form-field>
       </div>
@@ -27,8 +32,7 @@
         <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
           <mat-select placeholder="Select Category" (selectionChange)="catchange()" [(ngModel)]="SelectedCat">
             <ng-container *ngFor="let item of auth.resource.categoryList">
-              <ng-container
-                *ngIf="item.id != 'food_and_beverages' && item.id != 'salons_and_spa' && item.id != 'healthcare'">
+              <ng-container *ngIf="item.id == 'fashion_brand' || item.id == 'fitness' || item.id == 'pet_care'">
                 <mat-option [value]="item.id">
                   {{item.title}}
                 </mat-option>
@@ -49,7 +53,7 @@
         </div>
         <div class="dflex flex_col l15margin JEend">
           <button (click)="takePicture('17:14','homeBanner','1')" mat-button disableRipple
-            class="c_align  M100width tb5padding cursor_pointer purple_txt regulartext s_size normallineheight lr20padding Aborder">
+            class="c_align M100width tb5padding cursor_pointer purple_txt regulartext s_size normallineheight lr20padding Aborder">
             <svg class="r5margin cursor_pointer" width="17" height="15" viewBox="0 0 17 15" fill="none"
               xmlns="http://www.w3.org/2000/svg">
               <path
@@ -92,9 +96,9 @@
 
   </main>
   <div class="boldtext xl_size t40margin">
-    People choice stores
+    Best Deal's stores
   </div>
-  <div class="t20margin b20margin">
+  <!--<div class="t20margin b20margin">
     <div class="b20padding">
       <span class="s_size boldtext">People’s Choice </span> <span class="xs_size gray_txt">(Maximum 250 words)</span>
     </div>
@@ -108,7 +112,7 @@
         </button>
       </mat-form-field>
     </div>
-  </div>
+  </div> -->
 
 
   <div class="Aborder A5radius A20padding t20margin b20margin">
@@ -204,7 +208,7 @@
               {{item.cat}}
             </div>
             <div class="M25width c_align dflex JCcenter">
-              <a (click)="deletestore(1,item.sectionid)" class="r20margin">
+              <a (click)="deletestore(1,item.id)" class="r20margin">
                 <mat-icon class="black_text">delete</mat-icon>
               </a>
               <a (click)="takePicture('9:16','peopleCstorebanner',item.sectionid)">
@@ -216,7 +220,7 @@
       </div>
     </div>
   </div>
-  <div class="boldtext m_size t40margin b20margin">
+  <!-- <div class="boldtext m_size t40margin b20margin">
     Trending stores
   </div>
   <div class="Aborder A5radius A20padding b20margin">
@@ -289,9 +293,9 @@
       <tr class="mat-row" *matNoDataRow>
       </tr>
     </table>
-  </div>
+  </div> -->
 
-  <div *ngIf="trendingStores.length > 0" class="t15margin boxshw A10radius white_bg">
+  <!-- <div *ngIf="trendingStores.length > 0" class="t15margin boxshw A10radius white_bg">
     <div class="dflex JCevenly M100width tb15padding s_size purple_background c_white">
       <div class="M10width c_align">Rank</div>
       <div class="regulartext M40width">Store Name</div>
@@ -323,5 +327,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>

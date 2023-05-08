@@ -21,8 +21,8 @@ import { Location } from '@angular/common';
 })
 export class HgbnodecatstoresComponent implements OnInit {
   selectedcat: string = '';
-  Catthumbnail = '';
-  Catbanner = '';
+  // Catthumbnail = '';
+  // Catbanner = '';
   HGBdata: any;
   editpeoplechoice: boolean = false;
   parameters: string = 'phone';
@@ -85,11 +85,14 @@ export class HgbnodecatstoresComponent implements OnInit {
         this.HGBdata = data[0];
         if(this.HGBdata != undefined){
           this.peoplechoicecatpara = data[0].Peoplechoicepara;
+        if (data[0].Stores.length > 0) {
+
           this.api
             .getStoresbyIds(data[0]?.Stores)
             .subscribe((data: any) => {
               this.PChoiceStores = data;
             });
+          }
         }
         // this.PChoiceStores = data;
       });
@@ -214,10 +217,10 @@ export class HgbnodecatstoresComponent implements OnInit {
     this.api.adddatatosectionstore(datas).then(() => {
       this.HGBdata = datas;
       if (i == 1) {
-      this.api.startSnackBar('Store Added');
+      this.auth.resource.startSnackBar('Store Added');
       }
       else {
-      this.api.startSnackBar('People Choice Added.');
+      this.auth.resource.startSnackBar('People Choice Added.');
       }
     });
   }
@@ -250,8 +253,8 @@ export class HgbnodecatstoresComponent implements OnInit {
     );
     this.catindex = i;
     this.selectedcat = this.auth.resource.categoryList[i].title;
-    this.Catthumbnail = this.auth.resource.categoryList[i].HGThumbnail;
-    this.Catbanner = this.auth.resource.categoryList[i].HGCatbanner;
+    // this.Catthumbnail = this.auth.resource.categoryList[i].HGThumbnail;
+    // this.Catbanner = this.auth.resource.categoryList[i].HGCatbanner;
     // this.peoplechoicecatpara = data[0].Categories[i].peoplechoicecatpara;
     // });
   }
@@ -310,10 +313,10 @@ export class HgbnodecatstoresComponent implements OnInit {
                 );
 
                 if (type == 'Thumbnail') {
-                  this.Catthumbnail = ref.url;
+                  // this.Catthumbnail = ref.url;
                   this.auth.resource.categoryList[i].HGThumbnail = ref.url;
                 } else if (type == 'homeBanner') {
-                  this.Catbanner = ref.url;
+                  // this.Catbanner = ref.url;
                   this.auth.resource.categoryList[i].HGCatbanner = ref.url;
                 }
                 this.auth.resource.startSnackBar('Banner Update.');

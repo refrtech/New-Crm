@@ -108,9 +108,11 @@ export class HgbnodesubcatstoresComponent implements OnInit {
         this.HGpeoplechoicedata = data[0];
         if (this.HGpeoplechoicedata != undefined) {
           this.peoplechoicesubcatpara = data[0].Peoplechoicepara;
+        if (data[0].Stores.length > 0) {
           this.api.getStoresbyIds(data[0]?.Stores).subscribe((data: any) => {
             this.PChoiceStores = data;
           });
+        }
         }
       });
     this.api
@@ -121,7 +123,7 @@ export class HgbnodesubcatstoresComponent implements OnInit {
       )
       .subscribe((data: any) => {
         this.HGBrandYoulovedata = data[0];
-        if (this.HGBrandYoulovedata != undefined) {
+        if (this.HGBrandYoulovedata != undefined && data[0]?.Stores.length > 0) {
           this.api.getStoresbyIds(data[0]?.Stores).subscribe((data: any) => {
             this.BrandYouloveStores = data;
           });
@@ -239,9 +241,10 @@ export class HgbnodesubcatstoresComponent implements OnInit {
         this.HGBrandYoulovedata = datas;
       }
       if (i == 1) {
-        this.api.startSnackBar('Store Added');
+        this.auth.resource.startSnackBar('Store Added');
       } else {
-        this.api.startSnackBar('People Choice Added.');
+        this.editpeoplechoice = !this.editpeoplechoice;
+        this.auth.resource.startSnackBar('People Choice Added.');
       }
     });
   }

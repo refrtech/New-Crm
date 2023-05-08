@@ -61,8 +61,8 @@ export class DailydropsComponent implements OnInit {
       .pipe(take(1))
       .subscribe((daildropsdata: any) => {
         this.dailydropmoduledata = daildropsdata[0];
-        this.SectionTitle = daildropsdata[0]?.Section_title;
-        this.SectionSTitle = daildropsdata[0]?.Section_Stitle;
+        this.SectionTitle = this.dailydropmoduledata?.Section_title;
+        this.SectionSTitle = this.dailydropmoduledata[0]?.Section_Stitle;
       });
   }
 

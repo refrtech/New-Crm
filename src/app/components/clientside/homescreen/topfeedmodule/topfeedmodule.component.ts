@@ -32,7 +32,7 @@ export class TopfeedmoduleComponent implements OnInit {
   addSlide() {
     const dialogRef = this.dailog.open(FeedsectionComponent, {
       width: '50%',
-      data: { id: this.getVideoData.id,FeedVideos:this.getVideoData.FeedVideos },
+      data: { id: this.getVideoData.id,FeedVideos:this.getVideoData.Videos },
       hasBackdrop: true,
       disableClose: true,
       panelClass: 'thanksscreen',
@@ -63,18 +63,18 @@ export class TopfeedmoduleComponent implements OnInit {
             this.auth.resource.startSnackBar(result.info);
           }
         } else {
-          let i = this.getVideoData.FeedVideos.findIndex((x:any)=>{
+          let i = this.getVideoData.Videos.findIndex((x:any)=>{
             x.fileName == id
           });
-          this.getVideoData.FeedVideos.splice(i,1);
-          this.api.UpdateVideo(this.getVideoData.id,this.getVideoData.FeedVideos).then((data: any) => {});
+          this.getVideoData.Videos.splice(i,1);
+          this.api.UpdateVideo(this.getVideoData.id,this.getVideoData.Videos).then((data: any) => {});
         }
       });
     }
   }
 
   async getVideo() {
-    await this.api.getVideosdata('TopFeedVideos').subscribe((data) => {
+    await this.api.getSectionsdata('TopFeedVideos').subscribe((data) => {
       this.getVideoData = data[0];
     });
   }

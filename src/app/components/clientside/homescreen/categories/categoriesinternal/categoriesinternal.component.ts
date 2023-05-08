@@ -109,7 +109,7 @@ export class CategoriesinternalComponent implements OnInit {
       )
       .subscribe((data: any) => {
         this.PChoicedata = data[0];
-        if (this.PChoicedata != undefined) {
+        if (this.PChoicedata != undefined && data[0]?.Stores.length > 0) {
           this.api.getStoresbyIds(data[0]?.Stores).subscribe((data: any) => {
             this.PChoiceStores = data;
           });
@@ -124,7 +124,7 @@ export class CategoriesinternalComponent implements OnInit {
       )
       .subscribe((data: any) => {
         this.trendingdata = data[0];
-        if (this.trendingdata != undefined) {
+        if (this.trendingdata != undefined && data[0]?.Stores.length > 0) {
           this.api.getStoresbyIds(data[0]?.Stores).subscribe((data: any) => {
             this.trendingStores = data;
           });
@@ -139,7 +139,7 @@ export class CategoriesinternalComponent implements OnInit {
       )
       .subscribe((data: any) => {
         this.CURATEDdata = data[0];
-        if (this.CURATEDdata != undefined) {
+        if (this.CURATEDdata != undefined && data[0]?.Stores.length > 0) {
           this.api.getStoresbyIds(data[0]?.Stores).subscribe((data: any) => {
             this.curatedstores = data;
           });
@@ -154,7 +154,7 @@ export class CategoriesinternalComponent implements OnInit {
       )
       .subscribe((data: any) => {
         this.productYWLData = data[0];
-        if (this.productYWLData != undefined) {
+        if (this.productYWLData != undefined && data[0]?.Stores.length > 0) {
           this.api.getStoresbyIds(data[0]?.Stores).subscribe((data: any) => {
             this.products = data;
           });
@@ -281,7 +281,6 @@ export class CategoriesinternalComponent implements OnInit {
     //   });
     // }
     if (i == 1) {
-      console.log(this.PChoicedata);
       if (this.PChoicedata == undefined) {
         this.addsectionstoredata(i, Data);
       } else {
@@ -325,7 +324,6 @@ export class CategoriesinternalComponent implements OnInit {
   }
 
   addsectionstoredata(i: number, data: any) {
-    console.log('Data', data);
     let datas: any;
     if (i == 1) {
       datas = {
@@ -365,7 +363,7 @@ export class CategoriesinternalComponent implements OnInit {
       };
     }
     this.api.adddatatosectionstore(datas).then(() => {
-      this.api.startSnackBar('Store Added');
+      this.auth.resource.startSnackBar('Store Added');
 
       if (i == 1) {
         this.PChoiceStores.push(data);
@@ -432,7 +430,7 @@ export class CategoriesinternalComponent implements OnInit {
                   this.auth.resource.categoryList[this.catindex].thumbnail =
                     ref.url;
                 }
-                this.auth.resource.startSnackBar('Banner Update Under Review!');
+                this.auth.resource.startSnackBar('Banner Update.');
               }
             });
         } else {

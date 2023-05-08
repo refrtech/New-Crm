@@ -183,7 +183,6 @@ export class OrdersComponent implements OnInit {
       )
       .pipe(take(1))
       .subscribe((recentorders: any) => {
-        console.log(recentorders);
         this.recentorderss = '';
         this.recentorderss = recentorders;
         for (let i = 0; i < this.recentorderss.length; i++) {

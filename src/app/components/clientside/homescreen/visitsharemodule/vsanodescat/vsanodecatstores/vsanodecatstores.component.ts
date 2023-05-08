@@ -88,18 +88,20 @@ export class VSAnodecatstoresComponent implements OnInit {
     this.catindex = this.auth.resource.categoryList.findIndex(
       (x: any) => x.id == this.actRoute.snapshot.params['catid']
     );
-    console.log(this.catindex);
     this.api
     .getDataCat_Subcatdata('VSAInternalCatSection',this.actRoute.snapshot.params['catid'],'PeopleChoice')
     .subscribe((data: any) => {
       this.VSAPeopleCHoicedata = data[0];
       if(this.VSAPeopleCHoicedata != undefined){
         this.peoplechoicecatpara = data[0].Peoplechoicepara;
+        if(data[0]?.Stores.length > 0){
+
         this.api
           .getStoresbyIds(data[0]?.Stores)
           .subscribe((data: any) => {
             this.PChoiceStores = data;
           });
+        }
       }
       // this.PChoiceStores = data;
     });
@@ -236,7 +238,7 @@ export class VSAnodecatstoresComponent implements OnInit {
 
   deletestore(i: number, id: string) {
     if (i == 1) {
-      this.api.deletestorefrompeopleStore(id).then((data: any) => {
+      this.api.AddORRemoveSectionStores(2, id, this.VSAPeopleCHoicedata.id).then((data: any) => {
         this.MerchantdataSource = new MatTableDataSource();
       });
     }
@@ -369,10 +371,10 @@ export class VSAnodecatstoresComponent implements OnInit {
     this.api.adddatatosectionstore(datas).then(() => {
       this.VSAPeopleCHoicedata = datas;
       if (i == 1) {
-      this.api.startSnackBar('Store Added');
+      this.auth.resource.startSnackBar('Store Added');
       }
       else {
-      this.api.startSnackBar('People Choice Added.');
+      this.auth.resource.startSnackBar('People Choice Added.');
       }
     });
   }
@@ -381,9 +383,6 @@ export class VSAnodecatstoresComponent implements OnInit {
     // let index = this.catarray.findIndex(
     //   (x: any) => x.Catid == this.actRoute.snapshot.params['catid']
     // );
-    console.log(this.VSAPeopleCHoicedata);
-    console.log(this.VSAPeopleCHoicedata?.Peoplechoicepara);
-    console.log(this.peoplechoicecatpara);
     if (!this.editpeoplechoice) {
       this.editpeoplechoice = !this.editpeoplechoice;
     } else if (
@@ -401,12 +400,8 @@ export class VSAnodecatstoresComponent implements OnInit {
           this.api
             .updatepeoplechoicepara(this.VSAPeopleCHoicedata.id, this.peoplechoicecatpara)
             .then((data) => {
-              console.log("data",data);
-              // if (data != undefined) {
                 this.VSAPeopleCHoicedata.Peoplechoicepara = this.peoplechoicecatpara;
-                console.log("adadsadas");
                 this.editpeoplechoice = !this.editpeoplechoice;
-              // }
             })
             .catch(() => {
               return false;

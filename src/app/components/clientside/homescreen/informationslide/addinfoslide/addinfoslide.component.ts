@@ -63,11 +63,11 @@ export class AddinfoslideComponent implements OnInit {
               ? 'video'
               : 'image',
           };
-          if (this.data.infoVideos == undefined) {
+          // if (this.data.infoVideos == undefined) {
             this.data.infoVideos = [data];
-          } else {
-            this.data.infoVideos.push(data);
-          }
+          // } else {
+          //   this.data.infoVideos.push(data);
+          // }
           this.api
             .UpdateVideo(this.data.id, this.data.infoVideos)
             .then(() => {

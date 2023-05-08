@@ -85,21 +85,23 @@ export class BrandSpotlightComponent implements OnInit {
       .pipe(take(1))
       .subscribe((data: any) => {
         this.BSmoduledata = data[0];
-        this.SectionTitle = this.BSmoduledata.BS_Title;
-        this.SectionSTitle = this.BSmoduledata.BS_STitle;
+        this.SectionTitle = this.BSmoduledata.Section_title;
+        this.SectionSTitle = this.BSmoduledata.Section_Stitle;
       });
 
     this.api
-      .getbrandspotlightStores()
+      .getSectionsdata('BrandspotLightSection')
       .pipe(take(1))
       .subscribe((data: any) => {
         this.nodestoresid = data[0].id;
-        this.api
-          .getStoresbyIds(data[0].Stores)
-          .pipe(take(1))
-          .subscribe((data: any) => {
-            this.BSmoduleStoredata = data;
-          });
+        if (data[0].Stores.length > 0) {
+          this.api
+            .getStoresbyIds(data[0].Stores)
+            .pipe(take(1))
+            .subscribe((data: any) => {
+              this.BSmoduleStoredata = data;
+            });
+        }
       });
   }
 
@@ -108,10 +110,7 @@ export class BrandSpotlightComponent implements OnInit {
       this.editTitle = !this.editTitle;
     } else if (i == 2 && !this.editSubt) {
       this.editSubt = !this.editSubt;
-    } else if (
-      i == 1 &&
-      this.SectionTitle == this.BSmoduledata.Section_title
-    ) {
+    } else if (i == 1 && this.SectionTitle == this.BSmoduledata.Section_title) {
       this.editTitle = !this.editTitle;
     } else if (
       i == 2 &&
@@ -145,7 +144,6 @@ export class BrandSpotlightComponent implements OnInit {
       }
     }
   }
-
 
   // updateBSTitle() {
   //   if (!this.editTitle) {
@@ -193,10 +191,19 @@ export class BrandSpotlightComponent implements OnInit {
 
   action(data: any) {
     if (this.isstorealreadyadded == true) {
-      this.api.AddORRemoveSectionStores(2, data.id, this.nodestoresid);
+      this.api
+        .AddORRemoveSectionStores(2, data.id, this.nodestoresid)
+        .then(() => {
+          let i = this.BSmoduleStoredata.findIndex((x: any) => x.id == data.id);
+          this.BSmoduleStoredata.splice(i, 1);
+        });
       this.isstorealreadyadded = false;
     } else {
-      this.api.AddORRemoveSectionStores(1, data.id, this.nodestoresid);
+      this.api
+        .AddORRemoveSectionStores(1, data.id, this.nodestoresid)
+        .then(() => {
+          this.BSmoduleStoredata.push(data);
+        });
       this.isstorealreadyadded = true;
     }
   }

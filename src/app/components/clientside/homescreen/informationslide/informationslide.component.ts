@@ -26,7 +26,7 @@ export class InformationslideComponent implements OnInit {
   addSlide(id: number, data?: any) {
     const dialogRef = this.dailog.open(AddinfoslideComponent, {
       width: '50%',
-      data: { id: this.getVideoData.id,infoVideos: this.getVideoData.infoVideos},
+      data: { id: this.getVideoData.id,infoVideos: this.getVideoData.Videos},
       hasBackdrop: true,
       disableClose: true,
       panelClass: 'thanksscreen',
@@ -34,7 +34,7 @@ export class InformationslideComponent implements OnInit {
   }
 
   async getVideo() {
-    await this.api.getVideosdata('InformationVideo').subscribe((data) => {
+    await this.api.getSectionsdata('InformationVideo').subscribe((data) => {
       this.getVideoData = data[0];
     });
   }
@@ -43,11 +43,11 @@ export class InformationslideComponent implements OnInit {
     if (id == undefined) {
       this.auth.resource.startSnackBar('invalid data');
     } else {
-      let i = this.getVideoData.infoVideos.findIndex((x:any)=>{
+      let i = this.getVideoData.Videos.findIndex((x:any)=>{
         x.fileName == id
       });
-      this.getVideoData.infoVideos.splice(i,1);
-      this.api.UpdateVideo(this.getVideoData.id,this.getVideoData.infoVideos).then((data: any) => {
+      this.getVideoData.Videos.splice(i,1);
+      this.api.UpdateVideo(this.getVideoData.id,this.getVideoData.Videos).then((data: any) => {
         this.auth.resource.startSnackBar('Video deleted');
       });
     }

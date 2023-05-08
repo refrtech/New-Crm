@@ -63,11 +63,13 @@ export class VisitallstoredetailsComponent implements OnInit {
       .pipe(take(1))
       .subscribe((data: any) => {
         this.vsaDataid = data[0]?.id;
+        if(data[0]?.Stores.length > 0){
         this.api
           .getStoresbyIds(data[0]?.Stores)
           .subscribe((data: any) => {
             this.storelist = data;
           });
+        }
       });
     }
   }
@@ -141,7 +143,7 @@ export class VisitallstoredetailsComponent implements OnInit {
         };
         this.api.adddatatosectionstore(datas).then(() => {
           this.storelist.push(data);
-          this.api.startSnackBar('Store Added');
+          this.auth.resource.startSnackBar('Store Added');
         });
       }
       this.isstorealreadyadded = true;
