@@ -150,7 +150,7 @@ export class CategoriesinternalComponent implements OnInit {
       .getDataCat_Subcatdata(
         'CategorySection',
         this.actRoute.snapshot.params['cat'],
-        'ProductsYWL'
+        'MostlovedHGB'
       )
       .subscribe((data: any) => {
         this.productYWLData = data[0];
@@ -350,7 +350,7 @@ export class CategoriesinternalComponent implements OnInit {
         M_Date: this.api.newTimestamp,
         SectionName: 'CategorySection',
         Catid: this.actRoute.snapshot.params['cat'],
-        ContainerType: 'ProductsYWL',
+        ContainerType: 'MostlovedHGB',
       };
     } else if (i == 4) {
       datas = {

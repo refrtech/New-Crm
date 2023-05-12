@@ -88,6 +88,7 @@ export class HgbnodesubcatstoresComponent implements OnInit {
   HGBrandYoulovedata: any;
   BrandYouloveStores: Array<any> = [];
   homegrownproducts: Array<any> = [];
+  catindex: number = -1;
   constructor(
     public api: ApiserviceService,
     private actRoute: ActivatedRoute,
@@ -105,14 +106,21 @@ export class HgbnodesubcatstoresComponent implements OnInit {
         'PeopleChoice'
       )
       .subscribe((data: any) => {
-        this.HGpeoplechoicedata = data[0];
+        this.catindex = this.auth.resource.categoryList.findIndex(
+          (x: any) => x.id == this.actRoute.snapshot.params['catid']
+        );
+
+        this.HGpeoplechoicedata =
+          this.auth.resource.categoryList[
+            this.catindex
+          ].HGSUBCATPeoplechoicepara;
         if (this.HGpeoplechoicedata != undefined) {
           this.peoplechoicesubcatpara = data[0].Peoplechoicepara;
-        if (data[0].Stores.length > 0) {
-          this.api.getStoresbyIds(data[0]?.Stores).subscribe((data: any) => {
-            this.PChoiceStores = data;
-          });
-        }
+          if (data[0].Stores?.length > 0) {
+            this.api.getStoresbyIds(data[0]?.Stores).subscribe((data: any) => {
+              this.PChoiceStores = data;
+            });
+          }
         }
       });
     this.api
@@ -123,7 +131,10 @@ export class HgbnodesubcatstoresComponent implements OnInit {
       )
       .subscribe((data: any) => {
         this.HGBrandYoulovedata = data[0];
-        if (this.HGBrandYoulovedata != undefined && data[0]?.Stores.length > 0) {
+        if (
+          this.HGBrandYoulovedata != undefined &&
+          data[0]?.Stores?.length > 0
+        ) {
           this.api.getStoresbyIds(data[0]?.Stores).subscribe((data: any) => {
             this.BrandYouloveStores = data;
           });
@@ -298,16 +309,19 @@ export class HgbnodesubcatstoresComponent implements OnInit {
       // this.api.deletestorefrompeopleStore(id).then((data: any) => {
       //   this.MerchantdataSource = new MatTableDataSource();
       // });
-      this.api.AddORRemoveSectionStores(2, id, this.HGpeoplechoicedata.id).then(() => {
-        let i = this.PChoiceStores.findIndex((x: any) => x.id == id);
-        this.PChoiceStores.splice(i, 1);
-      });
-
+      this.api
+        .AddORRemoveSectionStores(2, id, this.HGpeoplechoicedata.id)
+        .then(() => {
+          let i = this.PChoiceStores.findIndex((x: any) => x.id == id);
+          this.PChoiceStores.splice(i, 1);
+        });
     } else if (i == 2) {
-      this.api.AddORRemoveSectionStores(2, id, this.HGBrandYoulovedata.id).then(() => {
-        let i = this.BrandYouloveStores.findIndex((x: any) => x.id == id);
-        this.BrandYouloveStores.splice(i, 1);
-      });
+      this.api
+        .AddORRemoveSectionStores(2, id, this.HGBrandYoulovedata.id)
+        .then(() => {
+          let i = this.BrandYouloveStores.findIndex((x: any) => x.id == id);
+          this.BrandYouloveStores.splice(i, 1);
+        });
       // this.api.deletestorefromTrendingStore(id).then((data: any) => {
       //   this.MerchantdataSource1 = new MatTableDataSource();
       // });
@@ -365,14 +379,10 @@ export class HgbnodesubcatstoresComponent implements OnInit {
           //     }
           //   });
           this.api
-          .updateSectionStorebanner(
-            id,
-            result.croppedImage,
-            'homegrown'
-          )
-          .then((data) => {
-            this.auth.resource.startSnackBar('banner updated');
-          });
+            .updateSectionStorebanner(id, result.croppedImage, 'homegrown')
+            .then((data) => {
+              this.auth.resource.startSnackBar('banner updated');
+            });
         }
         // else if (type == 'trendingstorebanner') {
         //   this.api
@@ -424,30 +434,29 @@ export class HgbnodesubcatstoresComponent implements OnInit {
     if (!this.editpeoplechoice) {
       this.editpeoplechoice = !this.editpeoplechoice;
     } else if (
-      this.peoplechoicesubcatpara == this.HGpeoplechoicedata?.peoplechoiceSubcatpara
+      this.peoplechoicesubcatpara ==
+      this.auth.resource.categoryList[this.catindex].HGSUBCATPeoplechoicepara
     ) {
       this.editpeoplechoice = !this.editpeoplechoice;
     } else {
       if (this.peoplechoicesubcatpara == '') {
         this.auth.resource.startSnackBar('please enter the People choice.');
       } else {
-        if (this.HGpeoplechoicedata == undefined){
-          this.addsectionstoredata(2, this.peoplechoicesubcatpara);
-        }
-        else {
         this.api
-          .updatepeoplechoicepara(this.HGpeoplechoicedata.id, this.peoplechoicesubcatpara)
+          .updatepeoplechoicepara(
+            4,
+            this.actRoute.snapshot.params['catid'],
+            this.peoplechoicesubcatpara
+          )
           .then((data) => {
-            if (data != undefined) {
-              this.HGpeoplechoicedata.peoplechoiceSubcatpara =
-                this.peoplechoicesubcatpara;
+              this.auth.resource.categoryList[
+                this.catindex
+              ].HGSUBCATPeoplechoicepara = this.peoplechoicesubcatpara;
               this.editpeoplechoice = !this.editpeoplechoice;
-            }
           })
           .catch(() => {
             return false;
           });
-        }
       }
     }
   }

@@ -21,8 +21,6 @@ import { Location } from '@angular/common';
 })
 export class HgbnodecatstoresComponent implements OnInit {
   selectedcat: string = '';
-  // Catthumbnail = '';
-  // Catbanner = '';
   HGBdata: any;
   editpeoplechoice: boolean = false;
   parameters: string = 'phone';
@@ -84,9 +82,7 @@ export class HgbnodecatstoresComponent implements OnInit {
       .subscribe((data: any) => {
         this.HGBdata = data[0];
         if(this.HGBdata != undefined){
-          this.peoplechoicecatpara = data[0].Peoplechoicepara;
         if (data[0].Stores.length > 0) {
-
           this.api
             .getStoresbyIds(data[0]?.Stores)
             .subscribe((data: any) => {
@@ -252,6 +248,7 @@ export class HgbnodecatstoresComponent implements OnInit {
       (x: any) => x.id == this.actRoute.snapshot.params['catid']
     );
     this.catindex = i;
+    this.peoplechoicecatpara = this.auth.resource.categoryList[i].HGCATPeoplechoicepara;
     this.selectedcat = this.auth.resource.categoryList[i].title;
     // this.Catthumbnail = this.auth.resource.categoryList[i].HGThumbnail;
     // this.Catbanner = this.auth.resource.categoryList[i].HGCatbanner;
@@ -405,7 +402,7 @@ export class HgbnodecatstoresComponent implements OnInit {
   updatepeoplechoice() {
     if (!this.editpeoplechoice) {
       this.editpeoplechoice = !this.editpeoplechoice;
-    } else if (this.peoplechoicecatpara == this.HGBdata?.Peoplechoicepara) {
+    } else if (this.peoplechoicecatpara == this.auth.resource.categoryList[this.catindex].HGCATPeoplechoicepara) {
       this.editpeoplechoice = !this.editpeoplechoice;
     } else {
       if (this.peoplechoicecatpara == '') {
@@ -416,12 +413,10 @@ export class HgbnodecatstoresComponent implements OnInit {
         }
         else {
           this.api
-            .updatepeoplechoicepara(this.HGBdata.id, this.peoplechoicecatpara)
+            .updatepeoplechoicepara(3,this.actRoute.snapshot.params['catid'], this.peoplechoicecatpara)
             .then((data) => {
-              if (data != undefined) {
-                this.HGBdata.Peoplechoicepara = this.peoplechoicecatpara;
+                this.auth.resource.categoryList[this.catindex].HGCATPeoplechoicepara = this.peoplechoicecatpara;
                 this.editpeoplechoice = !this.editpeoplechoice;
-              }
             })
             .catch(() => {
               return false;

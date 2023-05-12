@@ -89,7 +89,7 @@ export class VSAnodecatstoresComponent implements OnInit {
       (x: any) => x.id == this.actRoute.snapshot.params['catid']
     );
     this.api
-    .getDataCat_Subcatdata('VSAInternalCatSection',this.actRoute.snapshot.params['catid'],'PeopleChoice')
+    .getvsaDataCat_Subcatdata('VSAInternalCatSection',this.actRoute.snapshot.params['nodeid'],this.actRoute.snapshot.params['catid'],'PeopleChoice')
     .subscribe((data: any) => {
       this.VSAPeopleCHoicedata = data[0];
       if(this.VSAPeopleCHoicedata != undefined){
@@ -398,7 +398,7 @@ export class VSAnodecatstoresComponent implements OnInit {
         }
         else {
           this.api
-            .updatepeoplechoicepara(this.VSAPeopleCHoicedata.id, this.peoplechoicecatpara)
+            .updatepeoplechoicepara(1,this.actRoute.snapshot.params['catid'], this.peoplechoicecatpara)
             .then((data) => {
                 this.VSAPeopleCHoicedata.Peoplechoicepara = this.peoplechoicecatpara;
                 this.editpeoplechoice = !this.editpeoplechoice;

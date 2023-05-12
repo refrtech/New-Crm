@@ -9,7 +9,7 @@ import { Camera } from '@capacitor/camera';
 import { CameraResultType } from '@capacitor/camera/dist/esm/definitions';
 import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component';
 import { ApiserviceService } from 'src/app/apiservice.service';
-import { Observable, of, take } from 'rxjs';
+import { take } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { Location } from '@angular/common';
 @Component({
@@ -49,8 +49,6 @@ export class HgbcreatecategoryComponent implements OnInit {
         this.storeBanner = data[0].HGbanner;
         // this.homeGrownproducts$ = of(data[0].products);
       });
-
-
   }
 
   drop(event: CdkDragDrop<string[]>) {

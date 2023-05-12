@@ -18,10 +18,10 @@
         </button>
       </div>
     </div>
-    <div class="dflex">
+    <div class="dflex" *ngIf="this.actRoute.snapshot.params['catid'] != 'in_the_mix'">
       <div class="M30width">
         <div class="img">
-          <img class="M100width" [src]=" auth.resource.categoryList[catindex].VSAthumbnail ? auth.resource.categoryList[catindex].VSAthumbnail : 'assets/brand/opengraph.png' " alt="banner" />
+          <img class="M100width" [src]=" auth.resource.categoryList[catindex]?.VSAthumbnail ? auth.resource.categoryList[catindex]?.VSAthumbnail : 'assets/brand/opengraph.png' " alt="banner" />
         </div>
       </div>
       <div class="dflex flex_col l15margin JEend"

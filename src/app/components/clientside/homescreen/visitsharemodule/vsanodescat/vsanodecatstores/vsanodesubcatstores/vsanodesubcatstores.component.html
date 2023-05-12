@@ -48,7 +48,7 @@
       <div class="dflex">
         <div class="M30width">
           <div class="img">
-            <img class="M100width" [src]=" subCatBanner ? subCatBanner : 'assets/brand/opengraph.png' " alt="banner" />
+            <img class="M100width" [src]=" this.auth.resource.categoryList[catindex].items[subcatindex].VSASubcatbanner ? this.auth.resource.categoryList[catindex].items[subcatindex].VSASubcatbanner : 'assets/brand/opengraph.png' " alt="banner" />
           </div>
         </div>
         <div class="dflex flex_col l15margin JEend">
@@ -73,11 +73,11 @@
       <div class="dflex">
         <div class="M30width">
           <div class="img">
-            <img class="M100width" [src]=" CatBanner ? CatBanner : 'assets/brand/opengraph.png' " alt="banner" />
+            <img class="M100width" [src]=" this.auth.resource.categoryList[catindex].VSAcatBanner ? this.auth.resource.categoryList[catindex].VSAcatBanner : 'assets/brand/opengraph.png' " alt="banner" />
           </div>
         </div>
         <div class="dflex flex_col l15margin JEend">
-          <button (click)="takePicture('16:9','homeBanner','2')" mat-button disableRipple
+          <button (click)="takePicture('17:14','homeBanner','2')" mat-button disableRipple
             class="c_align  M100width tb5padding cursor_pointer purple_txt regulartext s_size normallineheight lr20padding Aborder">
             <svg class="r5margin cursor_pointer" width="17" height="15" viewBox="0 0 17 15" fill="none"
               xmlns="http://www.w3.org/2000/svg">

@@ -41,7 +41,7 @@ export class CropperComponent implements OnInit {
       this.aspectRatio = 17.2 / 13.1;
     }
     else {
-      // this.aspectRatio = 17 / 14.35;
+      this.aspectRatio = 1 / 1;
     }
 
   }

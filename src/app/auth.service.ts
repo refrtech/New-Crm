@@ -1582,7 +1582,7 @@ export class AuthService {
               {id:"sc-food_and_beverages-cafe", icon:"", anim:"", img:"", name:"Cafe", type:"food_and_beverages", rank:0, count:0},
               {id:"sc-food_and_beverages-restaurants", icon:"", anim:"", img:"", name:"Restaurants", type:"food_and_beverages", rank:0, count:0},
               {id:"sc-food_and_beverages-clubs_and_bars", icon:"", anim:"", img:"", name:"Clubs & Bars", type:"food_and_beverages", rank:0, count:0},
-          ]
+          ]sc-food_and_beverages-instant_food
       },
 
       {

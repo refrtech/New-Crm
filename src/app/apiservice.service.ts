@@ -145,7 +145,6 @@ export class ApiserviceService {
     operator1?: any,
     value1?: any
   ) {
-
     const catData: CollectionReference = collection(
       this.firestore,
       `${'walt'}`
@@ -1209,7 +1208,9 @@ export class ApiserviceService {
   async updatecatBannerORthumbnail(
     catid: any,
     croppedImage: string,
-    type: string
+    type: string,
+    catindex?:number,
+    subcatindex?:number
   ) {
     const newTimestamp = this.getServerTimestamp();
     const categoryrefr = doc(this.firestore, `${'cats'}`, `${catid}`);
@@ -1225,29 +1226,45 @@ export class ApiserviceService {
         }).then(() => {
           return cloudUpload;
         });
-      } else if(type == 'logo') {
+      } else if (type == 'logo') {
         return updateDoc(categoryrefr, {
           thumbnail: cloudUpload.url,
           upd: newTimestamp,
         }).then(() => {
           return cloudUpload;
         });
-      }
-      else if(type == 'VSAthumbnail'){
+      } else if (type == 'VSAthumbnail') {
         return updateDoc(categoryrefr, {
           VSAthumbnail: cloudUpload.url,
           upd: newTimestamp,
         }).then(() => {
           return cloudUpload;
         });
-      }
-      else if(type == 'VSABanner'){
+      } else if (type == 'VSABanner') {
         return updateDoc(categoryrefr, {
           VSABanner: cloudUpload.url,
           upd: newTimestamp,
         }).then(() => {
           return cloudUpload;
         });
+      }
+      else if(type == 'VSAcatbanner'){
+        return updateDoc(categoryrefr, {
+          VSAcatBanner: cloudUpload.url,
+          upd: newTimestamp,
+        }).then(() => {
+          return cloudUpload;
+        });
+      }
+      else if( type == 'VSAsubcatbanner'){
+        this.auth.resource.categoryList[catindex || 0].items[subcatindex || 0].VSASubcatbanner = cloudUpload.url;
+        return updateDoc(categoryrefr, {
+          items: this.auth.resource.categoryList[catindex || 0].items,
+          upd: newTimestamp,
+        }).then(() => {
+          return cloudUpload;
+        });
+
       }
     }
   }
@@ -1306,8 +1323,6 @@ export class ApiserviceService {
   //     });
   //   }
   // }
-
-
 
   // async updateNodesubcatinternalBanner(
   //   id: string,
@@ -1751,8 +1766,7 @@ export class ApiserviceService {
           .catch((err) => {
             return false;
           });
-      }
-      else if(section == 'DailyDrop'){
+      } else if (section == 'DailyDrop') {
         return updateDoc(Shoprefr, { DailyDropBanner: cloudUpload.url })
           .then((datas: any) => {
             return 'Banner Uploaded';
@@ -1760,8 +1774,7 @@ export class ApiserviceService {
           .catch((err) => {
             return false;
           });
-      }
-      else if(section == 'NSIYH'){
+      } else if (section == 'NSIYH') {
         return updateDoc(Shoprefr, { NSIYHBanner: cloudUpload.url })
           .then((datas: any) => {
             return 'Banner Uploaded';
@@ -1769,8 +1782,7 @@ export class ApiserviceService {
           .catch((err) => {
             return false;
           });
-      }
-      else if(section == 'Categores'){
+      } else if (section == 'Categores') {
         return updateDoc(Shoprefr, { CategoresBanner: cloudUpload.url })
           .then((datas: any) => {
             return 'Banner Uploaded';
@@ -1778,9 +1790,7 @@ export class ApiserviceService {
           .catch((err) => {
             return false;
           });
-      }
-
-      else if(section == 'VSA'){
+      } else if (section == 'VSA') {
         return updateDoc(Shoprefr, { VSABanner: cloudUpload.url })
           .then((datas: any) => {
             return 'Banner Uploaded';
@@ -1800,8 +1810,6 @@ export class ApiserviceService {
     const qu = query(Hgrown, where('id', 'in', StoreIds));
     return collectionData(qu);
   }
-
-
 
   async AddORRemoveSectionStores(index: number, storeid: any, DocId: string) {
     const sectiondata = await doc(
@@ -2077,27 +2085,45 @@ export class ApiserviceService {
 
   getvsaDataCat_Subcatdata(
     sectionname: string,
-    Nodeid:string,
+    Nodeid: string,
     Catid: string,
-    SubcatId:string,
     ContainerType: string,
+    SubcatId?: string
   ) {
     const coll = collection(this.firestore, 'Section_stores');
-    const q = query(
-      coll,
-      where('SectionName', '==', sectionname),
-      where('Nodeid','==',Nodeid),
-      where('Catid', '==', Catid),
-      where('SubcatId','==',SubcatId),
-      where('ContainerType', '==', ContainerType)
-    );
+    var q;
+    if (SubcatId == undefined || SubcatId == '') {
+
+      q = query(
+        coll,
+        where('SectionName', '==', sectionname),
+        where('NodeId', '==', Nodeid),
+        where('Catid', '==', Catid),
+        where('ContainerType', '==', ContainerType)
+      );
+    } else {
+      q = query(
+        coll,
+        where('SectionName', '==', sectionname),
+        where('Nodeid', '==', Nodeid),
+        where('Catid', '==', Catid),
+        where('SubcatId', '==', SubcatId),
+        where('ContainerType', '==', ContainerType)
+      );
+    }
     return collectionData(q);
   }
 
-
-  updatepeoplechoicepara(id: string, data: any) {
-    const cityrefr = doc(this.firestore, `${'Section_stores'}`, `${id}`);
-    return updateDoc(cityrefr, { Peoplechoicepara: data });
+  updatepeoplechoicepara(index: number, id: string, data: any) {
+    const cityrefr = doc(this.firestore, `${'cats'}`, `${id}`);
+    if (index == 1) {
+      return updateDoc(cityrefr, { VSAPeoplechoicepara: data });
+    } else if(index == 3) {
+      return updateDoc(cityrefr, { HGCATPeoplechoicepara: data });
+    }
+    else {
+      return updateDoc(cityrefr, { HGSUBCATPeoplechoicepara: data });
+    }
   }
 
   // top feed video start
@@ -2105,10 +2131,10 @@ export class ApiserviceService {
   async UpdateVideo(id: string, data: any) {
     const cityrefr = doc(this.firestore, `${'Section_stores'}`, `${id}`);
     // if (index == 1) {
-      return updateDoc(cityrefr, {
-        Videos: data,
-        M_Date: this.newTimestamp,
-      });
+    return updateDoc(cityrefr, {
+      Videos: data,
+      M_Date: this.newTimestamp,
+    });
     // } else {
     //   return updateDoc(cityrefr, {
     //     FeedVideos: arrayRemove(data),
@@ -2126,9 +2152,12 @@ export class ApiserviceService {
     // );
   }
 
-  getSectionsdata(sectionName:string) {
-    const vid: CollectionReference = collection(this.firestore, 'Section_stores');
-    const qu = query(vid,where('SectionName','==',sectionName));
+  getSectionsdata(sectionName: string) {
+    const vid: CollectionReference = collection(
+      this.firestore,
+      'Section_stores'
+    );
+    const qu = query(vid, where('SectionName', '==', sectionName));
     return collectionData(qu);
   }
 
@@ -2147,7 +2176,6 @@ export class ApiserviceService {
       });
     }
   }
-
 
   // async deleteVideo(id: any) {
   //   const vidRef = await doc(this.firestore, 'feedVideos', `${id}`);

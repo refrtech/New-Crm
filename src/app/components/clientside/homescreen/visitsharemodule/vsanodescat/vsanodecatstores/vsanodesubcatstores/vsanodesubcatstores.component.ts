@@ -5,7 +5,7 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { AuthService } from 'src/app/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ApiserviceService } from 'src/app/apiservice.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { take } from 'rxjs';
@@ -20,8 +20,6 @@ import { Location } from '@angular/common';
   styleUrls: ['./vsanodesubcatstores.component.scss'],
 })
 export class VSAnodesubcatstoresComponent implements OnInit {
-  subCatBanner: string = '';
-  CatBanner: string = '';
   SelectedSubCat: string = '';
   SelectedCat: string = '';
   subcatlist: Array<any> = [];
@@ -34,7 +32,6 @@ export class VSAnodesubcatstoresComponent implements OnInit {
   isstorealreadyadded1: boolean = false;
   MerchantdataSource!: MatTableDataSource<any>;
   MerchantdataSource1!: MatTableDataSource<any>;
-  // peoplechoicecatpara: string = '';
   editpeoplechoice: boolean = false;
 
   ParaArr: Array<any> = [
@@ -68,10 +65,11 @@ export class VSAnodesubcatstoresComponent implements OnInit {
   ];
 
   PChoiceStores: Array<any> = [];
-  // trendingStores: Array<any> = [];
   catarray: Array<any> = [];
   DocId: string = '';
   VSAPeopleCHoicedata: any;
+  catindex: number = -1;
+  subcatindex:number = -1;
   constructor(
     public auth: AuthService,
     public actRoute: ActivatedRoute,
@@ -79,13 +77,18 @@ export class VSAnodesubcatstoresComponent implements OnInit {
     public Location: Location
   ) {
     if (this.actRoute.snapshot.params['catid'] != 'in_the_mix') {
-      let i = this.auth.resource.categoryList.findIndex(
+      this.catindex = this.auth.resource.categoryList.findIndex(
         (x: any) => x.id == this.actRoute.snapshot.params['catid']
       );
-      this.subcatlist = this.auth.resource.categoryList[i].items;
-      this.SelectedSubCat = this.auth.resource.categoryList[i].items[0].id;
+      this.subcatlist = this.auth.resource.categoryList[this.catindex].items;
+      this.SelectedSubCat =
+        this.auth.resource.categoryList[this.catindex].items[0].id;
+        this.subcatindex = this.auth.resource.categoryList[this.catindex].items.findIndex((x:any)=>x.id == this.SelectedSubCat);
     } else {
-      this.SelectedCat = 'fashion_brand'; //this.auth.resource.categoryList[0].id;
+      this.SelectedCat = 'fashion_brand';
+      this.catindex = this.auth.resource.categoryList.findIndex(
+        (x: any) => x.id == 'fashion_brand'
+      );
     }
   }
 
@@ -98,22 +101,24 @@ export class VSAnodesubcatstoresComponent implements OnInit {
   }
 
   subcatchange() {
-    // this.peoplechoicecatpara = '';
+    this.subcatindex = this.auth.resource.categoryList[this.catindex].items.findIndex((x:any)=>x.id == this.SelectedSubCat);
     this.PChoiceStores = [];
-    // this.trendingStores = [];
     //get the vsa people choice stores as per node id and sub cat
     this.api
       .getvsaDataCat_Subcatdata(
         'VSASection',
         this.actRoute.snapshot.params['nodeid'],
         this.actRoute.snapshot.params['catid'],
-        this.SelectedSubCat,
-        'Bestdeal'
+        'Bestdeal',
+        this.SelectedSubCat
       )
       .pipe(take(1))
       .subscribe((data: any) => {
         this.VSAPeopleCHoicedata = data;
-        if (this.VSAPeopleCHoicedata != undefined && data[0]?.Stores.length > 0) {
+        if (
+          this.VSAPeopleCHoicedata != undefined &&
+          data[0]?.Stores.length > 0
+        ) {
           this.api.getStoresbyIds(data[0]?.Stores).subscribe((data: any) => {
             this.PChoiceStores = data;
           });
@@ -175,14 +180,15 @@ export class VSAnodesubcatstoresComponent implements OnInit {
     // this.peoplechoicecatpara = '';
     this.PChoiceStores = [];
     // this.trendingStores = [];
+    this.catindex = this.auth.resource.categoryList.findIndex((x:any)=>x.id == this.SelectedCat);
 
     this.api
       .getvsaDataCat_Subcatdata(
         'VSASection',
         this.actRoute.snapshot.params['nodeid'],
         this.SelectedCat,
-        '',
-        'Bestdeal'
+        'Bestdeal',
+        ''
       )
       .pipe(take(1))
       .subscribe((data: any) => {
@@ -401,6 +407,42 @@ export class VSAnodesubcatstoresComponent implements OnInit {
         }
       } else {
         if (type == 'homeBanner' && (id == '1' || id == '2')) {
+          if (id == '1') {
+
+            this.api
+              .updatecatBannerORthumbnail(
+                this.actRoute.snapshot.params['catid'],
+                result.croppedImage,
+                'VSAsubcatbanner',
+                this.catindex,
+                this.subcatindex
+              )
+              .then((ref: any) => {
+                if (!ref || !ref.success) {
+                  this.auth.resource.startSnackBar('Upload Failed!');
+                } else {
+                  // this.auth.resource.categoryList[this.catindex].VSAthumbnail =
+                  //   ref.url;
+                  this.auth.resource.startSnackBar('Banner Update.');
+                }
+              });
+          } else {
+            this.api
+              .updatecatBannerORthumbnail(
+                this.SelectedCat,
+                result.croppedImage,
+                'VSAcatbanner'
+              )
+              .then((ref: any) => {
+                if (!ref || !ref.success) {
+                  this.auth.resource.startSnackBar('Upload Failed!');
+                } else {
+                  this.auth.resource.categoryList[this.catindex].VSAcatBanner = result.croppedImage;
+                  this.auth.resource.startSnackBar('Banner Update.');
+                }
+              });
+          }
+
           // this.api
           //   .updateNodesubcatinternalBanner(
           //     this.actRoute.snapshot.params['internalid'],
@@ -447,10 +489,10 @@ export class VSAnodesubcatstoresComponent implements OnInit {
         // }
         else if (type == 'peopleCstorebanner') {
           this.api
-          .updateSectionStorebanner('VSA',id, result.croppedImage)
-          .then((data: any) => {
-            this.auth.resource.startSnackBar('banner uploaded');
-          });
+            .updateSectionStorebanner('VSA', id, result.croppedImage)
+            .then((data: any) => {
+              this.auth.resource.startSnackBar('banner uploaded');
+            });
         }
       }
     });
