@@ -17,7 +17,6 @@ import { CameraResultType } from '@capacitor/camera/dist/esm/definitions';
 export class VSAnodescatComponent implements OnInit {
   storeBanner = '';
   nodeId: string = '';
-  // id:any;
   constructor(
     public auth: AuthService,
     private api: ApiserviceService,

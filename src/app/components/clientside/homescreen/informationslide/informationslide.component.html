@@ -10,7 +10,7 @@
         <span class="fs_24 boldtext lr15padding AScenter">Information Slide</span>
         <span class="divide"></span>
         <div class="AScenter">
-            <button mat-button (click)="addSlide(1)"
+            <button [disabled]="getVideoData?.Videos.length == 1 ? true : false" mat-button (click)="addSlide(1)"
                 class="s_size semiboldtext purple_background normallineheight tb5padding l15padding r15padding White_txt">
                 <mat-icon class="xml_size">add</mat-icon>
                 Add Slide
