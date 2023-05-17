@@ -50,6 +50,9 @@
         <button class="viewbtn t10padding b10padding l30padding r30padding t10margin b15margin"
             (click)="ApplyFilter()">Apply Filter</button>
     </div>
+
+
+
     <div>
         <table *ngIf="MerchantdataSource" class="crmtable" mat-table [dataSource]="MerchantdataSource" matSort>
             <ng-container matColumnDef="MerchantId">

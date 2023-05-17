@@ -129,7 +129,6 @@ export class MerchantsProfileComponent implements OnInit {
       this.apiservice.getStoreByID(this.storeID).then((storeRef) => {
         const store: any = storeRef.exists() ? storeRef.data() : null;
         this.storeDetails = store;
-
         this.listLoc = store.loc;
         this.Selcategory = store.cat;
         this.catindex = this.auth.resource.categoryList.findIndex(

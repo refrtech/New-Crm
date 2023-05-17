@@ -1,4 +1,4 @@
-<div class="A20padding">
+<div class="A20padding" *ngIf="storeDetails != undefined">
   <div class="xxl_size boldtext b15padding">
     Edit Profile
   </div>
@@ -112,7 +112,7 @@
                 </mat-form-field>
               </div>
               <div class="normaltext M_size M50width">
-                <mat-form-field appearance="outline" class="crminput crmsearch">
+                <mat-form-field *ngIf="storeinfoDetails != undefined" appearance="outline" class="crminput crmsearch">
                   <input matInput [(ngModel)]="storeinfoDetails.name">
                 </mat-form-field>
               </div>
@@ -195,7 +195,7 @@
                   <mat-select placeholder="Sub-Category" [(ngModel)]="Selsubcategory">
                     <div *ngFor="let item of auth.resource.categoryList[catindex].items">
                       <mat-option [value]="item?.id">
-                        {{item.name}}
+                        {{item?.name}}
                       </mat-option>
                     </div>
                   </mat-select>

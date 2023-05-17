@@ -94,6 +94,7 @@ import { CategoriesComponent } from './components/clientside/homescreen/categori
 import { CategoriesinternalComponent } from './components/clientside/homescreen/categories/categoriesinternal/categoriesinternal.component';
 import { ConfirmationPopupComponent } from './components/clientside/homescreen/confirmation-popup/confirmation-popup.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { PaginationComponent } from './components/pagination/pagination.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -150,6 +151,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     CategoriesComponent,
     CategoriesinternalComponent,
     ConfirmationPopupComponent,
+    PaginationComponent,
   ],
   imports: [
     MatDialogModule,

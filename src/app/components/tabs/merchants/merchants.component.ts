@@ -83,9 +83,8 @@ export class MerchantsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
-    private apiservice: ApiserviceService,
-    private excelservice: ExcelexportService,
-    public api: ApiserviceService
+    public api: ApiserviceService,
+    private excelservice: ExcelexportService
   ) {}
   ngOnInit(): void {}
 
@@ -157,7 +156,7 @@ export class MerchantsComponent implements OnInit {
   }
 
   execute() {
-    this.apiservice
+    this.api
       .getRecentStores(
         1000,
         this.getall,
@@ -173,7 +172,7 @@ export class MerchantsComponent implements OnInit {
   }
 
   exportexcel() {
-    this.apiservice
+    this.api
       .getRecentStores(
         1000,
         this.getall,
