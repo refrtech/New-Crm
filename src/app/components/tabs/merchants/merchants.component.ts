@@ -1,11 +1,12 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { take } from 'rxjs';
+import { of, take } from 'rxjs';
 import { ApiserviceService } from 'src/app/apiservice.service';
+import { AuthService } from 'src/app/auth.service';
 import { ExcelexportService } from 'src/app/excelexport.service';
+import { PaginationserviceService } from 'src/app/paginationservice.service';
 
 @Component({
   selector: 'app-merchants',
@@ -84,9 +85,14 @@ export class MerchantsComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
     public api: ApiserviceService,
-    private excelservice: ExcelexportService
+    private excelservice: ExcelexportService,
+    private auth:AuthService,
+    public paginationserv:PaginationserviceService
   ) {}
-  ngOnInit(): void {}
+
+  ngOnInit(): void {
+    this.paginationserv.dataO = of();
+  }
 
   ngAfterViewInit() {
     setTimeout(() => {
@@ -156,19 +162,29 @@ export class MerchantsComponent implements OnInit {
   }
 
   execute() {
-    this.api
-      .getRecentStores(
-        1000,
-        this.getall,
-        this.parameters,
-        this.operators,
-        this.searchvalue
-      )
-      .pipe(take(1))
-      .subscribe((recentStore: any) => {
-        this.MerchantdataSource = new MatTableDataSource(recentStore);
-        this.MerchantdataSource.sort = this.sort;
-      });
+    this.auth.user$.pipe(take(1)).subscribe((mine) => {
+      if (!mine) {
+      } else {
+        this.paginationserv.init('shops', 'sin', { reverse: false, prepend: false },this.parameters,this.operators,this.searchvalue);
+      }
+    });
+    // this.api
+    //   .getRecentStores(
+    //     1000,
+    //     this.getall,
+    //     this.parameters,
+    //     this.operators,
+    //     this.searchvalue
+    //   )
+    //   .pipe(take(1))
+    //   .subscribe((recentStore: any) => {
+    //     this.MerchantdataSource = new MatTableDataSource(recentStore);
+    //     this.MerchantdataSource.sort = this.sort;
+    //   });
+  }
+
+  loadmore(){
+    this.paginationserv.more(this.parameters,this.operators,this.searchvalue);
   }
 
   exportexcel() {

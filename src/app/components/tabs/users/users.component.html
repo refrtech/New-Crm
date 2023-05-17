@@ -44,11 +44,14 @@
             (click)="ApplyFilter()">Apply Filter</button>
     </div>
     <div>
-        <table class="crmtable" mat-table [dataSource]="UserdataSource" matSort>
+        <table class="crmtable" mat-table [dataSource]="paginationserv.dataO" matSort>
             <ng-container matColumnDef="User_id">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">User ID</th>
                 <td mat-cell *matCellDef="let row,let i =index">
                     <div class="gray_txt xxs_size">{{row.uid}}</div>
+                    <div>
+                      {{row.sin.toDate() | date:'MMM dd, yyyy'}}
+                    </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="User_name">
@@ -106,5 +109,9 @@
             <tr class="mat-row" *matNoDataRow>
             </tr>
         </table>
+    </div>
+    <div class="c_align" *ngIf="paginationserv.dataO">
+      <button class="viewbtn t10padding b10padding l30padding r30padding t10margin b15margin" (click)="loadmore()">Load
+        more data</button>
     </div>
 </div>

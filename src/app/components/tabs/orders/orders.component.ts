@@ -3,11 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { take } from 'rxjs';
+import { of, take } from 'rxjs';
 import { ApiserviceService } from 'src/app/apiservice.service';
 import { ExcelexportService } from 'src/app/excelexport.service';
 import { TransactionDetailsComponent } from '../transaction-details/transaction-details.component';
 import { AuthService } from 'src/app/auth.service';
+import { PaginationserviceService } from 'src/app/paginationservice.service';
 
 @Component({
   selector: 'app-orders',
@@ -99,10 +100,14 @@ export class OrdersComponent implements OnInit {
     private apiservice: ApiserviceService,
     private excelservice: ExcelexportService,
     private dialog: MatDialog,
-    private auth: AuthService
+    private auth: AuthService,
+    public paginationserv:PaginationserviceService
+
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.paginationserv.dataO = of();
+  }
 
   onChange() {
     if (this.parameters == 'ordrTYPE') {
@@ -132,19 +137,30 @@ export class OrdersComponent implements OnInit {
         return;
       }
     }
-    this.apiservice
-      .getRecentAddedOrder(
-        100,
-        this.getall,
-        this.parameters,
-        this.operators,
-        this.searchvalue
-      )
-      .pipe(take(1))
-      .subscribe((recentorders: any) => {
-        this.orderdatasource = new MatTableDataSource(recentorders);
-        this.orderdatasource.sort = this.sort;
-      });
+    this.auth.user$.pipe(take(1)).subscribe((mine) => {
+      if (!mine) {
+      } else {
+        this.paginationserv.init('walt', 'sin', { reverse: false, prepend: false },this.parameters,this.operators,this.searchvalue);
+      }
+    });
+
+    // this.apiservice
+    //   .getRecentAddedOrder(
+    //     100,
+    //     this.getall,
+    //     this.parameters,
+    //     this.operators,
+    //     this.searchvalue
+    //   )
+    //   .pipe(take(1))
+    //   .subscribe((recentorders: any) => {
+    //     this.orderdatasource = new MatTableDataSource(recentorders);
+    //     this.orderdatasource.sort = this.sort;
+    //   });
+  }
+
+  loadmore(){
+    this.paginationserv.more(this.parameters,this.operators,this.searchvalue);
   }
 
   openDialog(data: any) {

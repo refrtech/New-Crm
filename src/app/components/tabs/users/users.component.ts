@@ -2,9 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { take } from 'rxjs';
+import { of, take } from 'rxjs';
 import { ApiserviceService } from 'src/app/apiservice.service';
+import { AuthService } from 'src/app/auth.service';
 import { ExcelexportService } from 'src/app/excelexport.service';
+import { PaginationserviceService } from 'src/app/paginationservice.service';
 
 
 @Component({
@@ -72,11 +74,14 @@ export class UsersComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
-    private apiservice: ApiserviceService, private excelservice: ExcelexportService
+    private apiservice: ApiserviceService, private excelservice: ExcelexportService,
+    private auth:AuthService,
+    public paginationserv:PaginationserviceService
   ) {
   }
 
   ngOnInit(): void {
+    this.paginationserv.dataO = of();
   }
 
   ApplyFilter() {
@@ -108,10 +113,20 @@ export class UsersComponent implements OnInit {
   }
 
   execute(para?: string, operator?: string, value?: any) {
-    this.apiservice.getUserList(100, this.getall, para, operator, value).pipe(take(1)).subscribe((recentusers: any) => {
-      this.UserdataSource = new MatTableDataSource(recentusers);
-      this.UserdataSource.sort = this.sort;
+    this.auth.user$.pipe(take(1)).subscribe((mine) => {
+      if (!mine) {
+      } else {
+        this.paginationserv.init('users', 'sin', { reverse: false, prepend: false },this.parameters,this.operators,this.searchvalue);
+      }
     });
+    // this.apiservice.getUserList(100, this.getall, para, operator, value).pipe(take(1)).subscribe((recentusers: any) => {
+    //   this.UserdataSource = new MatTableDataSource(recentusers);
+    //   this.UserdataSource.sort = this.sort;
+    // });
+  }
+
+  loadmore(){
+    this.paginationserv.more(this.parameters,this.operators,this.searchvalue);
   }
 
   exportexcel() {

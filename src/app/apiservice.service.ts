@@ -21,7 +21,9 @@ import {
   arrayRemove,
   arrayUnion,
   deleteDoc,
+  endAt,
   getCountFromServer,
+  startAt,
   WhereFilterOp,
 } from 'firebase/firestore';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -237,6 +239,13 @@ export class ApiserviceService {
     ) {
       orderbyvalue = Para;
     }
+
+    // qu = query(
+    //   catData,
+    //   where('sin', '>=', new Date('2023,03,01')),
+    //   where('sin', '<', new Date('2023,03,31')),
+    //   orderBy('sin', 'desc')
+    // );
 
     if (getall == true) {
       if (
@@ -1209,8 +1218,8 @@ export class ApiserviceService {
     catid: any,
     croppedImage: string,
     type: string,
-    catindex?:number,
-    subcatindex?:number
+    catindex?: number,
+    subcatindex?: number
   ) {
     const newTimestamp = this.getServerTimestamp();
     const categoryrefr = doc(this.firestore, `${'cats'}`, `${catid}`);
@@ -1247,24 +1256,23 @@ export class ApiserviceService {
         }).then(() => {
           return cloudUpload;
         });
-      }
-      else if(type == 'VSAcatbanner'){
+      } else if (type == 'VSAcatbanner') {
         return updateDoc(categoryrefr, {
           VSAcatBanner: cloudUpload.url,
           upd: newTimestamp,
         }).then(() => {
           return cloudUpload;
         });
-      }
-      else if( type == 'VSAsubcatbanner'){
-        this.auth.resource.categoryList[catindex || 0].items[subcatindex || 0].VSASubcatbanner = cloudUpload.url;
+      } else if (type == 'VSAsubcatbanner') {
+        this.auth.resource.categoryList[catindex || 0].items[
+          subcatindex || 0
+        ].VSASubcatbanner = cloudUpload.url;
         return updateDoc(categoryrefr, {
           items: this.auth.resource.categoryList[catindex || 0].items,
           upd: newTimestamp,
         }).then(() => {
           return cloudUpload;
         });
-
       }
     }
   }
@@ -2093,7 +2101,6 @@ export class ApiserviceService {
     const coll = collection(this.firestore, 'Section_stores');
     var q;
     if (SubcatId == undefined || SubcatId == '') {
-
       q = query(
         coll,
         where('SectionName', '==', sectionname),
@@ -2118,10 +2125,9 @@ export class ApiserviceService {
     const cityrefr = doc(this.firestore, `${'cats'}`, `${id}`);
     if (index == 1) {
       return updateDoc(cityrefr, { VSAPeoplechoicepara: data });
-    } else if(index == 3) {
+    } else if (index == 3) {
       return updateDoc(cityrefr, { HGCATPeoplechoicepara: data });
-    }
-    else {
+    } else {
       return updateDoc(cityrefr, { HGSUBCATPeoplechoicepara: data });
     }
   }
