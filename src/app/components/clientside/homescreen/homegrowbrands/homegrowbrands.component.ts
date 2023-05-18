@@ -4,9 +4,6 @@ import { Router } from '@angular/router';
 import { take } from 'rxjs';
 import { ApiserviceService } from 'src/app/apiservice.service';
 import { AuthService } from 'src/app/auth.service';
-import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component';
-import { Camera } from '@capacitor/camera';
-import { CameraResultType } from '@capacitor/camera/dist/esm/definitions';
 import { ConfirmationPopupComponent } from '../confirmation-popup/confirmation-popup.component';
 
 @Component({

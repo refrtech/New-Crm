@@ -7,12 +7,8 @@ import {
   ElementRef,
 } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { log } from 'console';
 import { ApiserviceService } from 'src/app/apiservice.service';
 import { AuthService } from 'src/app/auth.service';
-import { Camera } from '@capacitor/camera';
-import { CameraResultType } from '@capacitor/camera/dist/esm/definitions';
-import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component';
 
 @Component({
   selector: 'app-feedsection',

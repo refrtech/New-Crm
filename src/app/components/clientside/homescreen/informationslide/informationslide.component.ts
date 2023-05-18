@@ -24,8 +24,8 @@ export class InformationslideComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  addSlide(id: number, data?: any) {
-    const dialogRef = this.dailog.open(AddinfoslideComponent, {
+  addSlide() {
+    this.dailog.open(AddinfoslideComponent, {
       width: '50%',
       data: { id: this.getVideoData.id,infoVideos: this.getVideoData.Videos},
       hasBackdrop: true,

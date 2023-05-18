@@ -112,7 +112,6 @@ export class MerchantsProfileComponent implements OnInit {
     private dialog: MatDialog,
     public auth: AuthService
   ) {
-    this.execute();
   }
 
   ngOnInit(): void {}
@@ -128,23 +127,26 @@ export class MerchantsProfileComponent implements OnInit {
     if (this.storeID != undefined) {
       this.apiservice.getStoreByID(this.storeID).then((storeRef) => {
         const store: any = storeRef.exists() ? storeRef.data() : null;
+        console.log(store);
         this.storeDetails = store;
         this.listLoc = store.loc;
         this.Selcategory = store.cat;
         this.catindex = this.auth.resource.categoryList.findIndex(
-          (x: any) => x.id == store.cat
+          (x: any) => x?.id == store.cat
         );
         this.subcatindex = this.auth.resource.categoryList[
           this.catindex
-        ].items.findIndex((x: any) => x.id == store.subCat);
+        ].items.findIndex((x: any) => x?.id == store.subCat);
         this.Selsubcategory =
           this.auth.resource.categoryList[this.catindex].items[
             this.subcatindex
-          ].id;
+          ]?.id;
         this.apiservice.getUserByUID(store.by).then((storeuser) => {
           const storeuserD: any = storeuser.exists() ? storeuser.data() : null;
           this.storeuid = storeuserD.uid;
           this.storeinfoDetails = storeuserD;
+        console.log("storeuserD",storeuserD);
+
         });
       });
     }

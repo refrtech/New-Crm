@@ -3,7 +3,7 @@ import { CameraResultType } from '@capacitor/camera/dist/esm/definitions';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { Observable, of, take } from 'rxjs';
+import { take } from 'rxjs';
 import { ApiserviceService } from 'src/app/apiservice.service';
 import { AuthService } from 'src/app/auth.service';
 import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component';

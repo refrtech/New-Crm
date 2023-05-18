@@ -1,4 +1,4 @@
-<div class="A20padding" *ngIf="storeDetails != undefined">
+<div class="A20padding" *ngIf="storeDetails != undefined && storeinfoDetails != undefined">
   <div class="xxl_size boldtext b15padding">
     Edit Profile
   </div>
@@ -487,7 +487,7 @@
       </mat-tab>
       <mat-tab label="Banking Details">
         <div class="A15padding">
-          <div class="dflex">
+          <div class="dflex" *ngIf="storeinfoDetails.BankIMPS != undefined && storeinfoDetails.BankIMPS.verified">
             <div class="dflex t5padding M100width">
               <div class="normaltext M_size M30width r15margin">
                 Bank Name
@@ -500,21 +500,41 @@
               </div>
             </div>
           </div>
-          <div>
+          <div *ngIf="storeinfoDetails.BankIMPS != undefined && storeinfoDetails.BankIMPS.verified">
             <div class="dflex M100width t5padding">
               <div class="normaltext M_size M30width r15margin">
                 <mat-form-field appearance="outline" class="crminput M100width">
-                  <input matInput>
+                  <input matInput disabled [(ngModel)]="storeinfoDetails.BankIMPS.bank_name">
                 </mat-form-field>
               </div>
               <div class="normaltext M_size M30width r15margin">
                 <mat-form-field appearance="outline" class="crminput M100width">
-                  <input matInput>
+                  <input matInput disabled [(ngModel)]="storeinfoDetails.BankIMPS.account_number">
                 </mat-form-field>
               </div>
               <div class="normaltext M_size M30width r15margin">
                 <mat-form-field appearance="outline" class="crminput M100width">
-                  <input matInput>
+                  <input matInput disabled [(ngModel)]="storeinfoDetails.BankIMPS.ifsc">
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+
+
+
+          <div class="dflex" *ngIf="storeinfoDetails.BankUPI != undefined && storeinfoDetails.BankUPI.verified">
+            <div class="dflex t5padding M100width">
+              <div class="normaltext M_size M30width r15margin">
+                UPI ID:
+              </div>
+            </div>
+          </div>
+          <div *ngIf="storeinfoDetails.BankUPI != undefined && storeinfoDetails.BankUPI.verified">
+            <div class="dflex M100width t5padding">
+              <div class="normaltext M_size M30width r15margin">
+                <mat-form-field appearance="outline" class="crminput M100width">
+                  <input matInput disabled [(ngModel)]="storeinfoDetails.BankUPI.address">
                 </mat-form-field>
               </div>
             </div>

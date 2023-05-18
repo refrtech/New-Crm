@@ -70,8 +70,6 @@ export class VSAnodecatstoresComponent implements OnInit {
   ];
 
   PChoiceStores: Array<any> = [];
-  // trendingStores: Array<any> = [];
-  // catarray: Array<any> = [];
   DocId: string = '';
   catindex: number = -1;
   VSAPeopleCHoicedata: any;

@@ -4,7 +4,6 @@ import {
   CanActivate,
   Router,
   RouterStateSnapshot,
-  UrlTree,
 } from '@angular/router';
 import { map, Observable, take, tap } from 'rxjs';
 import { AuthService } from '../auth.service';
