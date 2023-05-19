@@ -197,9 +197,8 @@ export class VisitallstoredetailsComponent implements OnInit {
           //   .then((data: any) => {
           //     this.auth.resource.startSnackBar('Banner uploaded');
           //   });
-
           this.api
-          .updateSectionStorebanner('VSA',Storeid, result.croppedImage)
+          .updateSectionStorebanner(Storeid, result.croppedImage,'VSA')
           .then((data: any) => {
             this.auth.resource.startSnackBar('banner uploaded');
           });

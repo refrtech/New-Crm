@@ -142,19 +142,14 @@ export class ApiserviceService {
     getall: boolean,
     Para?: any,
     operator?: any,
-    value?: any,
-    Para1?: any,
-    operator1?: any,
-    value1?: any
+    value?: any
   ) {
     const catData: CollectionReference = collection(
       this.firestore,
       `${'walt'}`
     );
     let Parametere: WhereFilterOp = Para;
-    let Parametere1: WhereFilterOp = Para1;
     let conditions: WhereFilterOp = operator;
-    // let conditions1: WhereFilterOp = operator1;
 
     var qu;
     let orderbyvalue = 'sin';
@@ -199,7 +194,6 @@ export class ApiserviceService {
           where(Parametere, conditions, value),
           where('type', 'array-contains', 'storeORDER'),
           orderBy(orderbyvalue, 'desc'),
-          // startAfter()
           limit(datalimit)
         );
       } else {
@@ -1621,11 +1615,12 @@ export class ApiserviceService {
   cloudupload2(id: string, croppedImage: any) {
     return new Promise((resolve, reject) => {
       let file = this.dataURLtoFile(croppedImage, id);
-
+console.log( "file size = ",(file.size / (1024*1024)).toFixed(2));
       //
       if (file) {
         var reader = new FileReader();
         reader.readAsDataURL(file);
+
         this.fileName = file.name;
         const formData = new FormData();
         formData.append('file', file, file.name);
@@ -1702,6 +1697,7 @@ export class ApiserviceService {
   }
 
   dataURLtoFile(dataurl: any, filename: string) {
+
     var arr = dataurl.split(','),
       mime = arr[0].match(/:(.*?);/)[1],
       bstr = atob(arr[1]),
@@ -1806,6 +1802,24 @@ export class ApiserviceService {
           .catch((err) => {
             return false;
           });
+      }
+      else if(section == 'Storelogo'){
+        return updateDoc(Shoprefr, { logo: cloudUpload.url })
+        .then((datas: any) => {
+          return 'Banner Uploaded';
+        })
+        .catch((err) => {
+          return false;
+        });
+      }
+      else if(section == 'Storebanner'){
+        return updateDoc(Shoprefr, { banner: cloudUpload.url })
+        .then((datas: any) => {
+          return 'Banner Uploaded';
+        })
+        .catch((err) => {
+          return false;
+        });
       }
     }
   }

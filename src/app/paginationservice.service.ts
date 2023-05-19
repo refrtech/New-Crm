@@ -113,7 +113,6 @@ export class PaginationserviceService {
   more(parameter?: any, operator?: any, value?: any) {
     const cursor = this.getCursor();
     if (cursor) {
-      console.log(cursor);
       const c = collection(this.fs, this.query.path);
 
       let more;

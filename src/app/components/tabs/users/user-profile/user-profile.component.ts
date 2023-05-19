@@ -100,25 +100,25 @@ export class UserProfileComponent implements OnInit {
   ordertypechange(){
     this.orderdataSource = new MatTableDataSource();
     if (this.mattaborders?.selectedIndex == 0) {
-      this.apiservice.getRecentAddedOrder(100, false, "by", "==", this.userID,"journey","==","DIRECT").pipe(take(1)).subscribe((recentorders: any) => {
+      this.apiservice.getRecentAddedOrder(100, false, "by", "==", this.userID).pipe(take(1)).subscribe((recentorders: any) => {
         this.orderdataSource = new MatTableDataSource(recentorders);
         this.orderdataSource.sort = this.sort;
       });
     }
     else if (this.mattaborders?.selectedIndex == 1) {
-      this.apiservice.getRecentAddedOrder(100, false, "by", "==", this.userID,"journey","==","F2F").pipe(take(1)).subscribe((recentorders: any) => {
+      this.apiservice.getRecentAddedOrder(100, false, "by", "==", this.userID).pipe(take(1)).subscribe((recentorders: any) => {
         this.orderdataSource = new MatTableDataSource(recentorders);
         this.orderdataSource.sort = this.sort;
       });
     }
     else if (this.mattaborders?.selectedIndex == 2) {
-      this.apiservice.getRecentAddedOrder(100, false, "by", "==", this.userID,"journey","==","POS").pipe(take(1)).subscribe((recentorders: any) => {
+      this.apiservice.getRecentAddedOrder(100, false, "by", "==", this.userID).pipe(take(1)).subscribe((recentorders: any) => {
         this.orderdataSource = new MatTableDataSource(recentorders);
         this.orderdataSource.sort = this.sort;
       });
     }
     else if (this.mattaborders?.selectedIndex == 3) {
-      this.apiservice.getRecentAddedOrder(100, false, "by", "==", this.userID,"journey","==","BURN").pipe(take(1)).subscribe((recentorders: any) => {
+      this.apiservice.getRecentAddedOrder(100, false, "by", "==", this.userID).pipe(take(1)).subscribe((recentorders: any) => {
         this.orderdataSource = new MatTableDataSource(recentorders);
         this.orderdataSource.sort = this.sort;
       });

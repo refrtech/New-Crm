@@ -22,14 +22,12 @@ import {
   provideFirebaseApp,
   getApp,
   initializeApp,
-  FirebaseApp,
 } from '@angular/fire/app';
 import { provideAuth, initializeAuth } from '@angular/fire/auth';
 import {
   provideFirestore,
   getFirestore,
   enableIndexedDbPersistence,
-  connectFirestoreEmulator,
 } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { getMessaging, provideMessaging } from '@angular/fire/messaging';
@@ -95,6 +93,10 @@ import { CategoriesinternalComponent } from './components/clientside/homescreen/
 import { ConfirmationPopupComponent } from './components/clientside/homescreen/confirmation-popup/confirmation-popup.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { ImagekitioAngularModule } from 'imagekitio-angular';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -167,6 +169,12 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     MatRadioModule,
     MatExpansionModule,
     NgxDropzoneModule,
+    ImagekitioAngularModule.forRoot({
+      publicKey: environment.publicKey,
+      urlEndpoint: environment.urlEndpoint,
+      authenticationEndpoint: environment.authenticationEndpoint
+    }),
+
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireModule,
     // 3. Initialize

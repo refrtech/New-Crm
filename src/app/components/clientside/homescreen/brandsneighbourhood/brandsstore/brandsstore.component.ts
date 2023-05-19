@@ -181,7 +181,7 @@ export class BrandsstoreComponent implements OnInit {
       } else {
         if (type == 'banner') {
           this.api
-            .updateSectionStorebanner('BIYN',Storeid, result.croppedImage)
+            .updateSectionStorebanner(Storeid, result.croppedImage,'BIYN')
             .then((data: any) => {
               this.auth.resource.startSnackBar('banner uploaded');
             });

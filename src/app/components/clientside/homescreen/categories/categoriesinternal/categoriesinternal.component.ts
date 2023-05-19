@@ -367,13 +367,11 @@ export class CategoriesinternalComponent implements OnInit {
 
       if (i == 1) {
         this.PChoiceStores.push(data);
-      } else if(i ==2) {
+      } else if (i == 2) {
         this.trendingStores.push(data);
-      }
-      else if(i == 3){
+      } else if (i == 3) {
         this.products.push(data);
-      }
-      else if(i == 4){
+      } else if (i == 4) {
         this.curatedstores.push(data);
       }
     });
@@ -435,7 +433,7 @@ export class CategoriesinternalComponent implements OnInit {
             });
         } else {
           this.api
-            .updateSectionStorebanner('Categores', Storeid, result.croppedImage)
+            .updateSectionStorebanner(Storeid, result.croppedImage, 'Categores')
             .then((data: any) => {
               this.auth.resource.startSnackBar('banner uploaded');
             });

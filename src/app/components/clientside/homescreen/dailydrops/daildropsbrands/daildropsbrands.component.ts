@@ -191,7 +191,7 @@ export class DaildropsbrandsComponent implements OnInit {
           //     this.auth.resource.startSnackBar('banner uploaded');
           //   });
           this.api
-          .updateSectionStorebanner('DailyDrop',Storeid, result.croppedImage)
+          .updateSectionStorebanner(Storeid, result.croppedImage,'DailyDrop')
           .then((data: any) => {
             this.auth.resource.startSnackBar('banner uploaded');
           });

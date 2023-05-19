@@ -191,7 +191,7 @@ export class StoresinhoodComponent implements OnInit {
           //     this.auth.resource.startSnackBar('banner uploaded');
           //   });
           this.api
-            .updateSectionStorebanner('NSIYH', Storeid, result.croppedImage)
+            .updateSectionStorebanner(Storeid, result.croppedImage, 'NSIYH')
             .then((data: any) => {
               this.auth.resource.startSnackBar('banner uploaded');
             });

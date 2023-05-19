@@ -11,6 +11,11 @@ import { ApiserviceService } from 'src/app/apiservice.service';
 import { AuthService } from 'src/app/auth.service';
 import * as XLSX from 'xlsx';
 import { TransactionDetailsComponent } from '../../transaction-details/transaction-details.component';
+import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component';
+import { Camera } from '@capacitor/camera';
+import { CameraResultType } from '@capacitor/camera/dist/esm/definitions';
+
+
 @Component({
   selector: 'app-merchants-profile',
   templateUrl: './merchants-profile.component.html',
@@ -110,7 +115,8 @@ export class MerchantsProfileComponent implements OnInit {
     private actRoute: ActivatedRoute,
     public apiservice: ApiserviceService,
     private dialog: MatDialog,
-    public auth: AuthService
+    public auth: AuthService,
+    public api: ApiserviceService,
   ) {
   }
 
@@ -127,7 +133,6 @@ export class MerchantsProfileComponent implements OnInit {
     if (this.storeID != undefined) {
       this.apiservice.getStoreByID(this.storeID).then((storeRef) => {
         const store: any = storeRef.exists() ? storeRef.data() : null;
-        console.log(store);
         this.storeDetails = store;
         this.listLoc = store.loc;
         this.Selcategory = store.cat;
@@ -145,8 +150,6 @@ export class MerchantsProfileComponent implements OnInit {
           const storeuserD: any = storeuser.exists() ? storeuser.data() : null;
           this.storeuid = storeuserD.uid;
           this.storeinfoDetails = storeuserD;
-        console.log("storeuserD",storeuserD);
-
         });
       });
     }
@@ -195,9 +198,6 @@ export class MerchantsProfileComponent implements OnInit {
           'to',
           '==',
           this.storeuid,
-          'journey',
-          '==',
-          'DIRECT'
         )
         .pipe(take(1))
         .subscribe((recentorders: any) => {
@@ -212,9 +212,6 @@ export class MerchantsProfileComponent implements OnInit {
           'to',
           '==',
           this.storeuid,
-          'journey',
-          '==',
-          'F2F'
         )
         .pipe(take(1))
         .subscribe((recentorders: any) => {
@@ -228,10 +225,7 @@ export class MerchantsProfileComponent implements OnInit {
           false,
           'to',
           '==',
-          this.storeuid,
-          'journey',
-          '==',
-          'POS'
+          this.storeuid
         )
         .pipe(take(1))
         .subscribe((recentorders: any) => {
@@ -245,10 +239,7 @@ export class MerchantsProfileComponent implements OnInit {
           false,
           'to',
           '==',
-          this.storeuid,
-          'journey',
-          '==',
-          'BURN'
+          this.storeuid
         )
         .pipe(take(1))
         .subscribe((recentorders: any) => {
@@ -285,10 +276,7 @@ export class MerchantsProfileComponent implements OnInit {
         false,
         'to',
         '==',
-        this.storeuid,
-        'journey',
-        '==',
-        'DIRECT'
+        this.storeuid
       )
       .pipe(take(1))
       .subscribe((recentorders: any) => {
@@ -363,6 +351,61 @@ export class MerchantsProfileComponent implements OnInit {
       disableClose: false,
       panelClass: 'dialogLayout',
       data: { Orderdata: data, id: 1 },
+    });
+  }
+
+
+
+  async takePicture(ratio: string, type: string, Storeid: string) {
+    const image = await Camera.getPhoto({
+      quality: 100,
+      height: 300,
+      width: 300,
+      allowEditing: false,
+      resultType: CameraResultType.Uri,
+    });
+    const imageUrl = image.webPath || '';
+    if (imageUrl) {
+      this.startCropper(ratio, imageUrl, type, Storeid);
+    }
+  }
+
+  async startCropper(
+    ratio: string,
+    webPath: string,
+    type: string,
+    Storeid: string,
+  ) {
+    let isPhone = this.auth.resource.getWidth < 768;
+    let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
+    const refDialog = this.auth.resource.dialog.open(CropperComponent, {
+      width: w,
+      minWidth: '320px',
+      maxWidth: '480px',
+      height: '360px',
+      data: { webPath: webPath, type: type, ratio: ratio },
+      disableClose: true,
+      panelClass: 'dialogLayout',
+    });
+    refDialog.afterClosed().subscribe(async (result) => {
+      if (!result.success) {
+        if (result.info) {
+          this.auth.resource.startSnackBar(result.info);
+        }
+      } else {
+          this.api
+          .updateSectionStorebanner(Storeid, result.croppedImage,type)
+          .then((data: any) => {
+            if(type == 'Storelogo'){
+              this.storeDetails.logo = result.croppedImage;
+            }
+            else if(type == 'Storebanner'){
+              this.storeDetails.banner = result.croppedImage;
+            }
+            this.auth.resource.startSnackBar('banner uploaded');
+          });
+
+      }
     });
   }
 }

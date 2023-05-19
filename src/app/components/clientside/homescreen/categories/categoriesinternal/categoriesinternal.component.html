@@ -13,9 +13,9 @@
     <div class="dflex">
       <div class="M20width">
         <div class="cat_thumbnail">
-          <img class="M100width"
+          <ik-image class="M100width"
             [src]="auth.resource.categoryList[catindex].thumbnail ? auth.resource.categoryList[catindex].thumbnail : 'assets/brand/opengraph.png' "
-            alt="" />
+            alt="" ></ik-image>
         </div>
       </div>
       <div (click)="takePicture('1:1','logo')" class="dflex flex_col l15margin JEend">
@@ -43,9 +43,9 @@
     <div class="dflex">
       <div class="M30width">
         <div class="img">
-          <img class="M100width"
+          <ik-image class="M100width"
             [src]=" auth.resource.categoryList[catindex].CategoryBanner ? auth.resource.categoryList[catindex].CategoryBanner : 'assets/brand/opengraph.png' "
-            alt="banner" />
+            alt="banner" ></ik-image>
         </div>
       </div>
       <div class="dflex flex_col l15margin JEend">

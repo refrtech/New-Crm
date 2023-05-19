@@ -33,7 +33,7 @@
     </div>
     <div class="dflex AIcenter Aborder A5padding t20margin A5radius" *ngIf="fileName >= '0'">
         <div class="feedmoduleImg">
-            <img #imagePreview [src]="url" *ngIf="format==='image' && url">
+            <ik-image #imagePreview [src]="url" *ngIf="format==='image' && url">
             <video #videoPlayer [src]="url" *ngIf="format==='video' && url" controls height="200"></video>
         </div>
         <div class="l10margin">
@@ -84,7 +84,7 @@
   </div>
   <div class="dflex AIcenter Aborder A5padding t20margin A5radius" *ngIf="fileName >= '0'">
       <div class="feedmoduleImg">
-          <img #imagePreview [src]="url" *ngIf="format==='image' && url">
+          <ik-image #imagePreview [src]="url" *ngIf="format==='image' && url"></ik-image>
           <video #videoPlayer [src]="url" *ngIf="format==='video' && url" controls height="200"></video>
       </div>
       <div class="l10margin">

@@ -3,8 +3,8 @@
 [class.b_black]="themeService.colorScheme == 'dark'"
 [class.b_white]="themeService.colorScheme == 'light'"
 *ngIf="!showWeb">
-    <img *ngIf=" themeService.colorScheme == 'dark' " [src]=" auth.resource.env.splash " />
-    <img *ngIf=" themeService.colorScheme == 'light' " [src]=" auth.resource.env.splashDark " />
+    <ik-image *ngIf=" themeService.colorScheme == 'dark' " [src]=" auth.resource.env.splash " ></ik-image>
+    <ik-image *ngIf=" themeService.colorScheme == 'light' " [src]=" auth.resource.env.splashDark " ></ik-image>
 </div>
 
 <div class="slides textC"

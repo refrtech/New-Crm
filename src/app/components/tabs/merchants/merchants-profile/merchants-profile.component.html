@@ -53,20 +53,31 @@
             <div class="M_size normaltext t20padding b10padding">
               Store Logo
             </div>
+
             <div class="cardbox storelogo OF_hidden">
-              <img class="M100width" [src]="storeDetails?.logo" />
+              <ik-image class="M100width" [src]="storeDetails?.logo" ></ik-image>
+            </div>
+            <div class="tb10padding c_align">
+              <button mat-button class="viewbtn addbtn" (click)="takePicture('1:1','Storelogo',storeDetails?.id)">
+                Update logo
+              </button>
             </div>
             <div class="M_size normaltext t20padding b10padding">
               Store Banner
             </div>
             <div class="cardbox storebanner OF_hidden">
-              <img class="M100width" [src]="storeDetails?.banner" />
+              <ik-image class="M100width" [src]="storeDetails?.banner" ></ik-image>
+            </div>
+            <div class="tb10padding c_align">
+              <button mat-button class="viewbtn addbtn" (click)="takePicture('16:9','Storebanner',storeDetails?.id)">
+                Update banner
+              </button>
             </div>
             <div class="M_size normaltext t20padding b10padding">
               Store Photos
             </div>
             <div class="cardbox storebanner OF_hidden">
-              <img class="M100width" [src]="storeDetails?.banners[indexs]" />
+              <ik-image class="M100width" [src]="storeDetails?.banners[indexs]" ></ik-image>
             </div>
             <div class="c_align tb10padding">
               <span *ngFor="let item of storeDetails?.banners;let i = index" class="dot" (click)="indexs = i"></span>
@@ -107,12 +118,12 @@
 
             <div class="dflex M100width t5padding">
               <div class="normaltext M_size M50width">
-                <mat-form-field appearance="outline" class="crminput crmsearch">
+                <mat-form-field appearance="outline" class="crminput M80width">
                   <input matInput [(ngModel)]="storeDetails.name">
                 </mat-form-field>
               </div>
               <div class="normaltext M_size M50width">
-                <mat-form-field *ngIf="storeinfoDetails != undefined" appearance="outline" class="crminput crmsearch">
+                <mat-form-field *ngIf="storeinfoDetails != undefined" appearance="outline" class="crminput M80width">
                   <input matInput [(ngModel)]="storeinfoDetails.name">
                 </mat-form-field>
               </div>
@@ -130,12 +141,12 @@
 
             <div class="dflex M100width t5padding">
               <div class="normaltext M_size M50width">
-                <mat-form-field appearance="outline" class="crminput crmsearch">
+                <mat-form-field appearance="outline" class="crminput M80width">
                   <input matInput [(ngModel)]="storeDetails.phone">
                 </mat-form-field>
               </div>
               <div class="normaltext M_size M50width">
-                <mat-form-field class="crminput crmsearch M30width" appearance="outline">
+                <mat-form-field class="crminput M80width" appearance="outline">
                   <mat-select placeholder="Store Type" [(ngModel)]="storeDetails.type">
                     <mat-option value="Both">
                       Hybrid
@@ -160,12 +171,12 @@
             </div>
             <div class="dflex M100width t5padding">
               <div class="normaltext M_size M50width">
-                <mat-form-field appearance="outline" class="crminput crmsearch">
+                <mat-form-field appearance="outline" class="crminput M80width">
                   <input matInput [(ngModel)]="storeDetails.email">
                 </mat-form-field>
               </div>
               <div class="normaltext M_size M50width">
-                <mat-form-field class="crminput crmsearch M30width" appearance="outline">
+                <mat-form-field class="crminput M80width" appearance="outline">
                   <mat-select placeholder="Category" [(ngModel)]="Selcategory">
                     <div *ngFor="let item of auth.resource.categoryList">
                       <mat-option [value]="item?.id">
@@ -186,12 +197,12 @@
             </div>
             <div class="dflex M100width t5padding">
               <div class="normaltext M_size M50width">
-                <mat-form-field appearance="outline" class="crminput crmsearch">
+                <mat-form-field appearance="outline" class="crminput M80width">
                   <input matInput>
                 </mat-form-field>
               </div>
               <div class="normaltext M_size M50width">
-                <mat-form-field class="crminput crmsearch M30width" appearance="outline">
+                <mat-form-field class="crminput M80width" appearance="outline">
                   <mat-select placeholder="Sub-Category" [(ngModel)]="Selsubcategory">
                     <div *ngFor="let item of auth.resource.categoryList[catindex].items">
                       <mat-option [value]="item?.id">
@@ -212,7 +223,7 @@
             </div>
             <div class="dflex M100width t5padding">
               <div class="normaltext M_size M50width">
-                <mat-form-field class="crminput crmsearch M30width" appearance="outline">
+                <mat-form-field class="crminput M80width" appearance="outline">
                   <mat-select placeholder="Category" class="">
                     <mat-option [value]="1">
                       item
@@ -221,7 +232,7 @@
                 </mat-form-field>
               </div>
               <div class="normaltext M_size M50width">
-                <mat-form-field appearance="outline" class="crminput crmsearch">
+                <mat-form-field appearance="outline" class="crminput M80width">
                   <input matInput>
                 </mat-form-field>
               </div>
@@ -236,12 +247,12 @@
             </div>
             <div class="dflex M100width t5padding">
               <div class="normaltext M_size M50width">
-                <mat-form-field appearance="outline" class="crminput crmsearch">
+                <mat-form-field appearance="outline" class="crminput M80width">
                   <input matInput>
                 </mat-form-field>
               </div>
               <div class="normaltext M_size M50width Editableinput">
-                <mat-form-field appearance="outline" class="crminput crmsearch">
+                <mat-form-field appearance="outline" class="crminput M80width">
                   <input matInput disabled="true" [(ngModel)]="storeID">
                   <button matSuffix mat-icon-button aria-label="Clear" class="purple_background"
                     (click)="apiservice.copyClipboard(storeID)">
@@ -263,7 +274,7 @@
             </div>
             <div class="dflex M100width t5padding">
               <div class="normaltext M_size M50width Editableinput">
-                <mat-form-field appearance="outline" class="crminput crmsearch">
+                <mat-form-field appearance="outline" class="crminput M80width">
                   <input matInput disabled="true" [(ngModel)]="storeuid">
                   <button matSuffix mat-icon-button aria-label="Clear" class="purple_background"
                     (click)="apiservice.copyClipboard(storeuid)">
@@ -664,7 +675,7 @@
               <td mat-cell *matCellDef="let row" class="A10padding">
                 <div class="dflex">
                   <div class="Ascenter prod_img">
-                    <img class="prod_img" src="{{row.banners}}">
+                    <ik-image class="prod_img" src="{{row.banners}}"></ik-image>
                   </div>
                   <div class="l_align AScenter overFlow_dotted l10padding">
                     <div class="s_size boldtext">
