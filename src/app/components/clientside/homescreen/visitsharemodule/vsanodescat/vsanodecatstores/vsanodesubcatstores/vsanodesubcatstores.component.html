@@ -205,7 +205,7 @@
               {{item.name}}
             </div>
             <div class="M25width l_align">
-              {{item.cat}}
+              {{api.getCat(item.cat)}}
             </div>
             <div class="M25width c_align dflex JCcenter">
               <a (click)="deletestore(1,item.id)" class="r20margin">

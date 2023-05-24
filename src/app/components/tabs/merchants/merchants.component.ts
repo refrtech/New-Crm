@@ -165,7 +165,7 @@ export class MerchantsComponent implements OnInit {
     this.auth.user$.pipe(take(1)).subscribe((mine) => {
       if (!mine) {
       } else {
-        this.paginationserv.init('shops', 'sin', { reverse: false, prepend: false },this.parameters,this.operators,this.searchvalue);
+        this.paginationserv.init('shops', 'sin', { reverse: false, prepend: false },'Merchant',this.parameters,this.operators,this.searchvalue);
       }
     });
     // this.api

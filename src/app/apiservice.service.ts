@@ -29,6 +29,8 @@ import {
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ResourceService } from './resource.service';
 import { AuthService } from './auth.service';
+import { resolve } from 'dns';
+import { rejects } from 'assert';
 
 @Injectable({
   providedIn: 'root',
@@ -1615,7 +1617,7 @@ export class ApiserviceService {
   cloudupload2(id: string, croppedImage: any) {
     return new Promise((resolve, reject) => {
       let file = this.dataURLtoFile(croppedImage, id);
-console.log( "file size = ",(file.size / (1024*1024)).toFixed(2));
+      // console.log( "file size = ",(file.size / (1024*1024)).toFixed(2));
       //
       if (file) {
         var reader = new FileReader();
@@ -1630,7 +1632,7 @@ console.log( "file size = ",(file.size / (1024*1024)).toFixed(2));
           'multipart/form-data'
         );
         this.http
-          .post('http://34.100.197.18:5001/upload-image', formData, {
+          .post('http://34.93.82.230:5001/upload-image', formData, {
             headers: headers,
           })
           .subscribe(
@@ -1697,7 +1699,6 @@ console.log( "file size = ",(file.size / (1024*1024)).toFixed(2));
   }
 
   dataURLtoFile(dataurl: any, filename: string) {
-
     var arr = dataurl.split(','),
       mime = arr[0].match(/:(.*?);/)[1],
       bstr = atob(arr[1]),
@@ -1712,15 +1713,23 @@ console.log( "file size = ",(file.size / (1024*1024)).toFixed(2));
 
   ////////////////////////////////
 
-  async adddatatosectionstore(data: any) {
-    const addedcity = await addDoc(
-      collection(this.firestore, 'Section_stores'),
-      data
-    ).then((ref) => {
-      const areeas = doc(this.firestore, 'Section_stores', `${ref.id}`);
-      return updateDoc(areeas, { id: ref.id }).then(() => {
-        return ref;
-      });
+  adddatatosectionstore(data: any) {
+    return new Promise((resolve, reject) => {
+      const addedcity = addDoc(
+        collection(this.firestore, 'Section_stores'),
+        data
+      )
+        .then((ref) => {
+          const areeas = doc(this.firestore, 'Section_stores', `${ref.id}`);
+          console.log('ref', ref);
+          console.log('ref id', ref.id);
+          updateDoc(areeas, { id: ref.id }).then(() => {
+            resolve(ref);
+          });
+        })
+        .catch((err: any) => {
+          reject(err);
+        });
     });
   }
 
@@ -1802,24 +1811,22 @@ console.log( "file size = ",(file.size / (1024*1024)).toFixed(2));
           .catch((err) => {
             return false;
           });
-      }
-      else if(section == 'Storelogo'){
+      } else if (section == 'Storelogo') {
         return updateDoc(Shoprefr, { logo: cloudUpload.url })
-        .then((datas: any) => {
-          return 'Banner Uploaded';
-        })
-        .catch((err) => {
-          return false;
-        });
-      }
-      else if(section == 'Storebanner'){
+          .then((datas: any) => {
+            return 'Banner Uploaded';
+          })
+          .catch((err) => {
+            return false;
+          });
+      } else if (section == 'Storebanner') {
         return updateDoc(Shoprefr, { banner: cloudUpload.url })
-        .then((datas: any) => {
-          return 'Banner Uploaded';
-        })
-        .catch((err) => {
-          return false;
-        });
+          .then((datas: any) => {
+            return 'Banner Uploaded';
+          })
+          .catch((err) => {
+            return false;
+          });
       }
     }
   }

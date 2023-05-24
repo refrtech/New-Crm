@@ -118,7 +118,7 @@ export class VSAnodesubcatstoresComponent implements OnInit {
       )
       .pipe(take(1))
       .subscribe((data: any) => {
-        this.VSAPeopleCHoicedata = data;
+        this.VSAPeopleCHoicedata = data[0];
         if (
           this.VSAPeopleCHoicedata != undefined &&
           data[0]?.Stores.length > 0
@@ -287,9 +287,9 @@ export class VSAnodesubcatstoresComponent implements OnInit {
       //   Data.SubcatId = this.SelectedSubCat;
       // }
 
-      let Datas = {
+      let Datas: any = {
         Nodeid: this.actRoute.snapshot.params['nodeid'],
-        CatId:
+        Catid:
           this.actRoute.snapshot.params['catid'] != 'in_the_mix'
             ? this.actRoute.snapshot.params['catid']
             : this.SelectedCat,
@@ -301,13 +301,17 @@ export class VSAnodesubcatstoresComponent implements OnInit {
           this.actRoute.snapshot.params['catid'] != 'in_the_mix'
             ? 'SubCat'
             : 'Cat',
-        sectionName: 'VSASection',
+        SectionName: 'VSASection',
         ContainerType: 'Bestdeal',
         Stores: [Data.id],
       };
+
       if (this.PChoiceStores.length == 0) {
-        this.api.adddatatosectionstore(Datas).then(() => {
+        this.api.adddatatosectionstore(Datas).then((dres: any) => {
+          Datas.id = dres.id;
           this.VSAPeopleCHoicedata = Datas;
+          this.PChoiceStores.push(Data);
+
           if (i == 1) {
             this.auth.resource.startSnackBar('Store Added');
           } else {
@@ -315,6 +319,10 @@ export class VSAnodesubcatstoresComponent implements OnInit {
           }
         });
       } else {
+        console.log(Data.id);
+        console.log(this.VSAPeopleCHoicedata);
+        console.log(this.VSAPeopleCHoicedata.id);
+
         this.api
           .AddORRemoveSectionStores(1, Data.id, this.VSAPeopleCHoicedata.id)
           .then(() => {

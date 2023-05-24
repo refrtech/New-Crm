@@ -53,9 +53,11 @@ export class PaginationserviceService {
     path: string,
     field: string,
     opts?: any,
+    sectionname?:string,
     parameter?: any,
     operator?: any,
     value?: any
+
   ) {
     //this.firstHit = true;
     this._done.next(false);
@@ -77,6 +79,33 @@ export class PaginationserviceService {
     };
     const c = collection(this.fs, this.query.path);
     let first;
+
+    if(sectionname == 'Orders'){
+    if (
+      parameter != undefined &&
+      parameter != '' &&
+      operator != undefined &&
+      operator != '' &&
+      value != undefined &&
+      value != ''
+    ) {
+      first = query(
+        c,
+        where("type", "array-contains", "addORDER"),
+        where(parameter, operator, value),
+        orderBy(this.query.field, 'desc'),
+        limit(this.query.limit)
+      );
+    } else {
+      first = query(
+        c,
+        where("type", "array-contains", "addORDER"),
+        orderBy(this.query.field, 'desc'),
+        limit(this.query.limit)
+      );
+    }
+  }
+  else {
     if (
       parameter != undefined &&
       parameter != '' &&
@@ -98,6 +127,7 @@ export class PaginationserviceService {
         limit(this.query.limit)
       );
     }
+  }
 
     this.mapAndUpdate(first);
 

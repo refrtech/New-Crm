@@ -64,7 +64,7 @@
             <ng-container matColumnDef="orderDate">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading">Order Date</th>
                 <td class="gray_txt xs_size" mat-cell *matCellDef="let row; let i = index">
-                    {{row.sin.toDate() | date:'dd/MM/yyyy'}}
+                    {{row.sin.toDate() | date:'dd/MM/yyyy,h:mm a'}}
                 </td>
             </ng-container>
             <ng-container matColumnDef="StoreName">

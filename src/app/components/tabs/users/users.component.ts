@@ -116,7 +116,7 @@ export class UsersComponent implements OnInit {
     this.auth.user$.pipe(take(1)).subscribe((mine) => {
       if (!mine) {
       } else {
-        this.paginationserv.init('users', 'sin', { reverse: false, prepend: false },this.parameters,this.operators,this.searchvalue);
+        this.paginationserv.init('users', 'sin', { reverse: false, prepend: false },'Users',this.parameters,this.operators,this.searchvalue);
       }
     });
     // this.apiservice.getUserList(100, this.getall, para, operator, value).pipe(take(1)).subscribe((recentusers: any) => {

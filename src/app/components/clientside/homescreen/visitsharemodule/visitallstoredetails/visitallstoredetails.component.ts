@@ -52,12 +52,6 @@ export class VisitallstoredetailsComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.data.selectednode != undefined) {
-      // this.api
-      //   .getstoreaspernode('VSAsection', this.data.selectednode.id)
-      //   .subscribe((data: any) => {
-      //     this.storelist$ = of(data);
-      //   });
-
       this.api
       .getstoreaspernode('VSAExternalSection', this.data.selectednode?.id)
       .pipe(take(1))
@@ -95,18 +89,6 @@ export class VisitallstoredetailsComponent implements OnInit {
   }
 
   action(data: any) {
-    // data.city_id = this.data.cityid;
-    // data.nodeid =
-    //   this.data.selectednode == undefined
-    //     ? this.data.node.id
-    //     : this.data.selectednode.id;
-    // data.sectionname = 'VSAsection';
-    // this.api.addstorewithnodeid(data).then((data: any) => {
-    //   this.isstorealreadyadded = true;
-    //   this.auth.resource.startSnackBar('Store added');
-    // });
-
-
     if (this.isstorealreadyadded == true) {
       if (this.storelist.length == 1) {
         this.api.deletestoresectiondata(this.vsaDataid).then(() => {
@@ -192,11 +174,6 @@ export class VisitallstoredetailsComponent implements OnInit {
         }
       } else {
         if (type == 'banner') {
-          // this.api
-          //   .updatestorewithnodebanner(id, result.croppedImage)
-          //   .then((data: any) => {
-          //     this.auth.resource.startSnackBar('Banner uploaded');
-          //   });
           this.api
           .updateSectionStorebanner(Storeid, result.croppedImage,'VSA')
           .then((data: any) => {
@@ -208,10 +185,6 @@ export class VisitallstoredetailsComponent implements OnInit {
   }
 
   deletestore(id: string) {
-    // this.api.deletestorefromnodes(id).then((data: any) => {
-    //   this.auth.resource.startSnackBar('store deleted');
-    // });
-
     if (this.storelist.length == 1) {
       this.api.deletestoresectiondata(this.vsaDataid).then(() => {
         this.storelist = [];

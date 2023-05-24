@@ -140,7 +140,7 @@ export class OrdersComponent implements OnInit {
     this.auth.user$.pipe(take(1)).subscribe((mine) => {
       if (!mine) {
       } else {
-        this.paginationserv.init('walt', 'sin', { reverse: false, prepend: false },this.parameters,this.operators,this.searchvalue);
+        this.paginationserv.init('walt', 'sin', { reverse: false, prepend: false },'Orders',this.parameters,this.operators,this.searchvalue);
       }
     });
 

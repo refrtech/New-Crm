@@ -25,6 +25,10 @@ export class InformationslideComponent implements OnInit {
   ngOnInit(): void {}
 
   addSlide() {
+    if(this.getVideoData?.Videos.length == 1 ){
+this.auth.resource.startSnackBar("Max. limit 1 video.")
+    }
+    else {
     this.dailog.open(AddinfoslideComponent, {
       width: '50%',
       data: { id: this.getVideoData.id,infoVideos: this.getVideoData.Videos},
@@ -32,6 +36,7 @@ export class InformationslideComponent implements OnInit {
       disableClose: true,
       panelClass: 'thanksscreen',
     });
+  }
   }
 
   async getVideo() {

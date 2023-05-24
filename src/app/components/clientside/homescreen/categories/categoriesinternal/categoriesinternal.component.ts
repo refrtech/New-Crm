@@ -430,6 +430,8 @@ export class CategoriesinternalComponent implements OnInit {
                 }
                 this.auth.resource.startSnackBar('Banner Update.');
               }
+            }).catch((err:any)=>{
+              this.auth.resource.startSnackBar(JSON.stringify(err));
             });
         } else {
           this.api
