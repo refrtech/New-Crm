@@ -319,15 +319,17 @@ export class VSAnodesubcatstoresComponent implements OnInit {
           }
         });
       } else {
-        console.log(Data.id);
-        console.log(this.VSAPeopleCHoicedata);
-        console.log(this.VSAPeopleCHoicedata.id);
 
+        if(this.PChoiceStores.length >= 10){
+          this.auth.resource.startSnackBar("Max limit 10.");
+        }
+        else {
         this.api
           .AddORRemoveSectionStores(1, Data.id, this.VSAPeopleCHoicedata.id)
           .then(() => {
             this.PChoiceStores.push(Data);
           });
+        }
       }
       // this.api.addstoretoPeoplechoice(Data).then((data: any) => {
       //   this.isstorealreadyadded = true;

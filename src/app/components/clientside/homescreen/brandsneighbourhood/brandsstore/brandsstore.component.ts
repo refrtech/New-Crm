@@ -57,10 +57,8 @@ export class BrandsstoreComponent implements OnInit {
         .pipe(take(1))
         .subscribe((data: any) => {
           this.BIYNDataId = data[0]?.id;
-        if (data[0].Stores.length > 0) {
-          this.api
-            .getStoresbyIds(data[0]?.Stores)
-            .subscribe((data: any) => {
+          if (data[0].Stores.length > 0) {
+            this.api.getStoresbyIds(data[0]?.Stores).subscribe((data: any) => {
               this.storelist = data;
             });
           }
@@ -86,11 +84,15 @@ export class BrandsstoreComponent implements OnInit {
       this.isstorealreadyadded = false;
     } else {
       if (this.data.selectednode != undefined) {
-        this.api
-          .AddORRemoveSectionStores(1, data.id, this.BIYNDataId)
-          .then(() => {
-            this.storelist.push(data);
-          });
+        if (this.storelist.length >= 10) {
+          this.auth.resource.startSnackBar('Max limit 10.');
+        } else {
+          this.api
+            .AddORRemoveSectionStores(1, data.id, this.BIYNDataId)
+            .then(() => {
+              this.storelist.push(data);
+            });
+        }
       } else {
         let datas = {
           Stores: [data.id],
@@ -181,7 +183,7 @@ export class BrandsstoreComponent implements OnInit {
       } else {
         if (type == 'banner') {
           this.api
-            .updateSectionStorebanner(Storeid, result.croppedImage,'BIYN')
+            .updateSectionStorebanner(Storeid, result.croppedImage, 'BIYN')
             .then((data: any) => {
               this.auth.resource.startSnackBar('banner uploaded');
             });

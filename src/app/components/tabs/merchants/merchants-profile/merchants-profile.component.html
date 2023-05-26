@@ -61,6 +61,11 @@
               <button mat-button class="viewbtn addbtn" (click)="takePicture('1:1','Storelogo',storeDetails?.id)">
                 Update logo
               </button>
+
+              <button mat-button class="viewbtn addbtn l10margin" (click)="download(storeDetails?.logo)">
+                download
+              </button>
+
             </div>
             <div class="M_size normaltext t20padding b10padding">
               Store Banner
@@ -71,6 +76,9 @@
             <div class="tb10padding c_align">
               <button mat-button class="viewbtn addbtn" (click)="takePicture('16:9','Storebanner',storeDetails?.id)">
                 Update banner
+              </button>
+              <button mat-button class="viewbtn addbtn l10margin" (click)="download(storeDetails?.banner)">
+                download
               </button>
             </div>
             <div class="M_size normaltext t20padding b10padding">
@@ -88,6 +96,11 @@
               </button>
               <button mat-button class="viewbtn addbtn">
                 Delete
+              </button>
+            </div>
+            <div class="c_align">
+              <button mat-button class="viewbtn addbtn l10margin" (click)="download(storeDetails?.banners[indexs])">
+                download
               </button>
             </div>
             <div class="M_size normaltext t20padding b10padding">

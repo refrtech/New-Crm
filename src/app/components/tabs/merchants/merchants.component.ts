@@ -187,6 +187,11 @@ export class MerchantsComponent implements OnInit {
     this.paginationserv.more(this.parameters,this.operators,this.searchvalue);
   }
 
+  getallimages(){
+
+  }
+
+
   exportexcel() {
     this.api
       .getRecentStores(
@@ -204,7 +209,7 @@ export class MerchantsComponent implements OnInit {
               recentStore[i].sin.seconds * 1000
             ).toDateString(),
             Merchant_id: recentStore[i].id,
-            Store_Name: recentStore[i].excelarr,
+            Store_Name: recentStore[i].name,
             Mobile_No: recentStore[i].phone,
             Email_id: recentStore[i].email,
             Category: recentStore[i].cat,
@@ -212,7 +217,9 @@ export class MerchantsComponent implements OnInit {
             Store_type: recentStore[i].type,
           });
         }
-        this.excelservice.exportasexcelfile(this.excelarr, 'demo');
+        if (this.excelarr.length == recentStore.length) {
+          this.excelservice.exportasexcelfile(this.excelarr, 'demo');
+        }
       });
   }
 }

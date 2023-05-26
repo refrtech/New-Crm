@@ -38,7 +38,7 @@ export class NewstoreinhoodComponent implements OnInit {
     } else if (creatednode == undefined && this.Selectednode == '') {
       this.auth.resource.startSnackBar('please select node.');
     } else {
-      this.dialog.open(StoresinhoodComponent, {
+      let dailogref = this.dialog.open(StoresinhoodComponent, {
         width: '90%',
         data: {
           node: this.selectednodedata,
@@ -50,6 +50,9 @@ export class NewstoreinhoodComponent implements OnInit {
         disableClose: true,
         panelClass: 'thanksscreen',
       });
+      dailogref.afterClosed().subscribe((ref:any)=>{
+        this.citychange();
+      })
     }
   }
 

@@ -97,11 +97,15 @@ export class StoresinhoodComponent implements OnInit {
       this.isstorealreadyadded = false;
     } else {
       if (this.data.selectednode != undefined) {
-        this.api
-          .AddORRemoveSectionStores(1, data.id, this.NSIYHDataId)
-          .then(() => {
-            this.storelist.push(data);
-          });
+        if (this.storelist.length >= 10) {
+          this.auth.resource.startSnackBar('Max limit 10.');
+        } else {
+          this.api
+            .AddORRemoveSectionStores(1, data.id, this.NSIYHDataId)
+            .then(() => {
+              this.storelist.push(data);
+            });
+        }
       } else {
         let datas = {
           Stores: [data.id],

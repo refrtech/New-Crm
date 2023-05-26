@@ -408,4 +408,8 @@ export class MerchantsProfileComponent implements OnInit {
       }
     });
   }
+
+  download(logo:string){
+    window.open(logo);
+  }
 }

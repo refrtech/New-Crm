@@ -14,6 +14,9 @@ export const environment = {
     env: false,
     code:"Albatrosses", date: 1644195271637
   },
+  publicKey:'public_C+HVmi4u3PibyRYt5Ldz+EJ6gHk=',
+  urlEndpoint:'https://ik.imagekit.io/refrclub01',
+  authenticationEndpoint:'https://us-central1-refr-india.cloudfunctions.net/ind_serve',
 
   firebaseConfig:{
     apiKey: "AIzaSyDH4KRqGtrYXyIQVy2pW-C9IHihoYc1akQ",

@@ -264,12 +264,10 @@ export class HomegrowbrandsComponent implements OnInit {
             if (rowno == '1') {
               let i = this.First_Stores.findIndex((x: any) => x.id == data.id);
               this.First_Stores.splice(i, 1);
-            }
-            else if (rowno == '2') {
+            } else if (rowno == '2') {
               let i = this.Second_Stores.findIndex((x: any) => x.id == data.id);
               this.First_Stores.splice(i, 1);
-            }
-            else if(rowno == '3') {
+            } else if (rowno == '3') {
               let i = this.third_Stores.findIndex((x: any) => x.id == data.id);
               this.First_Stores.splice(i, 1);
             }
@@ -285,26 +283,34 @@ export class HomegrowbrandsComponent implements OnInit {
       // }
       this.isstorealreadyadded = false;
     } else {
-      this.api
-        .updateHomeGrwonStoreData(
-          true,
-          this.rowno || '',
-          this.HGmoduledata.SectionID,
-          datas.id
-        )
-        .then((data: any) => {
-          if (data != undefined) {
-            if (this.rowno == '1') {
-              this.First_Stores.push(datas);
-            } else if (this.rowno == '2') {
-              this.Second_Stores.push(datas);
-            } else if (this.rowno == '3') {
-              this.third_Stores.push(datas);
+      if (
+        (this.rowno == '1' && this.First_Stores.length >= 10) ||
+        (this.rowno == '2' && this.Second_Stores.length >= 10) ||
+        (this.rowno == '3' && this.third_Stores.length >= 10)
+      ) {
+        this.auth.resource.startSnackBar('Max limit 10.');
+      } else {
+        this.api
+          .updateHomeGrwonStoreData(
+            true,
+            this.rowno || '',
+            this.HGmoduledata.SectionID,
+            datas.id
+          )
+          .then((data: any) => {
+            if (data != undefined) {
+              if (this.rowno == '1') {
+                this.First_Stores.push(datas);
+              } else if (this.rowno == '2') {
+                this.Second_Stores.push(datas);
+              } else if (this.rowno == '3') {
+                this.third_Stores.push(datas);
+              }
             }
-          }
-        });
+          });
 
-      this.isstorealreadyadded = true;
+        this.isstorealreadyadded = true;
+      }
     }
   }
 

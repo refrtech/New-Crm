@@ -72,6 +72,9 @@ export class VisitsharemoduleComponent implements OnInit {
         hasBackdrop: true,
         disableClose: true,
         panelClass: 'thanksscreen',
+      })
+      dialogRef.afterClosed().subscribe((result) => {
+        this.citychange();
       });
     }
   }

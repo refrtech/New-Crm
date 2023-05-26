@@ -87,22 +87,24 @@ export class VSAnodecatstoresComponent implements OnInit {
       (x: any) => x.id == this.actRoute.snapshot.params['catid']
     );
     this.api
-    .getvsaDataCat_Subcatdata('VSAInternalCatSection',this.actRoute.snapshot.params['nodeid'],this.actRoute.snapshot.params['catid'],'PeopleChoice')
-    .subscribe((data: any) => {
-      this.VSAPeopleCHoicedata = data[0];
-      if(this.VSAPeopleCHoicedata != undefined){
-        this.peoplechoicecatpara = data[0].Peoplechoicepara;
-        if(data[0]?.Stores.length > 0){
-
-        this.api
-          .getStoresbyIds(data[0]?.Stores)
-          .subscribe((data: any) => {
-            this.PChoiceStores = data;
-          });
+      .getvsaDataCat_Subcatdata(
+        'VSAInternalCatSection',
+        this.actRoute.snapshot.params['nodeid'],
+        this.actRoute.snapshot.params['catid'],
+        'PeopleChoice'
+      )
+      .subscribe((data: any) => {
+        this.VSAPeopleCHoicedata = data[0];
+        if (this.VSAPeopleCHoicedata != undefined) {
+          this.peoplechoicecatpara = data[0].Peoplechoicepara;
+          if (data[0]?.Stores.length > 0) {
+            this.api.getStoresbyIds(data[0]?.Stores).subscribe((data: any) => {
+              this.PChoiceStores = data;
+            });
+          }
         }
-      }
-      // this.PChoiceStores = data;
-    });
+        // this.PChoiceStores = data;
+      });
 
     // this.api
     //   .getnodeinterdata(this.actRoute.snapshot.params['nodeid'])
@@ -177,13 +179,16 @@ export class VSAnodecatstoresComponent implements OnInit {
     if (i == 1) {
       if (this.VSAPeopleCHoicedata == undefined) {
         this.addsectionstoredata(i, Data);
-      }
-      else {
-        this.api
-        .AddORRemoveSectionStores(1, Data.id, this.VSAPeopleCHoicedata.id)
-        .then(() => {
-          this.PChoiceStores.push(Data);
-        });
+      } else {
+        if (this.PChoiceStores.length >= 10) {
+          this.auth.resource.startSnackBar('Max limit 10.');
+        } else {
+          this.api
+            .AddORRemoveSectionStores(1, Data.id, this.VSAPeopleCHoicedata.id)
+            .then(() => {
+              this.PChoiceStores.push(Data);
+            });
+        }
       }
 
       // Data.Nodeid = this.actRoute.snapshot.params['nodeid'];
@@ -236,9 +241,11 @@ export class VSAnodecatstoresComponent implements OnInit {
 
   deletestore(i: number, id: string) {
     if (i == 1) {
-      this.api.AddORRemoveSectionStores(2, id, this.VSAPeopleCHoicedata.id).then((data: any) => {
-        this.MerchantdataSource = new MatTableDataSource();
-      });
+      this.api
+        .AddORRemoveSectionStores(2, id, this.VSAPeopleCHoicedata.id)
+        .then((data: any) => {
+          this.MerchantdataSource = new MatTableDataSource();
+        });
     }
     // else {
     //   this.api.deletestorefromTrendingStore(id).then((data: any) => {
@@ -291,7 +298,8 @@ export class VSAnodecatstoresComponent implements OnInit {
                 this.auth.resource.startSnackBar('Upload Failed!');
               } else {
                 // this.storeBanner = ref.url;
-                this.auth.resource.categoryList[this.catindex].VSAthumbnail =  ref.url;
+                this.auth.resource.categoryList[this.catindex].VSAthumbnail =
+                  ref.url;
                 this.auth.resource.startSnackBar('Banner Update.');
               }
             });
@@ -344,7 +352,7 @@ export class VSAnodecatstoresComponent implements OnInit {
   }
 
   addsectionstoredata(i: number, data: any) {
-    let datas:any;
+    let datas: any;
     if (i == 1) {
       datas = {
         Stores: [data.id],
@@ -352,7 +360,7 @@ export class VSAnodecatstoresComponent implements OnInit {
         M_Date: this.api.newTimestamp,
         SectionName: 'VSAInternalCatSection',
         Catid: this.actRoute.snapshot.params['catid'],
-        NodeId:this.actRoute.snapshot.params['nodeid'],
+        NodeId: this.actRoute.snapshot.params['nodeid'],
         ContainerType: 'PeopleChoice',
       };
     } else {
@@ -361,7 +369,7 @@ export class VSAnodecatstoresComponent implements OnInit {
         M_Date: this.api.newTimestamp,
         SectionName: 'VSAInternalCatSection',
         Catid: this.actRoute.snapshot.params['catid'],
-        NodeId:this.actRoute.snapshot.params['nodeid'],
+        NodeId: this.actRoute.snapshot.params['nodeid'],
         ContainerType: 'PeopleChoice',
         Peoplechoicepara: data,
       };
@@ -369,10 +377,9 @@ export class VSAnodecatstoresComponent implements OnInit {
     this.api.adddatatosectionstore(datas).then(() => {
       this.VSAPeopleCHoicedata = datas;
       if (i == 1) {
-      this.auth.resource.startSnackBar('Store Added');
-      }
-      else {
-      this.auth.resource.startSnackBar('People Choice Added.');
+        this.auth.resource.startSnackBar('Store Added');
+      } else {
+        this.auth.resource.startSnackBar('People Choice Added.');
       }
     });
   }
@@ -391,15 +398,19 @@ export class VSAnodecatstoresComponent implements OnInit {
       if (this.peoplechoicecatpara == '') {
         this.auth.resource.startSnackBar('please enter the People choice.');
       } else {
-        if (this.VSAPeopleCHoicedata == undefined){
+        if (this.VSAPeopleCHoicedata == undefined) {
           this.addsectionstoredata(2, this.peoplechoicecatpara);
-        }
-        else {
+        } else {
           this.api
-            .updatepeoplechoicepara(1,this.actRoute.snapshot.params['catid'], this.peoplechoicecatpara)
+            .updatepeoplechoicepara(
+              1,
+              this.actRoute.snapshot.params['catid'],
+              this.peoplechoicecatpara
+            )
             .then((data) => {
-                this.VSAPeopleCHoicedata.Peoplechoicepara = this.peoplechoicecatpara;
-                this.editpeoplechoice = !this.editpeoplechoice;
+              this.VSAPeopleCHoicedata.Peoplechoicepara =
+                this.peoplechoicecatpara;
+              this.editpeoplechoice = !this.editpeoplechoice;
             })
             .catch(() => {
               return false;

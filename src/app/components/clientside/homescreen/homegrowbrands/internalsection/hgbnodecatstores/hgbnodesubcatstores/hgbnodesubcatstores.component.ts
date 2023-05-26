@@ -189,11 +189,15 @@ export class HgbnodesubcatstoresComponent implements OnInit {
       if (this.HGBrandYoulovedata == undefined) {
         this.addsectionstoredata(3, Data);
       } else {
-        this.api
-          .AddORRemoveSectionStores(1, Data.id, this.HGBrandYoulovedata.id)
-          .then(() => {
-            this.BrandYouloveStores.push(Data);
-          });
+        if (this.BrandYouloveStores.length >= 10) {
+          this.auth.resource.startSnackBar('Max limit 10.');
+        } else {
+          this.api
+            .AddORRemoveSectionStores(1, Data.id, this.HGBrandYoulovedata.id)
+            .then(() => {
+              this.BrandYouloveStores.push(Data);
+            });
+        }
       }
 
       // Data.catId = this.actRoute.snapshot.params['catid'];
@@ -449,10 +453,10 @@ export class HgbnodesubcatstoresComponent implements OnInit {
             this.peoplechoicesubcatpara
           )
           .then((data) => {
-              this.auth.resource.categoryList[
-                this.catindex
-              ].HGSUBCATPeoplechoicepara = this.peoplechoicesubcatpara;
-              this.editpeoplechoice = !this.editpeoplechoice;
+            this.auth.resource.categoryList[
+              this.catindex
+            ].HGSUBCATPeoplechoicepara = this.peoplechoicesubcatpara;
+            this.editpeoplechoice = !this.editpeoplechoice;
           })
           .catch(() => {
             return false;

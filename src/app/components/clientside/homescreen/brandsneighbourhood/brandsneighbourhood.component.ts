@@ -59,6 +59,9 @@ export class BrandsneighbourhoodComponent implements OnInit {
         disableClose: true,
         panelClass: 'thanksscreen',
       });
+      dialogRef.afterClosed().subscribe((result: any) => {
+        this.citychange();
+      });
     }
   }
 

@@ -172,11 +172,15 @@ export class HgbnodecatstoresComponent implements OnInit {
         //   this.isstorealreadyadded = true;
         //   this.PChoiceStores.push(Data);
         // });
-        this.api
-          .AddORRemoveSectionStores(1, Data.id, this.HGBdata.id)
-          .then(() => {
-            this.PChoiceStores.push(Data);
-          });
+        if (this.PChoiceStores.length >= 10) {
+          this.auth.resource.startSnackBar('Max limit 10.');
+        } else {
+          this.api
+            .AddORRemoveSectionStores(1, Data.id, this.HGBdata.id)
+            .then(() => {
+              this.PChoiceStores.push(Data);
+            });
+        }
       }
     }
     // else {

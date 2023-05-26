@@ -199,12 +199,16 @@ export class BrandSpotlightComponent implements OnInit {
         });
       this.isstorealreadyadded = false;
     } else {
-      this.api
-        .AddORRemoveSectionStores(1, data.id, this.nodestoresid)
-        .then(() => {
-          this.BSmoduleStoredata.push(data);
-        });
-      this.isstorealreadyadded = true;
+      if (this.BSmoduleStoredata.length >= 10) {
+        this.auth.resource.startSnackBar('Max limit 10.');
+      } else {
+        this.api
+          .AddORRemoveSectionStores(1, data.id, this.nodestoresid)
+          .then(() => {
+            this.BSmoduleStoredata.push(data);
+          });
+        this.isstorealreadyadded = true;
+      }
     }
   }
 

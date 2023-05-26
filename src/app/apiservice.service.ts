@@ -257,7 +257,8 @@ export class ApiserviceService {
       } else {
         qu = query(catData, orderBy(orderbyvalue, 'desc'));
       }
-    } else {
+    }
+    else {
       if (
         Parametere != undefined &&
         operator != undefined &&
@@ -1718,11 +1719,8 @@ export class ApiserviceService {
       const addedcity = addDoc(
         collection(this.firestore, 'Section_stores'),
         data
-      )
-        .then((ref) => {
+      ).then((ref) => {
           const areeas = doc(this.firestore, 'Section_stores', `${ref.id}`);
-          console.log('ref', ref);
-          console.log('ref id', ref.id);
           updateDoc(areeas, { id: ref.id }).then(() => {
             resolve(ref);
           });

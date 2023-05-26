@@ -41,30 +41,29 @@ export class VisitallstoredetailsComponent implements OnInit {
   id: number = 0;
   nodestores$: Observable<any[]> = of();
   storelist: Array<any> = [];
-  vsaDataid:string ="";
+  vsaDataid: string = '';
   constructor(
     public router: Router,
     public api: ApiserviceService,
     public auth: AuthService,
     public dialogRef: MatDialogRef<VisitallstoredetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     if (this.data.selectednode != undefined) {
       this.api
-      .getstoreaspernode('VSAExternalSection', this.data.selectednode?.id)
-      .pipe(take(1))
-      .subscribe((data: any) => {
-        this.vsaDataid = data[0]?.id;
-        if(data[0]?.Stores.length > 0){
-        this.api
-          .getStoresbyIds(data[0]?.Stores)
-          .subscribe((data: any) => {
-            this.storelist = data;
-          });
-        }
-      });
+        .getstoreaspernode('VSAExternalSection', this.data.selectednode?.id)
+        .pipe(take(1))
+        .subscribe((data: any) => {
+          this.vsaDataid = data[0]?.id;
+          if (data[0]?.Stores.length > 0) {
+            this.api.getStoresbyIds(data[0]?.Stores).subscribe((data: any) => {
+              this.storelist = data;
+            });
+          }
+        });
     }
   }
 
@@ -105,30 +104,36 @@ export class VisitallstoredetailsComponent implements OnInit {
       }
       this.isstorealreadyadded = false;
     } else {
-      if (this.data.selectednode != undefined) {
-        this.api
-          .AddORRemoveSectionStores(1, data.id, this.vsaDataid)
-          .then(() => {
-            this.storelist.push(data);
-          });
+      if (this.storelist.length >= 10) {
+        this.auth.resource.startSnackBar('Max limit 10.');
       } else {
-        let datas = {
-          Stores: [data.id],
-          C_Date: this.api.newTimestamp,
-          M_Date: this.api.newTimestamp,
-          SectionName: 'VSAExternalSection',
-          CityId: this.data.cityid,
-          NodeId:
-            this.data.selectednode == undefined
-              ? this.data.node.id
-              : this.data.selectednode.id,
-        };
-        this.api.adddatatosectionstore(datas).then(() => {
-          this.storelist.push(data);
-          this.auth.resource.startSnackBar('Store Added');
-        });
+        if (this.data.selectednode != undefined) {
+          this.api
+            .AddORRemoveSectionStores(1, data.id, this.vsaDataid)
+            .then(() => {
+              this.storelist.push(data);
+            });
+        } else {
+          let datas = {
+            Stores: [data.id],
+            C_Date: this.api.newTimestamp,
+            M_Date: this.api.newTimestamp,
+            SectionName: 'VSAExternalSection',
+            CityId: this.data.cityid,
+            NodeId:
+              this.data.selectednode == undefined
+                ? this.data.node.id
+                : this.data.selectednode.id,
+          };
+          this.api.adddatatosectionstore(datas).then((res: any) => {
+            this.vsaDataid = res.id;
+            this.data.selectednode = this.data.node;
+            this.storelist.push(data);
+            this.auth.resource.startSnackBar('Store Added');
+          });
+        }
+        this.isstorealreadyadded = true;
       }
-      this.isstorealreadyadded = true;
     }
   }
 
@@ -154,7 +159,7 @@ export class VisitallstoredetailsComponent implements OnInit {
     ratio: string,
     webPath: string,
     type: string,
-    Storeid: string,
+    Storeid: string
   ) {
     let isPhone = this.auth.resource.getWidth < 768;
     let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
@@ -175,10 +180,10 @@ export class VisitallstoredetailsComponent implements OnInit {
       } else {
         if (type == 'banner') {
           this.api
-          .updateSectionStorebanner(Storeid, result.croppedImage,'VSA')
-          .then((data: any) => {
-            this.auth.resource.startSnackBar('banner uploaded');
-          });
+            .updateSectionStorebanner(Storeid, result.croppedImage, 'VSA')
+            .then((data: any) => {
+              this.auth.resource.startSnackBar('banner uploaded');
+            });
         }
       }
     });
