@@ -79,7 +79,7 @@ export class MerchantsComponent implements OnInit {
     'city',
     'action',
   ];
-  MerchantdataSource!: MatTableDataSource<any>;
+  // MerchantdataSource!: MatTableDataSource<any>;
   valuetype: number = 2;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -188,7 +188,6 @@ export class MerchantsComponent implements OnInit {
   }
 
   getallimages(){
-
   }
 
 

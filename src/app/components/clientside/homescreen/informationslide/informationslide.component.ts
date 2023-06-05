@@ -18,25 +18,31 @@ export class InformationslideComponent implements OnInit {
   videoData: any;
   videoPath: string = '';
 
-  constructor(private dailog: MatDialog, public auth: AuthService,private api:ApiserviceService) {
+  constructor(
+    private dailog: MatDialog,
+    public auth: AuthService,
+    private api: ApiserviceService
+  ) {
     this.getVideo();
   }
 
   ngOnInit(): void {}
 
   addSlide() {
-    if(this.getVideoData?.Videos.length == 1 ){
-this.auth.resource.startSnackBar("Max. limit 1 video.")
+    if (this.getVideoData?.Videos.length >= 1) {
+      this.auth.resource.startSnackBar('Max. limit 1 video.');
+    } else {
+      this.dailog.open(AddinfoslideComponent, {
+        width: '50%',
+        data: {
+          id: this.getVideoData.id,
+          infoVideos: this.getVideoData.Videos,
+        },
+        hasBackdrop: true,
+        disableClose: true,
+        panelClass: 'thanksscreen',
+      });
     }
-    else {
-    this.dailog.open(AddinfoslideComponent, {
-      width: '50%',
-      data: { id: this.getVideoData.id,infoVideos: this.getVideoData.Videos},
-      hasBackdrop: true,
-      disableClose: true,
-      panelClass: 'thanksscreen',
-    });
-  }
   }
 
   async getVideo() {
@@ -69,11 +75,13 @@ this.auth.resource.startSnackBar("Max. limit 1 video.")
             this.auth.resource.startSnackBar(result.info);
           }
         } else {
-          let i = this.getVideoData.Videos.findIndex((x:any)=>{
-            x.fileName == id
+          let i = this.getVideoData.Videos.findIndex((x: any) => {
+            x.fileName == id;
           });
-          this.getVideoData.Videos.splice(i,1);
-          this.api.UpdateVideo(this.getVideoData.id,this.getVideoData.Videos).then((data: any) => {});
+          this.getVideoData.Videos.splice(i, 1);
+          this.api
+            .UpdateVideo(this.getVideoData.id, this.getVideoData.Videos)
+            .then((data: any) => {});
         }
       });
     }

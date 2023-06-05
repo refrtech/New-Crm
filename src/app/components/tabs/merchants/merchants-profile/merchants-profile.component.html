@@ -55,7 +55,7 @@
             </div>
 
             <div class="cardbox storelogo OF_hidden">
-              <ik-image class="M100width" [src]="storeDetails?.logo" ></ik-image>
+              <ik-image class="M100width" [src]="storeDetails?.logo"></ik-image>
             </div>
             <div class="tb10padding c_align">
               <button mat-button class="viewbtn addbtn" (click)="takePicture('1:1','Storelogo',storeDetails?.id)">
@@ -63,7 +63,7 @@
               </button>
 
               <button mat-button class="viewbtn addbtn l10margin" (click)="download(storeDetails?.logo)">
-                download
+                Download
               </button>
 
             </div>
@@ -71,36 +71,38 @@
               Store Banner
             </div>
             <div class="cardbox storebanner OF_hidden">
-              <ik-image class="M100width" [src]="storeDetails?.banner" ></ik-image>
+              <ik-image class="M100width" [src]="storeDetails?.banner"></ik-image>
             </div>
             <div class="tb10padding c_align">
               <button mat-button class="viewbtn addbtn" (click)="takePicture('16:9','Storebanner',storeDetails?.id)">
                 Update banner
               </button>
               <button mat-button class="viewbtn addbtn l10margin" (click)="download(storeDetails?.banner)">
-                download
+                Download
               </button>
             </div>
-            <div class="M_size normaltext t20padding b10padding">
-              Store Photos
-            </div>
-            <div class="cardbox storebanner OF_hidden">
-              <ik-image class="M100width" [src]="storeDetails?.banners[indexs]" ></ik-image>
-            </div>
-            <div class="c_align tb10padding">
-              <span *ngFor="let item of storeDetails?.banners;let i = index" class="dot" (click)="indexs = i"></span>
-            </div>
+            <ng-container *ngIf="storeDetails?.banners.length > 0">
+              <div class="M_size normaltext t20padding b10padding">
+                Store Photos
+              </div>
+              <div class="cardbox storebanner OF_hidden">
+                <ik-image class="M100width" [src]="storeDetails?.banners[indexs]"></ik-image>
+              </div>
+              <div class="c_align tb10padding">
+                <span *ngFor="let item of storeDetails?.banners;let i = index" class="dot" (click)="indexs = i"></span>
+              </div>
+            </ng-container>
             <div class="dflex JCcenter t10margin b5margin">
-              <button mat-button class="viewbtn addbtn r5margin">
-                Add
+              <button mat-button class="viewbtn addbtn r5margin" (click)="takePicture('16:9','Storebannerss',storeDetails?.id,storeDetails?.banners)">
+                Add Banners
               </button>
-              <button mat-button class="viewbtn addbtn">
+              <button mat-button class="viewbtn addbtn" *ngIf="storeDetails?.banners.length > 0" (click)="deletestorebanners(indexs)">
                 Delete
               </button>
             </div>
-            <div class="c_align">
+            <div class="c_align" *ngIf="storeDetails?.banners.length > 0">
               <button mat-button class="viewbtn addbtn l10margin" (click)="download(storeDetails?.banners[indexs])">
-                download
+                Download
               </button>
             </div>
             <div class="M_size normaltext t20padding b10padding">

@@ -62,7 +62,6 @@ export class VisitsharemoduleComponent implements OnInit {
       const dialogRef = this.dialog.open(VisitallstoredetailsComponent, {
         width: '90%',
         maxHeight: '90vh',
-
         data: {
           node: this.selectednodedata,
           id: this.VSAmoduledata.id,

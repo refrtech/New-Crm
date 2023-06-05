@@ -1746,7 +1746,7 @@ export class AuthService {
       formData.append('file', file, file.name);
       const headers = new HttpHeaders();
       headers.append('Content-Type:multipart/form-data; boundary=------------------------1234567890', 'multipart/form-data');
-      const proxy_url = 'http://34.100.197.18:5001/upload-image'
+      const proxy_url = 'https://upload.refr.club/upload-image'
       this.http.post(proxy_url, formData, {headers:headers}).subscribe(
         (res) => {
         },

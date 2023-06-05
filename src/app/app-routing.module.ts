@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BrandSpotlightComponent } from './components/clientside/homescreen/brand-spotlight/brand-spotlight.component';
-import { BrandsdetailComponent } from './components/clientside/homescreen/brandsneighbourhood/brandsdetail/brandsdetail.component';
 import { BrandsneighbourhoodComponent } from './components/clientside/homescreen/brandsneighbourhood/brandsneighbourhood.component';
 import { BrandsstoreComponent } from './components/clientside/homescreen/brandsneighbourhood/brandsstore/brandsstore.component';
 import { DaildropsbrandsComponent } from './components/clientside/homescreen/dailydrops/daildropsbrands/daildropsbrands.component';
@@ -12,7 +11,6 @@ import { HgbnodecatstoresComponent } from './components/clientside/homescreen/ho
 import { HomescreenComponent } from './components/clientside/homescreen/homescreen.component';
 import { AddinfoslideComponent } from './components/clientside/homescreen/informationslide/addinfoslide/addinfoslide.component';
 import { InformationslideComponent } from './components/clientside/homescreen/informationslide/informationslide.component';
-import { NewstoredetailsComponent } from './components/clientside/homescreen/newstoreinhood/newstoredetails/newstoredetails.component';
 import { NewstoreinhoodComponent } from './components/clientside/homescreen/newstoreinhood/newstoreinhood.component';
 import { FeedsectionComponent } from './components/clientside/homescreen/topfeedmodule/feedsection/feedsection.component';
 import { TopfeedmoduleComponent } from './components/clientside/homescreen/topfeedmodule/topfeedmodule.component';
@@ -24,8 +22,6 @@ import { VisitsharemoduleComponent } from './components/clientside/homescreen/vi
 import { NodemanagementCitysComponent } from './components/clientside/nodemanagement-citys/nodemanagement-citys.component';
 import { AddnodeComponent } from './components/clientside/nodemanagement-citys/nodemanagement/addnode/addnode.component';
 import { NodemanagementComponent } from './components/clientside/nodemanagement-citys/nodemanagement/nodemanagement.component';
-import { AddcityAndAreaComponent } from './components/clientside/setting/addcity-and-area/addcity-and-area.component';
-import { SettingComponent } from './components/clientside/setting/setting.component';
 import { CategorysectioninternalComponent } from './components/internalsection/homegrownbrands/categorysectioninternal/categorysectioninternal.component';
 import { HomegrownbrandsComponent } from './components/internalsection/homegrownbrands/homegrownbrands.component';
 import { InternalsectionComponent } from './components/internalsection/internalsection.component';
@@ -162,16 +158,6 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: 'settings',
-        component: SettingComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'addcityarea/:id',
-        component: AddcityAndAreaComponent,
-        canActivate: [AuthGuard],
-      },
-      {
         path: 'visitshareinternal',
         component: VisitshareinternalComponent,
         canActivate: [AuthGuard],
@@ -202,11 +188,6 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: 'nodebrands',
-        component: BrandsdetailComponent,
-        canActivate: [AuthGuard],
-      },
-      {
         path: 'storebrands',
         component: BrandsstoreComponent,
         canActivate: [AuthGuard],
@@ -214,11 +195,6 @@ const routes: Routes = [
       {
         path: 'newstoreinyourhood',
         component: NewstoreinhoodComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'newstoreinyourhooddetails',
-        component: NewstoredetailsComponent,
         canActivate: [AuthGuard],
       },
       {

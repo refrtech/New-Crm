@@ -86,6 +86,8 @@ export class VSAnodecatstoresComponent implements OnInit {
     this.catindex = this.auth.resource.categoryList.findIndex(
       (x: any) => x.id == this.actRoute.snapshot.params['catid']
     );
+
+    this.peoplechoicecatpara = this.auth.resource.categoryList[this.catindex].VSAPeoplechoicepara;
     this.api
       .getvsaDataCat_Subcatdata(
         'VSAInternalCatSection',
@@ -96,14 +98,12 @@ export class VSAnodecatstoresComponent implements OnInit {
       .subscribe((data: any) => {
         this.VSAPeopleCHoicedata = data[0];
         if (this.VSAPeopleCHoicedata != undefined) {
-          this.peoplechoicecatpara = data[0].Peoplechoicepara;
           if (data[0]?.Stores.length > 0) {
             this.api.getStoresbyIds(data[0]?.Stores).subscribe((data: any) => {
               this.PChoiceStores = data;
             });
           }
         }
-        // this.PChoiceStores = data;
       });
 
     // this.api
@@ -385,13 +385,10 @@ export class VSAnodecatstoresComponent implements OnInit {
   }
 
   updatepeoplechoice() {
-    // let index = this.catarray.findIndex(
-    //   (x: any) => x.Catid == this.actRoute.snapshot.params['catid']
-    // );
     if (!this.editpeoplechoice) {
       this.editpeoplechoice = !this.editpeoplechoice;
     } else if (
-      this.peoplechoicecatpara == this.VSAPeopleCHoicedata?.Peoplechoicepara
+      this.peoplechoicecatpara == this.auth.resource.categoryList[this.catindex].VSAPeoplechoicepara
     ) {
       this.editpeoplechoice = !this.editpeoplechoice;
     } else {
@@ -408,8 +405,7 @@ export class VSAnodecatstoresComponent implements OnInit {
               this.peoplechoicecatpara
             )
             .then((data) => {
-              this.VSAPeopleCHoicedata.Peoplechoicepara =
-                this.peoplechoicecatpara;
+                this.auth.resource.categoryList[this.catindex].VSAPeoplechoicepara = this.peoplechoicecatpara;
               this.editpeoplechoice = !this.editpeoplechoice;
             })
             .catch(() => {

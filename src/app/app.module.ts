@@ -59,14 +59,10 @@ import { HomegrownbrandsComponent } from './components/internalsection/homegrown
 import { InternalsectionComponent } from './components/internalsection/internalsection.component';
 import { CategorysectioninternalComponent } from './components/internalsection/homegrownbrands/categorysectioninternal/categorysectioninternal.component';
 import { VisitshareinternalComponent } from './components/internalsection/visitshareinternal/visitshareinternal.component';
-import { SettingComponent } from './components/clientside/setting/setting.component';
-import { AddcityAndAreaComponent } from './components/clientside/setting/addcity-and-area/addcity-and-area.component';
 import { InformationslideComponent } from './components/clientside/homescreen/informationslide/informationslide.component';
 import { AddinfoslideComponent } from './components/clientside/homescreen/informationslide/addinfoslide/addinfoslide.component';
-import { BrandsdetailComponent } from './components/clientside/homescreen/brandsneighbourhood/brandsdetail/brandsdetail.component';
 import { BrandsstoreComponent } from './components/clientside/homescreen/brandsneighbourhood/brandsstore/brandsstore.component';
 import { NewstoreinhoodComponent } from './components/clientside/homescreen/newstoreinhood/newstoreinhood.component';
-import { NewstoredetailsComponent } from './components/clientside/homescreen/newstoreinhood/newstoredetails/newstoredetails.component';
 import { DailydropsComponent } from './components/clientside/homescreen/dailydrops/dailydrops.component';
 import { DaildropsbrandsComponent } from './components/clientside/homescreen/dailydrops/daildropsbrands/daildropsbrands.component';
 import { BrandSpotlightComponent } from './components/clientside/homescreen/brand-spotlight/brand-spotlight.component';
@@ -128,14 +124,10 @@ import { ImagekitioAngularModule } from 'imagekitio-angular';
     InternalsectionComponent,
     CategorysectioninternalComponent,
     VisitshareinternalComponent,
-    SettingComponent,
-    AddcityAndAreaComponent,
     InformationslideComponent,
     AddinfoslideComponent,
-    BrandsdetailComponent,
     BrandsstoreComponent,
     NewstoreinhoodComponent,
-    NewstoredetailsComponent,
     DailydropsComponent,
     DaildropsbrandsComponent,
     BrandSpotlightComponent,

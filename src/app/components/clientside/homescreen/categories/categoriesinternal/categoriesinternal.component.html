@@ -15,7 +15,7 @@
         <div class="cat_thumbnail">
           <ik-image class="M100width"
             [src]="auth.resource.categoryList[catindex].thumbnail ? auth.resource.categoryList[catindex].thumbnail : 'assets/brand/opengraph.png' "
-            alt="" ></ik-image>
+            alt=""></ik-image>
         </div>
       </div>
       <div (click)="takePicture('1:1','logo')" class="dflex flex_col l15margin JEend">
@@ -45,7 +45,7 @@
         <div class="img">
           <ik-image class="M100width"
             [src]=" auth.resource.categoryList[catindex].CategoryBanner ? auth.resource.categoryList[catindex].CategoryBanner : 'assets/brand/opengraph.png' "
-            alt="banner" ></ik-image>
+            alt="banner"></ik-image>
         </div>
       </div>
       <div class="dflex flex_col l15margin JEend">
@@ -65,9 +65,53 @@
       </div>
     </div>
   </main>
+
+  <div class="t40margin b20margin">
+    <div class="b20padding">
+      <span class="s_size boldtext">Select Sub-category</span>
+    </div>
+    <div class="dWrap dflex">
+      <section *ngFor="let x of auth.resource.categoryList[catindex].items;let i = index">
+        <main class="section">
+          <div class="w200 h200 Aborder pos_relative">
+            <div class="img">
+              <ik-image class="M100width h200 object_fit_cover" [src]=" x.subCatbanner ? x.subCatbanner : 'assets/brand/opengraph.png' "  alt="banner"></ik-image>
+            </div>
+          </div>
+          <div class="w200 Aborder t10margin b10margin tb10padding regulartext s_size">
+            <div class="c_align boldtext m_size">
+              {{x.name}}
+            </div>
+          </div>
+          <div (click)="takePicture('1:1','subcatbanner',x.id,i)"
+            class="w200 Aborder dflex JCcenter AIcenter t10margin b10margin tb10padding regulartext s_size">
+            <mat-icon>photo_camera</mat-icon>
+            Camera
+          </div>
+        </main>
+      </section>
+    </div>
+  </div>
   <div class="boldtext m_size t40margin b20margin">
     People choice stores
   </div>
+
+  <div class="t40margin b20margin">
+    <div class="b20padding">
+      <span class="s_size boldtext">People’s Choice </span> <span class="xs_size gray_txt">(Maximum 250 words)</span>
+    </div>
+    <div>
+      <mat-form-field class="l5margin r5margin M50width crminput Editableinput" appearance="outline">
+        <input type="string" matInput maxlength="250" [(ngModel)]="peoplechoicecatpara" [disabled]="!editpeoplechoice">
+        <button (click)="updatepeoplechoice()" matSuffix mat-icon-button aria-label="Clear" class="purple_background">
+          <mat-icon>
+            {{editpeoplechoice ? 'check': 'edit'}}
+          </mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+  </div>
+
   <div class="Aborder A5radius A20padding b20margin">
     <div class="boldtext l_size b20margin">Apply Filter to search store</div>
     <div class="dflex">

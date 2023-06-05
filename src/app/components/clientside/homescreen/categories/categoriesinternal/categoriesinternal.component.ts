@@ -14,6 +14,9 @@ import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component
   styleUrls: ['./categoriesinternal.component.scss'],
 })
 export class CategoriesinternalComponent implements OnInit {
+  peoplechoicecatpara: string = '';
+  editpeoplechoice: boolean = false;
+
   storeBanner = '';
   Catthumbnail = '';
 
@@ -97,6 +100,7 @@ export class CategoriesinternalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(this.auth.resource.categoryList);
     this.catindex = this.auth.resource.categoryList.findIndex(
       (x: any) => x.id == this.actRoute.snapshot.params['cat']
     );
@@ -377,7 +381,7 @@ export class CategoriesinternalComponent implements OnInit {
     });
   }
 
-  async takePicture(ratio: string, type: string, id?: string) {
+  async takePicture(ratio: string, type: string, id?: string, i?: number) {
     const image = await Camera.getPhoto({
       quality: 100,
       height: 300,
@@ -387,11 +391,17 @@ export class CategoriesinternalComponent implements OnInit {
     });
     const imageUrl = image.webPath || '';
     if (imageUrl) {
-      this.startCropper(ratio, imageUrl, type, id);
+      this.startCropper(ratio, imageUrl, type, id, i);
     }
   }
 
-  startCropper(ratio: string, webPath: string, type: string, Storeid?: string) {
+  startCropper(
+    ratio: string,
+    webPath: string,
+    type: string,
+    Storeid?: string,
+    subcatindex?: number
+  ) {
     let isPhone = this.auth.resource.getWidth < 768;
     let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
     const refDialog = this.auth.resource.dialog.open(CropperComponent, {
@@ -430,8 +440,25 @@ export class CategoriesinternalComponent implements OnInit {
                 }
                 this.auth.resource.startSnackBar('Banner Update.');
               }
-            }).catch((err:any)=>{
+            })
+            .catch((err: any) => {
               this.auth.resource.startSnackBar(JSON.stringify(err));
+            });
+        } else if (type == 'subcatbanner') {
+          this.api
+            .updatehomegrownbanners(
+              this.actRoute.snapshot.params['cat'],
+              4,
+              result.croppedImage,
+              this.catindex,
+              subcatindex || 0
+            )
+            .then((ref) => {
+              if (!ref) {
+                this.auth.resource.startSnackBar('Upload Failed!');
+              } else {
+                this.auth.resource.startSnackBar('Banner Updated.');
+              }
             });
         } else {
           this.api
@@ -529,4 +556,34 @@ export class CategoriesinternalComponent implements OnInit {
 
   //     return new File([u8arr], filename, {type:mime});
   // }
+
+  updatepeoplechoice() {
+    if (!this.editpeoplechoice) {
+      this.editpeoplechoice = !this.editpeoplechoice;
+    } else if (
+      this.peoplechoicecatpara ==
+      this.auth.resource.categoryList[this.catindex].CATPeoplechoicepara
+    ) {
+      this.editpeoplechoice = !this.editpeoplechoice;
+    } else {
+      if (this.peoplechoicecatpara == '') {
+        this.auth.resource.startSnackBar('please enter the People choice.');
+      } else {
+        this.api
+          .updatepeoplechoicepara(
+            5,
+            this.actRoute.snapshot.params['catid'],
+            this.peoplechoicecatpara
+          )
+          .then((data) => {
+            this.auth.resource.categoryList[this.catindex].CATPeoplechoicepara =
+              this.peoplechoicecatpara;
+            this.editpeoplechoice = !this.editpeoplechoice;
+          })
+          .catch(() => {
+            return false;
+          });
+      }
+    }
+  }
 }

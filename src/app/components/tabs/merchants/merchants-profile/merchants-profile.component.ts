@@ -15,7 +15,6 @@ import { CropperComponent } from 'src/app/placeholders/cropper/cropper.component
 import { Camera } from '@capacitor/camera';
 import { CameraResultType } from '@capacitor/camera/dist/esm/definitions';
 
-
 @Component({
   selector: 'app-merchants-profile',
   templateUrl: './merchants-profile.component.html',
@@ -116,9 +115,8 @@ export class MerchantsProfileComponent implements OnInit {
     public apiservice: ApiserviceService,
     private dialog: MatDialog,
     public auth: AuthService,
-    public api: ApiserviceService,
-  ) {
-  }
+    public api: ApiserviceService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -134,6 +132,7 @@ export class MerchantsProfileComponent implements OnInit {
       this.apiservice.getStoreByID(this.storeID).then((storeRef) => {
         const store: any = storeRef.exists() ? storeRef.data() : null;
         this.storeDetails = store;
+        console.log(store);
         this.listLoc = store.loc;
         this.Selcategory = store.cat;
         this.catindex = this.auth.resource.categoryList.findIndex(
@@ -192,13 +191,7 @@ export class MerchantsProfileComponent implements OnInit {
     this.orderdataSource = new MatTableDataSource();
     if (this.mattaborders?.selectedIndex == 0) {
       this.apiservice
-        .getRecentAddedOrder(
-          100,
-          false,
-          'to',
-          '==',
-          this.storeuid,
-        )
+        .getRecentAddedOrder(100, false, 'to', '==', this.storeuid)
         .pipe(take(1))
         .subscribe((recentorders: any) => {
           this.orderdataSource = new MatTableDataSource(recentorders);
@@ -206,13 +199,7 @@ export class MerchantsProfileComponent implements OnInit {
         });
     } else if (this.mattaborders?.selectedIndex == 1) {
       this.apiservice
-        .getRecentAddedOrder(
-          100,
-          false,
-          'to',
-          '==',
-          this.storeuid,
-        )
+        .getRecentAddedOrder(100, false, 'to', '==', this.storeuid)
         .pipe(take(1))
         .subscribe((recentorders: any) => {
           this.orderdataSource = new MatTableDataSource(recentorders);
@@ -220,13 +207,7 @@ export class MerchantsProfileComponent implements OnInit {
         });
     } else if (this.mattaborders?.selectedIndex == 2) {
       this.apiservice
-        .getRecentAddedOrder(
-          100,
-          false,
-          'to',
-          '==',
-          this.storeuid
-        )
+        .getRecentAddedOrder(100, false, 'to', '==', this.storeuid)
         .pipe(take(1))
         .subscribe((recentorders: any) => {
           this.orderdataSource = new MatTableDataSource(recentorders);
@@ -234,13 +215,7 @@ export class MerchantsProfileComponent implements OnInit {
         });
     } else if (this.mattaborders?.selectedIndex == 3) {
       this.apiservice
-        .getRecentAddedOrder(
-          100,
-          false,
-          'to',
-          '==',
-          this.storeuid
-        )
+        .getRecentAddedOrder(100, false, 'to', '==', this.storeuid)
         .pipe(take(1))
         .subscribe((recentorders: any) => {
           this.orderdataSource = new MatTableDataSource(recentorders);
@@ -271,13 +246,7 @@ export class MerchantsProfileComponent implements OnInit {
 
   getorders() {
     this.apiservice
-      .getRecentAddedOrder(
-        100,
-        false,
-        'to',
-        '==',
-        this.storeuid
-      )
+      .getRecentAddedOrder(100, false, 'to', '==', this.storeuid)
       .pipe(take(1))
       .subscribe((recentorders: any) => {
         this.orderdataSource = new MatTableDataSource(recentorders);
@@ -354,9 +323,12 @@ export class MerchantsProfileComponent implements OnInit {
     });
   }
 
-
-
-  async takePicture(ratio: string, type: string, Storeid: string) {
+  async takePicture(
+    ratio: string,
+    type: string,
+    Storeid: string,
+    Storebanners?: any
+  ) {
     const image = await Camera.getPhoto({
       quality: 100,
       height: 300,
@@ -366,7 +338,7 @@ export class MerchantsProfileComponent implements OnInit {
     });
     const imageUrl = image.webPath || '';
     if (imageUrl) {
-      this.startCropper(ratio, imageUrl, type, Storeid);
+      this.startCropper(ratio, imageUrl, type, Storeid, Storebanners);
     }
   }
 
@@ -375,7 +347,9 @@ export class MerchantsProfileComponent implements OnInit {
     webPath: string,
     type: string,
     Storeid: string,
+    Storebanners: any
   ) {
+    console.log(Storebanners);
     let isPhone = this.auth.resource.getWidth < 768;
     let w = isPhone ? this.auth.resource.getWidth + 'px' : '480px';
     const refDialog = this.auth.resource.dialog.open(CropperComponent, {
@@ -393,23 +367,39 @@ export class MerchantsProfileComponent implements OnInit {
           this.auth.resource.startSnackBar(result.info);
         }
       } else {
-          this.api
-          .updateSectionStorebanner(Storeid, result.croppedImage,type)
+        this.api
+          .updateSectionStorebanner(
+            Storeid,
+            result.croppedImage,
+            type,
+            Storebanners
+          )
           .then((data: any) => {
-            if(type == 'Storelogo'){
+            if (type == 'Storelogo') {
               this.storeDetails.logo = result.croppedImage;
-            }
-            else if(type == 'Storebanner'){
+            } else if (type == 'Storebanner') {
               this.storeDetails.banner = result.croppedImage;
+            }
+            else if (type == 'Storebannerss') {
+              this.storeDetails?.banners.push(result.croppedImage);
             }
             this.auth.resource.startSnackBar('banner uploaded');
           });
-
       }
     });
   }
 
-  download(logo:string){
+  download(logo: string) {
     window.open(logo);
+  }
+
+  deletestorebanners(index:number){
+    console.log(this.storeDetails.banners);
+    this.api.deletestorebanners(this.storeDetails.id,this.storeDetails.banners[index])
+    .then((data: any) => {
+    this.storeDetails.banners.splice(index,1);
+      this.auth.resource.startSnackBar('banner deleted');
+    })
+
   }
 }

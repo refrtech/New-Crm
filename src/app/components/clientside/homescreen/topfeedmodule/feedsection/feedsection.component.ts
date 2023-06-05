@@ -62,7 +62,7 @@ export class FeedsectionComponent implements OnInit {
       const formData = new FormData();
       formData.append('file', file, this.fileName);
 
-      const uploadUrl = 'http://34.100.197.18:5001/upload';
+      const uploadUrl = 'https://upload.refr.club/upload';
       this.http.post(uploadUrl, formData).subscribe(
         (response: any) => {
           this.isInProcess = false;
