@@ -21,7 +21,7 @@
     <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline">
       <mat-select placeholder="Filter Type" [(ngModel)]="parameters" (selectionChange)="onChange()">
         <mat-option *ngFor="let item of ParaArr" [value]="item.titvalue">
-          {{item.Title}}
+          {{item?.Title}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -38,7 +38,7 @@
     <mat-form-field class="crminput l5margin r5margin M30width" appearance="outline" *ngIf="valuetype == 1">
       <mat-select placeholder="Operator's" [(ngModel)]="searchvalue">
         <mat-option *ngFor="let item of Valuearr" [value]="item.titvalue">
-          {{item.Title}}
+          {{item?.Title}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -50,9 +50,6 @@
     <button class="viewbtn t10padding b10padding l30padding r30padding t10margin b15margin"
       (click)="ApplyFilter()">Apply Filter</button>
   </div>
-
-
-
   <div>
     <table *ngIf="paginationserv.dataO" class="crmtable" mat-table [dataSource]="paginationserv.dataO" matSort>
       <ng-container matColumnDef="MerchantId">

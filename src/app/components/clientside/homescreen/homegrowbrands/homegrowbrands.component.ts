@@ -137,7 +137,7 @@ export class HomegrowbrandsComponent implements OnInit {
         ) {
           this.api
             .getStoresbyIds(data[0].First_Stores)
-            .pipe(take(1))
+            .pipe()
             .subscribe((data: any) => {
               this.First_Stores = data;
             });
@@ -148,7 +148,7 @@ export class HomegrowbrandsComponent implements OnInit {
         ) {
           this.api
             .getStoresbyIds(data[0].Second_Stores)
-            .pipe(take(1))
+            .pipe()
             .subscribe((data: any) => {
               this.Second_Stores = data;
             });
@@ -159,7 +159,7 @@ export class HomegrowbrandsComponent implements OnInit {
         ) {
           this.api
             .getStoresbyIds(data[0].third_Stores)
-            .pipe(take(1))
+            .pipe()
             .subscribe((data: any) => {
               this.third_Stores = data;
             });

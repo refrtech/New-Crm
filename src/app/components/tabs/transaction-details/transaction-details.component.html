@@ -51,7 +51,7 @@
                 {{Transactiondata.amTotal}}
             </div>
             <div class="b5padding" *ngIf="Transactiondata.amCamp != undefined">
-                {{Transactiondata.gwInfo.method}}
+                {{Transactiondata?.gwInfo?.method}}
             </div>
             <div class="b5padding" *ngIf="Transactiondata.amCamp != undefined">
                 <span *ngIf="Transactiondata.amTotal == '5126'">4300</span>
@@ -80,14 +80,14 @@
                             <div class="stepactiontitle">Order has been placed</div>
                             <div class="stepactionsubtitle">
                                 <!-- {{Transactiondata.sin.toDate() | date}} -->
-                                Mon, 6th Aug ‘22 - 11:37am
+                                <!-- Mon, 6th Aug ‘22 - 11:37am -->
                             </div>
                         </div>
                         <div class="steperaction" *ngIf="Transactiondata.status > 0">
                             <div class="stepactiontitle">Order has been Accepted</div>
                             <div class="stepactionsubtitle">
                                 <!-- {{Transactiondata.sin.toDate() | date}} -->
-                                Mon, 6th Aug ‘22 - 11:37am
+                                <!-- Mon, 6th Aug ‘22 - 11:37am -->
                             </div>
                         </div>
                     </div>
@@ -223,13 +223,13 @@
                 </div>
                 <div class="datacont2 gray_txt">
                     <div class="b5padding">
-                        <span *ngIf="Transactiondata.camp.storeTyp == 'Both'">
+                        <span *ngIf="Transactiondata?.camp?.storeTyp == 'Both'">
                             Online + Offline
                         </span>
-                        <span *ngIf="Transactiondata.camp.storeTyp == 'Onli'">
+                        <span *ngIf="Transactiondata?.camp?.storeTyp == 'Onli'">
                             Online
                         </span>
-                        <span *ngIf="Transactiondata.camp.storeTyp == 'Offl'">
+                        <span *ngIf="Transactiondata?.camp?.storeTyp == 'Offl'">
                             Offline
                         </span>
                     </div>
@@ -266,7 +266,7 @@
                             Failed
                         </button>
                         <button mat-button [disabled]="true" class="failed_btn"
-                            *ngIf="Transactiondata.status ==-10">
+                            *ngIf="Transactiondata.status == -10">
                             Refund
                         </button>
                         <button mat-button [disabled]="true" class="Success_btn"
@@ -291,9 +291,9 @@
                         <span *ngIf="Transactiondata.ordrTYPE == 'RefrCASH+COD'">RC + COD</span>
                     </div>
                     <div class="b5padding">
-                        <span *ngIf="typeid==1">{{Transactiondata.invoice.amtRefrCash |
+                        <span *ngIf="typeid == 1">{{Transactiondata.invoice.amtRefrCash |
                             number:'1.0-2' || 0}}</span>
-                        <span *ngIf="typeid==2">{{Transactiondata.earn | number:'1.0-2'}}</span>
+                        <span *ngIf="typeid == 2">{{Transactiondata.earn | number:'1.0-2'}}</span>
                     </div>
                 </div>
                 <div class="datacont1">

@@ -157,12 +157,12 @@
             <div class="dflex M100width t5padding">
               <div class="normaltext M_size M50width">
                 <mat-form-field appearance="outline" class="crminput M80width">
-                  <input matInput [(ngModel)]="storeDetails.phone">
+                  <input matInput disabled [(ngModel)]="storeDetails.phone">
                 </mat-form-field>
               </div>
               <div class="normaltext M_size M50width">
                 <mat-form-field class="crminput M80width" appearance="outline">
-                  <mat-select placeholder="Store Type" [(ngModel)]="storeDetails.type">
+                  <mat-select disable placeholder="Store Type" [(ngModel)]="storeDetails.type">
                     <mat-option value="Both">
                       Hybrid
                     </mat-option>
@@ -187,7 +187,7 @@
             <div class="dflex M100width t5padding">
               <div class="normaltext M_size M50width">
                 <mat-form-field appearance="outline" class="crminput M80width">
-                  <input matInput [(ngModel)]="storeDetails.email">
+                  <input matInput disabled [(ngModel)]="storeDetails.email">
                 </mat-form-field>
               </div>
               <div class="normaltext M_size M50width">

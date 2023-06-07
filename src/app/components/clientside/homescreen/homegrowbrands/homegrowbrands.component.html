@@ -25,7 +25,8 @@
             <mat-form-field class="crminput l5margin r5margin M80width Editableinput" appearance="outline">
               <input type="text" [(ngModel)]="SectionTitle" matInput placeholder="Enter the module name"
                 [disabled]="!editTitle">
-              <button matSuffix mat-icon-button aria-label="Clear" class="purple_background" (click)="updateSectionDetails(1);">
+              <button matSuffix mat-icon-button aria-label="Clear" class="purple_background"
+                (click)="updateSectionDetails(1);">
                 <mat-icon>
                   {{editTitle ? 'check': 'edit'}}
                 </mat-icon>
@@ -41,7 +42,8 @@
             <mat-form-field class="crminput l5margin r5margin M80width Editableinput" appearance="outline">
               <input type="text" [(ngModel)]="SectionSTitle" matInput placeholder="Enter the subtext name"
                 [disabled]="!editSubt">
-              <button matSuffix mat-icon-button aria-label="Clear" class="purple_background" (click)="updateSectionDetails(2)">
+              <button matSuffix mat-icon-button aria-label="Clear" class="purple_background"
+                (click)="updateSectionDetails(2)">
                 <mat-icon>
                   {{editSubt ? 'check': 'edit'}}
                 </mat-icon>
@@ -116,7 +118,7 @@
         </ng-container>
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading"> Action </th>
-          <td mat-cell *matCellDef="let row" >
+          <td mat-cell *matCellDef="let row">
             <mat-icon (click)="action(row)" *ngIf="!isstorealreadyadded">
               {{isstorealreadyadded ?'remove':'add_circle'}}
             </mat-icon>
@@ -134,13 +136,16 @@
     <div class="dflex M100width">
       <div class="boxshw M100width">
         <div class="dflex M100width tb15padding s_size purple_background c_white">
+          <div class="M10width c_align">
+            Sr. No
+          </div>
           <div class="regulartext M25width">
             <span class="l10padding">
               Store name
             </span>
           </div>
           <div class="regulartext M25width c_align">Category</div>
-          <div class="M30width"></div>
+          <div class="M20width"></div>
           <div class="regulartext M20width c_align">Action</div>
         </div>
         <div>
@@ -149,6 +154,9 @@
               <ng-container *ngFor="let item of First_Stores;let i = index">
                 <ng-container>
                   <div class="dflex tborder s_size tb15padding">
+                    <div class="M10width c_align">
+                      {{i + 1}}
+                    </div>
                     <div class="regulartext M25width">
                       <span class="l10padding">
                         {{item.name}}
@@ -157,7 +165,7 @@
                     <div class="regulartext M25width c_align">
                       {{api.getCat(item.cat)}}
                     </div>
-                    <div class="M35width"></div>
+                    <div class="M25width"></div>
                     <!-- <div class="regulartext M5width c_align">
                       <mat-icon (click)="takePicture('1:1','logo',item.id)">
                         photo_camera
@@ -183,13 +191,16 @@
     <div class="dflex M100width">
       <div class="boxshw M100width">
         <div class="dflex M100width tb15padding s_size purple_background c_white">
+          <div class="M10width c_align">
+            Sr. No
+          </div>
           <div class="regulartext M25width">
             <span class="l10padding">
               Store name
             </span>
           </div>
           <div class="regulartext M25width c_align">Category</div>
-          <div class="M30width"></div>
+          <div class="M20width"></div>
           <div class="regulartext M20width c_align">Action</div>
         </div>
         <div>
@@ -198,13 +209,16 @@
               <ng-container *ngFor="let item of Second_Stores;let i = index">
                 <ng-container>
                   <div class="dflex tborder s_size tb15padding">
+                    <div class="M10width c_align">
+                      {{i + 1}}
+                    </div>
                     <div class="regulartext M25width">
                       <span class="l10padding">{{item.name}}</span>
                     </div>
                     <div class="regulartext M25width c_align">
                       {{api.getCat(item.cat)}}
                     </div>
-                    <div class="M35width"></div>
+                    <div class="M25width"></div>
                     <!-- <div class="regulartext M5width c_align">
                       <mat-icon (click)="takePicture('1:1','logo',item.id)">
                         photo_camera
@@ -230,13 +244,16 @@
     <div class="dflex M100width">
       <div class="boxshw M100width">
         <div class="dflex M100width tb15padding s_size purple_background c_white">
+          <div class="M10width c_align">
+            Sr. No
+          </div>
           <div class="regulartext M25width">
             <span class="l10padding">
-            Store name
-          </span>
-        </div>
+              Store name
+            </span>
+          </div>
           <div class="regulartext M25width c_align">Category</div>
-          <div class="M30width"></div>
+          <div class="M20width"></div>
           <div class="regulartext M20width c_align">Action</div>
         </div>
         <div>
@@ -245,13 +262,16 @@
               <ng-container *ngFor="let item of third_Stores;let i = index">
                 <ng-container>
                   <div class="dflex tborder s_size tb15padding">
+                    <div class="M10width c_align">
+                      {{i + 1}}
+                    </div>
                     <div class="regulartext M25width">
                       <span class="l10padding">{{item.name}}</span>
                     </div>
                     <div class="regulartext M25width c_align">
                       {{api.getCat(item.cat)}}
                     </div>
-                    <div class="M35width"></div>
+                    <div class="M25width"></div>
                     <!-- <div class="regulartext M5width c_align">
                       <mat-icon (click)="takePicture('1:1','logo',item.id)">
                         photo_camera
