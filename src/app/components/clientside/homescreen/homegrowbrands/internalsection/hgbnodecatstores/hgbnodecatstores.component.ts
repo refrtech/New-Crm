@@ -86,6 +86,7 @@ export class HgbnodecatstoresComponent implements OnInit {
       .subscribe((data: any) => {
         this.HGBdata = data[0];
         if (this.HGBdata != undefined) {
+          console.log("HGBdata = ",this.HGBdata);
           if (data[0].Stores.length > 0) {
             this.api.getStoresbyIds(data[0]?.Stores).subscribe((data: any) => {
               this.PChoiceStores = data;
