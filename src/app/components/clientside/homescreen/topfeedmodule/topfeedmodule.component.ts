@@ -30,7 +30,7 @@ export class TopfeedmoduleComponent implements OnInit {
   ngOnInit(): void {}
 
   addSlide() {
-    const dialogRef = this.dailog.open(FeedsectionComponent, {
+    this.dailog.open(FeedsectionComponent, {
       width: '50%',
       data: { id: this.getVideoData.id,FeedVideos:this.getVideoData.Videos },
       hasBackdrop: true,
@@ -79,6 +79,15 @@ export class TopfeedmoduleComponent implements OnInit {
     });
   }
 
+  updatelink(i:number,url?:string){
+    this.dailog.open(FeedsectionComponent, {
+      width: '50%',
+      data: { Addrouting:true,id: this.getVideoData.id,FeedVideos:this.getVideoData.Videos,index:i ,routingurl:url},
+      hasBackdrop: true,
+      disableClose: true,
+      panelClass: 'thanksscreen',
+    });
+  }
   // openUrl(id: any) {
   //   this.auth.addVideo(this.url).then((ref) => {
   //     this.url = id;

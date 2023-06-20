@@ -1,50 +1,50 @@
-<div class="A20padding">
+<ng-container *ngIf="data.Addrouting != true">
+  <div class="A20padding">
     <div class="dflex AIcenter">
-        <a (click)="close()">
-            <svg width="38" height="24" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M24 12H5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" />
-            </svg>
-        </a>
-        <span class="fs_24 boldtext lr15padding AScenter">Top Feed module</span>
+      <a (click)="close()">
+        <svg width="38" height="24" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 12H5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+      <span class="fs_24 boldtext lr15padding AScenter">Top Feed module</span>
     </div>
     <div class="dottedborder A20padding c_align t50margin bg_fb">
-        <div class="m_size gray_txt">
-            Drag or drop your file here
-        </div>
-        <div class="t10margin b10margin gray_txt">
-            or
-        </div>
-        <div>
-            <input class="b10margin d_none" #hiddenfileinput type="file" (change)="onSelectFile($event)">
-            <button mat-button (click)="hiddenfileinput.click()"
-                class="file-upload Apurpleborder s_size normallineheight purple_txt browse b10margin cursor_pointer d_inline">
-                {{"Browse"}}
-            </button>
-        </div>
-        <div class="s_size gray_txt b5margin">
-            Maximum upload file size - 24 MB
-        </div>
-        <div class="s_size gray_txt">
-            Media ratio - 16 : 9
-        </div>
+      <div class="m_size gray_txt">
+        Drag or drop your file here
+      </div>
+      <div class="t10margin b10margin gray_txt">
+        or
+      </div>
+      <div>
+        <input class="b10margin d_none" #hiddenfileinput type="file" (change)="onSelectFile($event)">
+        <button mat-button (click)="hiddenfileinput.click()"
+          class="file-upload Apurpleborder s_size normallineheight purple_txt browse b10margin cursor_pointer d_inline">
+          {{"Browse"}}
+        </button>
+      </div>
+      <div class="s_size gray_txt b5margin">
+        Maximum upload file size - 24 MB
+      </div>
+      <div class="s_size gray_txt">
+        Media ratio - 16 : 9
+      </div>
     </div>
     <div class="Aborder A5padding t20margin A5radius" *ngIf="fileName >= '0'">
-        <div class="feedmoduleImg d_none">
-            <ik-image #imagePreview [src]="url" *ngIf="format==='image' && url"></ik-image>
-            <video #videoPlayer [src]="url" *ngIf="format==='video' && url" controls height="200"></video>
-        </div>
-        <div class="c_align">
-            {{fileName}}
-        </div>
-        <!-- <span class="divide"></span> -->
-        <div class="d_none">
-            <input class="b10margin d_none" #hiddenfileinput type="file" (change)="onSelectFile($event)">
-        </div>
+      <div class="feedmoduleImg d_none">
+        <ik-image #imagePreview [src]="url" *ngIf="format==='image' && url"></ik-image>
+        <video #videoPlayer [src]="url" *ngIf="format==='video' && url" controls height="200"></video>
+      </div>
+      <div class="c_align">
+        {{fileName}}
+      </div>
+      <!-- <span class="divide"></span> -->
+      <div class="d_none">
+        <input class="b10margin d_none" #hiddenfileinput type="file" (change)="onSelectFile($event)">
+      </div>
     </div>
 
-     <!-- <div class="dflex AIcenter Aborder A5padding t20margin A5radius" *ngIf="fileName >= '0'">
+    <!-- <div class="dflex AIcenter Aborder A5padding t20margin A5radius" *ngIf="fileName >= '0'">
         <div class="feedmoduleImg">
             <ik-image #imagePreview [src]="url" *ngIf="format==='image' && url"></ik-image>
             <video #videoPlayer [src]="url" *ngIf="format==='video' && url" controls height="200"></video>
@@ -59,4 +59,33 @@
     </div> -->
 
     <mat-progress-bar mode="indeterminate" *ngIf="isInProcess"></mat-progress-bar>
-</div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="data.Addrouting == true">
+  <div class="A20padding">
+    <div class="dflex AIcenter">
+      <a (click)="close()">
+        <svg width="38" height="24" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 12H5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+      <span class="fs_24 boldtext lr15padding AScenter">Add URL</span>
+    </div>
+    <div class="t50margin dflex">
+      <div class="M50width">
+        <mat-form-field class="crminput searchinput M100width" appearance="outline">
+          <input matInput placeholder="URl" type="text" [(ngModel)]="routingurl">
+        </mat-form-field>
+      </div>
+      <div class="M50width c_align AScenter">
+        <button mat-button
+          class="s_size semiboldtext purple_background normallineheight tb5padding l15padding r15padding White_txt"
+          (click)="updatelink()">
+          Update Link
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>

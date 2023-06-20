@@ -1,56 +1,70 @@
 <div class="A20padding">
-    <div class="dflex AIcenter">
-        <a routerLink="/homescreen">
-            <svg width="38" height="24" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M24 12H5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" />
-            </svg>
-        </a>
-        <span class="fs_24 boldtext lr15padding AScenter">Top Feed module</span>
-        <span class="divide"></span>
-        <div class="AScenter">
-            <button mat-button (click)="addSlide()"
-                class="s_size semiboldtext purple_background normallineheight tb5padding l15padding r15padding White_txt">
-                <mat-icon class="xml_size">add</mat-icon>
-                Add Slide
-            </button>
-        </div>
+  <div class="dflex AIcenter">
+    <a routerLink="/homescreen">
+      <svg width="38" height="24" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 12H5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M12 19L5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </a>
+    <span class="fs_24 boldtext lr15padding AScenter">Top Feed module</span>
+    <span class="divide"></span>
+    <div class="AScenter">
+      <button mat-button (click)="addSlide()"
+        class="s_size semiboldtext purple_background normallineheight tb5padding l15padding r15padding White_txt">
+        <mat-icon class="xml_size">add</mat-icon>
+        Add Slide
+      </button>
     </div>
-    <div class="t50margin boxshw" (click)="slide = false">
-        <div class="dflex JCevenly M100width tb15padding s_size purple_background c_white">
-            <div class="M5width"></div>
-            <div class="regulartext M25width">
-              <!-- Date Added -->
-              Slides
-            </div>
-            <div class="regulartext M25width c_align">
-
-            </div>
-            <div class="regulartext M45width c_align">Action</div>
-        </div>
-        <div cdkDropListGroup>
-            <div class="example-container M100width">
-                <div cdkDropList class="example-list">
-                    <div class="example-box tborder s_size" *ngFor="let item of getVideoData?.Videos;let i = index" cdkDrag>
-                        <div class="M5width dflex JCcenter">
-                            <mat-icon>menu</mat-icon>
-                        </div>
-                        <div class="M25width l_align gray_txt">
-                          {{item.fileName}}
-
-                            <!-- {{item?.c_Date.toDate() | date:'MMM dd, yyyy'}} -->
-                        </div>
-                        <div class="M25width c_align semiboldtext">
-                        </div>
-                        <div class="M45width c_align">
-                            <a>
-                                <mat-icon (click)="deleteVid(item.fileName)" class="black_text">delete</mat-icon>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  </div>
+  <div class="t50margin boxshw" (click)="slide = false">
+    <div class="dflex JCevenly M100width tb15padding s_size purple_background c_white">
+      <div class="M5width"></div>
+      <div class="regulartext M25width">
+        <!-- Date Added -->
+        Slides
+      </div>
+      <div class="regulartext M25width c_align">
+URl
+      </div>
+      <div class="regulartext M45width c_align">Action</div>
     </div>
+    <div cdkDropListGroup>
+      <div class="example-container M100width">
+        <div cdkDropList class="example-list">
+          <div class="example-box tborder s_size" *ngFor="let item of getVideoData?.Videos;let i = index" cdkDrag>
+            <div class="M5width dflex JCcenter">
+              <mat-icon>menu</mat-icon>
+            </div>
+            <div class="M25width l_align gray_txt">
+              {{item.fileName}}
+            </div>
+            <div class="M25width c_align semiboldtext">
+              <div *ngIf="item.routingurl" class="dflex JCcenter">
+                {{item.routingurl}}
+
+                <button mat-button
+                  class="s_size l10margin semiboldtext purple_background normallineheight tb5padding l15padding r15padding White_txt" (click)="updatelink(i,item.routingurl)">
+                  <mat-icon>
+                    edit
+                  </mat-icon>
+                </button>
+              </div>
+              <div *ngIf="!item.routingurl">
+                <button mat-button
+                  class="s_size semiboldtext purple_background normallineheight tb5padding l15padding r15padding White_txt"
+                  (click)="updatelink(i)">
+                  Update Link
+                </button>
+              </div>
+            </div>
+            <div class="M45width c_align">
+              <a>
+                <mat-icon (click)="deleteVid(item.fileName)" class="black_text">delete</mat-icon>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

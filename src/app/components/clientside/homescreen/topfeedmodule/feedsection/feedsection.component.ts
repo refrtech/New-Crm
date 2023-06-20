@@ -31,7 +31,7 @@ export class FeedsectionComponent implements OnInit {
   isInProcess: boolean = false;
   size = 1024 * 1024;
   size_limit: boolean = false;
-
+  routingurl: string = '';
   onFileSelected($event: Event) {
     throw new Error('Method not implemented.');
   }
@@ -43,6 +43,7 @@ export class FeedsectionComponent implements OnInit {
     public api: ApiserviceService,
     public auth: AuthService
   ) {
+    this.routingurl = this.data.routingurl
   }
 
   ngOnInit(): void {}
@@ -79,11 +80,9 @@ export class FeedsectionComponent implements OnInit {
           } else {
             this.data.FeedVideos.push(data);
           }
-          this.api
-            .UpdateVideo(this.data.id, this.data.FeedVideos)
-            .then(() => {
-              this.dialogRef.close();
-            });
+          this.api.UpdateVideo(this.data.id, this.data.FeedVideos).then(() => {
+            this.dialogRef.close();
+          });
         },
         (error) => {
           this.isInProcess = false;
@@ -91,7 +90,9 @@ export class FeedsectionComponent implements OnInit {
         }
       );
     } else {
-      this.auth.resource.startSnackBar('Please upload the size of file below 250mb');
+      this.auth.resource.startSnackBar(
+        'Please upload the size of file below 250mb'
+      );
       this.dialogRef.close();
     }
   }
@@ -146,5 +147,17 @@ export class FeedsectionComponent implements OnInit {
 
   close() {
     this.dialogRef.close();
+  }
+
+  updatelink() {
+    console.log(this.data);
+    if (this.routingurl == '') {
+      this.auth.resource.startSnackBar('Please enter the Url.');
+    } else {
+      this.data.FeedVideos[this.data.index].routingurl = this.routingurl;
+      this.api.UpdateVideo(this.data.id, this.data.FeedVideos).then(() => {
+        this.dialogRef.close();
+      });
+    }
   }
 }
