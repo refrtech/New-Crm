@@ -16,7 +16,7 @@
           <mat-select placeholder="Select Sub-Category" (selectionChange)="subcatchange()" [(ngModel)]="SelectedSubCat">
             <ng-container *ngFor="let item of subcatlist">
               <ng-container
-                *ngIf="item.id != 'sc-food_and_beverages-instant_food' && item.id != 'sc-food_and_beverages-munchies_food' && item.id != 'sc-food_and_beverages-beverages' && item.id != 'sc-food_and_beverages-healthy_snacks'">
+                *ngIf="item.id != 'sc-food_and_beverages-instant_food' && item.id != 'sc-food_and_beverages-munchies_food' && item.id != 'sc-food_and_beverages-beverages' && item.id != 'sc-food_and_beverages-healthy_snacks' && item.id != 'sc-food_and_beverages-munchies'">
                 <mat-option [value]="item.id">
                   {{item.name}}
                 </mat-option>

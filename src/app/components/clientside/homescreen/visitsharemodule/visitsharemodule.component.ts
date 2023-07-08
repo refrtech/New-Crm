@@ -30,7 +30,7 @@ export class VisitsharemoduleComponent implements OnInit {
     public router: Router,
     public api: ApiserviceService,
     private dialog: MatDialog,
-    private auth:AuthService
+    private auth: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -71,7 +71,7 @@ export class VisitsharemoduleComponent implements OnInit {
         hasBackdrop: true,
         disableClose: true,
         panelClass: 'thanksscreen',
-      })
+      });
       dialogRef.afterClosed().subscribe((result) => {
         this.citychange();
       });
@@ -147,25 +147,20 @@ export class VisitsharemoduleComponent implements OnInit {
   //   }
   // }
 
-
-
   navigatetointernal(item: any) {
     this.router.navigateByUrl('/VSAcat/' + item.id + '/' + item.city_id);
   }
 
   updateSectionDetails(i: number) {
-    if (i == 1 && !this.editTitle) {
-      this.editTitle = !this.editTitle;
-    } else if (i == 2 && !this.editSubt) {
-      this.editSubt = !this.editSubt;
-    } else if (
+    if (
       i == 1 &&
-      this.SectionTitle == this.VSAmoduledata.Section_title
+      (!this.editTitle || this.SectionTitle == this.VSAmoduledata.Section_title)
     ) {
       this.editTitle = !this.editTitle;
     } else if (
       i == 2 &&
-      this.SectionSTitle == this.VSAmoduledata.Section_Stitle
+      (!this.editSubt ||
+        this.SectionSTitle == this.VSAmoduledata.Section_Stitle)
     ) {
       this.editSubt = !this.editSubt;
     } else {

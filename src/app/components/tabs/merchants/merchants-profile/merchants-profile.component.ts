@@ -25,6 +25,9 @@ export class MerchantsProfileComponent implements OnInit {
   catindex: number = 0;
   subcatindex: number = 0;
   listLoc: any[] = [];
+  editname: boolean = false;
+
+
   @ViewChild('MatTabGroupss') mattab?: MatTabGroup;
   @ViewChild('MatTaborders') mattaborders?: MatTabGroup;
 
@@ -394,12 +397,22 @@ export class MerchantsProfileComponent implements OnInit {
   }
 
   deletestorebanners(index:number){
-    console.log(this.storeDetails.banners);
     this.api.deletestorebanners(this.storeDetails.id,this.storeDetails.banners[index])
     .then((data: any) => {
     this.storeDetails.banners.splice(index,1);
       this.auth.resource.startSnackBar('banner deleted');
     })
+  }
 
+  updateSectionDetails(i:number){
+    if (
+      i == 1 &&
+      !this.editname
+    ) {
+      this.editname = !this.editname;
+    }
+    else {
+
+    }
   }
 }

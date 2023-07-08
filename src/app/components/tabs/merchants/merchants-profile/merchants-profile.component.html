@@ -132,14 +132,25 @@
             </div>
 
             <div class="dflex M100width t5padding">
-              <div class="normaltext M_size M50width">
+              <div class="normaltext M_size M50width Editableinput">
                 <mat-form-field appearance="outline" class="crminput M80width">
-                  <input matInput [(ngModel)]="storeDetails.name">
+                  <input matInput type="text" [(ngModel)]="storeDetails.name" [disabled]="!editname">
+                  <button matSuffix mat-icon-button aria-label="Clear" class="purple_background" (click)="updateSectionDetails(1)">
+                    <mat-icon>
+                      {{editname ? 'check': 'edit'}}
+                    </mat-icon>
+                  </button>
                 </mat-form-field>
               </div>
-              <div class="normaltext M_size M50width">
+              <div class="normaltext M_size M50width Editableinput">
                 <mat-form-field *ngIf="storeinfoDetails != undefined" appearance="outline" class="crminput M80width">
                   <input matInput [(ngModel)]="storeinfoDetails.name">
+                  <button matSuffix mat-icon-button aria-label="Clear" class="purple_background" (click)="updateSectionDetails(1)">
+                    <mat-icon>
+                      {{editname ? 'check': 'edit'}}
+                    </mat-icon>
+                  </button>
+
                 </mat-form-field>
               </div>
             </div>
@@ -312,16 +323,26 @@
               <div class="t5padding M100width normaltext M_size">
                 Location {{i + 1}}
               </div>
-              <mat-form-field appearance="outline" class="crminput M75width">
+              <mat-form-field appearance="outline" class="crminput M75width Editableinput">
                 <input matInput [value]="item.line1">
+                <button matSuffix mat-icon-button aria-label="Clear" class="purple_background" (click)="updateSectionDetails(1)">
+                  <mat-icon>
+                    {{editname ? 'check': 'edit'}}
+                  </mat-icon>
+                </button>
               </mat-form-field>
             </div>
             <div class="t5padding M100width normaltext M_size">
               Store Description
             </div>
             <div class="t5padding">
-              <mat-form-field appearance="outline" class="crminput M75width">
+              <mat-form-field appearance="outline" class="crminput M75width Editableinput">
                 <input matInput [(ngModel)]="storeDetails.about">
+                <button matSuffix mat-icon-button aria-label="Clear" class="purple_background" (click)="updateSectionDetails(1)">
+                  <mat-icon>
+                    {{editname ? 'check': 'edit'}}
+                  </mat-icon>
+                </button>
               </mat-form-field>
             </div>
             <div class="dflex t20padding">
@@ -333,25 +354,25 @@
                   <div class="dflex">
                     <div>COD</div>
                     <span class="divide"></span>
-                    <mat-slide-toggle [(ngModel)]="storeDetails.typeORDER.COD"></mat-slide-toggle>
+                    <mat-slide-toggle color="primary" [(ngModel)]="storeDetails.typeORDER.COD"></mat-slide-toggle>
                   </div>
 
                   <div class="dflex">
                     <div>Return</div>
                     <span class="divide"></span>
-                    <mat-slide-toggle [(ngModel)]="storeDetails.typeORDER.return">
+                    <mat-slide-toggle color="primary" [(ngModel)]="storeDetails.typeORDER.return">
                     </mat-slide-toggle>
                   </div>
                   <div class="dflex">
                     <div>Exchange</div>
                     <span class="divide"></span>
-                    <mat-slide-toggle [(ngModel)]="storeDetails.typeORDER.exchange">
+                    <mat-slide-toggle color="primary" [(ngModel)]="storeDetails.typeORDER.exchange">
                     </mat-slide-toggle>
                   </div>
                   <div class="dflex">
                     <div>Refund</div>
                     <span class="divide"></span>
-                    <mat-slide-toggle [(ngModel)]="storeDetails.typeORDER.refund">
+                    <mat-slide-toggle color="primary" [(ngModel)]="storeDetails.typeORDER.refund">
                     </mat-slide-toggle>
                   </div>
                 </div>
@@ -362,12 +383,12 @@
                   <div class="dflex">
                     <div>Delivery Area</div>
                     <span class="divide"></span>
-                    <mat-slide-toggle></mat-slide-toggle>
+                    <mat-slide-toggle color="primary"></mat-slide-toggle>
                   </div>
                   <div class="dflex">
                     <div>Require Logistics Partner</div>
                     <span class="divide"></span>
-                    <mat-slide-toggle [(ngModel)]="storeDetails.typeORDER.logistics">
+                    <mat-slide-toggle color="primary" [(ngModel)]="storeDetails.typeORDER.logistics">
                     </mat-slide-toggle>
                   </div>
                   <div class="t5padding M100width normaltext M_size">
@@ -403,7 +424,7 @@
                   </div>
                   <div class="dflex t2padding">
                     <div>
-                      <mat-slide-toggle [(ngModel)]="storeDetails.schedule.opensDaily">Daily
+                      <mat-slide-toggle color="primary" [(ngModel)]="storeDetails.schedule.opensDaily">Daily
                       </mat-slide-toggle>
                     </div>
                     <span class="divide"></span>
@@ -416,7 +437,7 @@
                   </div>
                   <div class="dflex t2padding">
                     <div>
-                      <mat-slide-toggle [(ngModel)]="storeDetails.schedule.openSun">Sun
+                      <mat-slide-toggle color="primary" [(ngModel)]="storeDetails.schedule.openSun">Sun
                       </mat-slide-toggle>
                     </div>
                     <span class="divide"></span>
@@ -429,7 +450,7 @@
                   </div>
                   <div class="dflex t2padding">
                     <div>
-                      <mat-slide-toggle [(ngModel)]="storeDetails.schedule.openMon">Mon
+                      <mat-slide-toggle color="primary" [(ngModel)]="storeDetails.schedule.openMon">Mon
                       </mat-slide-toggle>
                     </div>
                     <span class="divide"></span>
@@ -442,7 +463,7 @@
                   </div>
                   <div class="dflex t2padding">
                     <div>
-                      <mat-slide-toggle [(ngModel)]="storeDetails.schedule.openTue">Tue
+                      <mat-slide-toggle color="primary" [(ngModel)]="storeDetails.schedule.openTue">Tue
                       </mat-slide-toggle>
                     </div>
                     <span class="divide"></span>
@@ -455,7 +476,7 @@
                   </div>
                   <div class="dflex t2padding">
                     <div>
-                      <mat-slide-toggle [(ngModel)]="storeDetails.schedule.openWed">Wed
+                      <mat-slide-toggle color="primary" [(ngModel)]="storeDetails.schedule.openWed">Wed
                       </mat-slide-toggle>
                     </div>
                     <span class="divide"></span>
@@ -468,7 +489,7 @@
                   </div>
                   <div class="dflex t2padding">
                     <div>
-                      <mat-slide-toggle [(ngModel)]="storeDetails.schedule.openThu">Thur
+                      <mat-slide-toggle color="primary" [(ngModel)]="storeDetails.schedule.openThu">Thur
                       </mat-slide-toggle>
                     </div>
                     <span class="divide"></span>
@@ -481,7 +502,7 @@
                   </div>
                   <div class="dflex t2padding">
                     <div>
-                      <mat-slide-toggle [(ngModel)]="storeDetails.schedule.openFri">Fri
+                      <mat-slide-toggle color="primary" [(ngModel)]="storeDetails.schedule.openFri">Fri
                       </mat-slide-toggle>
                     </div>
                     <span class="divide"></span>
@@ -494,7 +515,7 @@
                   </div>
                   <div class="dflex t2padding">
                     <div>
-                      <mat-slide-toggle [(ngModel)]="storeDetails.schedule.openSat">Sat
+                      <mat-slide-toggle color="primary" [(ngModel)]="storeDetails.schedule.openSat">Sat
                       </mat-slide-toggle>
                     </div>
                     <span class="divide"></span>
@@ -762,7 +783,7 @@
             <ng-container matColumnDef="status">
               <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
               <td mat-cell class="A10padding" *matCellDef="let row">
-                <mat-slide-toggle></mat-slide-toggle>
+                <mat-slide-toggle color="primary"></mat-slide-toggle>
               </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="ProdColumns"></tr>
